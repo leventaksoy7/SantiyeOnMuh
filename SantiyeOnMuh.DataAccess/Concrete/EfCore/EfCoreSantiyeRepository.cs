@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace SantiyeOnMuh.DataAccess.Concrete.SqlServer
 {
-    internal class EfCoreSantiyeRepository : EfCoreGenericRepository<Santiye,Context>,IRepository<Santiye>
+    public class EfCoreSantiyeRepository : EfCoreGenericRepository<Santiye, Context>, ISantiyeRepository
     {
     }
 }
