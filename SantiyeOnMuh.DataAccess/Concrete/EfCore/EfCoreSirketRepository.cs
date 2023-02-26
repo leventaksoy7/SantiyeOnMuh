@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace SantiyeOnMuh.DataAccess.Concrete.EfCore
 {
-    internal class EfCoreSirketRepository:EfCoreGenericRepository<Sirket,Context>, ISirketRepository
+    public class EfCoreSirketRepository:EfCoreGenericRepository<Sirket,Context>, ISirketRepository
     {
     }
 }

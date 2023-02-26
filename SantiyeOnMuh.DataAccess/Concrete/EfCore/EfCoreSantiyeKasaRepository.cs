@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace SantiyeOnMuh.DataAccess.Concrete.EfCore
 {
-    internal class EfCoreSantiyeKasaRepository:EfCoreGenericRepository<SantiyeKasa,Context>, ISantiyeKasaRepository
+    public class EfCoreSantiyeKasaRepository:EfCoreGenericRepository<SantiyeKasa,Context>, ISantiyeKasaRepository
     {
     }
 }

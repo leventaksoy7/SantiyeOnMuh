@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace SantiyeOnMuh.DataAccess.Concrete.EfCore
 {
-    internal class EfCoreCariHesapRepository:EfCoreGenericRepository<CariHesap,Context>,ICariHesapRepository
+    public class EfCoreCariHesapRepository:EfCoreGenericRepository<CariHesap,Context>,ICariHesapRepository
     {
     }
 }

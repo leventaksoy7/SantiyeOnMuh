@@ -24,8 +24,8 @@ namespace SantiyeOnMuh.Entity
         public int? BankaKasaKaynak { get; set; }
         public DateTime SistemeGiris { get; set; }
         public DateTime SonGuncelleme { get; set; }
-        //public int SantiyeKasaGKId { get; set; }
-        //public SantiyeKasaGK SantiyeKasaGK { get; set; }
+        public int SantiyeGiderKalemiId { get; set; }
+        public SantiyeGiderKalemi SantiyeGiderKalemi { get; set; }
         public int SantiyeId { get; set; }
         public Santiye Santiye { get; set; }
         public SantiyeKasa()
