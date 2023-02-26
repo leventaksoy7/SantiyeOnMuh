@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace SantiyeOnMuh.Entity
 {
-    public class SantiyeKasa
+    public class OdemeNakit
     {
         public int Id { get; set; }
         [Required(ErrorMessage = "TARİH GİRMELİSİNİZ")]
@@ -15,32 +15,30 @@ namespace SantiyeOnMuh.Entity
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
         public DateTime Tarih { get; set; }
         public string Aciklama { get; set; }
-        public string Kisi { get; set; }
-        public string No { get; set; }//PLAKA-CEP-FATURA VEYA FİŞ NO
-        public decimal Gelir { get; set; }
-        public decimal Gider { get; set; }
+        public decimal Tutar { get; set; }
         public string ImgUrl { get; set; }
-        public bool Durum { get; set; }
         public int? BankaKasaKaynak { get; set; }
+        public int? CariKasaKaynak { get; set; }
         public DateTime SistemeGiris { get; set; }
         public DateTime SonGuncelleme { get; set; }
-        //public int SantiyeKasaGKId { get; set; }
-        //public SantiyeKasaGK SantiyeKasaGK { get; set; }
-        public int SantiyeId { get; set; }
-        public Santiye Santiye { get; set; }
-        public SantiyeKasa()
+        public bool Durum { get; set; }
+        public int CariHesapId { get; set; }
+        public CariHesap CariHesap { get; set; }
+        public int SirketId { get; set; }
+        public Sirket Sirket { get; set; }
+        public int BankaHesapId { get; set; }
+        public BankaHesap BankaHesap { get; set; }
+        public OdemeNakit()
         {
-            Tarih = DateTime.Today;
+            Tarih = System.DateTime.Now;
 
-            Gelir = 0;
-            Gider = 0;
+            BankaKasaKaynak = null;
+            CariKasaKaynak = null;
 
             Durum = true;
 
-            //BankaKasaKaynak = null;
-
-            SistemeGiris = DateTime.Today;
-            SonGuncelleme = DateTime.Today;
+            SistemeGiris = System.DateTime.Now;
+            SonGuncelleme = System.DateTime.Now;
         }
     }
 }
