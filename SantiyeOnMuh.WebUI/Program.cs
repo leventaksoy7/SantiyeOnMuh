@@ -1,6 +1,7 @@
 using SantiyeOnMuh.Business.Abstract;
 using SantiyeOnMuh.Business.Concrete;
 using SantiyeOnMuh.DataAccess.Abstract;
+using SantiyeOnMuh.DataAccess.Concrete.EfCore;
 using SantiyeOnMuh.DataAccess.Concrete.SqlServer;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -19,8 +20,6 @@ builder.Services.AddMemoryCache();
 // Add a custom scoped service.
 builder.Services.AddScoped<ISantiyeService, SantiyeManager>();
 builder.Services.AddScoped<ISantiyeRepository, EfCoreSantiyeRepository>();
-//builder.Services.AddScoped < ISantiyeRepository,
-
 
 var app = builder.Build();
 
@@ -29,6 +28,7 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
+    SeedDatabase.Seed();
     app.UseExceptionHandler("/Home/Error");
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();

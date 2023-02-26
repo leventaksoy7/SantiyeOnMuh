@@ -21,7 +21,7 @@ namespace SantiyeOnMuh.Entity
         public decimal Gider { get; set; }
         public string ImgUrl { get; set; }
         public bool Durum { get; set; }
-        public int? BankaKasaKaynak { get; set; }
+        //public int? BankaKasaKaynak { get; set; }
         public DateTime SistemeGiris { get; set; }
         public DateTime SonGuncelleme { get; set; }
         //public int SantiyeKasaGKId { get; set; }
@@ -37,7 +37,7 @@ namespace SantiyeOnMuh.Entity
 
             Durum = true;
 
-            BankaKasaKaynak = null;
+            //BankaKasaKaynak = null;
 
             SistemeGiris = DateTime.Today;
             SonGuncelleme = DateTime.Today;

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using SantiyeOnMuh.Business.Abstract;
 using SantiyeOnMuh.WebUI.Models;
 using System.Diagnostics;
 
@@ -7,6 +8,15 @@ namespace SantiyeOnMuh.WebUI.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+
+        private ISantiyeService _santiyeService;
+
+        public IActionResult Methodmethod(ISantiyeService santiyeService)
+        {
+            this._santiyeService = santiyeService;
+
+            return View();
+        }
 
         public HomeController(ILogger<HomeController> logger)
         {

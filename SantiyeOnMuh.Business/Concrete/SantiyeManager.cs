@@ -24,7 +24,7 @@ namespace SantiyeOnMuh.Business.Concrete
         public void Create(Santiye entity)
         {
             //İŞ KURALLARI
-            //_santiyeRepository.Create(entity);
+            _santiyeRepository.Create(entity);
         }
 
         public void Update(Santiye entity)

@@ -9,6 +9,6 @@ namespace SantiyeOnMuh.DataAccess.Abstract
 {
     public interface ISantiyeRepository : IRepository<Santiye>
     {
-        //List<Santiye> GetAllDetay(bool drm);
+        //EKSTRA METODLAR EKLENECEKSE BURAYA
     }
 }
