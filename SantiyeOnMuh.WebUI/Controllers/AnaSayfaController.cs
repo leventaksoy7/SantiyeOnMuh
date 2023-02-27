@@ -32,61 +32,59 @@ namespace SantiyeOnMuh.WebUI.Controllers
         }
         public IActionResult Index()
         {
-
             var anaSayfaViewModel = new AnaSayfaViewListModel()
             {
                 Santiyes = _santiyeService.GetAll(true),
                 SantiyeKasas = _santiyeKasaService.GetAll(null, null, true),
-                //SantiyeGiderKalemi = _santiyeGiderKalemiService.GetAll(),
-                //BankaHesaps = _bankaHesapService.GetAllDetay(true),
-                //BankaKasas = _bankaKasaService.GetAllDetayBankaHesap(null, true),
+                SantiyeGiderKalemis = _santiyeGiderKalemiService.GetAll(),
+                BankaHesaps = _bankaHesapService.GetAll(true),
+                BankaKasas = _bankaKasaService.GetAll(null, true),
             };
 
-            ////ŞANTİYELER VE ŞANTİYE KASASI GİDER KALEMLERİ
-            //var aktifsantiyesayisi = anaSayfaViewModel.Santiyes.Count();
-            //var aktifgidersayisi = anaSayfaViewModel.SantiyeKasaGKs.Count();
+            //ŞANTİYELER VE ŞANTİYE KASASI GİDER KALEMLERİ
+            var aktifsantiyesayisi = anaSayfaViewModel.Santiyes.Count();
+            var aktifgidersayisi = anaSayfaViewModel.SantiyeGiderKalemis.Count();
 
-            //decimal?[] kalemtoplami = new decimal?[aktifgidersayisi * aktifsantiyesayisi];
+            decimal?[] kalemtoplami = new decimal?[aktifgidersayisi * aktifsantiyesayisi];
 
-            //int sayi = 0;
-            //foreach (var santiye in anaSayfaViewModel.Santiyes)
-            //{
-            //    foreach (var giderkalemi in anaSayfaViewModel.SantiyeKasaGKs)
-            //    {
-            //        kalemtoplami[sayi] =
-            //            (decimal?)_santiyeKasaService.GetAllDetaySantiyeGK((int)santiye.Id, (int)giderkalemi.Id, true).Sum(i => i.Gider)
-            //            +
-            //            (decimal?)_santiyeKasaService.GetAllDetaySantiyeGK((int)santiye.Id, (int)giderkalemi.Id, true).Sum(i => i.Gelir);
+            int sayi = 0;
+            foreach (var santiye in anaSayfaViewModel.Santiyes)
+            {
+                foreach (var giderkalemi in anaSayfaViewModel.SantiyeGiderKalemis)
+                {
+                    kalemtoplami[sayi] =
+                        (decimal?)_santiyeKasaService.GetAll((int)santiye.Id, (int)giderkalemi.Id, true).Sum(i => i.Gider)
+                        +
+                        (decimal?)_santiyeKasaService.GetAll((int)santiye.Id, (int)giderkalemi.Id, true).Sum(i => i.Gelir);
 
-            //        sayi = sayi + 1;
-            //    }
-            //}
-            //ViewBag.gider = kalemtoplami;
+                    sayi = sayi + 1;
+                }
+            }
+            ViewBag.gider = kalemtoplami;
 
-            ////BANKA HESAPLARI VE BANKA BAKİYELERİ
-            //var aktifbankahesabisayisi = anaSayfaViewModel.BankaHesaps.Count();
+            //BANKA HESAPLARI VE BANKA BAKİYELERİ
+            var aktifbankahesabisayisi = anaSayfaViewModel.BankaHesaps.Count();
 
-            //decimal?[] bankahesabigiren = new decimal?[aktifbankahesabisayisi];
-            //decimal?[] bankahesabicikan = new decimal?[aktifbankahesabisayisi];
-            //decimal?[] bankahesabinet = new decimal?[aktifbankahesabisayisi];
+            decimal?[] bankahesabigiren = new decimal?[aktifbankahesabisayisi];
+            decimal?[] bankahesabicikan = new decimal?[aktifbankahesabisayisi];
+            decimal?[] bankahesabinet = new decimal?[aktifbankahesabisayisi];
 
-            //int sayi2 = 0;
-            //foreach (var bankahesabi in anaSayfaViewModel.BankaHesaps)
-            //{
-            //    bankahesabigiren[sayi2] = (decimal?)_bankaKasaService.GetAllDetayBankaHesap((int)bankahesabi.Id, true).Sum(i => i.Giren);
+            int sayi2 = 0;
+            foreach (var bankahesabi in anaSayfaViewModel.BankaHesaps)
+            {
+                bankahesabigiren[sayi2] = (decimal?)_bankaKasaService.GetAll((int)bankahesabi.Id, true).Sum(i => i.Giren);
 
-            //    bankahesabicikan[sayi2] = (decimal?)_bankaKasaService.GetAllDetayBankaHesap((int)bankahesabi.Id, true).Sum(i => i.Cikan);
+                bankahesabicikan[sayi2] = (decimal?)_bankaKasaService.GetAll((int)bankahesabi.Id, true).Sum(i => i.Cikan);
 
-            //    bankahesabinet[sayi2] = bankahesabigiren[sayi2] - bankahesabicikan[sayi2];
+                bankahesabinet[sayi2] = bankahesabigiren[sayi2] - bankahesabicikan[sayi2];
 
-            //    sayi2 = sayi2 + 1;
-            //}
-            //ViewBag.net = bankahesabinet;
+                sayi2 = sayi2 + 1;
+            }
+            ViewBag.net = bankahesabinet;
 
-            //ViewBag.Sayfa = "ANA SAYFA";
+            ViewBag.Sayfa = "ANA SAYFA";
 
             return View(anaSayfaViewModel);
-
         }
     }
 }
