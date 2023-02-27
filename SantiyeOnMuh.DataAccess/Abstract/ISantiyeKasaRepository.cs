@@ -7,8 +7,11 @@ using System.Threading.Tasks;
 
 namespace SantiyeOnMuh.DataAccess.Abstract
 {
-    public interface ISantiyeKasaRepository : IRepository<SantiyeKasa>, IRepositoryGetAllDurum<SantiyeKasa>
+    public interface ISantiyeKasaRepository : IRepository<SantiyeKasa>
     {
-        //EKSTRA METODLAR EKLENECEKSE BURAYA
+        SantiyeKasa GetByIdDetay(int id);
+        List<SantiyeKasa> GetAll(int? santiyeid, int? gkid, bool drm);
+        List<SantiyeKasa> GetAll(int santiyeid, int? gkid, bool drm, int page, int pageSize);
+        int GetCountByGiderKalemi(int santiyeid, int? gkid, bool drm);
     }
 }

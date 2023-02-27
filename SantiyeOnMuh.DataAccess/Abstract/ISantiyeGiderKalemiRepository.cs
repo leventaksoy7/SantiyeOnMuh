@@ -10,5 +10,6 @@ namespace SantiyeOnMuh.DataAccess.Abstract
     public interface ISantiyeGiderKalemiRepository : IRepository<SantiyeGiderKalemi>, IRepositoryGetAllDurum<SantiyeGiderKalemi>
     {
         //EKSTRA METODLAR EKLENECEKSE BURAYA
+        List<SantiyeGiderKalemi> GetAll(bool drm, bool tur);
     }
 }

@@ -9,6 +9,6 @@ namespace SantiyeOnMuh.Business.Abstract
 {
     public interface ISantiyeGiderKalemiService : IService<SantiyeGiderKalemi>
     {
-
+        List<SantiyeGiderKalemi> GetAll(bool drm, bool tur);
     }
 }

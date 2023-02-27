@@ -9,6 +9,8 @@ namespace SantiyeOnMuh.Business.Abstract
 {
     public interface ICariHesapService : IService<CariHesap>
     {
-
+        List<CariHesap> GetAll(int? santiyeid, bool drm);
+        List<CariHesap> GetAll(int? santiyeid, bool drm, int page, int pageSize);
+        int GetCountBySantiye(int? santiyeid, bool drm);
     }
 }

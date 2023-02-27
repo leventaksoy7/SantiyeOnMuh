@@ -10,12 +10,12 @@ namespace SantiyeOnMuh.DataAccess.Concrete.EfCore
 {
     public class EfCoreSirketRepository : EfCoreGenericRepository<Sirket, Context>, ISirketRepository
     {
-        public List<Sirket> GetAll(bool durum)
+        public List<Sirket> GetAll(bool drm)
         {
             using (var context = new Context())
             {
                 return context.Sirkets
-                    .Where(i => i.Durum == durum)
+                    .Where(i => i.Durum == drm)
                     .ToList();
             }
         }

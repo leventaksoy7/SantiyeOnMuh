@@ -37,6 +37,11 @@ namespace SantiyeOnMuh.Business.Concrete
             return _bankaHesapRepository.GetAll();
         }
 
+        public List<BankaHesap> GetAll(bool drm)
+        {
+            return _bankaHesapRepository.GetAll(drm);
+        }
+
         public BankaHesap GetById(int id)
         {
             return _bankaHesapRepository.GetById(id);

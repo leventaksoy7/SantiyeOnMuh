@@ -37,6 +37,11 @@ namespace SantiyeOnMuh.Business.Concrete
             return _sirketRepository.GetAll();
         }
 
+        public List<Sirket> GetAll(bool drm)
+        {
+            return _sirketRepository.GetAll(drm);
+        }
+
         public Sirket GetById(int id)
         {
             return _sirketRepository.GetById(id);

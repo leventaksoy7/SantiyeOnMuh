@@ -40,5 +40,20 @@ namespace SantiyeOnMuh.Business.Concrete
         {
             return _cariHesapRepository.GetById(id);
         }
+
+        public List<CariHesap> GetAll(int? santiyeid, bool drm)
+        {
+            return _cariHesapRepository.GetAll(santiyeid, drm);
+        }
+
+        public List<CariHesap> GetAll(int? santiyeid, bool drm, int page, int pageSize)
+        {
+            return _cariHesapRepository.GetAll(santiyeid, drm, page, pageSize);
+        }
+
+        public int GetCountBySantiye(int? santiyeid, bool drm)
+        {
+            return _cariHesapRepository.GetCountBySantiye(santiyeid, drm);
+        }
     }
 }

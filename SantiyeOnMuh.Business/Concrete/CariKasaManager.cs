@@ -41,5 +41,25 @@ namespace SantiyeOnMuh.Business.Concrete
         {
             return _cariKasaRepository.GetById(id);
         }
+
+        public CariKasa GetByIdDetay(int id)
+        {
+            return _cariKasaRepository.GetByIdDetay(id);
+        }
+
+        public List<CariKasa> GetAll(int carihesapid, int? gkid, bool drm)
+        {
+            return _cariKasaRepository.GetAll(carihesapid, gkid, drm);
+        }
+
+        public List<CariKasa> GetAll(int carihesapid, int? gkid, bool drm, int page, int pageSize)
+        {
+            return _cariKasaRepository.GetAll(carihesapid,gkid, drm, page, pageSize);
+        }
+
+        public int GetCountByCariHesapGK(int carihesapid, int? gkid, bool drm)
+        {
+            return _cariKasaRepository.GetCountByCariHesapGK(carihesapid,gkid,drm);
+        }
     }
 }

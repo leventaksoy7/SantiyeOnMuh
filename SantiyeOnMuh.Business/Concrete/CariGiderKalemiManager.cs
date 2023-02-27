@@ -32,14 +32,24 @@ namespace SantiyeOnMuh.Business.Concrete
             _cariGiderKalemiRepository.Update(entity);
         }
 
+        public CariGiderKalemi GetById(int id)
+        {
+            return _cariGiderKalemiRepository.GetById(id);
+        }
+
         public List<CariGiderKalemi> GetAll()
         {
             return _cariGiderKalemiRepository.GetAll();
         }
 
-        public CariGiderKalemi GetById(int id)
+        public List<CariGiderKalemi> GetAll(bool drm, bool tur)
         {
-            return _cariGiderKalemiRepository.GetById(id);
+            return _cariGiderKalemiRepository.GetAll(drm, tur);
+        }
+
+        public List<CariGiderKalemi> GetAll(bool drm)
+        {
+            return _cariGiderKalemiRepository.GetAll(drm);
         }
     }
 }

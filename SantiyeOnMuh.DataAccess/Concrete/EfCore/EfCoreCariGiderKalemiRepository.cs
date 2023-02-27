@@ -10,12 +10,24 @@ namespace SantiyeOnMuh.DataAccess.Concrete.EfCore
 {
     public class EfCoreCariGiderKalemiRepository : EfCoreGenericRepository<CariGiderKalemi, Context>, ICariGiderKalemiRepository
     {
-        public List<CariGiderKalemi> GetAll(bool durum)
+        public List<CariGiderKalemi> GetAll(bool drm)
         {
             using (var context = new Context())
             {
                 return context.CariGiderKalemis
-                    .Where(i => i.Durum == durum)
+                    .Where(i => i.Durum == drm)
+                    .ToList();
+            }
+        }
+
+        public List<CariGiderKalemi> GetAll(bool drm, bool tur)
+        {
+            using (var context = new Context())
+            {
+                return context.CariGiderKalemis
+                    .Where(i => i.Tur == drm)
+                    .Where(i => i.Durum == drm)
+                    .OrderBy(i => i.Ad)
                     .ToList();
             }
         }

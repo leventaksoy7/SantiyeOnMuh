@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace SantiyeOnMuh.Business.Abstract
 {
-    public interface ISirketService : IService<Sirket>
+    public interface ISirketService : IService<Sirket>, IServiceGetAllDurum<Sirket>
     {
 
     }

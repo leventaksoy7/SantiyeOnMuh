@@ -9,5 +9,9 @@ namespace SantiyeOnMuh.DataAccess.Abstract
 {
     public interface IBankaKasaRepository:IRepository<BankaKasa>,IRepositoryGetAllDurum<BankaKasa>
     {
+        BankaKasa GetByIdDetay(int id);
+        List<BankaKasa> GetAll(int? bankahesapid, bool drm);
+        List<BankaKasa> GetAll(int? bankahesapid, bool drm, int page, int pageSize);
+        int GetCountByBankaHesap(int? bankahesapid, bool drm);
     }
 }

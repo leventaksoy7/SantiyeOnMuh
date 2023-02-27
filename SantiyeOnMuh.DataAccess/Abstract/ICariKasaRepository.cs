@@ -9,5 +9,9 @@ namespace SantiyeOnMuh.DataAccess.Abstract
 {
     public interface ICariKasaRepository : IRepository<CariKasa>, IRepositoryGetAllDurum<CariKasa>
     {
+        CariKasa GetByIdDetay(int id);
+        List<CariKasa> GetAll(int carihesapid, int? gkid, bool drm);
+        List<CariKasa> GetAll(int carihesapid, int? gkid, bool drm, int page, int pageSize);
+        int GetCountByCariHesapGK(int carihesapid, int? gkid, bool drm);
     }
 }

@@ -8,6 +8,6 @@ namespace SantiyeOnMuh.DataAccess.Abstract
 {
     public interface IRepositoryGetAllDurum<T> where T : class
     {
-        List<T> GetAll(bool durum);
+        List<T> GetAll(bool drm);
     }
 }

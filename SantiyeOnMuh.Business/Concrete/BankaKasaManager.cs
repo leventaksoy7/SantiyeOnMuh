@@ -41,5 +41,25 @@ namespace SantiyeOnMuh.Business.Concrete
         {
             return _bankaKasaRepository.GetById(id);
         }
+
+        public BankaKasa GetByIdDetay(int id)
+        {
+            return _bankaKasaRepository.GetById(id);
+        }
+
+        public List<BankaKasa> GetAll(int? bankahesapid, bool drm)
+        {
+            return _bankaKasaRepository.GetAll(bankahesapid, drm);
+        }
+
+        public List<BankaKasa> GetAll(int? bankahesapid, bool drm, int page, int pageSize)
+        {
+            return _bankaKasaRepository.GetAll(bankahesapid,drm,page,pageSize);
+        }
+
+        public int GetCountByBankaHesap(int? bankahesapid, bool drm)
+        {
+            return _bankaKasaRepository.GetCountByBankaHesap(bankahesapid, drm);
+        }
     }
 }

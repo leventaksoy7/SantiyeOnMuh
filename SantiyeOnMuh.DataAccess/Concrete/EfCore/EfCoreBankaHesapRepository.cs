@@ -11,12 +11,12 @@ namespace SantiyeOnMuh.DataAccess.Concrete.EfCore
 {
     public class EfCoreBankaHesapRepository : EfCoreGenericRepository<BankaHesap, Context>, IBankaHesapRepository
     {
-        public List<BankaHesap> GetAll(bool durum)
+        public List<BankaHesap> GetAll(bool drm)
         {
             using (var context = new Context())
             {
                 return context.BankaHesaps
-                    .Where(i => i.Durum == durum)
+                    .Where(i => i.Durum == drm)
                     .ToList();
             }
         }

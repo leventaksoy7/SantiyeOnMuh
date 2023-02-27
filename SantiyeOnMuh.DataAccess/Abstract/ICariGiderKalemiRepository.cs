@@ -9,5 +9,6 @@ namespace SantiyeOnMuh.DataAccess.Abstract
 {
     public interface ICariGiderKalemiRepository : IRepository<CariGiderKalemi>, IRepositoryGetAllDurum<CariGiderKalemi>
     {
+        public List<CariGiderKalemi> GetAll(bool drm,bool tur);
     }
 }

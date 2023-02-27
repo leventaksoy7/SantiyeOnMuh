@@ -25,8 +25,8 @@ namespace SantiyeOnMuh.Entity
         public DateTime SistemeGiris { get; set; }
         public DateTime SonGuncelleme { get; set; }
         public bool Durum { get; set; }
-        public int CariKasaGiderKalemiId { get; set; }
-        public CariGiderKalemi CariHesapKasaGiderKalemi { get; set; }
+        public int CariGiderKalemiId { get; set; }
+        public CariGiderKalemi CariGiderKalemi { get; set; }
         public int CariHesapId { get; set; }
         public CariHesap CariHesap { get; set; }
         public CariKasa()
