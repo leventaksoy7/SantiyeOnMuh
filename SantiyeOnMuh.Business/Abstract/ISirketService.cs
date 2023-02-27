@@ -7,7 +7,8 @@ using System.Threading.Tasks;
 
 namespace SantiyeOnMuh.Business.Abstract
 {
-    public interface ISantiyeService : IService<Santiye>
+    public interface ISirketService : IService<Sirket>
     {
+
     }
 }

@@ -8,7 +8,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-
 namespace SantiyeOnMuh.Business.Concrete
 {
     public class SantiyeManager : ISantiyeService
@@ -20,7 +19,7 @@ namespace SantiyeOnMuh.Business.Concrete
         {
             _santiyeRepository = santiyeRepository;
         }
-
+        //CRUD
         public void Create(Santiye entity)
         {
             //İŞ KURALLARI
@@ -29,23 +28,22 @@ namespace SantiyeOnMuh.Business.Concrete
 
         public void Update(Santiye entity)
         {
-            throw new NotImplementedException();
+            _santiyeRepository.Update(entity);
         }
 
         public void Delete(Santiye entity)
         {
-            throw new NotImplementedException();
-        }
-
-        public List<Santiye> GetAll()
-        {
-            throw new NotImplementedException();
+            _santiyeRepository.Delete(entity);
         }
 
         public Santiye GetById(int id)
         {
-            throw new NotImplementedException();
+            return _santiyeRepository.GetById(id);
         }
 
+        public List<Santiye> GetAll()
+        {
+            return _santiyeRepository.GetAll();
+        }
     }
 }

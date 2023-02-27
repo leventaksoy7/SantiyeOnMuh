@@ -7,7 +7,12 @@ using System.Threading.Tasks;
 
 namespace SantiyeOnMuh.Business.Abstract
 {
-    public interface ISantiyeService : IService<Santiye>
+    public interface IService<T>
     {
+        T GetById(int id);
+        List<T> GetAll();
+        void Create(T entity);
+        void Update(T entity);
+        void Delete(T entity);
     }
 }
