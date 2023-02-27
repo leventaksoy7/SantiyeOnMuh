@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace SantiyeOnMuh.DataAccess.Abstract
 {
-    public interface ICariKasaRepository : IRepository<CariKasa>
+    public interface ICariKasaRepository : IRepository<CariKasa>, IRepositoryGetAllDurum<CariKasa>
     {
     }
 }

@@ -9,11 +9,16 @@ namespace SantiyeOnMuh.WebUI.Controllers
     {
         private readonly ILogger<HomeController> _logger;
 
+        //INJ
         private ISantiyeService _santiyeService;
-
+        public HomeController(ISantiyeService santiyeService)
+        {
+            _santiyeService = santiyeService;
+        }
+        //
         public IActionResult Methodmethod(ISantiyeService santiyeService)
         {
-            this._santiyeService = santiyeService;
+            
 
             return View();
         }

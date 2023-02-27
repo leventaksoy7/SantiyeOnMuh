@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace SantiyeOnMuh.DataAccess.Abstract
 {
-    public interface IOdemeCekRepository:IRepository<OdemeCek>
+    public interface IOdemeCekRepository:IRepository<OdemeCek>, IRepositoryGetAllDurum<OdemeCek>
     {
     }
 }

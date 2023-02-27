@@ -3,18 +3,43 @@ using SantiyeOnMuh.Business.Abstract;
 
 namespace SantiyeOnMuh.WebUI.Controllers
 {
-    public class AnaSayfaController : Controller
-    {
-        public IActionResult Index()
-        {
-            //var anaSayfaViewModel = new AnaSayfaViewListModel()
-            //{
-            //    Santiyes = _santiyeService.GetAllDetay(true),
-            //    SantiyeKasas = _santiyeKasaService.GetAllDetaySantiyeGK(null, null, true),
-            //    SantiyeKasaGKs = _santiyeKasaGKService.GetAll(),
-            //    BankaHesaps = _bankaHesapService.GetAllDetay(true),
-            //    BankaKasas = _bankaKasaService.GetAllDetayBankaHesap(null, true),
-            //};
+    //public class AnaSayfaController : Controller
+    //{
+        //private ISantiyeService _santiyeService;
+        //private ISantiyeGiderKalemiService _santiyeGiderKalemiService;
+        //private ICariGiderKalemiService _cariGiderKalemiService;
+        //private IBankaHesapService _bankaHesapService;
+        //private IBankaKasaService _bankaKasaService;
+        //private ISantiyeKasaService _santiyeKasaService;
+        //private ICariKasaService _cariKasaService;
+        //public AnaSayfaController(
+        //    ISantiyeService santiyeService,
+        //    ISantiyeGiderKalemiService santiyeGiderKalemiService,
+        //    ICariGiderKalemiService cariGiderKalemiService,
+        //    IBankaHesapService bankaHesapService,
+        //    IBankaKasaService bankaKasaService,
+        //    ISantiyeKasaService santiyeKasaService,
+        //    ICariKasaService cariKasaService)
+        //{
+        //    this._santiyeService = santiyeService;
+        //    this._santiyeGiderKalemiService = santiyeGiderKalemiService;
+        //    this._cariGiderKalemiService = cariGiderKalemiService;
+        //    this._bankaHesapService = bankaHesapService;
+        //    this._bankaKasaService = bankaKasaService;
+        //    this._santiyeKasaService = santiyeKasaService;
+        //    this._cariKasaService = cariKasaService;
+        //}
+        //public IActionResult Index()
+        //{
+
+        //    var anaSayfaViewModel = new AnaSayfaViewListModel()
+        //    {
+        //        Santiyes = _santiyeService.GetAllDetay(true),
+        //        SantiyeKasas = _santiyeKasaService.GetAllDetaySantiyeGK(null, null, true),
+        //        SantiyeGiderKalemi = _santiyeGiderKalemiService.GetAll(),
+        //        BankaHesaps = _bankaHesapService.GetAllDetay(true),
+        //        BankaKasas = _bankaKasaService.GetAllDetayBankaHesap(null, true),
+        //    };
 
             ////ŞANTİYELER VE ŞANTİYE KASASI GİDER KALEMLERİ
             //var aktifsantiyesayisi = anaSayfaViewModel.Santiyes.Count();
@@ -61,7 +86,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
 
             //return View(anaSayfaViewModel);
 
-            return View();
-        }
-    }
+            //return View();
+        //}
+    //}
 }

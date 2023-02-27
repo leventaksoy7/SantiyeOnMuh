@@ -11,5 +11,14 @@ namespace SantiyeOnMuh.DataAccess.Concrete.SqlServer
 {
     public class EfCoreSantiyeRepository : EfCoreGenericRepository<Santiye, Context>, ISantiyeRepository
     {
+        public List<Santiye> GetAll(bool durum)
+        {
+            using (var context = new Context())
+            {
+                return context.Santiyes
+                    .Where(i => i.Durum == durum)
+                    .ToList();
+            }
+        }
     }
 }

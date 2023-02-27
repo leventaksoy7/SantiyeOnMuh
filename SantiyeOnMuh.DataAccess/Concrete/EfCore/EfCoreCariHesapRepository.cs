@@ -8,7 +8,16 @@ using System.Threading.Tasks;
 
 namespace SantiyeOnMuh.DataAccess.Concrete.EfCore
 {
-    public class EfCoreCariHesapRepository:EfCoreGenericRepository<CariHesap,Context>,ICariHesapRepository
+    public class EfCoreCariHesapRepository : EfCoreGenericRepository<CariHesap, Context>, ICariHesapRepository
     {
+        public List<CariHesap> GetAll(bool durum)
+        {
+            using (var context = new Context())
+            {
+                return context.CariHesaps
+                    .Where(i => i.Durum == durum)
+                    .ToList();
+            }
+        }
     }
 }

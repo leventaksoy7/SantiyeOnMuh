@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace SantiyeOnMuh.DataAccess.Abstract
 {
-    public interface IBankaKasaRepository:IRepository<BankaKasa>
+    public interface IBankaKasaRepository:IRepository<BankaKasa>,IRepositoryGetAllDurum<BankaKasa>
     {
     }
 }

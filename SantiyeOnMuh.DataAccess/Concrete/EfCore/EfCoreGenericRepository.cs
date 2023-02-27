@@ -54,6 +54,5 @@ namespace SantiyeOnMuh.DataAccess.Concrete.EfCore
                 return context.Set<TEntity>().Find(id);
             }
         }
-
     }
 }

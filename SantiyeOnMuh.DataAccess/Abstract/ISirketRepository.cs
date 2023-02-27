@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace SantiyeOnMuh.DataAccess.Abstract
 {
-    public interface ISirketRepository : IRepository<Sirket>
+    public interface ISirketRepository : IRepository<Sirket>, IRepositoryGetAllDurum<Sirket>
     {
         //EKSTRA METODLAR EKLENECEKSE BURAYA
     }

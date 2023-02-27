@@ -8,7 +8,16 @@ using System.Threading.Tasks;
 
 namespace SantiyeOnMuh.DataAccess.Concrete.EfCore
 {
-    public class EfCoreSirketRepository:EfCoreGenericRepository<Sirket,Context>, ISirketRepository
+    public class EfCoreSirketRepository : EfCoreGenericRepository<Sirket, Context>, ISirketRepository
     {
+        public List<Sirket> GetAll(bool durum)
+        {
+            using (var context = new Context())
+            {
+                return context.Sirkets
+                    .Where(i => i.Durum == durum)
+                    .ToList();
+            }
+        }
     }
 }

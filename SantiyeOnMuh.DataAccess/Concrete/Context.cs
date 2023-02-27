@@ -11,7 +11,7 @@ namespace SantiyeOnMuh.DataAccess.Concrete
     public class Context:DbContext
     {
         public DbSet<Santiye> Santiyes { get; set; }
-        public DbSet<SantiyeKasa> SantiyesKasa { get; set; }
+        public DbSet<SantiyeKasa> SantiyesKasas { get; set; }
         public DbSet<SantiyeGiderKalemi> SantiyeGiderKalemis { get; set; }
         public DbSet<CariHesap> CariHesaps { get; set; }
         public DbSet<CariKasa> CariKasas { get; set; }
