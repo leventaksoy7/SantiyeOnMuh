@@ -57,9 +57,9 @@ namespace SantiyeOnMuh.Business.Concrete
             return _santiyeKasaRepository.GetAll(santiyeid, gkid, drm, page, pageSize);
         }
 
-        public int GetCountByGiderKalemi(int santiyeid, int? gkid, bool drm)
+        public int GetCount(int santiyeid, int? gkid, bool drm)
         {
-            return _santiyeKasaRepository.GetCountByGiderKalemi(santiyeid, gkid, drm);
+            return _santiyeKasaRepository.GetCount(santiyeid, gkid, drm);
         }
     }
 }

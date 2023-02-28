@@ -97,7 +97,7 @@ namespace SantiyeOnMuh.DataAccess.Concrete.EfCore
             }
         }
 
-        public int GetCountByGiderKalemi(int santiyeid, int? gkid, bool drm)
+        public int GetCount(int santiyeid, int? gkid, bool drm)
         {
             using (var context = new Context())
             {

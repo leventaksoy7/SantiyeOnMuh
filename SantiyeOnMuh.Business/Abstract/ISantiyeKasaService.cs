@@ -12,6 +12,6 @@ namespace SantiyeOnMuh.Business.Abstract
         SantiyeKasa GetByIdDetay(int id);
         List<SantiyeKasa> GetAll(int? santiyeid, int? gkid, bool drm);
         List<SantiyeKasa> GetAll(int santiyeid, int? gkid, bool drm, int page, int pageSize);
-        int GetCountByGiderKalemi(int santiyeid, int? gkid, bool drm);
+        int GetCount(int santiyeid, int? gkid, bool drm);
     }
 }
