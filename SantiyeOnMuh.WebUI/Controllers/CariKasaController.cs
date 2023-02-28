@@ -423,7 +423,6 @@ namespace SantiyeOnMuh.WebUI.Controllers
             entityCariKasa.ImgUrl = c.ImgUrl;
             entityCariKasa.SonGuncelleme = System.DateTime.Today;
 
-
             entityCariKasa.CariGiderKalemiId = c.CariGiderKalemiId;
             entityCariKasa.CariHesapId = c.CariHesapId;
 

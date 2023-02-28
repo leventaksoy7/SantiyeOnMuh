@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace SantiyeOnMuh.WebUI.Models.Ara_Entityler
+namespace SantiyeOnMuh.WebUI.Models
 {
     public class BankaKasaEftModel
     {
@@ -19,13 +19,13 @@ namespace SantiyeOnMuh.WebUI.Models.Ara_Entityler
         public bool Durum { get; set; }
         public BankaKasaEftModel()
         {
-            Tarih = System.DateTime.Now;
+            Tarih = DateTime.Now;
             Nitelik = "EFT";
             Tutar = 0;
             Durum = true;
 
-            SistemeGiris = System.DateTime.Now;
-            SonGuncelleme = System.DateTime.Now;
+            SistemeGiris = DateTime.Now;
+            SonGuncelleme = DateTime.Now;
         }
     }
 }

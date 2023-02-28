@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace SantiyeOnMuh.WebUI.Models.Ara_Entityler
+namespace SantiyeOnMuh.WebUI.Models
 {
     public class BankaKasaEftSantiyeModel
     {

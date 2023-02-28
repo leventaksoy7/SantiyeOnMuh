@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using SantiyeOnMuh.Business.Abstract;
 using SantiyeOnMuh.Entity;
 using SantiyeOnMuh.WebUI.Models;
-using SantiyeOnMuh.WebUI.Models.Ara_Entityler;
 
 namespace SantiyeOnMuh.WebUI.Controllers
 {
@@ -356,7 +355,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
             #region BANKA HESAP ADI VE ŞANTİYE HESAP ADINI BULUYORUZ
             //ARA MODELE DAYANARAK BANKA KASA MODELİ TANIMLANDI VE EKLENDİ
             string bankahesapadi = _bankaHesapService.GetById((int)b.BankaHesapId).BankaAd;
-            string santiyeadi = _santiyeService.GetById((int)b.SantiyeId).Ad;
+            //string santiyeadi = _santiyeService.GetById((int)b.SantiyeId).Ad;
             #endregion
 
             #region BANKAKASA NESNESİ

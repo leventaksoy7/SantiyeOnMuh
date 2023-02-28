@@ -1,0 +1,116 @@
+﻿@model AnaSayfaViewListModel
+@{
+    var giderkalemisayisi = 0;
+    var bankasayisi = 0;
+
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>W3.CSS Template</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        html, body, h1, h2, h3, h4, h5 {
+            font-family: "Raleway", sans-serif
+        }
+    </style>
+</head>
+<body class="w3-light-grey">
+    <br />
+    @if (Model.Santiyes.Count == 0)
+    {
+        <div class="w3-row-padding w3-margin-bottom">
+            <div class="w3-quarter">
+                <div class="w3-container w3-red w3-padding-16">
+                    <div class="w3-left"><i class="fas fa-city w3-xxlarge"></i></div>
+                    <div class="w3-right">
+                        <a href="#"><h3> AKTİF ŞANTİYE BULUNMAMAKTADIR</h3></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="w3-row-padding w3-margin-bottom">
+            @foreach (var santiye in Model.Santiyes)
+            {
+                <div class="w3-quarter">
+                    <div class="w3-container w3-red w3-padding-16">
+                        <div class="w3-left"><i class="fas fa-city w3-xxlarge"></i></div>
+                        <div class="w3-right">
+                            <a asp-controller="SantiyeKasa"
+                       asp-action="SantiyeKasa"
+                       asp-route-santiyeid="@santiye.Id">@santiye.Ad</a>
+                        </div>
+                        <div class="w3-clear"></div>
+                        @foreach (var giderkalemi in Model.SantiyeGiderKalemis)
+                        {
+                            {
+                                <h6>
+                                    @giderkalemi.Ad - @ViewBag.gider[giderkalemisayisi]
+                                    <label style="visibility:hidden"> @(giderkalemisayisi = giderkalemisayisi + 1) </label>
+                                </h6>
+                            }
+                        }
+                    </div>
+                    <br />
+                    <br />
+                </div>
+            }
+        </div>
+    }
+    <div class="w3-panel">
+        <div class="w3-row-padding" style="margin:0 -16px">
+            <div class="w3-twothird">
+                <h5>GÜNCEL HESAP BAKİYELERİ</h5>
+                <table class="w3-table w3-striped w3-white">
+                    @foreach (var bankahesabi in Model.BankaHesaps)
+                    {
+                        <tr>
+                            <th>@bankahesabi.HesapAd </th>
+                            <td><i class="fa fa-turkish-lira"></i></td>
+                            <td><i>@ViewBag.net[bankasayisi]</i></td>
+                            <td style="visibility:hidden"> @(bankasayisi = bankasayisi + 1) </td>
+                        </tr>
+                    }
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <footer class="w3-container w3-padding-16 w3-light-grey">
+        <h6 style="font-weight:bold ;text-align:right">DEVELOPED BY || ROTASZ ||</h6>
+    </footer>
+
+    <script>
+        // Get the Sidebar
+        var mySidebar = document.getElementById("mySidebar");
+
+        // Get the DIV with overlay effect
+        var overlayBg = document.getElementById("myOverlay");
+
+        // Toggle between showing and hiding the sidebar, and add overlay effect
+        function w3_open() {
+            if (mySidebar.style.display === 'block') {
+                mySidebar.style.display = 'none';
+                overlayBg.style.display = "none";
+            } else {
+                mySidebar.style.display = 'block';
+                overlayBg.style.display = "block";
+            }
+        }
+
+        // Close the sidebar with the close button
+        function w3_close() {
+            mySidebar.style.display = "none";
+            overlayBg.style.display = "none";
+        }
+    </script>
+</body>
+</html>

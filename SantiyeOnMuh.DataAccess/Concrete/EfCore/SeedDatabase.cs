@@ -25,10 +25,10 @@ namespace SantiyeOnMuh.DataAccess.Concrete.EfCore
                 }
 
                 //DATABASE EKLENMİŞ VERİ KONTROLÜ YAPILIYOR
-                if (context.SantiyesKasa.Count() == 0)
+                if (context.SantiyesKasas.Count() == 0)
                 {
                     //OLUŞTURULAN VERİLERİ İLGİLİ TABLOYA EKLİYOR.
-                    context.SantiyesKasa.AddRange(SantiyeKasas);
+                    context.SantiyesKasas.AddRange(SantiyeKasas);
                 }
             }
             context.SaveChanges();

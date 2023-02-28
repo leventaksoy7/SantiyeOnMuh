@@ -30,7 +30,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
             this._santiyeKasaService = santiyeKasaService;
             this._cariKasaService = cariKasaService;
         }
-        public IActionResult Index()
+        public IActionResult AnaSayfa()
         {
             var anaSayfaViewModel = new AnaSayfaViewListModel()
             {
@@ -57,7 +57,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
                         +
                         (decimal?)_santiyeKasaService.GetAll((int)santiye.Id, (int)giderkalemi.Id, true).Sum(i => i.Gelir);
 
-                    sayi = sayi + 1;
+                    sayi ++;
                 }
             }
             ViewBag.gider = kalemtoplami;
@@ -78,7 +78,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
 
                 bankahesabinet[sayi2] = bankahesabigiren[sayi2] - bankahesabicikan[sayi2];
 
-                sayi2 = sayi2 + 1;
+                sayi2 ++;
             }
             ViewBag.net = bankahesabinet;
 
