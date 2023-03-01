@@ -1,0 +1,61 @@
+﻿@model BankaKasaEftSantiyeModel
+@{
+
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+</head>
+<body>
+    <form asp-controller="BankaKasa" asp-action="BankaKasaEklemeSantiyeEft" method="post" enctype="multipart/form-data">
+        <br />
+        <br />
+        <div class="form-group">
+            <div class="col-sm-2"><label for="SantiyeId">ŞANTİYE:</label></div>
+            <div class="col-sm-2">
+                <div asp-validation-summary="ModelOnly"></div>
+                <select asp-for="SantiyeId"
+                        class="form-control"
+                        asp-items="@(new SelectList(@ViewBag.Santiye,"Id","Ad"))">
+                </select>
+            </div>
+        </div>
+        <br />
+        <br />
+        <div class="form-group">
+            <div class="col-sm-2"><label for="BankaHesapId">BANKA HESABI:</label></div>
+            <div class="col-sm-2">
+                <div asp-validation-summary="ModelOnly"></div>
+                <select asp-for="BankaHesapId"
+                        class="form-control"
+                        asp-items="@(new SelectList(@ViewBag.BankaHesap,"Id","Ad"))">
+                </select>
+            </div>
+        </div>
+        <br />
+        <br />
+        <div class="form-group">
+            <div class="col-sm-2"><label for="Tarih">TARİH:</label></div>
+            <div class="col-sm-2"><input asp-for="Tarih" class="form-control" value="@DateTime.Now.ToString("yyyy-MM-dd")" /></div>
+        </div>
+        <br />
+        <br />
+        <div class="form-group">
+            <div class="col-sm-2"><label for="Aciklama">AÇIKLAMA:</label></div>
+            <div class="col-sm-10"><input asp-for="Aciklama" class="form-control" /></div>
+        </div>
+        <br />
+        <br />
+        <div class="form-group">
+            <div class="col-sm-2"><label for="Tutar">TUTAR:</label></div>
+            <div class="col-sm-2"><input asp-for="Tutar" value="0" class="form-control" /></div>
+        </div>
+        <br />
+        <br />
+        <button type="submit" class="btn btn-success">GÖNDER</button>
+    </form>
+</body>
+</html>

@@ -1,0 +1,248 @@
+﻿@model BankaKasaViewListModel
+
+@{
+
+}
+
+<!DOCTYPE html>
+
+<html>
+<body>
+    <div>
+        <br />
+        <div>
+            <a asp-controller="BankaKasa"
+               asp-action="BankaKasa"
+               asp-route-bankahesapid="@null"
+               class="btn btn-primary btn-sm">TÜM BANKALAR</a>
+
+            <a asp-controller="BankaKasa"
+               asp-action="BankaKasaEkleme"
+               class="btn btn-success btn-sm">ANA KASAYA GİRİŞ</a>
+
+            <a asp-controller="BankaKasa"
+               asp-action="BankaKasaEklemeSantiyeEft"
+               class="btn btn-success btn-sm">ŞANTİYE KASASINA EFT</a>
+
+            <a asp-controller="BankaKasa"
+               asp-action="BankaKasaEklemeEft"
+               class="btn btn-success btn-sm">EFT</a>
+
+            <a asp-controller="Cek"
+               asp-action="CekEkleme"
+               class="btn btn-success btn-sm">ÇEK</a>
+
+            <a asp-controller="Nakit"
+               asp-action="NakitEkleme"
+               class="btn btn-success btn-sm">NAKİT</a>
+            <a asp-controller="BankaKasa"
+               asp-action="BankaKasaArsiv"
+               asp-route-bankahesapid="@null"
+               class="btn btn-dark btn-sm">ARŞİV</a>
+        </div>
+        <br />
+        <div>
+            @foreach (var bankahesap in Model.BankaHesaps)
+            {
+                <a asp-controller="BankaKasa"
+               asp-action="BankaKasa"
+               asp-route-bankahesapid="@bankahesap.Id"
+                   class="btn btn-warning btn-sm">@bankahesap.HesapAd</a>
+            }
+        </div>
+        <br />
+    </div>
+    <br />
+    <div>
+        <div class="col-md-12">
+            <table class="table table-bordered">
+                <tr>
+                    <th style=" vertical-align: middle; width: 5%">TARİH</th>
+                    <th style=" vertical-align: middle; width: 30%">AÇIKLAMA</th>
+                    <th style=" vertical-align: middle; width: 10%">HESAP ADI</th>
+                    <th style=" vertical-align: middle; width: 10%">NİTELİK</th>
+                    <th style=" vertical-align: middle; width: 10%">GİREN</th>
+                    <th style=" vertical-align: middle; width: 10%">ÇIKAN</th>
+
+                    <th style=" vertical-align: middle; width: 10%">DETAY</th>
+                    <th style=" vertical-align: middle; width: 10%">GÜNCELLE</th>
+                    <th style=" vertical-align: middle; width: 5%">SİL</th>
+                </tr>
+                @if (Model.BankaKasas.Count == 0)
+                {
+                    <tr><td>SİSTEME KAYITLI KASA VERİSİ BULUNMAMAKTADIR</td></tr>
+                }
+                else
+                {
+                    @foreach (var item in Model.BankaKasas)
+                    {
+                        <tr>
+                            <td style=" vertical-align: middle; width: 5%">@item.Tarih.ToString("dd/MM/yyyy")</td>
+                            <td style=" vertical-align: middle; width: 30%">@item.Aciklama</td>
+                            <td style=" vertical-align: middle; width: 10%">@item.BankaHesap.HesapAd</td>
+                            <td style=" vertical-align: middle; width: 10%">@item.Nitelik</td>
+                            <td style=" vertical-align: middle; width: 10%">@item.Giren</td>
+                            <td style=" vertical-align: middle; width: 10%">@item.Cikan</td>
+
+                            @if (item.CekKaynak != null)
+                            {
+                                <td style=" vertical-align: middle; width: 10%">
+                                    <a asp-controller="Cek"
+                           asp-action="CekDetay"
+                           asp-route-cekid="@item.CekKaynak"
+                                       class="btn btn-info btn-sm">DETAY</a>
+                                </td>
+                            }
+                            else if (item.NakitKaynak != null)
+                            {
+                                <td style=" vertical-align: middle; width: 10%">
+                                    <a asp-controller="Nakit"
+                           asp-action="NakitDetay"
+                           asp-route-nakitid="@item.NakitKaynak"
+                                       class="btn btn-info btn-sm">DETAY</a>
+                                </td>
+                            }
+                            else
+                            {
+                                <td style=" vertical-align: middle; width: 10%">
+                                    <a asp-controller="BankaKasa"
+                           asp-action="BankaKasaDetay"
+                           asp-route-bankakasaid="@item.Id"
+                                       class="btn btn-info btn-sm">DETAY</a>
+                                </td>
+                            }
+
+                            @if (item.CekKaynak != null)
+                            {
+                                <td style=" vertical-align: middle; width: 10%">
+                                    <a asp-controller="Cek"
+                           asp-action="CekGuncelle"
+                           asp-route-cekid="@item.CekKaynak"
+                                       class="btn btn-success btn-sm">GÜNCELLE</a>
+                                </td>
+                            }
+                            else if (item.NakitKaynak != null)
+                            {
+                                <td style=" vertical-align: middle; width: 10%">
+                                    <a asp-controller="Nakit"
+                           asp-action="NakitGuncelle"
+                           asp-route-nakitid="@item.NakitKaynak"
+                                       class="btn btn-success btn-sm">GÜNCELLE</a>
+                                </td>
+                            }
+                            else if (item.SantiyeKasaKaynak != null)
+                            {
+                                <td style=" vertical-align: middle; width: 10%">
+                                    <a asp-controller="BankaKasa"
+                           asp-action="BankaKasaGuncelleSantiyeEft"
+                           asp-route-bankakasasantiyeid="@item.Id"
+                                       class="btn btn-success btn-sm">GÜNCELLE</a>
+                                </td>
+                            }
+                            else
+                            {
+                                <td style=" vertical-align: middle; width: 10%">
+                                    <a asp-controller="BankaKasa"
+                           asp-action="BankaKasaGuncelle"
+                           asp-route-bankakasaid="@item.Id"
+                                       class="btn btn-success btn-sm">GÜNCELLE</a>
+                                </td>
+                            }
+
+                            @if (item.CekKaynak != null)
+                            {
+                                <td style=" vertical-align: middle; width: 10%">
+                                    <a asp-controller="Cek"
+                           asp-action="CekSil"
+                           asp-route-cekid="@item.CekKaynak"
+                                       class="btn btn-danger btn-sm">SİL</a>
+                                </td>
+                            }
+                            else if (item.NakitKaynak != null)
+                            {
+                                <td style=" vertical-align: middle; width: 10%">
+                                    <a asp-controller="Nakit"
+                           asp-action="NakitSil"
+                           asp-route-nakitid="@item.NakitKaynak"
+                                       class="btn btn-danger btn-sm">SİL</a>
+                                </td>
+                            }
+                            else if (item.SantiyeKasaKaynak != null)
+                            {
+                                <td style=" vertical-align: middle; width: 10%">
+                                    <a asp-controller="BankaKasa"
+                           asp-action="BankaKasaSilSantiyeEft"
+                           asp-route-bankakasasantiyeid="@item.Id"
+                                       class="btn btn-danger btn-sm">SİL</a>
+                                </td>
+                            }
+                            else
+                            {
+                                <td style=" vertical-align: middle; width: 5%">
+                                    <a asp-controller="BankaKasa"
+                           asp-action="BankaKasaSil"
+                           asp-route-bankakasaid="@item.Id"
+                                       class="btn btn-danger btn-sm">SİL</a>
+                                </td>
+                            }
+
+                        </tr>
+                    }
+                }
+            </table>
+        </div>
+        <div class="col-md-12">
+            <table class="table table-bordered">
+                <tr>
+                    <th style="vertical-align: middle; width: 70%">TOPLAM ÇIKAN</th>
+                    <td style="vertical-align: middle; width: 70%">@ViewBag.toplamgider</td>
+                </tr>
+                <tr>
+                    <th style="vertical-align: middle; width: 70%">TOPLAM GELEN</th>
+                    <td style="vertical-align: middle; width: 70%">@ViewBag.toplamgelir</td>
+                </tr>
+                <tr>
+                    <th style="vertical-align: middle; width: 70%">NET</th>
+                    <td style="vertical-align: middle; width: 70%">@(ViewBag.toplamgelir - ViewBag.toplamgider)</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <br />
+    <div class="row col-md-12">
+        <nav aria-label="Page navigation example">
+            <ul class="pagination">
+                @if (Model.PageInfo.UrlInfo == null)
+                {
+                    @for (int i = 0; i < Model.PageInfo.TotalPages(); i++)
+                    {
+                        <li class="page-item">
+                            <a class="page-link" href="/BankaKasa/BankaKasa?page=@(i + 1)">
+                                @(1 + i)
+                            </a>
+                        </li>
+                    }
+                }
+                else
+                {
+                    @for (int i = 0; i < Model.PageInfo.TotalPages(); i++)
+                    {
+                        <li class="page-item">
+                            <a class="page-link" href="/BankaKasa/BankaKasa/@Model.PageInfo.UrlInfo?page=@(i + 1)">
+                                @(1 + i)
+                            </a>
+                        </li>
+                    }
+                }
+            </ul>
+        </nav>
+    </div>
+    <br />
+    <div class="row col-md-12">
+        <a asp-controller="BankaKasa"
+           asp-action="BankaKasaExcel"
+           asp-route-bankahesapid=@Model.PageInfo.UrlInfo
+           class="btn btn-warning btn-sm">EXCEL</a>
+    </div>
+</body>
+</html>

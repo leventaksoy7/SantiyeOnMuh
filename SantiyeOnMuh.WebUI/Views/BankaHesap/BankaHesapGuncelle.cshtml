@@ -1,0 +1,47 @@
+﻿@model BankaHesap
+@{
+
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+</head>
+<body>
+    <br />
+    <form asp-controller="BankaHesap" asp-action="BankaHesapGuncelle" method="post">
+        <br />
+        <input type="hidden" name="Id" value="@Model.Id" />
+        <br />
+        <div class="form-group">
+            <div class="col-sm-2"><label for="HesapAd">HESAP ADI:</label></div>
+            <div class="col-sm-2"><input asp-for="HesapAd" class="form-control" /></div>
+        </div>
+        <br />
+        <br />
+        <div class="form-group">
+            <div class="col-sm-2"><label for="BankaAd">BANKA ADI:</label></div>
+            <div class="col-sm-2"><input asp-for="BankaAd" class="form-control" /></div>
+        </div>
+        <br />
+        <br />
+        <div class="form-group">
+            <div class="col-sm-2"><label for="HesapNo">HESAP NO:</label></div>
+            <div class="col-sm-2"><input asp-for="HesapNo" class="form-control" /></div>
+        </div>
+        <br />
+        <br />
+        <div class="form-group">
+            <div class="col-sm-2"><label for="Iban">IBAN NO:</label></div>
+            <div class="col-sm-2"><input asp-for="Iban" class="form-control" /></div>
+        </div>
+        <br />
+        <br />
+        <div class="col-sm-offset-2 col-sm-10">
+            <button class="btn btn-success">GÜNCELLE</button>
+        </div>
+    </form>
+</body>
+</html>

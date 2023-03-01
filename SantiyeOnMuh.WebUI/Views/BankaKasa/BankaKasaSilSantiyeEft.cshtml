@@ -1,0 +1,33 @@
+﻿@model BankaKasaEftSantiyeModel
+@{
+
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+</head>
+<body>
+    <form asp-controller="BankaKasa" asp-action="BankaKasaSilSantiyeEft" method="post" enctype="multipart/form-data">
+        <br />
+        <input type="hidden" name="BankaKasaId" value="@Model.BankaKasaId" />
+        <input type="hidden" name="SantiyeKasaId" value="@Model.SantiyeKasaId" />
+        <br />
+
+        <div class="row">
+            <div class="col-xl-6 col-md-4">
+                <table class="w3-table w3-striped w3-white">
+                    <tr><th>TARİH:</th><td>@Model.Tarih.ToString("dd/MM/yyyy")</td></tr>
+                    <tr><th>ŞANTİYE:</th><td>@ViewBag.Santiye</td></tr>
+                    <tr><th>BANKA:</th><td>@ViewBag.BankaHesap</td></tr>
+                    <tr><th>AÇIKLAMA:</th><td>@Model.Aciklama</td></tr>
+                    <tr><th>TUTAR:</th><td>@Model.Tutar</td></tr>
+                </table>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-danger">SİL</button>
+    </form>
+</body>
+</html>
