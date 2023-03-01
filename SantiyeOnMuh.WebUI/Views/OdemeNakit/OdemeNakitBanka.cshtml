@@ -1,0 +1,83 @@
+﻿@model NakitViewListModel
+@{
+
+}
+
+<!DOCTYPE html>
+
+<html>
+<body>
+    <div>
+        <br />
+        <div>
+            <a asp-controller="Nakit" asp-action="Index" class="btn btn-primary btn-sm">TÜM NAKİT ÖDEMELER</a>
+            <a asp-controller="Nakit" asp-action="AraSecim" class="btn btn-warning btn-sm">FİLTRE</a>
+            <a asp-controller="Nakit" asp-action="NakitArsiv" class="btn btn-dark btn-sm">SİLİNMİŞ ÖDEMELER</a>
+            <a asp-controller="Nakit" asp-action="NakitEkleme" class="btn btn-primary btn-sm">YENİ NAKİT EKLE</a>
+        </div>
+        <br />
+    </div>
+    <br />
+    <br />
+    <div>
+        <div class="col-md-12">
+            <table class="table table-bordered">
+                <tr>
+                    <th style="vertical-align: middle; width: 10%">TARİH</th>
+                    <th style="vertical-align: middle; width: 15%">AÇIKLAMA</th>
+                    <th style="vertical-align: middle; width: 10%">TUTAR</th>
+                    <th style="vertical-align: middle; width: 15%">ŞİRKET</th>
+                    <th style="vertical-align: middle; width: 10%">FİRMA</th>
+                    <th style="vertical-align: middle; width: 10%">BANKA</th>
+                    <th style="vertical-align: middle; width: 10%">DETAY</th>
+                    <th style="vertical-align: middle; width: 10%">GÜNCELLE</th>
+                    <th style="vertical-align: middle; width: 10%">SİL</th>
+                </tr>
+                @if (Model.Nakits.Count == 0)
+                {
+                    <tr><td>SİSTEME KAYITLI NAKİT ÖDEMESİ BULUNMAMAKTADIR</td></tr>
+                }
+                else
+                {
+                    @foreach (var item in Model.Nakits)
+                    {
+                        <tr>
+                            <td style="vertical-align: middle; width: 10%">@item.Tarih.ToString("dd/MM/yyyy")</td>
+                            <td style="vertical-align: middle; width: 15%">@item.Aciklama </td>
+                            <td style="vertical-align: middle; width: 10%">@item.Tutar</td>
+                            <td style="vertical-align: middle; width: 15%">@item.Sirket.Ad</td>
+                            <td style="vertical-align: middle; width: 10%">@item.CariHesap.Ad</td>
+                            <td style="vertical-align: middle; width: 10%">@item.BankaHesap.Ad</td>
+                            <td style="vertical-align: middle; width: 10%"><a asp-controller="Nakit" asp-action="NakitDetay" asp-route-id="@item.Id" class="btn btn-info btn-sm">DETAY</a></td>
+                            <td style="vertical-align: middle; width: 10%"><a asp-controller="Nakit" asp-action="NakitGuncelle" asp-route-id="@item.Id" class="btn btn-success btn-sm">GÜNCELLEME</a></td>
+                            <td style="vertical-align: middle; width: 10%"><a asp-controller="Nakit" asp-action="NakitSil" asp-route-id="@item.Id" class="btn btn-danger btn-sm">SİL</a></td>
+                        </tr>
+                    }
+                }
+            </table>
+        </div>
+    </div>
+    <br />
+    <div class="row col-md-12">
+        <nav aria-label="Page navigation example">
+            <ul class="pagination">
+                @for (int i = 0; i < Model.PageInfo.TotalPages(); i++)
+                {
+                    <li class="page-item">
+                        <a class="page-link" href="/Nakit/NakitSantiye/@Model.PageInfo.UrlInfo?page=@(i + 1)">
+                            @(1 + i)
+                        </a>
+                    </li>
+                }
+            </ul>
+        </nav>
+    </div>
+    <br />
+    <div>
+        <a asp-controller="Nakit"
+           asp-action="NakitSantiyeExcel"
+           asp-route-bankahesapid=@Model.PageInfo.UrlInfo
+           class="btn btn-light btn-sm">EXCEL</a>
+    </div>
+</body>
+</html>

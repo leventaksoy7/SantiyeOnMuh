@@ -1,0 +1,60 @@
+﻿@model CekViewListModel
+@{
+
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+</head>
+<body>
+    <br />
+    <div class="row">
+        <div class="col-md-12">
+            <table class="col-md-4">
+                @foreach (var bankahesap in Model.BankaHesaps)
+                {
+                    <tr>
+                        <td>
+                            <br />
+                            <a asp-controller="Cek"
+                           asp-action="CekBanka"
+                           asp-route-bankahesapid="@bankahesap.Id"
+                               class="btn btn-warning btn-sm">@bankahesap.Ad</a>
+                        </td>
+                    </tr>
+                }
+            </table>
+            <table class="col-md-4">
+                @foreach (var sirket in Model.Sirkets)
+                {
+                    <tr>
+                        <td>
+                            <br />
+                            <a asp-controller="Cek"
+                           asp-action="CekSirket"
+                           asp-route-sirketid="@sirket.Id"
+                               class="btn btn-warning btn-sm">@sirket.Ad</a>
+                        </td>
+                    </tr>
+                }
+            </table>
+            <table class="col-md-4">
+                @foreach (var santiye in Model.Santiyes)
+                {
+                    <tr>
+                        <td>
+                            <br />
+                            <a asp-controller="Cek"
+                           asp-action="CekSantiye"
+                           asp-route-santiyeid="@santiye.Id"
+                               class="btn btn-warning btn-sm">@santiye.Ad</a>
+                        </td>
+                    </tr>
+                }
+            </table>
+        </div>
+    </div>
+</body>
+</html>

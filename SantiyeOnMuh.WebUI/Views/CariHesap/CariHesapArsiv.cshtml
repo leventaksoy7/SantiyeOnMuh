@@ -1,0 +1,101 @@
+﻿@model CariHesapViewListModel
+@{
+
+}
+
+<!DOCTYPE html>
+
+<html>
+<body>
+    <div>
+        <br />
+        <div>
+            <a asp-controller="CariHesap" asp-action="CariHesap" asp-route-santiyeid=@null class="btn btn-primary btn-sm">AKTİF CARİ HESAPLAR</a>
+            <a asp-controller="CariHesap" asp-action="CariHesapArsiv" asp-route-santiyeid=@null class="btn btn-dark btn-sm">TÜM SİLİNMİŞ CARİ HESAPLAR</a>
+        </div>
+        <br />
+        <div>
+            @foreach (var santiye in Model.Santiyes)
+            {
+                <a asp-controller="CariHesap" asp-action="CariHesapArsiv" asp-route-santiyeid="@santiye.Id" class="btn btn-warning btn-sm">@santiye.Ad</a>
+            }
+        </div>
+        <br />
+    </div>
+    <div>
+        <div class="col-md-12">
+            <table class="table table-bordered">
+                <tr>
+                    <th style="width:10%">ŞANTİYE</th>
+                    <th style="width:40%; vertical-align:middle">FİRMA ADI</th>
+                    <th style="width:10%; vertical-align:middle">TELEFON</th>
+                    <th style="width:20%">İLGİLİ KİŞİ</th>
+                    <th style="width:10%">TELEFON</th>
+                    <th style="width:10%">GERİ YÜKLE</th>
+                </tr>
+                @if (Model.CariHesaps.Count == 0)
+                {
+                    <tr><td>SİSTEME KAYITLI CARİ HESAP BULUNMAMAKTADIR</td></tr>
+                }
+                else
+                {
+                    @foreach (var carihesap in Model.CariHesaps)
+                    {
+                        <tr>
+                            <td style="width:10%; vertical-align:middle; vertical-align:middle">@carihesap.Santiye.Ad</td>
+                            <td style="width:40%; vertical-align:middle">@carihesap.Ad</td>
+                            <td style="width:10%; vertical-align:middle">@carihesap.Telefon</td>
+                            <td style="width:20%; vertical-align:middle">@carihesap.IlgiliKisi</td>
+                            <td style="width:10%; vertical-align:middle">@carihesap.IlgiliKisiTelefon</td>
+
+                            <td style="width:10%; vertical-align:middle">
+                                <a asp-controller="CariKasa"
+                           asp-action="CariKasaGeriYukle"
+                           asp-route-carihesapid="@carihesap.Id"
+                                   class="btn btn-success btn-sm">GERİ YÜKLE</a>
+                            </td>
+                        </tr>
+                    }
+                }
+            </table>
+        </div>
+    </div>
+    <br />
+    <div class="row col-md-12">
+        <nav aria-label="Page navigation example">
+            <ul class="pagination">
+                @if (Model.PageInfo.UrlInfo == null)
+                {
+                    @for (int i = 0; i < Model.PageInfo.TotalPages(); i++)
+                    {
+                        <li class="page-item">
+                            <a class="page-link" href="/CariHesap/CariHesap?page=@(i+1)">
+                                @(1 + i)
+                            </a>
+                        </li>
+                    }
+                }
+                else
+                {
+                    @for (int i = 0; i < Model.PageInfo.TotalPages(); i++)
+                    {
+                        <li class="page-item">
+                            <a class="page-link" href="/CariHesap/CariHesap/@Model.PageInfo.UrlInfo?page=@(i+1)">
+                                @(1 + i)
+                            </a>
+                        </li>
+                    }
+                }
+            </ul>
+        </nav>
+    </div>
+    <br />
+    @*<div>
+    ÇÜNKÜ SİLİNMİŞLER İÇİN EXCEL YAZILMADI
+    <a asp-controller="CariHesap"
+    asp-action="CariHesapExcel"
+    asp-route-santiyeid=@Model.PageInfo.UrlInfo
+    class="btn btn-warning btn-sm">EXCEL</a>
+    </div>*@
+</body>
+</html>

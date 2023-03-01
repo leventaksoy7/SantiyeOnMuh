@@ -1,0 +1,117 @@
+﻿@model CariHesapViewListModel
+@{
+
+}
+
+<!DOCTYPE html>
+
+<html>
+<body>
+    <div>
+        <br />
+        <div>
+            <a asp-controller="CariHesap" asp-action="CariHesap" asp-route-santiyeid=@null class="btn btn-primary btn-sm">TÜM CARİ HESAPLAR</a>
+            <a asp-controller="CariHesap" asp-action="CariHesapEkleme" class="btn btn-success btn-sm">YENİ CARİ HESAP AÇ</a>
+            <a asp-controller="CariHesap" asp-action="CariHesapArsiv" asp-route-santiyeid=@null class="btn btn-dark btn-sm">SİLİNMİŞ CARİ HESAPLAR</a>
+        </div>
+        <br />
+        <div>
+            @foreach (var santiye in Model.Santiyes)
+            {
+                <a asp-controller="CariHesap" asp-action="CariHesap" asp-route-santiyeid="@santiye.Id" class="btn btn-warning btn-sm">@santiye.Ad</a>
+            }
+        </div>
+        <br />
+    </div>
+    <div>
+        <div class="col-md-12">
+            <table class="table table-bordered">
+                <tr>
+                    <th style="width:10%">ŞANTİYE</th>
+                    <th style="width:30%; vertical-align:middle">FİRMA ADI</th>
+                    <th style="width:10%; vertical-align:middle">TELEFON</th>
+                    <th style="width:10%">İLGİLİ KİŞİ</th>
+                    <th style="width:10%">TELEFON</th>
+                    <th style="width:10%">DETAY</th>
+                    <th style="width:10%">GÜNCELLE</th>
+                    <th style="width:10%">SİL</th>
+                </tr>
+                @if (Model.CariHesaps.Count == 0)
+                {
+                    <tr><td>SİSTEME KAYITLI CARİ HESAP BULUNMAMAKTADIR</td></tr>
+                }
+                else
+                {
+                    @foreach (var carihesap in Model.CariHesaps)
+                    {
+                        <tr>
+                            <td style="width:10%; vertical-align:middle; vertical-align:middle">@carihesap.Santiye.Ad</td>
+                            <td style="width:30%; vertical-align:middle">@carihesap.Ad</td>
+                            <td style="width:10%; vertical-align:middle">@carihesap.Telefon</td>
+                            <td style="width:10%; vertical-align:middle">@carihesap.IlgiliKisi</td>
+                            <td style="width:10%; vertical-align:middle">@carihesap.IlgiliKisiTelefon</td>
+
+                            <td style="width:10%; vertical-align:middle">
+                                <a asp-controller="CariKasa"
+                           asp-action="CariKasa"
+                           asp-route-carihesapid="@carihesap.Id"
+                                   class="btn btn-info btn-sm">HESABI GÖRÜNTÜLE</a>
+                            </td>
+
+                            <td style="width:10%; vertical-align:middle">
+                                <a asp-controller="CariHesap"
+                           asp-action="CariHesapGuncelle"
+                           asp-route-carihesapid="@carihesap.Id"
+                                   class="btn btn-success btn-sm">GÜNCELLEME</a>
+                            </td>
+
+                            <td style="width:10%; vertical-align:middle">
+                                <a asp-controller="CariHesap"
+                           asp-action="CariHesapSil"
+                           asp-route-carihesapid="@carihesap.Id"
+                                   class="btn btn-danger btn-sm">SİL</a>
+                            </td>
+                        </tr>
+                    }
+                }
+            </table>
+        </div>
+    </div>
+    <br />
+    <div class="row col-md-12">
+        <nav aria-label="Page navigation example">
+            <ul class="pagination">
+                @if (Model.PageInfo.UrlInfo == null)
+                {
+                    @for (int i = 0; i < Model.PageInfo.TotalPages(); i++)
+                    {
+                        <li class="page-item">
+                            <a class="page-link" href="/CariHesap/CariHesap?page=@(i+1)">
+                                @(1 + i)
+                            </a>
+                        </li>
+                    }
+                }
+                else
+                {
+                    @for (int i = 0; i < Model.PageInfo.TotalPages(); i++)
+                    {
+                        <li class="page-item">
+                            <a class="page-link" href="/CariHesap/CariHesap/@Model.PageInfo.UrlInfo?page=@(i+1)">
+                                @(1 + i)
+                            </a>
+                        </li>
+                    }
+                }
+            </ul>
+        </nav>
+    </div>
+    <br />
+    <div>
+        <a asp-controller="CariHesap"
+           asp-action="CariHesapExcel"
+           asp-route-santiyeid=@Model.PageInfo.UrlInfo
+           class="btn btn-warning btn-sm">EXCEL</a>
+    </div>
+</body>
+</html>

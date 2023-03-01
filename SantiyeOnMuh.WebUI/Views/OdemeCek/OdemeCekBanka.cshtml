@@ -1,0 +1,96 @@
+﻿@model CekViewListModel
+@{
+
+}
+
+<!DOCTYPE html>
+
+<html>
+<body>
+    <div>
+        <br />
+        <div>
+            <a asp-controller="Cek" asp-action="Index" class="btn btn-primary btn-sm">TÜM ÇEKLER</a>
+            <a asp-controller="Cek" asp-action="IndexArsiv" class="btn btn-dark btn-sm">ARŞİV</a>
+            <a asp-controller="Cek" asp-action="CekEkleme" class="btn btn-primary btn-sm">YENİ ÇEK EKLE</a>
+        </div>
+        <br />
+    </div>
+    <br />
+    <div>
+        <div class="col-md-12">
+            <table class="table table-bordered">
+                <tr>
+                    <th style="vertical-align: middle; width: 6%">TARİH</th>
+                    <th style="vertical-align: middle; width: 7%">ÇEK NO</th>
+                    <th style="vertical-align: middle; width: 7%">ŞİRKET</th>
+                    <th style="vertical-align: middle; width: 10%">FİRMA</th>
+                    <th style="vertical-align: middle; width: 20%">AÇIKLAMA</th>
+                    <th style="vertical-align: middle; width: 10%">ÖDEME DURUMU</th>
+                    <th style="vertical-align: middle; width: 10%">TUTAR</th>
+                    <th style="vertical-align: middle; width: 5%">DETAY</th>
+                    <th style="vertical-align: middle; width: 10%">GÜNCELLE</th>
+                    <th style="vertical-align: middle; width: 5%">SİL</th>
+                </tr>
+                @if (Model.Ceks.Count == 0)
+                {
+                    <tr><td>SİSTEME KAYITLI ÇEK BULUNMAMAKTADIR</td></tr>
+                }
+                else
+                {
+                    @foreach (var item in Model.Ceks)
+                    {
+                        <tr>
+                            <td style="vertical-align: middle; width: 6%">@item.Tarih.ToString("dd/MM/yyyy")</td>
+                            <td style="vertical-align: middle; width: 7%">@item.CekNo</td>
+                            <td style="vertical-align: middle; width: 10%">@item.CariHesap.Ad</td>
+                            <td style="vertical-align: middle; width: 7%">@item.Sirket.Ad</td>
+                            <td style="vertical-align: middle; width: 30%">@item.Aciklama </td>
+                            @if (item.OdemeDurumu == false)
+                            {
+                                <td style="vertical-align: middle; width: 10%">
+                                    <a asp-controller="Cek"
+                           asp-action="CekTahsil"
+                           asp-route-cekid="@item.Id"
+                                       class="btn btn-info btn-sm">TAHSİL ET</a>
+                                </td>
+                            }
+                            else
+                            {
+                                <td style="vertical-align: middle; width: 10%">TAHSİL EDİLDİ</td>
+
+                            }
+                            <td style="vertical-align: middle; width: 10%">@string.Format("{0:0,0.00}", item.Tutar)</td>
+                            <td style="vertical-align: middle; width: 5%"><a asp-controller="Cek" asp-action="CekDetay" asp-route-id="@item.Id" class="btn btn-info btn-sm">DETAY</a></td>
+                            <td style="vertical-align: middle; width: 10%"><a asp-controller="Cek" asp-action="CekGuncelle" asp-route-id="@item.Id" class="btn btn-success btn-sm">GÜNCELLEME</a></td>
+                            <td style="vertical-align: middle; width: 5%"><a asp-controller="Cek" asp-action="CekSil" asp-route-id="@item.Id" class="btn btn-danger btn-sm">SİL</a></td>
+                        </tr>
+                    }
+                }
+            </table>
+        </div>
+    </div>
+    <br />
+    <div class="row col-md-12">
+        <nav aria-label="Page navigation example">
+            <ul class="pagination">
+                @for (int i = 0; i < Model.PageInfo.TotalPages(); i++)
+                {
+                    <li class="page-item">
+                        <a class="page-link" href="/Cek/CekBanka/@Model.PageInfo.UrlInfo?page=@(i + 1)">
+                            @(1 + i)
+                        </a>
+                    </li>
+                }
+            </ul>
+        </nav>
+    </div>
+    <br />
+    <div>
+        <a asp-controller="Cek"
+           asp-action="CekBankaExcel"
+           asp-route-bankahesapid=@Model.PageInfo.UrlInfo
+           class="btn btn-warning btn-sm">EXCEL</a>
+    </div>
+</body>
+</html>

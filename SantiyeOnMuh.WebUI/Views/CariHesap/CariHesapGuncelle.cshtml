@@ -1,0 +1,63 @@
+﻿@model CariHesap
+@{
+
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+</head>
+
+<body>
+    <br />
+    <br />
+    <div class="container">
+        <form asp-controller="CariHesap" asp-action="CariHesapGuncelle" method="post">
+            <br />
+            <input type="hidden" name="Id" value="@Model.Id" />
+            <br />
+            <div class="row">
+                <div class="col form-group">
+
+                    <label for="Ad">FİRMA ADI:</label>
+                    <input asp-for="Ad" class="form-control" />
+
+                    <label for="Adres">ADRES:</label>
+                    <input asp-for="Adres" class="form-control" />
+
+                    <label for="Telefon">TELEFON:</label>
+                    <input asp-for="Telefon" class="form-control" />
+
+                    <label for="VergiNo">VERGİ NO:</label>
+                    <input asp-for="VergiNo" class="form-control" />
+
+                </div>
+                <div class="col form-group">
+
+                    <label for="IlgiliKisi">İLGİLİ KİŞİ:</label>
+                    <input asp-for="IlgiliKisi" class="form-control" />
+
+                    <label for="IlgiliKisiTelefon">İLGİLİ KİŞİ TEKEFON:</label>
+                    <input asp-for="IlgiliKisiTelefon" class="form-control" />
+
+                    <label for="Odeme">ÖDEME:</label>
+                    <input asp-for="Odeme" class="form-control" />
+
+                    <label for="Vade">VADE:</label>
+                    <input asp-for="Vade" class="form-control" />
+
+                    <label for="SantiyeId">ŞANTİYE:</label>
+                    <div asp-validation-summary="ModelOnly"></div>
+                    <select asp-for="SantiyeId"
+                            class="form-control"
+                            asp-items="@(new SelectList(@ViewBag.Santiye,"Id","Ad"))">
+                    </select>
+                </div>
+                <button class="btn btn-success">GÜNCELLE</button>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

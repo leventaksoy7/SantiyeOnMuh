@@ -1,0 +1,34 @@
+﻿@model Sirket
+@{
+
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+</head>
+<body>
+    <br />
+    <form asp-controller="Sirket" asp-action="SirketEkleme" method="post">
+        <br />
+        <br />
+        <div class="form-group">
+            <div class="col-sm-2"><label for="Ad">ŞİRKET ADI:</label></div>
+            <div class="col-sm-2"><input asp-for="Ad" class="form-control" /></div>
+        </div>
+        <br />
+        <br />
+        <div class="form-group">
+            <div class="col-sm-2"><label for="VergiNo">CARİ GİDER KALEMİ:</label></div>
+            <div class="col-sm-2"><input asp-for="VergiNo" class="form-control" /></div>
+        </div>
+        <br />
+        <br />
+        <div class="col-sm-offset-2 col-sm-6">
+            <button class="btn btn-success">EKLE</button>
+        </div>
+    </form>
+</body>
+</html>

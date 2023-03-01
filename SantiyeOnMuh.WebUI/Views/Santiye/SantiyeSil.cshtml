@@ -1,0 +1,35 @@
+﻿@model Santiye
+@{
+
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+</head>
+<body>
+    <br />
+    <form asp-controller="Santiye" asp-action="SantiyeSil" method="post">
+        <br />
+        <input type="hidden" name="Id" value="@Model.Id" />
+        <br />
+        <div class="form-group">
+            <div class="col-sm-2"><label for="Ad">ŞANTİYE ADI: </label></div>
+            <div class="col-sm-2">@Model.Ad</div>
+        </div>
+        <br />
+        <br />
+        <div class="form-group">
+            <div class="col-sm-2"><label for="Adres">ŞANTİYE ADRESİ: </label></div>
+            <div class="col-sm-2">@Model.Adres</div>
+        </div>
+        <br />
+        <br />
+        <div class="col-sm-offset-2 col-sm-10">
+            <button class="btn btn-danger">SİL</button>
+        </div>
+    </form>
+</body>
+</html>

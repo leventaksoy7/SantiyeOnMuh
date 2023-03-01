@@ -1,0 +1,65 @@
+﻿@model CariHesap
+@{
+
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+</head>
+<body>
+    <br />
+    <form asp-controller="CariHesap" asp-action="CariHesapSil" method="post">
+        <br />
+        <input type="hidden" name="Id" value="@Model.Id" />
+        <br />
+        <div class="row">
+            <div class="col-md-6">
+                <table class="table table-bordered" style="text-align:center">
+                    <tr>
+                        <th>FİRMA ADI</th>
+                        <th>@Model.Ad</th>
+                    </tr>
+                    <tr>
+                        <th>ADRES</th>
+                        <th>@Model.Adres</th>
+                    </tr>
+                    <tr>
+                        <th>TELEFON</th>
+                        <th>@Model.Telefon</th>
+                    </tr>
+                    <tr>
+                        <th>VERGİ NO</th>
+                        <th>@Model.VergiNo</th>
+                    </tr>
+                </table>
+            </div>
+            <div class="col-md-6">
+                <table class="table table-bordered" style="text-align:center">
+                    <tr>
+                        <th>İLGİLİ KİŞİ</th>
+                        <th>@Model.IlgiliKisi</th>
+                    </tr>
+                    <tr>
+                        <th>TELEFON</th>
+                        <th>@Model.IlgiliKisiTelefon</th>
+                    </tr>
+                    <tr>
+                        <th>ÖDEME ŞEKLİ</th>
+                        <th>@Model.Odeme</th>
+                    </tr>
+                    <tr>
+                        <th>VADE</th>
+                        <th>@Model.Vade</th>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div class="col-sm-offset-2 col-sm-10">
+            <button class="btn btn-danger">SİL</button>
+        </div>
+    </form>
+</body>
+</html>

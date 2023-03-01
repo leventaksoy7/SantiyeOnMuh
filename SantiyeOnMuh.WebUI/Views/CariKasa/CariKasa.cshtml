@@ -1,0 +1,282 @@
+﻿@model CariKasaViewListModel
+@{
+    var cari = Model.CariHesap;
+    decimal toplambakiye = 0;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>CariKasa</title>
+</head>
+<body>
+    <div>
+        <br />
+        <div>
+
+            <a asp-controller="CariHesap"
+               asp-action="CariHesap"
+               class="btn btn-info btn-sm">TÜM CARİLER</a>
+            @if (Model.CariHesap.Durum != false)
+            {
+                <a asp-controller="CariKasa"
+               asp-action="CariKasaFaturaEklemeFromCari"
+               asp-route-carihesapid="@cari.Id"
+                   class="btn btn-primary btn-sm">ALACAK GİRİŞİ</a>
+
+                <a asp-controller="Nakit"
+               asp-action="NakitEklemeFromCari"
+               asp-route-carihesapid="@cari.Id"
+                   class="btn btn-success btn-sm">BORÇ - NAKİT GİRİŞİ</a>
+
+                <a asp-controller="Cek"
+               asp-action="CekEklemeFromCari"
+               asp-route-carihesapid="@cari.Id"
+                   class="btn btn-success btn-sm">BORÇ - ÇEK GİRİŞİ</a>
+            }
+
+        </div>
+        <br />
+        <div>
+            <a asp-controller="CariKasa"
+               asp-action="CariKasa"
+               asp-route-carihesapid="@cari.Id"
+               asp-route-gkid="@null"
+               class="btn btn-warning btn-sm">TÜM KALEMLER</a>
+            @foreach (var gk in Model.CariKasaGKs)
+            {
+                <a asp-controller="CariKasa"
+               asp-action="CariKasa"
+               asp-route-carihesapid="@cari.Id"
+               asp-route-gkid="@gk.Id"
+                   class="btn btn-warning btn-sm">@gk.Ad</a>
+            }
+        </div>
+        <br />
+    </div>
+    <br />
+    <div>
+        <table class="table table-bordered">
+            <tr>
+                <th style="width:10%">FİRMA ADI:</th>
+                <td style="width:40%">@cari.Ad</td>
+
+                <th style="width:10%">İLGİLİ KİŞİ:</th>
+                <td style="width:40%">@cari.IlgiliKisi</td>
+            </tr>
+            <tr>
+                <th style="width:10%">ADRES:</th>
+                <td style="width:40%"> @cari.Adres</td>
+
+                <th style="width:10%">TELEFON:</th>
+                <td style="width:40%">@cari.IlgiliKisiTelefon</td>
+            </tr>
+            <tr>
+                <th style="width:10%">TELEFON:</th>
+                <td style="width:40%">@cari.Telefon</td>
+
+                <th style="width:10%">ÖDEME:</th>
+                <td style="width:40%">@cari.Odeme</td>
+            </tr>
+            <tr>
+                <th style="width:10%">VERGİ NO:</th>
+                <td style="width:40%">@cari.VergiNo</td>
+
+                <th style="width:10%">VADE:</th>
+                <td style="width:40%">@cari.Vade</td>
+            </tr>
+        </table>
+
+        <table class="table table-bordered">
+            <tr>
+                <th>KALEM ADI</th>
+                <th>TARİH</th>
+                <th>AÇIKLAMA</th>
+                <th>MİKTAR</th>
+                <th>BİRİM FİYAT</th>
+                <th>BORÇ</th>
+                <th>ALACAK</th>
+                <th>BAKİYE</th>
+                <th>DETAY</th>
+                <th>GÜNCELLE</th>
+                <th>SİL</th>
+            </tr>
+            @if (Model.CariKasas.Count == 0)
+            {
+                <tr><td>SİSTEME KAYITLI CARİ GİDERİ BULUNMAMAKTADIR</td></tr>
+            }
+            else
+            {
+                @foreach (var fatura in Model.CariKasas)
+                {
+                    <tr>
+                        <td>@fatura.CariGK.Ad</td>
+                        <td>@fatura.Tarih.ToString("dd/MM/yyyy")</td>
+                        <td>@fatura.Aciklama</td>
+                        <td>@fatura.Miktar</td>
+                        <td>@fatura.BirimFiyat</td>
+                        <td>@fatura.Borc</td>
+                        <td>@fatura.Alacak</td>
+                        <td>@(toplambakiye = toplambakiye - @fatura.Borc + @fatura.Alacak)</td>
+
+                        @if (fatura.NakitKaynak != null)
+                        {
+                            <td style="width:10%; vertical-align:middle">
+                                <a asp-controller="Nakit"
+                       asp-action="NakitDetay"
+                       asp-route-nakitid="@fatura.NakitKaynak"
+                                   class="btn btn-info btn-sm">ÖDEMEYİ GÖRÜNTÜLE</a>
+                            </td>
+                        }
+                        @if (fatura.CekKaynak != null)
+                        {
+                            <td style="width:10%; vertical-align:middle">
+                                <a asp-controller="Cek"
+                       asp-action="CekDetay"
+                       asp-route-cekid="@fatura.CekKaynak"
+                                   class="btn btn-info btn-sm">ÇEKİ GÖRÜNTÜLE</a>
+                            </td>
+                        }
+                        @if (fatura.CekKaynak == null && fatura.NakitKaynak == null)
+                        {
+                            <td style="width:10%; vertical-align:middle">
+                                <a asp-controller="CariKasa"
+                       asp-action="CariKasaDetay"
+                       asp-route-carikasaid="@fatura.Id"
+                                   class="btn btn-info btn-sm">DETAY</a>
+                            </td>
+                        }
+
+                        @if (fatura.NakitKaynak != null)
+                        {
+                            <td style="width:10%; vertical-align:middle">
+                                <a asp-controller="Nakit"
+                       asp-action="NakitGuncelle"
+                       asp-route-nakitid="@fatura.NakitKaynak"
+                                   class="btn btn-success btn-sm">GÜNCELLE</a>
+                            </td>
+                        }
+                        @if (fatura.CekKaynak != null)
+                        {
+                            <td style="width:10%; vertical-align:middle">
+                                <a asp-controller="Cek"
+                       asp-action="CekGuncelle"
+                       asp-route-cekid="@fatura.CekKaynak"
+                                   class="btn btn-success btn-sm">GÜNCELLE</a>
+                            </td>
+                        }
+                        @if (fatura.CekKaynak == null && fatura.NakitKaynak == null)
+                        {
+                            <td style="width:10%; vertical-align:middle">
+                                <a asp-controller="CariKasa"
+                       asp-action="CariKasaFaturaGuncelleFromCari"
+                       asp-route-carikasaid="@fatura.Id"
+                                   class="btn btn-success btn-sm">GÜNCELLE</a>
+                            </td>
+                        }
+
+                        @if (fatura.NakitKaynak != null)
+                        {
+                            <td style="width:10%; vertical-align:middle">
+                                <a asp-controller="Nakit"
+                       asp-action="NakitSil"
+                       asp-route-nakitid="@fatura.NakitKaynak"
+                                   class="btn btn-danger btn-sm">SİL</a>
+                            </td>
+                        }
+                        @if (fatura.CekKaynak != null)
+                        {
+                            <td style="width:10%; vertical-align:middle">
+                                <a asp-controller="Cek"
+                       asp-action="CekSil"
+                       asp-route-cekid="@fatura.CekKaynak"
+                                   class="btn btn-danger btn-sm">SİL</a>
+                            </td>
+                        }
+                        @if (fatura.CekKaynak == null && fatura.NakitKaynak == null)
+                        {
+                            <td style="width:10%; vertical-align:middle">
+                                <a asp-controller="CariKasa"
+                       asp-action="CariKasaSil"
+                       asp-route-carikasaid="@fatura.Id"
+                                   class="btn btn-danger btn-sm">SİL</a>
+                            </td>
+                        }
+                    </tr>
+                }
+            }
+        </table>
+    </div>
+    <div>
+        @if (ViewBag.gk != null)
+        {
+            <div class="col-md-12">
+                <table class="table table-bordered">
+                    <tr>
+                        <th style="vertical-align: middle; width: 70%">TOPLAM GİDER</th>
+                        <td style="vertical-align: middle; width: 70%">@(ViewBag.toplamgelir + ViewBag.toplamgider)</td>
+                    </tr>
+                </table>
+            </div>
+        }
+        else
+        {
+            <div class="col-md-12">
+                <table class="table table-bordered">
+                    <tr>
+                        <th style="vertical-align: middle; width: 70%">TOPLAM BORÇ</th>
+                        <td style="vertical-align: middle; width: 70%">@ViewBag.toplamgider</td>
+                    </tr>
+                    <tr>
+                        <th style="vertical-align: middle; width: 70%">TOPLAM ALACAK</th>
+                        <td style="vertical-align: middle; width: 70%">@ViewBag.toplamgelir</td>
+                    </tr>
+                    <tr>
+                        <th style="vertical-align: middle; width: 70%">NET</th>
+                        <td style="vertical-align: middle; width: 70%">@(ViewBag.toplamgelir - ViewBag.toplamgider)</td>
+                    </tr>
+
+                </table>
+            </div>
+        }
+    </div>
+    <br />
+    <div class="row col-md-12">
+        <nav aria-label="Page navigation example">
+            <ul class="pagination">
+                @if (Model.PageInfo.UrlInfo == null)
+                {
+                    @for (int i = 0; i < Model.PageInfo.TotalPages(); i++)
+                    {
+                        <li class="page-item">
+                            <a class="page-link" href="/CariKasa/CariKasa?page=@(i + 1)">
+                                @(1 + i)
+                            </a>
+                        </li>
+                    }
+                }
+                else
+                {
+                    @for (int i = 0; i < Model.PageInfo.TotalPages(); i++)
+                    {
+                        <li class="page-item">
+                            <a class="page-link" href="/CariKasa/CariKasa/@Model.PageInfo.UrlInfo?page=@(i + 1)">
+                                @(1 + i)
+                            </a>
+                        </li>
+                    }
+                }
+            </ul>
+        </nav>
+    </div>
+    <br />
+    <div>
+        <a asp-controller="CariKasa"
+           asp-action="CariKasaExcel"
+           asp-route-carihesapid=@Model.PageInfo.UrlInfo
+           class="btn btn-warning btn-sm">EXCEL</a>
+    </div>
+</body>
+</html>

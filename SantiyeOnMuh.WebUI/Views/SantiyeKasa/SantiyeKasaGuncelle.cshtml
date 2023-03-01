@@ -1,0 +1,87 @@
+﻿@model SantiyeKasa
+@{
+
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+</head>
+<body>
+    <form asp-controller="SantiyeKasa" asp-action="SantiyeKasaGuncelle" method="post" enctype="multipart/form-data">
+        <br />
+        <input type="hidden" name="Id" value="@Model.Id" />
+        <br />
+        <div class="form-group">
+            <div class="col-sm-2"><label for="SantiyeId">ŞANTİYE:</label></div>
+            <div class="col-sm-2">
+                <div asp-validation-summary="ModelOnly"></div>
+                <select asp-for="SantiyeId"
+                        class="form-control"
+                        asp-items="@(new SelectList(@ViewBag.Santiye,"Id","Ad"))">
+                </select>
+            </div>
+        </div>
+        <br />
+        <br />
+        <div class="form-group">
+            <div class="col-sm-2"><label for="Tarih">TARİH:</label></div>
+            <div class="col-sm-2"><input asp-for="Tarih" class="form-control" value="@Model.Tarih.ToString("yyyy-MM-dd")" /></div>
+        </div>
+        <br />
+        <br />
+        <div class="form-group">
+            <div class="col-sm-2"><label for="Aciklama">AÇIKLAMA:</label></div>
+            <div class="col-sm-10"><input asp-for="Aciklama" class="form-control" /></div>
+        </div>
+        <br />
+        <br />
+        <div class="form-group">
+            <div class="col-sm-2"><label for="Kisi">KİŞİ:</label></div>
+            <div class="col-sm-2"><input asp-for="Kisi" class="form-control" /></div>
+        </div>
+        <br />
+        <br />
+        <div class="form-group">
+            <div class="col-sm-2"><label for="SantiyeKasaGKId">TÜR:</label></div>
+            <div class="col-sm-2">
+                <div asp-validation-summary="ModelOnly"></div>
+                <select asp-for="SantiyeKasaGKId"
+                        class="form-control"
+                        asp-items="@(new SelectList(@ViewBag.GK,"Id","Ad"))">
+                </select>
+            </div>
+        </div>
+        <br />
+        <br />
+        <div class="form-group">
+            <div class="col-sm-2"><label for="No">FATURA/FİŞ NO-PLAKA:</label></div>
+            <div class="col-sm-2"><input asp-for="No" class="form-control" /></div>
+        </div>
+        <br />
+        <br />
+        <div class="form-group">
+            <div class="col-sm-2"><label for="Gelir">GELİR:</label></div>
+            <div class="col-sm-2"><input asp-for="Gelir" class="form-control" /></div>
+        </div>
+        <br />
+        <br />
+        <div class="form-group">
+            <div class="col-sm-2"><label for="Gider">GİDER:</label></div>
+            <div class="col-sm-2"><input asp-for="Gider" class="form-control" /></div>
+        </div>
+        <br />
+        <br />
+        <div class="form-group">
+            <div class="col-sm-2"><label for="ImgUrl">IMG:</label></div>
+            <div class="col-sm-2"><input asp-for="ImgUrl" class="form-control" /></div>
+        </div>
+        <br />
+        <br />
+        <button type="submit" class="btn btn-success">GÜNCELLE</button>
+
+    </form>
+</body>
+</html>

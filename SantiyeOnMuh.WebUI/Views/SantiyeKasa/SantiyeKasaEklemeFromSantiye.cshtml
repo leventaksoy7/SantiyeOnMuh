@@ -1,0 +1,75 @@
+﻿@model SantiyeKasa
+@{
+
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+</head>
+<body>
+    <form asp-controller="SantiyeKasa" asp-action="SantiyeKasaEklemeFromSantiye" method="post" enctype="multipart/form-data">
+        <br />
+        <br />
+        <input type="hidden" asp-for="SantiyeId" class="form-control" value="@ViewBag.SantiyeId" />
+        <br />
+        <br />
+        <div class="form-group">
+            <div class="col-sm-2"><label for="Tarih">TARİH:</label></div>
+            <div class="col-sm-2"><input asp-for="Tarih" class="form-control" value="@DateTime.Now.ToString("yyyy-MM-dd")" /></div>
+        </div>
+        <br />
+        <br />
+        <div class="form-group">
+            <div class="col-sm-2"><label for="Aciklama">AÇIKLAMA:</label></div>
+            <div class="col-sm-10"><input asp-for="Aciklama" value="@Model.Aciklama" class="form-control" /></div>
+        </div>
+        <br />
+        <br />
+        <div class="form-group">
+            <div class="col-sm-2"><label for="Kisi">KİŞİ:</label></div>
+            <div class="col-sm-2"><input asp-for="Kisi" value="@Model.Kisi" class="form-control" /></div>
+        </div>
+        <br />
+        <br />
+        <div class="form-group">
+            <div class="col-sm-2"><label asp-for="SantiyeKasaGKId">TÜR:</label></div>
+            <div class="col-sm-2">
+                <div asp-validation-summary="ModelOnly"></div>
+                <select asp-for="SantiyeKasaGKId"
+                        class="form-control"
+                        asp-items="@(new SelectList(@ViewBag.GK,"Id","Ad"))">
+                </select>
+            </div>
+        </div>
+        <br />
+        <br />
+        <div class="form-group">
+            <div class="col-sm-2"><label for="No">FATURA/FİŞ NO-PLAKA:</label></div>
+            <div class="col-sm-2"><input asp-for="No" value="@Model.No" class="form-control" /></div>
+        </div>
+        <br />
+        <br />
+        <div class="form-group">
+            <div class="col-sm-2"><label for="Gider">TUTAR:</label></div>
+            <div class="col-sm-2"><input asp-for="Gider" value="@Model.Gider" class="form-control" /></div>
+        </div>
+        <br />
+        <br />
+        <div class="form-group">
+            <div class="col-sm-2"><label for="ImgUrl">IMG:</label></div>
+            <div class="col-sm-2">
+                <input type="hidden" asp-for="ImgUrl" />
+                <input type="file" name="file" />
+            </div>
+        </div>
+        <br />
+        <br />
+
+        <button type="submit" class="btn btn-success">EKLE</button>
+
+    </form>
+</body>
+</html>

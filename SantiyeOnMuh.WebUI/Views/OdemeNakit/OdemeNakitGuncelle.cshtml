@@ -1,0 +1,74 @@
+﻿@model Nakit
+@{
+
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+</head>
+<body>
+    <form asp-controller="Nakit" asp-action="NakitGuncelle" method="post">
+        <br />
+        <input type="hidden" name="Id" value="@Model.Id" />
+        <br />
+        <div class="form-group">
+            <div class="col-sm-2"><label for="Tarih">TARİH:</label></div>
+            <div class="col-sm-2"><input asp-for="Tarih" class="form-control" value="@Model.Tarih.ToString("yyyy-MM-dd")" /></div>
+        </div>
+        <br />
+        <br />
+        <div class="form-group">
+            <div class="col-sm-2"><label for="Aciklama">AÇIKLAMA:</label></div>
+            <div class="col-sm-10"><input asp-for="Aciklama" class="form-control" /></div>
+        </div>
+        <br />
+        <br />
+        <div class="form-group">
+            <div class="col-sm-2"><label for="Kisi">TUTAR:</label></div>
+            <div class="col-sm-2"><input asp-for="Tutar" class="form-control" value=@Model.Tutar /></div>
+        </div>
+        <br />
+        <br />
+        <div class="form-group">
+            <div class="col-sm-2"><label for="SirketId">ŞİRKET:</label></div>
+            <div class="col-sm-2">
+                <div asp-validation-summary="ModelOnly"></div>
+                <select asp-for="SirketId"
+                        class="form-control"
+                        asp-items="@(new SelectList(@ViewBag.Sirket,"Id","SirketAdi"))">
+                </select>
+            </div>
+        </div>
+        <br />
+        <br />
+        <div class="form-group">
+            <div class="col-sm-2"><label for="CariHesapId">FİRMA:</label></div>
+            <div class="col-sm-2">
+                <div asp-validation-summary="ModelOnly"></div>
+                <select asp-for="CariHesapId"
+                        class="form-control"
+                        asp-items="@(new SelectList(@ViewBag.Cari,"Id","FirmaAdi"))">
+                </select>
+            </div>
+        </div>
+        <br />
+        <br />
+        <div class="form-group">
+            <div class="col-sm-2"><label for="BankaHesapId">BANKA HESABI:</label></div>
+            <div class="col-sm-2">
+                <div asp-validation-summary="ModelOnly"></div>
+                <select asp-for="BankaHesapId"
+                        class="form-control"
+                        asp-items="@(new SelectList(@ViewBag.Banka,"Id","HesapAdi"))">
+                </select>
+            </div>
+        </div>
+        <br />
+        <br />
+        <button type="submit" class="btn btn-success">GÜNCELLE</button>
+    </form>
+</body>
+</html>

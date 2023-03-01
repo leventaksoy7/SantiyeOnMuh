@@ -1,0 +1,89 @@
+﻿@model CariKasa
+@{
+
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+</head>
+<body>
+    <form asp-controller="CariKasa" asp-action="CariKasaEkleme" method="post" enctype="multipart/form-data">
+        <br />
+        <br />
+        <div class="form-group">
+            <div class="col-sm-2"><label for="CariHesapId">FİRMA ADI:</label></div>
+            <div class="col-sm-2">
+                <div asp-validation-summary="ModelOnly"></div>
+                <select asp-for="CariHesapId"
+                        class="form-control"
+                        asp-items="@(new SelectList(@ViewBag.CariHesap,"Id","Ad"))">
+                </select>
+            </div>
+        </div>
+        <br />
+        <br />
+        <div class="form-group">
+            <div class="col-sm-2"><label for="CariGKId">TÜR:</label></div>
+            <div class="col-sm-2">
+                <div asp-validation-summary="ModelOnly"></div>
+                <select asp-for="CariGiderKalemiId"
+                        class="form-control"
+                        asp-items="@(new SelectList(@ViewBag.CariGK,"Id","Ad"))">
+                </select>
+            </div>
+        </div>
+        <br />
+        <br />
+        <div class="form-group">
+            <div class="col-sm-2"><label for="Tarih">TARİH:</label></div>
+            <div class="col-sm-2"><input asp-for="Tarih" class="form-control" value="@DateTime.Now.ToString("yyyy-MM-dd")" /></div>
+        </div>
+        <br />
+        <br />
+        <div class="form-group">
+            <div class="col-sm-2"><label for="Aciklama">AÇIKLAMA:</label></div>
+            <div class="col-sm-10"><input asp-for="Aciklama" value="@Model.Aciklama" class="form-control" /></div>
+        </div>
+        <br />
+        <br />
+        <div class="form-group">
+            <div class="col-sm-2"><label for="Miktar">MİKTAR:</label></div>
+            <div class="col-sm-2"><input asp-for="Miktar" value="@Model.Miktar" class="form-control" /></div>
+        </div>
+        <br />
+        <br />
+        <div class="form-group">
+            <div class="col-sm-2"><label for="BirimFiyat">BİRİM:</label></div>
+            <div class="col-sm-2"><input asp-for="BirimFiyat" value="@Model.BirimFiyat" class="form-control" /></div>
+        </div>
+        <br />
+        <br />
+        <div class="form-group">
+            <div class="col-sm-2"><label for="Borc">BORÇ:</label></div>
+            <div class="col-sm-2"><input asp-for="Borc" class="form-control" value="0" /></div>
+        </div>
+        <br />
+        <br />
+        <div class="form-group">
+            <div class="col-sm-2"><label for="Gider">ALACAK:</label></div>
+            <div class="col-sm-2"><input asp-for="Alacak" value="@Model.Alacak" class="form-control" /></div>
+        </div>
+        <br />
+        <br />
+        <div class="form-group">
+            <div class="col-sm-2"><label for="ImgUrl">IMG:</label></div>
+            <div class="col-sm-2">
+                <input type="hidden" asp-for="ImgUrl" />
+                <input type="file" name="file" />
+            </div>
+        </div>
+        <br />
+        <br />
+        <button type="submit" class="btn btn-success">EKLE</button>
+
+    </form>
+</body>
+</html>

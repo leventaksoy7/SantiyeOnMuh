@@ -1,0 +1,77 @@
+﻿@model Nakit
+@{
+
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+</head>
+<body>
+    <form asp-controller="Nakit" asp-action="NakitEkleme" method="post" enctype="multipart/form-data">
+        <div asp-validation-summary="All" class="text-danger"></div>
+        <br />
+        <div class="form-group">
+            <div class="col-sm-2"><label for="Tarih">TARİH:</label></div>
+            <div class="col-sm-2"><input asp-for="Tarih" value="@DateTime.Now.ToString("yyyy-MM-dd")" class="form-control" /></div>
+        </div>
+        <br />
+        <br />
+        <div class="form-group">
+            <div class="col-sm-2"><label for="Aciklama">AÇIKLAMA:</label></div>
+            <div class="col-sm-10"><input asp-for="Aciklama" value="@Model.Aciklama" class="form-control" /></div>
+        </div>
+        <br />
+        <br />
+        <div class="form-group">
+            <div class="col-sm-2"><label for="Kisi">TUTAR:</label></div>
+            <div class="col-sm-2"><input asp-for="Tutar" value="@Model.Tutar" class="form-control" /></div>
+        </div>
+        <br />
+        <br />
+        <div class="form-group">
+            <div class="col-sm-2"><label for="SirketId">ŞİRKET:</label></div>
+            <div class="col-sm-2">
+                <select asp-for="SirketId" asp-items="@ViewBag.Sirket" class="form-control">
+                    <option selected disabled>SEÇİNİZ</option>
+                </select>
+            </div>
+        </div>
+        <br />
+        <br />
+        <div class="form-group">
+            <div class="col-sm-2"><label for="CariHesapId">FİRMA:</label></div>
+            <div class="col-sm-2">
+                <select asp-for="CariHesapId" asp-items="@ViewBag.Cari" class="form-control">
+                    <option selected disabled>SEÇİNİZ</option>
+                </select>
+            </div>
+        </div>
+        <br />
+        <br />
+        <div class="form-group">
+            <div class="col-sm-2"><label for="BankaHesapId">BANKA HESABI:</label></div>
+            <div class="col-sm-2">
+                <select asp-for="BankaHesapId" asp-items="@ViewBag.Banka" class="form-control">
+                    <option selected disabled>SEÇİNİZ</option>
+                </select>
+            </div>
+        </div>
+        <br />
+        <br />
+        <div class="form-group">
+            <div class="col-sm-2"><label for="ImgUrl">IMG:</label></div>
+            <div class="col-sm-2">
+                <input type="hidden" asp-for="ImgUrl" value="@Model.ImgUrl" />
+                <input type="file" name="file" />
+            </div>
+        </div>
+        <br />
+        <br />
+        <button type="submit" class="btn btn-success">EKLE</button>
+
+    </form>
+</body>
+</html>

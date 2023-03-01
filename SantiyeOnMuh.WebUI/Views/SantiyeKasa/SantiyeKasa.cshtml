@@ -1,0 +1,184 @@
+﻿@model SantiyeKasaViewListModel
+@{
+    var santiye = Model.Santiye.Id;
+}
+
+<!DOCTYPE html>
+
+<html>
+<body>
+    <div>
+        <br />
+        <div>
+            <a asp-controller="Santiye"
+               asp-action="Index"
+               class="btn btn-primary btn-sm">TÜM ŞANTİYELER</a>
+            @if (Model.Santiye.Durum != false)
+            {
+                <a asp-controller="SantiyeKasa"
+               asp-action="SantiyeKasaEklemeFromSantiye"
+               asp-route-santiyeid="@santiye"
+                   class="btn btn-primary btn-sm">KASAYA GİDER EKLE</a>
+            }
+        </div>
+        <br />
+        <div>
+            <a asp-controller="SantiyeKasa"
+               asp-action="SantiyeKasa"
+               asp-route-gkid=@null
+               class="btn btn-warning btn-sm">TÜM GİDERLER</a>
+            @foreach (var gk in Model.SantiyeKasaGKs)
+            {
+                <a asp-controller="SantiyeKasa"
+               asp-action="SantiyeKasa"
+               asp-route-gkid="@gk.Id"
+                   class="btn btn-warning btn-sm">@gk.Ad</a>
+            }
+        </div>
+        <br />
+    </div>
+    <br />
+    <div>
+        <div class="col-md-12">
+            <table class="table table-bordered">
+                <tr>
+                    <th>ŞANTİYE</th>
+                    <th>TARİH</th>
+                    <th>AÇIKLAMA</th>
+                    <th>KALEM</th>
+                    <th>TUTAR</th>
+
+                    <th>DETAY</th>
+                    <th>GÜNCELLE</th>
+                    <th>SİL</th>
+                </tr>
+                @if (Model.SantiyeKasas.Count == 0)
+                {
+                    <tr><td>SİSTEME KAYITLI ŞANTİYE KASA GİDERİ BULUNMAMAKTADIR</td></tr>
+                }
+                else
+                {
+                    @foreach (var item in Model.SantiyeKasas)
+                    {
+                        <tr>
+                            <td>@item.Santiye.Ad</td>
+                            <td>@item.Tarih.ToString("dd/MM/yyyy")</td>
+                            <td>@item.Aciklama</td>
+                            <td>@item.SantiyeKasaGK.Ad</td>
+
+                            <td>@(item.Gider + item.Gelir) </td>
+
+                            @if (item.SantiyeKasaGKId != 1)
+                            {
+                                <td>
+                                    <a asp-controller="SantiyeKasa"
+                           asp-action="SantiyeKasaDetay"
+                           asp-route-id="@item.Id"
+                                       class="btn btn-info btn-sm">DETAY</a>
+                                </td>
+
+                                <td>
+                                    <a asp-controller="SantiyeKasa"
+                           asp-action="SantiyeKasaGuncelleFromSantiye"
+                           asp-route-santiyekasaid="@item.Id"
+                                       class="btn btn-success btn-sm">GÜNCELLEME</a>
+                                </td>
+
+                                <td>
+                                    <a asp-controller="SantiyeKasa"
+                           asp-action="SantiyeKasaSil"
+                           asp-route-santiyekasaid="@item.Id"
+                                       class="btn btn-danger btn-sm">SİL</a>
+                                </td>
+                            }
+
+                        </tr>
+                    }
+                }
+            </table>
+        </div>
+        @if (ViewBag.gk != null)
+        {
+            @if (ViewBag.toplamgider != 0)
+            {
+                <div class="col-md-12">
+                    <table class="table table-bordered">
+                        <tr>
+                            <th style="vertical-align: middle; width: 70%">TOPLAM </th>
+                            <td style="vertical-align: middle; width: 70%">@ViewBag.toplamgider</td>
+                        </tr>
+                    </table>
+                </div>
+            }
+            else
+            {
+                <div class="col-md-12">
+                    <table class="table table-bordered">
+                        <tr>
+                            <th style="vertical-align: middle; width: 70%">TOPLAM </th>
+                            <td style="vertical-align: middle; width: 70%">@ViewBag.toplamgelir</td>
+                        </tr>
+                    </table>
+                </div>
+            }
+
+        }
+        else
+        {
+            <div class="col-md-12">
+                <table class="table table-bordered">
+                    <tr>
+                        <th style="vertical-align: middle; width: 70%">TOPLAM GİDER</th>
+                        <td style="vertical-align: middle; width: 70%">@ViewBag.toplamgider</td>
+                    </tr>
+                    <tr>
+                        <th style="vertical-align: middle; width: 70%">TOPLAM GELİR</th>
+                        <td style="vertical-align: middle; width: 70%">@ViewBag.toplamgelir</td>
+                    </tr>
+                    <tr>
+                        <th style="vertical-align: middle; width: 70%">NET</th>
+                        <td style="vertical-align: middle; width: 70%">@(ViewBag.toplamgelir - ViewBag.toplamgider)</td>
+                    </tr>
+
+                </table>
+            </div>
+        }
+    </div>
+    <br />
+    <div class="row col-md-12">
+        <nav aria-label="Page navigation example">
+            <ul class="pagination">
+                @if (Model.PageInfo.UrlInfo == null)
+                {
+                    @for (int i = 0; i < Model.PageInfo.TotalPages(); i++)
+                    {
+                        <li class="page-item">
+                            <a class="page-link" href="/SantiyeKasa/SantiyeKasa?page=@(i + 1)">
+                                @(1 + i)
+                            </a>
+                        </li>
+                    }
+                }
+                else
+                {
+                    @for (int i = 0; i < Model.PageInfo.TotalPages(); i++)
+                    {
+                        <li class="page-item">
+                            <a class="page-link" href="/SantiyeKasa/SantiyeKasa/@Model.PageInfo.UrlInfo?page=@(i + 1)">
+                                @(1 + i)
+                            </a>
+                        </li>
+                    }
+                }
+            </ul>
+        </nav>
+    </div>
+    <br />
+    <div>
+        <a asp-controller="SantiyeKasa"
+           asp-action="SantiyeKasaExcel"
+           asp-route-santiyeid=@Model.PageInfo.UrlInfo
+           class="btn btn-warning btn-sm">EXCEL</a>
+    </div>
+</body>
+</html>
