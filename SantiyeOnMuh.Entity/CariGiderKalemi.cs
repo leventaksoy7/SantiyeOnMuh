@@ -15,7 +15,7 @@ namespace SantiyeOnMuh.Entity
         public string Ad { get; set; }
         public bool Durum { get; set; }
         public bool Tur { get; set; }
-        public List<CariKasa> CariHesapKasas { get; set; }
+        public List<CariKasa> CariKasas { get; set; }
         public CariGiderKalemi()
         {
             Durum = true;

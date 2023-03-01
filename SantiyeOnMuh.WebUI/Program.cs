@@ -46,11 +46,11 @@ builder.Services.AddScoped<IBankaKasaRepository, EfCoreBankaKasaRepository>();
 builder.Services.AddScoped<IBankaKasaService, BankaKasaManager>();
 
 //ODEME
-builder.Services.AddScoped<IOdemeCekRepository, EfCoreOdemeCekRepository>();
-builder.Services.AddScoped<IOdemeCekService, OdemeCekManager>();
+builder.Services.AddScoped<ICekRepository, EfCoreCekRepository>();
+builder.Services.AddScoped<ICekService, CekManager>();
 
-builder.Services.AddScoped<IOdemeNakitRepository, EfCoreOdemeNakitRepository>();
-builder.Services.AddScoped<IOdemeNakitService, OdemeNakitManager>();
+builder.Services.AddScoped<INakitRepository, EfCoreNakitRepository>();
+builder.Services.AddScoped<INakitService, NakitManager>();
 
 //SÝRKET
 builder.Services.AddScoped<ISirketRepository, EfCoreSirketRepository>();

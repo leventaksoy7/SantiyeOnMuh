@@ -45,10 +45,10 @@
         <br />
         <br />
         <div class="form-group">
-            <div class="col-sm-2"><label for="SantiyeKasaGKId">TÜR:</label></div>
+            <div class="col-sm-2"><label for="SantiyeGiderKalemiId">TÜR:</label></div>
             <div class="col-sm-2">
                 <div asp-validation-summary="ModelOnly"></div>
-                <select asp-for="SantiyeKasaGKId"
+                <select asp-for="SantiyeGiderKalemiId"
                         class="form-control"
                         asp-items="@(new SelectList(@ViewBag.GK,"Id","Ad"))">
                 </select>

@@ -87,7 +87,7 @@ namespace SantiyeOnMuh.DataAccess.Concrete.EfCore
             }
         }
 
-        public int GetCountByBankaHesap(int? bankahesapid, bool drm)
+        public int GetCount(int? bankahesapid, bool drm)
         {
             using (var context = new Context())
             {

@@ -1,4 +1,4 @@
-﻿@model Nakit
+﻿@model Cek
 @{
 
 }
@@ -8,7 +8,6 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
-    <title>Nakit Detay</title>
 </head>
 <body>
     <div class="container">
@@ -16,7 +15,26 @@
             <div class="col-xl-6 col-md-4">
                 <table class="w3-table w3-striped w3-white">
                     <!--DÖNGÜ İÇİNDE FATURA BİLGİLERİ-->
-                    <tr><th>BANKA</th><td>@Model.BankaHesap.Ad</td></tr>
+                    <tr>
+                        <th>DURUM</th>
+                        @if (Model.OdemeDurumu != false)
+                        {
+                            <th>
+                                TAHSİL EDİLDİ
+                            </th>
+                        }
+                        else
+                        {
+                            <td style="vertical-align: middle; width: 10%">
+                                <a asp-controller="Cek"
+                               asp-action="CekTahsil"
+                               asp-route-cekid="@Model.Id"
+                                   class="btn btn-info btn-sm">TAHSİL ET</a>
+                            </td>
+                        }
+                    </tr>
+                    <tr><th>BANKA</th><td>@Model.BankaHesap.HesapAdi</td></tr>
+                    <tr><th>ÇEK NO</th><td>@Model.CekNo</td></tr>
                     <tr><th>TARİH</th><td>@Model.Tarih.ToString("dd/MM/yyyy")</td></tr>
                     <tr><th>AÇIKLAMA</th><td>@Model.Aciklama</td></tr>
                     <tr><th>TUTAR</th><td>@Model.Tutar</td></tr>
@@ -28,7 +46,7 @@
             </div>
             <div class="col-xl-6 col-md-4">
                 <div class="card-body">
-                    <img style='height: 100%; width: 100%; object-fit: contain' src="~/NakitResim/@Model.ImgUrl" />
+                    <img style='height: 100%; width: 100%; object-fit: contain' src="~/CekResim/@Model.ImgUrl" />
                 </div>
             </div>
         </div>

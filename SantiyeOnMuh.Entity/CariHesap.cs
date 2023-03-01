@@ -19,9 +19,9 @@ namespace SantiyeOnMuh.Entity
         public string Odeme { get; set; }
         public string Vade { get; set; }
         public bool Durum { get; set; }
-        public List<OdemeCek> OdemeCeks { get; set; }
-        public List<OdemeNakit> OdemeNakits { get; set; }
-        public List<CariKasa> CariHesapKasas { get; set; }
+        public List<Cek> Ceks { get; set; }
+        public List<Nakit> Nakits { get; set; }
+        public List<CariKasa> CariKasas { get; set; }
         public int SantiyeId { get; set; }
         public Santiye Santiye { get; set; }
         public CariHesap()

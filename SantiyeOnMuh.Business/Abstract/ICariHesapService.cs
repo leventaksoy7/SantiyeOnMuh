@@ -11,6 +11,6 @@ namespace SantiyeOnMuh.Business.Abstract
     {
         List<CariHesap> GetAll(int? santiyeid, bool drm);
         List<CariHesap> GetAll(int? santiyeid, bool drm, int page, int pageSize);
-        int GetCountBySantiye(int? santiyeid, bool drm);
+        int GetCount(int? santiyeid, bool drm);
     }
 }

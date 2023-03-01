@@ -1,4 +1,4 @@
-﻿@model NakitViewListModel
+﻿@model CekViewListModel
 @{
 
 }
@@ -18,13 +18,12 @@
                     <tr>
                         <td>
                             <br />
-                            <a asp-controller="Nakit"
-                           asp-action="NakitBanka"
+                            <a asp-controller="Cek"
+                           asp-action="CekBanka"
                            asp-route-bankahesapid="@bankahesap.Id"
-                               class="btn btn-warning btn-sm">@bankahesap.Ad</a>
+                               class="btn btn-warning btn-sm">@bankahesap.HesapAdi</a>
                         </td>
                     </tr>
-
                 }
             </table>
             <table class="col-md-4">
@@ -33,13 +32,12 @@
                     <tr>
                         <td>
                             <br />
-                            <a asp-controller="Nakit"
-                           asp-action="NakitSirket"
+                            <a asp-controller="Cek"
+                           asp-action="CekSirket"
                            asp-route-sirketid="@sirket.Id"
                                class="btn btn-warning btn-sm">@sirket.Ad</a>
                         </td>
                     </tr>
-
                 }
             </table>
             <table class="col-md-4">
@@ -48,13 +46,12 @@
                     <tr>
                         <td>
                             <br />
-                            <a asp-controller="Nakit"
-                           asp-action="NakitSantiye"
+                            <a asp-controller="Cek"
+                           asp-action="CekSantiye"
                            asp-route-santiyeid="@santiye.Id"
                                class="btn btn-warning btn-sm">@santiye.Ad</a>
                         </td>
                     </tr>
-
                 }
             </table>
         </div>

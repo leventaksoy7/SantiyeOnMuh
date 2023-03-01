@@ -8,17 +8,15 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
+    <title>Nakit Detay</title>
 </head>
 <body>
-    <form asp-controller="Nakit" asp-action="NakitSil" method="post">
-        <br />
-        <input type="hidden" name="Id" value="@Model.Id" />
-        <br />
+    <div class="container">
         <div class="row">
             <div class="col-xl-6 col-md-4">
                 <table class="w3-table w3-striped w3-white">
                     <!--DÖNGÜ İÇİNDE FATURA BİLGİLERİ-->
-                    <tr><th>BANKA</th><td>@Model.BankaHesap.Ad</td></tr>
+                    <tr><th>BANKA</th><td>@Model.BankaHesap.HesapAdi</td></tr>
                     <tr><th>TARİH</th><td>@Model.Tarih.ToString("dd/MM/yyyy")</td></tr>
                     <tr><th>AÇIKLAMA</th><td>@Model.Aciklama</td></tr>
                     <tr><th>TUTAR</th><td>@Model.Tutar</td></tr>
@@ -34,7 +32,6 @@
                 </div>
             </div>
         </div>
-        <button type="submit" class="btn btn-success">SİL</button>
-    </form>
+    </div>
 </body>
 </html>

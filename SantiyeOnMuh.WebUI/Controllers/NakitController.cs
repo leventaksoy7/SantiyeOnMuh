@@ -7,10 +7,10 @@ using SantiyeOnMuh.WebUI.Models;
 
 namespace SantiyeOnMuh.WebUI.Controllers
 {
-    public class OdemeNakitController : Controller
+    public class NakitController : Controller
     {
         // NESNELER ÜZERİNDEKİ İŞLEMLERİ _ OLAN NESNE ÜZERİNDE YAPIP SONRA AKTARIYORUZ - INJECTION
-        private IOdemeNakitService _odemeOdemeNakitService;
+        private INakitService _nakitService;
         private ISirketService _sirketService;
         private ICariHesapService _cariHesapService;
         private IBankaHesapService _bankaHesapService;
@@ -18,8 +18,8 @@ namespace SantiyeOnMuh.WebUI.Controllers
         private ICariKasaService _cariKasaService;
         private ISantiyeService _santiyeService;
 
-        public OdemeNakitController(
-            IOdemeNakitService odemeOdemeNakitService,
+        public NakitController(
+            INakitService nakitService,
             ISirketService sirketService,
             ICariHesapService cariHesapService,
             IBankaHesapService bankaHesapService,
@@ -27,7 +27,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
             ICariKasaService cariKasaService,
             ISantiyeService santiyeService)
         {
-            this._odemeOdemeNakitService = odemeOdemeNakitService;
+            this._nakitService = nakitService;
             this._sirketService = sirketService;
             this._cariHesapService = cariHesapService;
             this._bankaHesapService = bankaHesapService;
@@ -40,22 +40,22 @@ namespace SantiyeOnMuh.WebUI.Controllers
         {
             ViewBag.Sayfa = "NAKİT ÖDEMELER";
             const int pageSize = 10;
-            var odemeOdemeNakitViewModel = new OdemeNakitViewListModel()
+            var nakitViewModel = new NakitViewListModel()
             {
                 PageInfo = new PageInfo
                 {
-                    TotalItem = _odemeOdemeNakitService.GetCount(null, null, null, true),
+                    TotalItem = _nakitService.GetCount(null, null, null, true),
                     CurrentPage = page,
                     ItemPerPage = pageSize,
                     UrlInfo = null
                 },
 
-                OdemeNakits = _odemeOdemeNakitService.GetAll(null, null, null, true, page, pageSize),
+                Nakits = _nakitService.GetAll(null, null, null, true, page, pageSize),
             };
-            return View(odemeOdemeNakitViewModel);
+            return View(nakitViewModel);
         }
         [HttpGet]
-        public IActionResult OdemeNakitEkleme()
+        public IActionResult NakitEkleme()
         {
             ViewBag.Sayfa = "YENİ NAKİT ÖDEMESİ EKLE";
 
@@ -63,10 +63,10 @@ namespace SantiyeOnMuh.WebUI.Controllers
             ViewBag.Cari = new SelectList(_cariHesapService.GetAll(null, true), "Id", "Ad");
             ViewBag.Banka = new SelectList(_bankaHesapService.GetAll(true), "Id", "Ad");
 
-            return View(new OdemeNakit());
+            return View(new Nakit());
         }
         [HttpPost]
-        public IActionResult OdemeNakitEkleme(OdemeNakit n, IFormFile file)
+        public IActionResult NakitEkleme(Nakit n, IFormFile file)
         {
 
             ViewBag.Sirket = new SelectList(_sirketService.GetAll(true), "Id", "Ad");
@@ -75,7 +75,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
 
             if (ModelState.IsValid)
             {
-                _odemeOdemeNakitService.Create(n);
+                _nakitService.Create(n);
                 //CARİ KASA İÇİN ÇEK OLUŞTURULDU VE ÇEK KAYNAĞI İLE EKLENDİ
                 CariKasa entityCariKasa = new CariKasa()
                 {
@@ -107,16 +107,16 @@ namespace SantiyeOnMuh.WebUI.Controllers
                 _bankaKasaService.Create(entityBankaKasa);
 
                 //ŞİMDİ BANKA KASA VE CARİ HESAP'a AİT NAKİT ÖDEMESİ KAYNAĞI EKLENİYOR
-                var EntityEklenenOdemeNakit = _odemeOdemeNakitService.GetById(n.Id);
-                if (EntityEklenenOdemeNakit == null)
+                var EntityEklenenNakit = _nakitService.GetById(n.Id);
+                if (EntityEklenenNakit == null)
                 {
                     return NotFound();
                 }
 
-                EntityEklenenOdemeNakit.CariKasaKaynak = entityCariKasa.Id;
-                EntityEklenenOdemeNakit.BankaKasaKaynak = entityBankaKasa.Id;
+                EntityEklenenNakit.CariKasaKaynak = entityCariKasa.Id;
+                EntityEklenenNakit.BankaKasaKaynak = entityBankaKasa.Id;
 
-                _odemeOdemeNakitService.Update(EntityEklenenOdemeNakit);
+                _nakitService.Update(EntityEklenenNakit);
 
                 return RedirectToAction("BankaKasa", "BankaKasa");
             }
@@ -125,37 +125,37 @@ namespace SantiyeOnMuh.WebUI.Controllers
 
         }
         [HttpGet]
-        public IActionResult OdemeNakitGuncelle(int? odemeOdemeNakitid)
+        public IActionResult NakitGuncelle(int? nakitid)
         {
             ViewBag.Sayfa = "NAKİT ÖDEME BİLGİSİNİ GÜNCELLEME";
             ViewBag.Sirket = _sirketService.GetAll(true);
             ViewBag.Cari = _cariHesapService.GetAll(null, true);
             ViewBag.Banka = _bankaHesapService.GetAll(true);
 
-            if (odemeOdemeNakitid == null)
+            if (nakitid == null)
             {
                 return NotFound();
             }
-            OdemeNakit odemeOdemeNakit = _odemeOdemeNakitService.GetById((int)odemeOdemeNakitid);
+            Nakit nakit = _nakitService.GetById((int)nakitid);
 
-            if (odemeOdemeNakit == null)
+            if (nakit == null)
             {
                 return NotFound();
             }
-            return View(odemeOdemeNakit);
+            return View(nakit);
         }
         [HttpPost]
-        public IActionResult OdemeNakitGuncelle(OdemeNakit n)
+        public IActionResult NakitGuncelle(Nakit n)
         {
-            var entityOdemeNakit = _odemeOdemeNakitService.GetById(n.Id);
+            var entityNakit = _nakitService.GetById(n.Id);
 
-            if (entityOdemeNakit == null)
+            if (entityNakit == null)
             {
                 return NotFound();
             }
 
-            int? bankakasaid = entityOdemeNakit.BankaKasaKaynak;
-            int? carikasaid = entityOdemeNakit.CariKasaKaynak;
+            int? bankakasaid = entityNakit.BankaKasaKaynak;
+            int? carikasaid = entityNakit.CariKasaKaynak;
 
             if (bankakasaid != null)
             {
@@ -195,31 +195,31 @@ namespace SantiyeOnMuh.WebUI.Controllers
                 _cariKasaService.Update(entityCariKasa);
             }
 
-            entityOdemeNakit.Tarih = n.Tarih;
-            entityOdemeNakit.Aciklama = n.Aciklama;
-            entityOdemeNakit.Tutar = n.Tutar;
-            entityOdemeNakit.ImgUrl = n.ImgUrl;
-            entityOdemeNakit.SonGuncelleme = System.DateTime.Now;
-            entityOdemeNakit.CariHesapId = n.CariHesapId;
-            entityOdemeNakit.SirketId = n.SirketId;
-            entityOdemeNakit.BankaHesapId = n.BankaHesapId;
+            entityNakit.Tarih = n.Tarih;
+            entityNakit.Aciklama = n.Aciklama;
+            entityNakit.Tutar = n.Tutar;
+            entityNakit.ImgUrl = n.ImgUrl;
+            entityNakit.SonGuncelleme = System.DateTime.Now;
+            entityNakit.CariHesapId = n.CariHesapId;
+            entityNakit.SirketId = n.SirketId;
+            entityNakit.BankaHesapId = n.BankaHesapId;
 
-            _odemeOdemeNakitService.Update(entityOdemeNakit);
+            _nakitService.Update(entityNakit);
 
             return RedirectToAction("Index");
         }
         [HttpGet]
-        public IActionResult OdemeNakit(int? odemeOdemeNakitid)
+        public IActionResult Nakit(int? nakitid)
         {
             ViewBag.Sayfa = "NAKİT DETAYI";
-            if (odemeOdemeNakitid == null)
+            if (nakitid == null)
             {
                 return NotFound();
             }
 
-            OdemeNakit odemeOdemeNakit = _odemeOdemeNakitService.GetById((int)odemeOdemeNakitid);
+            Nakit nakit = _nakitService.GetById((int)nakitid);
 
-            if (odemeOdemeNakit == null)
+            if (nakit == null)
             {
                 return NotFound();
             }
@@ -228,40 +228,40 @@ namespace SantiyeOnMuh.WebUI.Controllers
             ViewBag.Cari = _cariHesapService.GetAll();
             ViewBag.Banka = _bankaHesapService.GetAll();
 
-            return View(odemeOdemeNakit);
+            return View(nakit);
         }
         [HttpGet]
-        public IActionResult OdemeNakitSil(int? odemeOdemeNakitid)
+        public IActionResult NakitSil(int? nakitid)
         {
             ViewBag.Sayfa = "NAKİT ÖDEMESİNİ SİL";
 
 
-            if (odemeOdemeNakitid == null)
+            if (nakitid == null)
             {
                 return NotFound();
             }
-            OdemeNakit odemeOdemeNakit = _odemeOdemeNakitService.GetById((int)odemeOdemeNakitid);
+            Nakit nakit = _nakitService.GetById((int)nakitid);
 
-            if (odemeOdemeNakit == null)
+            if (nakit == null)
             {
                 return NotFound();
             }
-            return View(odemeOdemeNakit);
+            return View(nakit);
         }
         [HttpPost]
-        public IActionResult OdemeNakitSil(OdemeNakit n)
+        public IActionResult NakitSil(Nakit n)
         {
-            var entityOdemeNakit = _odemeOdemeNakitService.GetById(n.Id);
-            if (entityOdemeNakit == null)
+            var entityNakit = _nakitService.GetById(n.Id);
+            if (entityNakit == null)
             {
                 return NotFound();
             }
 
-            entityOdemeNakit.SonGuncelleme = System.DateTime.Now;
-            entityOdemeNakit.Durum = false;
+            entityNakit.SonGuncelleme = System.DateTime.Now;
+            entityNakit.Durum = false;
 
-            int? bankakasaid = entityOdemeNakit.BankaKasaKaynak;
-            int? carikasaid = entityOdemeNakit.CariKasaKaynak;
+            int? bankakasaid = entityNakit.BankaKasaKaynak;
+            int? carikasaid = entityNakit.CariKasaKaynak;
 
             if (bankakasaid != null)
             {
@@ -288,17 +288,17 @@ namespace SantiyeOnMuh.WebUI.Controllers
                 _cariKasaService.Update(entityCariKasa);
             }
 
-            _odemeOdemeNakitService.Update(entityOdemeNakit);
+            _nakitService.Update(entityNakit);
             return RedirectToAction("Index");
         }
 
 
         //EXCEL
-        public IActionResult OdemeNakitExcel()
+        public IActionResult NakitExcel()
         {
-            var odemeOdemeNakitViewModel = new OdemeNakitViewListModel()
+            var nakitViewModel = new NakitViewListModel()
             {
-                OdemeNakits = _odemeOdemeNakitService.GetAll(null, null, null, true),
+                Nakits = _nakitService.GetAll(null, null, null, true),
             };
 
             using (var workbook = new XLWorkbook())
@@ -323,16 +323,16 @@ namespace SantiyeOnMuh.WebUI.Controllers
                 #endregion
 
                 #region Body
-                foreach (var odemeOdemeNakit in odemeOdemeNakitViewModel.OdemeNakits)
+                foreach (var nakit in nakitViewModel.Nakits)
                 {
                     currentRow++;
-                    worksheet.Cell(currentRow, 1).Value = odemeOdemeNakit.Tarih;
-                    worksheet.Cell(currentRow, 2).Value = odemeOdemeNakit.Aciklama;
-                    worksheet.Cell(currentRow, 3).Value = odemeOdemeNakit.BankaHesap.BankaAd;
-                    worksheet.Cell(currentRow, 4).Value = odemeOdemeNakit.CariHesap.Ad;
-                    worksheet.Cell(currentRow, 5).Value = odemeOdemeNakit.Tutar;
+                    worksheet.Cell(currentRow, 1).Value = nakit.Tarih;
+                    worksheet.Cell(currentRow, 2).Value = nakit.Aciklama;
+                    worksheet.Cell(currentRow, 3).Value = nakit.BankaHesap.HesapAdi;
+                    worksheet.Cell(currentRow, 4).Value = nakit.CariHesap.Ad;
+                    worksheet.Cell(currentRow, 5).Value = nakit.Tutar;
 
-                    toplam = toplam + odemeOdemeNakit.Tutar;
+                    toplam = toplam + nakit.Tutar;
                     worksheet.Cell(currentRow, 6).Value = toplam;
 
                     for (int i = 1; i < 7; i++)
@@ -362,7 +362,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
                     return File(
                         content,
                         "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-                        "OdemeNakitOdemeler.xlsx"
+                        "NakitOdemeler.xlsx"
                         );
                 }
             }
@@ -372,24 +372,24 @@ namespace SantiyeOnMuh.WebUI.Controllers
         {
             ViewBag.Sayfa = "NAKİT ÖDEMELER";
             const int pageSize = 10;
-            var odemeOdemeNakitViewModel = new OdemeNakitViewListModel()
+            var nakitViewModel = new NakitViewListModel()
             {
                 PageInfo = new PageInfo
                 {
-                    TotalItem = _odemeOdemeNakitService.GetCount(null, null, null, false),
+                    TotalItem = _nakitService.GetCount(null, null, null, false),
                     CurrentPage = page,
                     ItemPerPage = pageSize,
                     UrlInfo = null
                 },
 
-                OdemeNakits = _odemeOdemeNakitService.GetAll(null, null, null, false, page, pageSize),
+                Nakits = _nakitService.GetAll(null, null, null, false, page, pageSize),
             };
-            return View(odemeOdemeNakitViewModel);
+            return View(nakitViewModel);
         }
 
         #region CARİDEN
         [HttpGet]
-        public IActionResult OdemeNakitEklemeFromCari(int carihesapid)
+        public IActionResult NakitEklemeFromCari(int carihesapid)
         {
             ViewBag.Sayfa = _cariHesapService.GetById((int)carihesapid).Ad + " CARİSİNE YENİ NAKİT ÖDEMESİ GİRİŞİ";
             ViewBag.Sirket = _sirketService.GetAll(true);
@@ -397,10 +397,10 @@ namespace SantiyeOnMuh.WebUI.Controllers
 
             ViewBag.CariHesapId = carihesapid;
 
-            return View(new OdemeNakit());
+            return View(new Nakit());
         }
         [HttpPost]
-        public async Task<IActionResult> OdemeNakitEklemeFromCari(OdemeNakit n, IFormFile file)
+        public async Task<IActionResult> NakitEklemeFromCari(Nakit n, IFormFile file)
         {
             #region  RESİM VS. EKLENMEMİŞSE SAYFAYA GERİ GİDİYOR, GERİ GİDİLEN SAYFANIN İHTİYACI OLAN BİLGİLER
             ViewBag.Sayfa = _cariHesapService.GetById((int)n.CariHesapId).Ad + " CARİSİNE YENİ NAKİT ÖDEMESİ GİRİŞİ";
@@ -417,9 +417,9 @@ namespace SantiyeOnMuh.WebUI.Controllers
 
                 if (extension == ".jpg" || extension == ".png" || extension == ".pdf")
                 {
-                    var odemeOdemeNakitName = string.Format($"{n.Aciklama}{"-"}{Guid.NewGuid()}{extension}");
-                    n.ImgUrl = odemeOdemeNakitName;
-                    var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\OdemeNakitResim", odemeOdemeNakitName);
+                    var nakitName = string.Format($"{n.Aciklama}{"-"}{Guid.NewGuid()}{extension}");
+                    n.ImgUrl = nakitName;
+                    var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\NakitResim", nakitName);
 
                     using (var stream = new FileStream(path, FileMode.Create))
                     {
@@ -430,7 +430,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
             }
             else { return View(n); }
             #endregion
-            _odemeOdemeNakitService.Create(n);
+            _nakitService.Create(n);
             //CARİ KASA İÇİN ÇEK OLUŞTURULDU VE ÇEK KAYNAĞI İLE EKLENDİ
             String FirmaAdiForAciklama = _cariHesapService.GetById((int)n.CariHesapId).Ad;
 
@@ -461,15 +461,15 @@ namespace SantiyeOnMuh.WebUI.Controllers
             };
             _bankaKasaService.Create(EntityBankaKasa);
             //ŞİMDİ BANKA KASA VE CARİ HESAP'a AİT NAKİT ÖDEMESİ KAYNAĞI EKLENİYOR
-            var EntityEklenenOdemeNakit = _odemeOdemeNakitService.GetById(n.Id);
-            if (EntityEklenenOdemeNakit == null)
+            var EntityEklenenNakit = _nakitService.GetById(n.Id);
+            if (EntityEklenenNakit == null)
             {
                 return NotFound();
             }
-            EntityEklenenOdemeNakit.CariKasaKaynak = EntityCariKasa.Id;
-            EntityEklenenOdemeNakit.BankaKasaKaynak = EntityBankaKasa.Id;
+            EntityEklenenNakit.CariKasaKaynak = EntityCariKasa.Id;
+            EntityEklenenNakit.BankaKasaKaynak = EntityBankaKasa.Id;
 
-            _odemeOdemeNakitService.Update(EntityEklenenOdemeNakit);
+            _nakitService.Update(EntityEklenenNakit);
 
             return RedirectToAction("CariKasa", "CariKasa", new { carihesapid = n.CariHesapId });
         }
@@ -480,73 +480,73 @@ namespace SantiyeOnMuh.WebUI.Controllers
         {
             ViewBag.Sayfa = "NAKİT ÖDEMELERİ";
 
-            var odemeOdemeNakitViewModel = new OdemeNakitViewListModel()
+            var nakitViewModel = new NakitViewListModel()
             {
                 Santiyes = _santiyeService.GetAll(true),
                 BankaHesaps = _bankaHesapService.GetAll(true),
                 Sirkets = _sirketService.GetAll(true),
             };
 
-            return View(odemeOdemeNakitViewModel);
+            return View(nakitViewModel);
         }
-        public IActionResult OdemeNakitSantiye(int santiyeid, int page = 1)
+        public IActionResult NakitSantiye(int santiyeid, int page = 1)
         {
             ViewBag.Sayfa = "NAKİT ÖDEMELER";
             const int pageSize = 10;
-            var odemeOdemeNakitViewModel = new OdemeNakitViewListModel()
+            var nakitViewModel = new NakitViewListModel()
             {
                 PageInfo = new PageInfo
                 {
-                    TotalItem = _odemeOdemeNakitService.GetCount(santiyeid, null, null, true),
+                    TotalItem = _nakitService.GetCount(santiyeid, null, null, true),
                     CurrentPage = page,
                     ItemPerPage = pageSize,
                     UrlInfo = santiyeid
                 },
-                OdemeNakits = _odemeOdemeNakitService.GetAll(santiyeid, null, null, true, page, pageSize),
+                Nakits = _nakitService.GetAll(santiyeid, null, null, true, page, pageSize),
             };
-            return View(odemeOdemeNakitViewModel);
+            return View(nakitViewModel);
         }
-        public IActionResult OdemeNakitSirket(int sirketid, int page = 1)
+        public IActionResult NakitSirket(int sirketid, int page = 1)
         {
             ViewBag.Sayfa = "NAKİT ÖDEMELER";
             const int pageSize = 10;
-            var odemeOdemeNakitViewModel = new OdemeNakitViewListModel()
+            var nakitViewModel = new NakitViewListModel()
             {
                 PageInfo = new PageInfo
                 {
-                    TotalItem = _odemeOdemeNakitService.GetCount(null, sirketid, null, true),
+                    TotalItem = _nakitService.GetCount(null, sirketid, null, true),
                     CurrentPage = page,
                     ItemPerPage = pageSize,
                     UrlInfo = sirketid
                 },
-                OdemeNakits = _odemeOdemeNakitService.GetAll(null, sirketid, null, true, page, pageSize),
+                Nakits = _nakitService.GetAll(null, sirketid, null, true, page, pageSize),
             };
-            return View(odemeOdemeNakitViewModel);
+            return View(nakitViewModel);
         }
-        public IActionResult OdemeNakitBanka(int bankahesapid, int page = 1)
+        public IActionResult NakitBanka(int bankahesapid, int page = 1)
         {
             ViewBag.Sayfa = "NAKİT ÖDEMELER";
             const int pageSize = 10;
-            var odemeOdemeNakitViewModel = new OdemeNakitViewListModel()
+            var nakitViewModel = new NakitViewListModel()
             {
                 PageInfo = new PageInfo
                 {
-                    TotalItem = _odemeOdemeNakitService.GetCount(null, null, bankahesapid, true),
+                    TotalItem = _nakitService.GetCount(null, null, bankahesapid, true),
                     CurrentPage = page,
                     ItemPerPage = pageSize,
                     UrlInfo = bankahesapid
                 },
-                OdemeNakits = _odemeOdemeNakitService.GetAll(null, null, bankahesapid, true, page, pageSize),
+                Nakits = _nakitService.GetAll(null, null, bankahesapid, true, page, pageSize),
             };
-            return View(odemeOdemeNakitViewModel);
+            return View(nakitViewModel);
         }
 
         //EXCEL
-        public IActionResult OdemeNakitSantiye(int santiyeid)
+        public IActionResult NakitSantiye(int santiyeid)
         {
-            var odemeOdemeNakitViewModel = new OdemeNakitViewListModel()
+            var nakitViewModel = new NakitViewListModel()
             {
-                OdemeNakits = _odemeOdemeNakitService.GetAll(santiyeid, null, null, true),
+                Nakits = _nakitService.GetAll(santiyeid, null, null, true),
             };
 
             using (var workbook = new XLWorkbook())
@@ -571,16 +571,16 @@ namespace SantiyeOnMuh.WebUI.Controllers
                 #endregion
 
                 #region Body
-                foreach (var odemeOdemeNakit in odemeOdemeNakitViewModel.OdemeNakits)
+                foreach (var nakit in nakitViewModel.Nakits)
                 {
                     currentRow++;
-                    worksheet.Cell(currentRow, 1).Value = odemeOdemeNakit.Tarih;
-                    worksheet.Cell(currentRow, 2).Value = odemeOdemeNakit.Aciklama;
-                    worksheet.Cell(currentRow, 3).Value = odemeOdemeNakit.BankaHesap.BankaAd;
-                    worksheet.Cell(currentRow, 4).Value = odemeOdemeNakit.CariHesap.Ad;
-                    worksheet.Cell(currentRow, 5).Value = odemeOdemeNakit.Tutar;
+                    worksheet.Cell(currentRow, 1).Value = nakit.Tarih;
+                    worksheet.Cell(currentRow, 2).Value = nakit.Aciklama;
+                    worksheet.Cell(currentRow, 3).Value = nakit.BankaHesap.HesapAdi;
+                    worksheet.Cell(currentRow, 4).Value = nakit.CariHesap.Ad;
+                    worksheet.Cell(currentRow, 5).Value = nakit.Tutar;
 
-                    toplam = toplam + odemeOdemeNakit.Tutar;
+                    toplam = toplam + nakit.Tutar;
                     worksheet.Cell(currentRow, 6).Value = toplam;
 
                     for (int i = 1; i < 7; i++)
@@ -610,16 +610,16 @@ namespace SantiyeOnMuh.WebUI.Controllers
                     return File(
                         content,
                         "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-                        "OdemeNakitOdemeler.xlsx"
+                        "NakitOdemeler.xlsx"
                         );
                 }
             }
         }
-        public IActionResult OdemeNakitSirket(int sirketid)
+        public IActionResult NakitSirket(int sirketid)
         {
-            var odemeOdemeNakitViewModel = new OdemeNakitViewListModel()
+            var nakitViewModel = new NakitViewListModel()
             {
-                OdemeNakits = _odemeOdemeNakitService.GetAll(null, sirketid, null, true),
+                Nakits = _nakitService.GetAll(null, sirketid, null, true),
             };
 
             using (var workbook = new XLWorkbook())
@@ -644,16 +644,16 @@ namespace SantiyeOnMuh.WebUI.Controllers
                 #endregion
 
                 #region Body
-                foreach (var odemeOdemeNakit in odemeOdemeNakitViewModel.OdemeNakits)
+                foreach (var nakit in nakitViewModel.Nakits)
                 {
                     currentRow++;
-                    worksheet.Cell(currentRow, 1).Value = odemeOdemeNakit.Tarih;
-                    worksheet.Cell(currentRow, 2).Value = odemeOdemeNakit.Aciklama;
-                    worksheet.Cell(currentRow, 3).Value = odemeOdemeNakit.BankaHesap.BankaAd;
-                    worksheet.Cell(currentRow, 4).Value = odemeOdemeNakit.CariHesap.Ad;
-                    worksheet.Cell(currentRow, 5).Value = odemeOdemeNakit.Tutar;
+                    worksheet.Cell(currentRow, 1).Value = nakit.Tarih;
+                    worksheet.Cell(currentRow, 2).Value = nakit.Aciklama;
+                    worksheet.Cell(currentRow, 3).Value = nakit.BankaHesap.HesapAdi;
+                    worksheet.Cell(currentRow, 4).Value = nakit.CariHesap.Ad;
+                    worksheet.Cell(currentRow, 5).Value = nakit.Tutar;
 
-                    toplam = toplam + odemeOdemeNakit.Tutar;
+                    toplam = toplam + nakit.Tutar;
                     worksheet.Cell(currentRow, 6).Value = toplam;
 
                     for (int i = 1; i < 7; i++)
@@ -683,16 +683,16 @@ namespace SantiyeOnMuh.WebUI.Controllers
                     return File(
                         content,
                         "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-                        "OdemeNakitOdemeler.xlsx"
+                        "NakitOdemeler.xlsx"
                         );
                 }
             }
         }
-        public IActionResult OdemeNakitBankaHesap(int bankahesapid)
+        public IActionResult NakitBankaHesap(int bankahesapid)
         {
-            var odemeOdemeNakitViewModel = new OdemeNakitViewListModel()
+            var nakitViewModel = new NakitViewListModel()
             {
-                OdemeNakits = _odemeOdemeNakitService.GetAll(null, null, bankahesapid, true),
+                Nakits = _nakitService.GetAll(null, null, bankahesapid, true),
             };
 
             using (var workbook = new XLWorkbook())
@@ -717,16 +717,16 @@ namespace SantiyeOnMuh.WebUI.Controllers
                 #endregion
 
                 #region Body
-                foreach (var odemeOdemeNakit in odemeOdemeNakitViewModel.OdemeNakits)
+                foreach (var nakit in nakitViewModel.Nakits)
                 {
                     currentRow++;
-                    worksheet.Cell(currentRow, 1).Value = odemeOdemeNakit.Tarih;
-                    worksheet.Cell(currentRow, 2).Value = odemeOdemeNakit.Aciklama;
-                    worksheet.Cell(currentRow, 3).Value = odemeOdemeNakit.BankaHesap.BankaAd;
-                    worksheet.Cell(currentRow, 4).Value = odemeOdemeNakit.CariHesap.Ad;
-                    worksheet.Cell(currentRow, 5).Value = odemeOdemeNakit.Tutar;
+                    worksheet.Cell(currentRow, 1).Value = nakit.Tarih;
+                    worksheet.Cell(currentRow, 2).Value = nakit.Aciklama;
+                    worksheet.Cell(currentRow, 3).Value = nakit.BankaHesap.HesapAdi;
+                    worksheet.Cell(currentRow, 4).Value = nakit.CariHesap.Ad;
+                    worksheet.Cell(currentRow, 5).Value = nakit.Tutar;
 
-                    toplam = toplam + odemeOdemeNakit.Tutar;
+                    toplam = toplam + nakit.Tutar;
                     worksheet.Cell(currentRow, 6).Value = toplam;
 
                     for (int i = 1; i < 7; i++)
@@ -756,7 +756,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
                     return File(
                         content,
                         "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-                        "OdemeNakitOdemeler.xlsx"
+                        "NakitOdemeler.xlsx"
                         );
                 }
             }

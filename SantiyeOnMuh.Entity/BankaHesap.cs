@@ -10,14 +10,14 @@ namespace SantiyeOnMuh.Entity
     public class BankaHesap
     {
         public int Id { get; set; }
-        public string HesapAd { get; set; }
-        public string BankaAd { get; set; }
+        public string HesapAdi { get; set; }
+        public string BankaAdi { get; set; }
         public string HesapNo{ get; set; }
-        public string Iban { get; set; }
+        public string IbanNo { get; set; }
         public bool Durum { get; set; }
-        public List<OdemeCek> OdemeCeks { get; set; }
-        public List<OdemeNakit> OdemeNakits { get; set; }
-        public List<BankaKasa> BankaHesapKasas { get; set; }
+        public List<Cek> Ceks { get; set; }
+        public List<Nakit> Nakits { get; set; }
+        public List<BankaKasa> BankaKasas { get; set; }
         public BankaHesap()
         {
             Durum = true;

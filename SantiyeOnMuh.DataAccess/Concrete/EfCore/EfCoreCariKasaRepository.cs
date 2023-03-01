@@ -97,7 +97,7 @@ namespace SantiyeOnMuh.DataAccess.Concrete.EfCore
                     .ToList();
             }
         }
-        public int GetCountByCariHesapGK(int carihesapid, int? gkid, bool drm)
+        public int GetCount(int carihesapid, int? gkid, bool drm)
         {
             using (var context = new Context())
             {

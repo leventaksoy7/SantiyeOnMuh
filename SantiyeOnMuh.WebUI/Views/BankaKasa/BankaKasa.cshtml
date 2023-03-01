@@ -47,7 +47,7 @@
                 <a asp-controller="BankaKasa"
                asp-action="BankaKasa"
                asp-route-bankahesapid="@bankahesap.Id"
-                   class="btn btn-warning btn-sm">@bankahesap.HesapAd</a>
+                   class="btn btn-warning btn-sm">@bankahesap.HesapAdi</a>
             }
         </div>
         <br />
@@ -79,7 +79,7 @@
                         <tr>
                             <td style=" vertical-align: middle; width: 5%">@item.Tarih.ToString("dd/MM/yyyy")</td>
                             <td style=" vertical-align: middle; width: 30%">@item.Aciklama</td>
-                            <td style=" vertical-align: middle; width: 10%">@item.BankaHesap.HesapAd</td>
+                            <td style=" vertical-align: middle; width: 10%">@item.BankaHesap.HesapAdi</td>
                             <td style=" vertical-align: middle; width: 10%">@item.Nitelik</td>
                             <td style=" vertical-align: middle; width: 10%">@item.Giren</td>
                             <td style=" vertical-align: middle; width: 10%">@item.Cikan</td>

@@ -7,18 +7,18 @@ using System.Runtime.ConstrainedExecution;
 
 namespace SantiyeOnMuh.WebUI.Controllers
 {
-    public class OdemeCekController : Controller
+    public class CekController : Controller
     {
         // NESNELER ÜZERİNDEKİ İŞLEMLERİ _ OLAN NESNE ÜZERİNDE YAPIP SONRA AKTARIYORUZ - INJECTION
-        private IOdemeCekService _odemeCekService;
+        private ICekService _cekService;
         private ISirketService _sirketService;
         private ICariHesapService _cariHesapService;
         private IBankaHesapService _bankaHesapService;
         private IBankaKasaService _bankaKasaService;
         private ICariKasaService _cariKasaService;
         private ISantiyeService _santiyeService;
-        public OdemeCekController(
-            IOdemeCekService odemeCekService,
+        public CekController(
+            ICekService cekService,
             ISirketService sirketService,
             ICariHesapService cariHesapService,
             IBankaHesapService bankaHesapService,
@@ -26,7 +26,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
             ICariKasaService cariKasaService,
             ISantiyeService santiyeService)
         {
-            this._odemeCekService = odemeCekService;
+            this._cekService = cekService;
             this._sirketService = sirketService;
             this._cariHesapService = cariHesapService;
             this._bankaHesapService = bankaHesapService;
@@ -38,18 +38,18 @@ namespace SantiyeOnMuh.WebUI.Controllers
         {
             ViewBag.Sayfa = "ÇEKLER";
             const int pageSize = 10;
-            var odemeCekViewModel = new OdemeCekViewListModel()
+            var cekViewModel = new CekViewListModel()
             {
                 PageInfo = new PageInfo
                 {
-                    TotalItem = _odemeCekService.GetCount(null, null, null, true),
+                    TotalItem = _cekService.GetCount(null, null, null, true),
                     CurrentPage = page,
                     ItemPerPage = pageSize,
                     UrlInfo = null
                 },
-                OdemeCeks = _odemeCekService.GetAll(null, null, null, true, page, pageSize),
+                Ceks = _cekService.GetAll(null, null, null, true, page, pageSize),
             };
-            return View(odemeCekViewModel);
+            return View(cekViewModel);
         }
         [HttpGet]
         public IActionResult CekEkleme()
@@ -59,10 +59,10 @@ namespace SantiyeOnMuh.WebUI.Controllers
             ViewBag.Cari = _cariHesapService.GetAll(null, true);
             ViewBag.Banka = _bankaHesapService.GetAll(true);
 
-            return View(new OdemeCek());
+            return View(new Cek());
         }
         [HttpPost]
-        public async Task<IActionResult> CekEkleme(OdemeCek c, IFormFile file)
+        public async Task<IActionResult> CekEkleme(Cek c, IFormFile file)
         {
             #region RESİM VS. EKLENMEMİŞSE SAYFAYA GERİ GİDİYOR, GERİ GİDİLEN SAYFANIN İHTİYACI OLAN BİLGİLER
             ViewBag.Sayfa = "YENİ ÇEK EKLEME";
@@ -90,7 +90,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
             }
             else { return View(c); }
             #endregion
-            _odemeCekService.Create(c);
+            _cekService.Create(c);
             //CARİ KASA İÇİN ÇEK OLUŞTURULDU VE ÇEK KAYNAĞI İLE EKLENDİ
             CariKasa EntityCariKasa = new CariKasa()
             {
@@ -107,13 +107,13 @@ namespace SantiyeOnMuh.WebUI.Controllers
             };
             _cariKasaService.Create(EntityCariKasa);
             //ŞİMDİ DE ÇEKE, CARİ KAYNAĞI EKLENİYOR-GÜNCELLENİYOR
-            var EntityEklenenCek = _odemeCekService.GetById(c.Id);
+            var EntityEklenenCek = _cekService.GetById(c.Id);
             if (EntityEklenenCek == null)
             {
                 return NotFound();
             }
             EntityEklenenCek.CariKasaKaynak = EntityCariKasa.Id;
-            _odemeCekService.Update(EntityEklenenCek);
+            _cekService.Update(EntityEklenenCek);
 
             return RedirectToAction("Index");
         }
@@ -127,14 +127,14 @@ namespace SantiyeOnMuh.WebUI.Controllers
                 return NotFound();
             }
 
-            OdemeCek c = _odemeCekService.GetById((int)cekid);
+            Cek c = _cekService.GetByIdDetay((int)cekid);
 
             if (c == null)
             {
                 return NotFound();
             }
 
-            var entity = _odemeCekService.GetById(c.Id);
+            var entity = _cekService.GetById(c.Id);
 
             if (entity == null)
             {
@@ -163,7 +163,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
             entity.SonGuncelleme = DateTime.Now;
             entity.BankaKasaKaynak = EntityBankaKasa.Id;
 
-            _odemeCekService.Update(entity);
+            _cekService.Update(entity);
 
             return RedirectToAction("Index");
         }
@@ -179,7 +179,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
             {
                 return NotFound();
             }
-            OdemeCek cek = _odemeCekService.GetById((int)cekid);
+            Cek cek = _cekService.GetById((int)cekid);
 
             if (cek == null)
             {
@@ -188,17 +188,17 @@ namespace SantiyeOnMuh.WebUI.Controllers
             return View(cek);
         }
         [HttpPost]
-        public IActionResult CekGuncelle(OdemeCek c)
+        public IActionResult CekGuncelle(Cek c)
         {
-            var entityOdemeCek = _odemeCekService.GetById(c.Id);
+            var entityCek = _cekService.GetById(c.Id);
 
-            if (entityOdemeCek == null)
+            if (entityCek == null)
             {
                 return NotFound();
             }
 
-            int? bankakasaid = entityOdemeCek.BankaKasaKaynak;
-            int? carikasaid = entityOdemeCek.CariKasaKaynak;
+            int? bankakasaid = entityCek.BankaKasaKaynak;
+            int? carikasaid = entityCek.CariKasaKaynak;
 
             if (bankakasaid != null)
             {
@@ -209,10 +209,10 @@ namespace SantiyeOnMuh.WebUI.Controllers
                     return NotFound();
                 }
 
-                entityBankaKasa.Tarih = entityOdemeCek.Tarih;
-                entityBankaKasa.Aciklama = FirmaAdiForAciklama + " AİT " + entityOdemeCek.CekNo + " NOLU ÇEK ÖDEMESİ" + " - " + entityOdemeCek.Aciklama;
-                entityBankaKasa.Cikan = entityOdemeCek.Tutar;
-                entityBankaKasa.BankaHesapId = entityOdemeCek.BankaHesapId;
+                entityBankaKasa.Tarih = entityCek.Tarih;
+                entityBankaKasa.Aciklama = FirmaAdiForAciklama + " AİT " + entityCek.CekNo + " NOLU ÇEK ÖDEMESİ" + " - " + entityCek.Aciklama;
+                entityBankaKasa.Cikan = entityCek.Tutar;
+                entityBankaKasa.BankaHesapId = entityCek.BankaHesapId;
                 entityBankaKasa.SonGuncelleme = DateTime.Now;
 
                 _bankaKasaService.Update(entityBankaKasa);
@@ -235,22 +235,22 @@ namespace SantiyeOnMuh.WebUI.Controllers
                 _cariKasaService.Update(entityCariKasa);
             }
 
-            entityOdemeCek.Tarih = c.Tarih;
-            entityOdemeCek.Aciklama = c.Aciklama;
-            entityOdemeCek.CekNo = c.CekNo;
-            entityOdemeCek.Tutar = c.Tutar;
-            entityOdemeCek.ImgUrl = c.ImgUrl;
-            entityOdemeCek.SonGuncelleme = System.DateTime.Now;
-            entityOdemeCek.CariHesapId = c.CariHesapId;
-            entityOdemeCek.SirketId = c.SirketId;
-            entityOdemeCek.BankaHesapId = c.BankaHesapId;
+            entityCek.Tarih = c.Tarih;
+            entityCek.Aciklama = c.Aciklama;
+            entityCek.CekNo = c.CekNo;
+            entityCek.Tutar = c.Tutar;
+            entityCek.ImgUrl = c.ImgUrl;
+            entityCek.SonGuncelleme = System.DateTime.Now;
+            entityCek.CariHesapId = c.CariHesapId;
+            entityCek.SirketId = c.SirketId;
+            entityCek.BankaHesapId = c.BankaHesapId;
 
-            _odemeCekService.Update(entityOdemeCek);
+            _cekService.Update(entityCek);
 
             return RedirectToAction("Index");
         }
         [HttpGet]
-        public IActionResult Cek(int? cekid)
+        public IActionResult CekDetay(int? cekid)
         {
             ViewBag.Sayfa = "ÇEK DETAYI";
 
@@ -259,7 +259,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
                 return NotFound();
             }
 
-            OdemeCek cek = _odemeCekService.GetById((int)cekid);
+            Cek cek = _cekService.GetByIdDetay((int)cekid);
 
             if (cek == null)
             {
@@ -277,7 +277,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
             {
                 return NotFound();
             }
-            OdemeCek cek = _odemeCekService.GetById((int)cekid);
+            Cek cek = _cekService.GetByIdDetay((int)cekid);
 
             if (cek == null)
             {
@@ -286,9 +286,9 @@ namespace SantiyeOnMuh.WebUI.Controllers
             return View(cek);
         }
         [HttpPost]
-        public IActionResult CekSil(OdemeCek c)
+        public IActionResult CekSil(Cek c)
         {
-            var entityCek = _odemeCekService.GetById(c.Id);
+            var entityCek = _cekService.GetByIdDetay(c.Id);
 
             if (entityCek == null)
             {
@@ -331,7 +331,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
                 _cariKasaService.Update(entityCariKasa);
             }
 
-            _odemeCekService.Update(entityCek);
+            _cekService.Update(entityCek);
 
             return RedirectToAction("Index");
         }
@@ -340,9 +340,9 @@ namespace SantiyeOnMuh.WebUI.Controllers
         //EXCEL
         public IActionResult CekExcel()
         {
-            var cekViewModel = new OdemeCekViewListModel()
+            var cekViewModel = new CekViewListModel()
             {
-                OdemeCeks = _odemeCekService.GetAll(null, null, null, true),
+                Ceks = _cekService.GetAll(null, null, null, true),
             };
 
             using (var workbook = new XLWorkbook())
@@ -369,7 +369,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
                 #endregion
 
                 #region Body
-                foreach (var cek in cekViewModel.OdemeCeks)
+                foreach (var cek in cekViewModel.Ceks)
                 {
                     currentRow++;
                     worksheet.Cell(currentRow, 1).Value = cek.Tarih;
@@ -428,16 +428,16 @@ namespace SantiyeOnMuh.WebUI.Controllers
         {
             ViewBag.Sayfa = "SİLİNMİŞ ÇEKLER";
             const int pageSize = 10;
-            var cekViewModel = new OdemeCekViewListModel()
+            var cekViewModel = new CekViewListModel()
             {
                 PageInfo = new PageInfo
                 {
-                    TotalItem = _odemeCekService.GetCount(null, null, null, false),
+                    TotalItem = _cekService.GetCount(null, null, null, false),
                     CurrentPage = page,
                     ItemPerPage = pageSize,
                     UrlInfo = null
                 },
-                OdemeCeks = _odemeCekService.GetAll(null, null, null, false, page, pageSize),
+                Ceks = _cekService.GetAll(null, null, null, false, page, pageSize),
             };
             return View(cekViewModel);
         }
@@ -453,10 +453,10 @@ namespace SantiyeOnMuh.WebUI.Controllers
 
             ViewBag.CariHesapId = carihesapid;
 
-            return View(new OdemeCek());
+            return View(new Cek());
         }
         [HttpPost]
-        public async Task<IActionResult> CekEklemeFromCari(OdemeCek c, IFormFile file)
+        public async Task<IActionResult> CekEklemeFromCari(Cek c, IFormFile file)
         {
             #region  RESİM VS. EKLENMEMİŞSE SAYFAYA GERİ GİDİYOR, GERİ GİDİLEN SAYFANIN İHTİYACI OLAN BİLGİLER
             ViewBag.Sayfa = _cariHesapService.GetById((int)c.CariHesapId).Ad + " CARİSİNE YENİ ÇEK GİRİŞİ";
@@ -487,7 +487,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
             }
             else { return View(c); }
             #endregion
-            _odemeCekService.Create(c);
+            _cekService.Create(c);
             //CARİ KASA İÇİN ÇEK OLUŞTURULDU VE ÇEK KAYNAĞI İLE EKLENDİ
             CariKasa EntityCariKasa = new CariKasa()
             {
@@ -504,14 +504,14 @@ namespace SantiyeOnMuh.WebUI.Controllers
             };
             _cariKasaService.Create(EntityCariKasa);
             //ŞİMDİ DE ÇEKE, CARİ KAYNAĞI EKLENİYOR-GÜNCELLENİYOR
-            var EntityEklenenCek = _odemeCekService.GetById(c.Id);
+            var EntityEklenenCek = _cekService.GetById(c.Id);
             if (EntityEklenenCek == null)
             {
                 return NotFound();
             }
             EntityEklenenCek.CariKasaKaynak = EntityCariKasa.Id;
 
-            _odemeCekService.Update(EntityEklenenCek);
+            _cekService.Update(EntityEklenenCek);
 
             return RedirectToAction("CariKasa", "CariKasa", new { carihesapid = c.CariHesapId });
         }
@@ -521,7 +521,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
         public IActionResult AraSecim()
         {
             ViewBag.Sayfa = "ÇEKLER";
-            var cekViewModel = new OdemeCekViewListModel()
+            var cekViewModel = new CekViewListModel()
             {
                 Santiyes = _santiyeService.GetAll(true),
                 BankaHesaps = _bankaHesapService.GetAll(true),
@@ -534,16 +534,16 @@ namespace SantiyeOnMuh.WebUI.Controllers
         {
             ViewBag.Sayfa = "ÇEKLER";
             const int pageSize = 10;
-            var cekViewModel = new OdemeCekViewListModel()
+            var cekViewModel = new CekViewListModel()
             {
                 PageInfo = new PageInfo
                 {
-                    TotalItem = _odemeCekService.GetCount(santiyeid, null, null, true),
+                    TotalItem = _cekService.GetCount(santiyeid, null, null, true),
                     CurrentPage = page,
                     ItemPerPage = pageSize,
                     UrlInfo = santiyeid
                 },
-                OdemeCeks = _odemeCekService.GetAll(santiyeid, null, null, true, page, pageSize),
+                Ceks = _cekService.GetAll(santiyeid, null, null, true, page, pageSize),
             };
             return View(cekViewModel);
         }
@@ -551,16 +551,16 @@ namespace SantiyeOnMuh.WebUI.Controllers
         {
             ViewBag.Sayfa = "ÇEKLER";
             const int pageSize = 10;
-            var cekViewModel = new OdemeCekViewListModel()
+            var cekViewModel = new CekViewListModel()
             {
                 PageInfo = new PageInfo
                 {
-                    TotalItem = _odemeCekService.GetCount(null, sirketid, null, true),
+                    TotalItem = _cekService.GetCount(null, sirketid, null, true),
                     CurrentPage = page,
                     ItemPerPage = pageSize,
                     UrlInfo = sirketid
                 },
-                OdemeCeks = _odemeCekService.GetAll(null, sirketid, null, true, page, pageSize),
+                Ceks = _cekService.GetAll(null, sirketid, null, true, page, pageSize),
             };
             return View(cekViewModel);
         }
@@ -568,16 +568,16 @@ namespace SantiyeOnMuh.WebUI.Controllers
         {
             ViewBag.Sayfa = "ÇEKLER";
             const int pageSize = 10;
-            var cekViewModel = new OdemeCekViewListModel()
+            var cekViewModel = new CekViewListModel()
             {
                 PageInfo = new PageInfo
                 {
-                    TotalItem = _odemeCekService.GetCount(null, null, bankahesapid, true),
+                    TotalItem = _cekService.GetCount(null, null, bankahesapid, true),
                     CurrentPage = page,
                     ItemPerPage = pageSize,
                     UrlInfo = bankahesapid
                 },
-                OdemeCeks = _odemeCekService.GetAll(null, null, bankahesapid, true, page, pageSize),
+                Ceks = _cekService.GetAll(null, null, bankahesapid, true, page, pageSize),
             };
             return View(cekViewModel);
         }
@@ -585,9 +585,9 @@ namespace SantiyeOnMuh.WebUI.Controllers
         //BASİT FİLTRE EXCEL
         public IActionResult CekSantiyeExcel(int santiyeid)
         {
-            var cekViewModel = new OdemeCekViewListModel()
+            var cekViewModel = new CekViewListModel()
             {
-                OdemeCeks = _odemeCekService.GetAll(santiyeid, null, null, true),
+                Ceks = _cekService.GetAll(santiyeid, null, null, true),
             };
 
             using (var workbook = new XLWorkbook())
@@ -614,7 +614,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
                 #endregion
 
                 #region Body
-                foreach (var cek in cekViewModel.OdemeCeks)
+                foreach (var cek in cekViewModel.Ceks)
                 {
                     currentRow++;
                     worksheet.Cell(currentRow, 1).Value = cek.Tarih;
@@ -670,9 +670,9 @@ namespace SantiyeOnMuh.WebUI.Controllers
         }
         public IActionResult CekSirketExcel(int sirketid)
         {
-            var cekViewModel = new OdemeCekViewListModel()
+            var cekViewModel = new CekViewListModel()
             {
-                OdemeCeks = _odemeCekService.GetAll(null, sirketid, null, true),
+                Ceks = _cekService.GetAll(null, sirketid, null, true),
             };
 
             using (var workbook = new XLWorkbook())
@@ -699,7 +699,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
                 #endregion
 
                 #region Body
-                foreach (var cek in cekViewModel.OdemeCeks)
+                foreach (var cek in cekViewModel.Ceks)
                 {
                     currentRow++;
                     worksheet.Cell(currentRow, 1).Value = cek.Tarih;
@@ -755,9 +755,9 @@ namespace SantiyeOnMuh.WebUI.Controllers
         }
         public IActionResult CekBankaExcel(int bankahesapid)
         {
-            var cekViewModel = new OdemeCekViewListModel()
+            var cekViewModel = new CekViewListModel()
             {
-                OdemeCeks = _odemeCekService.GetAll(null, null, bankahesapid, true),
+                Ceks = _cekService.GetAll(null, null, bankahesapid, true),
             };
 
             using (var workbook = new XLWorkbook())
@@ -784,7 +784,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
                 #endregion
 
                 #region Body
-                foreach (var cek in cekViewModel.OdemeCeks)
+                foreach (var cek in cekViewModel.Ceks)
                 {
                     currentRow++;
                     worksheet.Cell(currentRow, 1).Value = cek.Tarih;

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace SantiyeOnMuh.Entity
 {
-    public class OdemeCek
+    public class Cek
     {
         public int Id { get; set; }
         [Required(ErrorMessage = "TARİH GİRMELİSİNİZ")]
@@ -30,7 +30,7 @@ namespace SantiyeOnMuh.Entity
         public Sirket Sirket { get; set; }
         public int BankaHesapId { get; set; }
         public BankaHesap BankaHesap { get; set; }
-        public OdemeCek()
+        public Cek()
         {
             Tarih = System.DateTime.Now;
 

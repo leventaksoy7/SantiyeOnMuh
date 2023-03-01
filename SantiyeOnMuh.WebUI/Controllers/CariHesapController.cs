@@ -27,7 +27,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
             {
                 PageInfo = new PageInfo
                 {
-                    TotalItem = _cariHesapService.GetCountBySantiye(santiyeid, true),
+                    TotalItem = _cariHesapService.GetCount(santiyeid, true),
                     CurrentPage = page,
                     ItemPerPage = pageSize,
                     UrlInfo = (int?)santiyeid
@@ -150,7 +150,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
             {
                 PageInfo = new PageInfo
                 {
-                    TotalItem = _cariHesapService.GetCountBySantiye(santiyeid, true),
+                    TotalItem = _cariHesapService.GetCount(santiyeid, true),
                     CurrentPage = page,
                     ItemPerPage = pageSize,
                     UrlInfo = (int?)santiyeid
@@ -214,7 +214,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
             {
                 PageInfo = new PageInfo
                 {
-                    TotalItem = _cariHesapService.GetCountBySantiye(santiyeid, false),
+                    TotalItem = _cariHesapService.GetCount(santiyeid, false),
                     CurrentPage = page,
                     ItemPerPage = pageSize,
                     UrlInfo = (int?)santiyeid

@@ -32,7 +32,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
             {
                 PageInfo = new PageInfo
                 {
-                    TotalItem = _cariKasaService.GetCountByCariHesapGK((int)carihesapid, (int?)gkid, true),
+                    TotalItem = _cariKasaService.GetCount((int)carihesapid, (int?)gkid, true),
                     CurrentPage = page,
                     ItemPerPage = pageSize,
                     UrlInfo = (int?)carihesapid

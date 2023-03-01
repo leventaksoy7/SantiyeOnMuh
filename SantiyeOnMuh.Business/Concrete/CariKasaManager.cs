@@ -57,9 +57,9 @@ namespace SantiyeOnMuh.Business.Concrete
             return _cariKasaRepository.GetAll(carihesapid,gkid, drm, page, pageSize);
         }
 
-        public int GetCountByCariHesapGK(int carihesapid, int? gkid, bool drm)
+        public int GetCount(int carihesapid, int? gkid, bool drm)
         {
-            return _cariKasaRepository.GetCountByCariHesapGK(carihesapid,gkid,drm);
+            return _cariKasaRepository.GetCount(carihesapid,gkid,drm);
         }
     }
 }

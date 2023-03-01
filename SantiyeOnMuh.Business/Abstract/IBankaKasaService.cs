@@ -12,6 +12,6 @@ namespace SantiyeOnMuh.Business.Abstract
         BankaKasa GetByIdDetay(int id);
         List<BankaKasa> GetAll(int? bankahesapid, bool drm);
         List<BankaKasa> GetAll(int? bankahesapid, bool drm, int page, int pageSize);
-        int GetCountByBankaHesap(int? bankahesapid, bool drm);
+        int GetCount(int? bankahesapid, bool drm);
     }
 }

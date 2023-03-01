@@ -1,13 +1,13 @@
-﻿<!DOCTYPE html>
+﻿@*<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <title>@ViewData["Title"] - SantiyeOnMuh.WebUI</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />*@
     @*<link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />*@
     @*<link rel="stylesheet" href="~/SantiyeOnMuh.WebUI.styles.css" asp-append-version="true" />*@
-</head>
+@*</head>
 <body>
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
@@ -15,7 +15,7 @@
                  @await Html.PartialAsync("_navbar")
             </div>
         </nav>
-    </header>
+    </header>*@
     @*
     ORJİNAL
     <header>
@@ -40,7 +40,7 @@
         </nav>
     </header>
     *@
-    <div class="container">
+@*    <div class="container">
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
@@ -56,5 +56,94 @@
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
     
+</body>
+</html>*@
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>OSMAN ACAR İNŞAAT</title>
+
+    <link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
+
+    <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+</head>
+<body>
+    <div class="w3-sidebar w3-bar-block w3-card bg-success" style="display:none" id="mySidebar">
+        <button class="w3-bar-item w3-button bg-info w3-large font-weight-bold"
+                onclick="w3_close()">
+            KAPAT &times;
+        </button>
+
+        <a href="/AnaSayfa/AnaSayfa" class="w3-bar-item w3-button w3-padding"><i class="fas fa-home"></i>  ANA SAYFA</a>
+        <br />
+        <a href="/Admin/Index" class="w3-bar-item w3-button w3-padding"><i class="fas fa-university"></i>  ADMİN</a>
+        <br />
+        <a href="/Santiye/Index" class="w3-bar-item w3-button w3-padding"><i class="fas fa-snowplow"></i>  ŞANTİYE</a>
+        <br />
+        <a href="/CariHesap/CariHesap" class="w3-bar-item w3-button w3-padding"><i class="fa fa-copy"></i>  CARİ HESAPLAR</a>
+        <br />
+        <a href="/BankaKasa/BankaKasa" class="w3-bar-item w3-button w3-padding"><i class="fas fa-cash-register"></i>  ANA KASA</a>
+        <br />
+        <a href="/Cek/Index" class="w3-bar-item w3-button w3-padding"><i class="fa fa-ticket"></i> ÇEK</a>
+
+        @*<a href="/Nakit/Index" class="w3-bar-item w3-button w3-padding"><i class="fa fa-turkish-lira"></i> NAKİT</a>
+        <a href="/CariGK/Index" class="w3-bar-item w3-button w3-padding"><i class="fa fa-bookmark"></i>  CARİ KALEMLER</a>
+        <a href="/Sirket/Index" class="w3-bar-item w3-button w3-padding"><i class="fa fa-building-o"></i>  ŞİRKET</a>
+        <a href="/BankaHesap/Index" class="w3-bar-item w3-button w3-padding"><i class="fas fa-university"></i>  BANKA HESAPLARI</a>
+        <a href="/Kullanici/Index" class="w3-bar-item w3-button w3-padding"><i class="fas fa-user-cog"></i>  KULLANICILAR</a>
+        <a href="/Taseron/Index" class="w3-bar-item w3-button w3-padding"><i class="fas fa-handshake"></i> TAŞÖRENLER</a>
+        <a href="/Personel/Index" class="w3-bar-item w3-button w3-padding"><i class="fas fa-users"></i> PERSONELLER</a>*@
+
+        <br />
+        <br />
+        <a href="#" class="w3-bar-item w3-button w3-padding"><i class="fas fa-power-off"></i> ÇIKIŞ</a>
+    </div>
+
+    <div id="main">
+        <div class="bg-info">
+            <button id="openNav" class="w3-button w3-teal w3-xlarge" onclick="w3_open()">&#9776;</button>
+            <div class="w3-container text-white">
+                <h1 style="color:black; text-align:center; vertical-align:middle; font-weight:bold">@ViewBag.Sayfa</h1>
+            </div>
+        </div>
+
+        <div class="w3-container">
+            @RenderBody()
+            <p></p>
+        </div>
+    </div>
+
+    <script>
+        function w3_open() {
+            document.getElementById("main").style.marginLeft = "25%";
+            document.getElementById("mySidebar").style.width = "25%";
+            document.getElementById("mySidebar").style.display = "block";
+            document.getElementById("openNav").style.display = 'none';
+        }
+        function w3_close() {
+            document.getElementById("main").style.marginLeft = "0%";
+            document.getElementById("mySidebar").style.display = "none";
+            document.getElementById("openNav").style.display = "inline-block";
+        }
+    </script>
+
 </body>
 </html>

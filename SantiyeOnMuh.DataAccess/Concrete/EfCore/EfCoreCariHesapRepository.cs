@@ -76,7 +76,7 @@ namespace SantiyeOnMuh.DataAccess.Concrete.EfCore
                     .ToList();
             }
         }
-        public int GetCountBySantiye(int? santiyeid, bool drm)
+        public int GetCount(int? santiyeid, bool drm)
         {
             using (var context = new Context())
             {

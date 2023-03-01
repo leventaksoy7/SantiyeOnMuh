@@ -33,7 +33,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
             {
                 PageInfo = new PageInfo
                 {
-                    TotalItem = _bankaKasaService.GetCountByBankaHesap(bankahesapid, true),
+                    TotalItem = _bankaKasaService.GetCount(bankahesapid, true),
                     CurrentPage = page,
                     ItemPerPage = pageSize,
                     UrlInfo = (int?)bankahesapid
@@ -156,7 +156,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
                     currentRow++;
                     worksheet.Cell(currentRow, 1).Value = bankakasa.Tarih;
                     worksheet.Cell(currentRow, 2).Value = bankakasa.Aciklama;
-                    worksheet.Cell(currentRow, 3).Value = bankakasa.BankaHesap.BankaAd;
+                    worksheet.Cell(currentRow, 3).Value = bankakasa.BankaHesap.BankaAdi;
                     worksheet.Cell(currentRow, 4).Value = bankakasa.Nitelik;
                     worksheet.Cell(currentRow, 5).Value = bankakasa.Giren;
                     worksheet.Cell(currentRow, 6).Value = bankakasa.Cikan;
@@ -191,7 +191,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
             {
                 PageInfo = new PageInfo
                 {
-                    TotalItem = _bankaKasaService.GetCountByBankaHesap(bankahesapid, false),
+                    TotalItem = _bankaKasaService.GetCount(bankahesapid, false),
                     CurrentPage = page,
                     ItemPerPage = pageSize,
                     UrlInfo = (int?)bankahesapid
@@ -242,8 +242,8 @@ namespace SantiyeOnMuh.WebUI.Controllers
             var GonderenBankaHesabi = _bankaHesapService.GetById((int)b.GonderenBanka);
             var AliciBankaHesabi = _bankaHesapService.GetById((int)b.AliciBanka);
 
-            var GonderenHesapAdi = GonderenBankaHesabi.BankaAd;
-            var AliciHesapAdi = AliciBankaHesabi.BankaAd;
+            var GonderenHesapAdi = GonderenBankaHesabi.BankaAdi;
+            var AliciHesapAdi = AliciBankaHesabi.BankaAdi;
 
             EFTGonderenHesap.Tarih = b.Tarih;
             EFTGonderenHesap.Aciklama = AliciHesapAdi + " HESABINA GÖNDERİLEN EFT" + " - " + b.Aciklama;
@@ -279,7 +279,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
         public IActionResult BankaKasaEklemeSantiyeEft(BankaKasaEftSantiyeModel b)
         {
             //ARA MODELE DAYANARAK BANKA KASA MODELİ TANIMLANDI VE EKLENDİ
-            string bankahesapadi = _bankaHesapService.GetById((int)b.BankaHesapId).BankaAd;
+            string bankahesapadi = _bankaHesapService.GetById((int)b.BankaHesapId).BankaAdi;
             string santiyeadi = _santiyeService.GetById((int)b.SantiyeId).Ad;
 
             BankaKasa entityBankaKasa = new BankaKasa()
@@ -354,7 +354,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
         {
             #region BANKA HESAP ADI VE ŞANTİYE HESAP ADINI BULUYORUZ
             //ARA MODELE DAYANARAK BANKA KASA MODELİ TANIMLANDI VE EKLENDİ
-            string bankahesapadi = _bankaHesapService.GetById((int)b.BankaHesapId).BankaAd;
+            string bankahesapadi = _bankaHesapService.GetById((int)b.BankaHesapId).BankaAdi;
             //string santiyeadi = _santiyeService.GetById((int)b.SantiyeId).Ad;
             #endregion
 
@@ -407,7 +407,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
             #endregion
 
             ViewBag.Santiye = _santiyeService.GetById((int)bankaKasa.SantiyeKasaKaynak).Ad;
-            ViewBag.BankaHesap = _bankaHesapService.GetById((int)bankaKasa.BankaHesapId).BankaAd;
+            ViewBag.BankaHesap = _bankaHesapService.GetById((int)bankaKasa.BankaHesapId).BankaAdi;
 
             BankaKasaEftSantiyeModel bankaKasaEftSantiyeModel = new BankaKasaEftSantiyeModel()
             {

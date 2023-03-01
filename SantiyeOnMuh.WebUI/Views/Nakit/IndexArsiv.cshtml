@@ -11,13 +11,10 @@
         <br />
         <div>
             <a asp-controller="Nakit" asp-action="Index" class="btn btn-primary btn-sm">TÜM NAKİT ÖDEMELER</a>
-            <a asp-controller="Nakit" asp-action="AraSecim" class="btn btn-warning btn-sm">FİLTRE</a>
-            <a asp-controller="Nakit" asp-action="NakitArsiv" class="btn btn-dark btn-sm">SİLİNMİŞ ÖDEMELER</a>
-            <a asp-controller="Nakit" asp-action="NakitEkleme" class="btn btn-primary btn-sm">YENİ NAKİT EKLE</a>
+            <a asp-controller="Nakit" asp-action="IndexArsiv" class="btn btn-dark btn-sm">ARŞİV</a>
         </div>
         <br />
     </div>
-    <br />
     <br />
     <div>
         <div class="col-md-12">
@@ -30,8 +27,6 @@
                     <th style="vertical-align: middle; width: 10%">FİRMA</th>
                     <th style="vertical-align: middle; width: 10%">BANKA</th>
                     <th style="vertical-align: middle; width: 10%">DETAY</th>
-                    <th style="vertical-align: middle; width: 10%">GÜNCELLE</th>
-                    <th style="vertical-align: middle; width: 10%">SİL</th>
                 </tr>
                 @if (Model.Nakits.Count == 0)
                 {
@@ -47,10 +42,8 @@
                             <td style="vertical-align: middle; width: 10%">@item.Tutar</td>
                             <td style="vertical-align: middle; width: 15%">@item.Sirket.Ad</td>
                             <td style="vertical-align: middle; width: 10%">@item.CariHesap.Ad</td>
-                            <td style="vertical-align: middle; width: 10%">@item.BankaHesap.Ad</td>
-                            <td style="vertical-align: middle; width: 10%"><a asp-controller="Nakit" asp-action="NakitDetay" asp-route-id="@item.Id" class="btn btn-info btn-sm">DETAY</a></td>
-                            <td style="vertical-align: middle; width: 10%"><a asp-controller="Nakit" asp-action="NakitGuncelle" asp-route-id="@item.Id" class="btn btn-success btn-sm">GÜNCELLEME</a></td>
-                            <td style="vertical-align: middle; width: 10%"><a asp-controller="Nakit" asp-action="NakitSil" asp-route-id="@item.Id" class="btn btn-danger btn-sm">SİL</a></td>
+                            <td style="vertical-align: middle; width: 10%">@item.BankaHesap.HesapAdi</td>
+                            <td style="vertical-align: middle; width: 10%"><a asp-controller="Nakit" asp-action="NakitGeriYukle" asp-route-id="@item.Id" class="btn btn-success btn-sm">GERİ YÜKLE</a></td>
                         </tr>
                     }
                 }
@@ -64,7 +57,7 @@
                 @for (int i = 0; i < Model.PageInfo.TotalPages(); i++)
                 {
                     <li class="page-item">
-                        <a class="page-link" href="/Nakit/NakitSantiye/@Model.PageInfo.UrlInfo?page=@(i + 1)">
+                        <a class="page-link" href="/Nakit/Index?page=@(i + 1)">
                             @(1 + i)
                         </a>
                     </li>
@@ -73,11 +66,10 @@
         </nav>
     </div>
     <br />
-    <div>
-        <a asp-controller="Nakit"
-           asp-action="NakitSantiyeExcel"
-           asp-route-bankahesapid=@Model.PageInfo.UrlInfo
-           class="btn btn-light btn-sm">EXCEL</a>
-    </div>
+    @*<div>
+    <a asp-controller="Nakit"
+    asp-action="NakitExcel"
+    class="btn btn-light btn-sm">EXCEL</a>
+    </div>*@
 </body>
 </html>

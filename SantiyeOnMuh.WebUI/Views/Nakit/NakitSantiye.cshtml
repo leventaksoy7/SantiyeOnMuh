@@ -47,7 +47,7 @@
                             <td style="vertical-align: middle; width: 10%">@item.Tutar</td>
                             <td style="vertical-align: middle; width: 15%">@item.Sirket.Ad</td>
                             <td style="vertical-align: middle; width: 10%">@item.CariHesap.Ad</td>
-                            <td style="vertical-align: middle; width: 10%">@item.BankaHesap.Ad</td>
+                            <td style="vertical-align: middle; width: 10%">@item.BankaHesap.HesapAdi</td>
                             <td style="vertical-align: middle; width: 10%"><a asp-controller="Nakit" asp-action="NakitDetay" asp-route-id="@item.Id" class="btn btn-info btn-sm">DETAY</a></td>
                             <td style="vertical-align: middle; width: 10%"><a asp-controller="Nakit" asp-action="NakitGuncelle" asp-route-id="@item.Id" class="btn btn-success btn-sm">GÜNCELLEME</a></td>
                             <td style="vertical-align: middle; width: 10%"><a asp-controller="Nakit" asp-action="NakitSil" asp-route-id="@item.Id" class="btn btn-danger btn-sm">SİL</a></td>
@@ -76,7 +76,7 @@
     <div>
         <a asp-controller="Nakit"
            asp-action="NakitSantiyeExcel"
-           asp-route-sirketid=@Model.PageInfo.UrlInfo
+           asp-route-santiyeid=@Model.PageInfo.UrlInfo
            class="btn btn-light btn-sm">EXCEL</a>
     </div>
 </body>

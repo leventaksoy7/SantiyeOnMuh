@@ -13,8 +13,8 @@ namespace SantiyeOnMuh.Entity
         public string Ad { get; set; }
         public string VergiNo { get; set; }
         public bool Durum { get; set; }
-        public List<OdemeCek> Ceks { get; set; }
-        public List<OdemeNakit> Nakits { get; set; }
+        public List<Cek> Ceks { get; set; }
+        public List<Nakit> Nakits { get; set; }
         public Sirket()
         {
             Durum = true;

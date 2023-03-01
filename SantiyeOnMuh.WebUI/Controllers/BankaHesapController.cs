@@ -50,10 +50,10 @@ namespace SantiyeOnMuh.WebUI.Controllers
             {
                 return NotFound();
             }
-            entityBankaHesap.HesapAd = b.HesapAd;
-            entityBankaHesap.BankaAd = b.BankaAd;
+            entityBankaHesap.HesapAdi = b.HesapAdi;
+            entityBankaHesap.BankaAdi = b.BankaAdi;
             entityBankaHesap.HesapNo = b.HesapNo;
-            entityBankaHesap.Iban = b.Iban;
+            entityBankaHesap.IbanNo = b.IbanNo;
 
             _bankaHesapService.Update(entityBankaHesap);
             return RedirectToAction("Index", "Admin");

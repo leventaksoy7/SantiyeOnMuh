@@ -57,9 +57,9 @@ namespace SantiyeOnMuh.Business.Concrete
             return _bankaKasaRepository.GetAll(bankahesapid,drm,page,pageSize);
         }
 
-        public int GetCountByBankaHesap(int? bankahesapid, bool drm)
+        public int GetCount(int? bankahesapid, bool drm)
         {
-            return _bankaKasaRepository.GetCountByBankaHesap(bankahesapid, drm);
+            return _bankaKasaRepository.GetCount(bankahesapid, drm);
         }
     }
 }

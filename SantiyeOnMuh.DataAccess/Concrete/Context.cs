@@ -18,8 +18,8 @@ namespace SantiyeOnMuh.DataAccess.Concrete
         public DbSet<CariGiderKalemi> CariGiderKalemis { get; set; }
         public DbSet<BankaHesap> BankaHesaps { get; set; }
         public DbSet<BankaKasa> BankaKasas { get; set; }
-        public DbSet<OdemeCek> OdemeCeks { get; set; }
-        public DbSet<OdemeNakit> OdemeNakits { get; set; }
+        public DbSet<Cek> Ceks { get; set; }
+        public DbSet<Nakit> Nakits { get; set; }
         public DbSet<Sirket> Sirkets { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

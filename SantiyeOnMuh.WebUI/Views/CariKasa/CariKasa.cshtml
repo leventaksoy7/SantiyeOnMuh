@@ -45,7 +45,7 @@
                asp-route-carihesapid="@cari.Id"
                asp-route-gkid="@null"
                class="btn btn-warning btn-sm">TÜM KALEMLER</a>
-            @foreach (var gk in Model.CariKasaGKs)
+            @foreach (var gk in Model.CariGiderKalemis)
             {
                 <a asp-controller="CariKasa"
                asp-action="CariKasa"
@@ -112,7 +112,7 @@
                 @foreach (var fatura in Model.CariKasas)
                 {
                     <tr>
-                        <td>@fatura.CariGK.Ad</td>
+                        <td>@fatura.CariGiderKalemi.Ad</td>
                         <td>@fatura.Tarih.ToString("dd/MM/yyyy")</td>
                         <td>@fatura.Aciklama</td>
                         <td>@fatura.Miktar</td>
