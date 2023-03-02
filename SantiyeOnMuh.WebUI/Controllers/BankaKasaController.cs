@@ -1,8 +1,11 @@
 ﻿using ClosedXML.Excel;
+using DocumentFormat.OpenXml.Wordprocessing;
 using Microsoft.AspNetCore.Mvc;
 using SantiyeOnMuh.Business.Abstract;
 using SantiyeOnMuh.Entity;
 using SantiyeOnMuh.WebUI.Models;
+using SantiyeOnMuh.WebUI.Models.Modeller;
+using System.ComponentModel.DataAnnotations;
 
 namespace SantiyeOnMuh.WebUI.Controllers
 {
@@ -57,40 +60,97 @@ namespace SantiyeOnMuh.WebUI.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult BankaKasaEkleme(BankaKasa b)
+        public IActionResult BankaKasaEkleme(BankaKasa bankaKasa)
         {
-            _bankaKasaService.Create(b);
+            /* View'larda kullanılan modeller, entitylerin WebUI içindeki kopyaları
+             * WebUI ve Entity katmanlarındaki modelleri new'lediğim için
+             * CRUD işlemlerinde verileri bir modelden diğerine aktarmak zorundayım.
+             * Form tarafında data annotation ve validation kullanımında
+             * Sürekli entity katmanına gitmek yerine
+             * WebUI katmanındaki modeller üzerinde değişiklik yapıyorum.
+             * entity katmanında sadece saf database deseni var.
+            */
+
+            var _bankaKasa = new EBankaKasa()
+            {
+                Tarih = bankaKasa.Tarih,
+                Aciklama = bankaKasa.Aciklama,
+                Nitelik = bankaKasa.Nitelik,
+                Giren = bankaKasa.Giren,
+                Cikan = bankaKasa.Cikan,
+                Durum = bankaKasa.Durum,
+                CekKaynak = bankaKasa.CekKaynak,
+                NakitKaynak = bankaKasa.NakitKaynak,
+                SantiyeKasaKaynak = bankaKasa.SantiyeKasaKaynak,
+                BankaHesapId = bankaKasa.BankaHesapId,
+                BankaHesap = bankaKasa.BankaHesap,
+                SistemeGiris = bankaKasa.SistemeGiris,
+                SonGuncelleme = bankaKasa.SonGuncelleme
+            };
+
+            _bankaKasaService.Create(_bankaKasa);
+
             return RedirectToAction("BankaKasa");
         }
         [HttpGet]
         public IActionResult BankaKasaGuncelle(int? bankakasaid)
         {
             ViewBag.Sayfa = "ANA KASAYA VERİ GÜNCELLEME";
+
             ViewBag.bankahesap = _bankaHesapService.GetAll(true);
 
             if (bankakasaid == null) { return NotFound(); }
-            BankaKasa bankaKasa = _bankaKasaService.GetByIdDetay((int)bankakasaid);
+
+            EBankaKasa bankaKasa = _bankaKasaService.GetByIdDetay((int)bankakasaid);
+
             if (bankaKasa == null) { return NotFound(); }
 
-            return View(bankaKasa);
+            /* View'larda kullanılan modeller, entitylerin WebUI içindeki kopyaları
+             * WebUI ve Entity katmanlarındaki modelleri new'lediğim için
+             * CRUD işlemlerinde verileri bir modelden diğerine aktarmak zorundayım.
+             * Form tarafında data annotation ve validation kullanımında
+             * Sürekli entity katmanına gitmek yerine
+             * WebUI katmanındaki modeller üzerinde değişiklik yapıyorum.
+             * entity katmanında sadece saf database deseni var.
+            */
+
+            var _bankaKasa = new BankaKasa()
+            {
+                Id = bankaKasa.Id,
+                Tarih = bankaKasa.Tarih,
+                Aciklama = bankaKasa.Aciklama,
+                Nitelik = bankaKasa.Nitelik,
+                Giren = bankaKasa.Giren,
+                Cikan = bankaKasa.Cikan,
+                Durum = bankaKasa.Durum,
+                CekKaynak = bankaKasa.CekKaynak,
+                NakitKaynak = bankaKasa.NakitKaynak,
+                SantiyeKasaKaynak = bankaKasa.SantiyeKasaKaynak,
+                BankaHesapId = bankaKasa.BankaHesapId,
+                BankaHesap = bankaKasa.BankaHesap,
+                SistemeGiris = bankaKasa.SistemeGiris,
+                SonGuncelleme = bankaKasa.SonGuncelleme
+            };
+
+            return View(_bankaKasa);
         }
         [HttpPost]
-        public IActionResult BankaKasaGuncelle(BankaKasa b)
+        public IActionResult BankaKasaGuncelle(BankaKasa bankaKasa)
         {
-            var entityBankaKasa = _bankaKasaService.GetByIdDetay(b.Id);
-            if (entityBankaKasa == null)
-            {
-                return NotFound();
-            }
-            entityBankaKasa.Tarih = b.Tarih;
-            entityBankaKasa.Aciklama = b.Aciklama;
-            entityBankaKasa.Nitelik = b.Nitelik;
-            entityBankaKasa.Giren = b.Giren;
-            entityBankaKasa.Cikan = b.Cikan;
-            entityBankaKasa.SonGuncelleme = System.DateTime.Now;
-            entityBankaKasa.BankaHesapId = b.BankaHesapId;
+            var _bankaKasa = _bankaKasaService.GetByIdDetay(bankaKasa.Id);
 
-            _bankaKasaService.Update(entityBankaKasa);
+            if (_bankaKasa == null){return NotFound();}
+
+            _bankaKasa.Tarih = bankaKasa.Tarih;
+            _bankaKasa.Aciklama = bankaKasa.Aciklama;
+            _bankaKasa.Nitelik = bankaKasa.Nitelik;
+            _bankaKasa.Giren = bankaKasa.Giren;
+            _bankaKasa.Cikan = bankaKasa.Cikan;
+            _bankaKasa.SonGuncelleme = System.DateTime.Now;
+            _bankaKasa.BankaHesapId = bankaKasa.BankaHesapId;
+
+            _bankaKasaService.Update(_bankaKasa);
+
             return RedirectToAction("BankaKasa");
         }
         [HttpGet]
@@ -99,24 +159,56 @@ namespace SantiyeOnMuh.WebUI.Controllers
             ViewBag.Sayfa = "DETAY";
 
             if (bankakasaid == null) { return NotFound(); }
-            BankaKasa bankaKasa = _bankaKasaService.GetByIdDetay((int)bankakasaid);
+
+            EBankaKasa bankaKasa = _bankaKasaService.GetByIdDetay((int)bankakasaid);
+
             if (bankaKasa == null) { return NotFound(); }
 
-            return View(bankaKasa);
+            /* View'larda kullanılan modeller, entitylerin WebUI içindeki kopyaları
+             * WebUI ve Entity katmanlarındaki modelleri new'lediğim için
+             * CRUD işlemlerinde verileri bir modelden diğerine aktarmak zorundayım.
+             * Form tarafında data annotation ve validation kullanımında
+             * Sürekli entity katmanına gitmek yerine
+             * WebUI katmanındaki modeller üzerinde değişiklik yapıyorum.
+             * entity katmanında sadece saf database deseni var.
+            */
+
+            var _bankaKasa = new BankaKasa()
+            {
+                Tarih = bankaKasa.Tarih,
+                Aciklama = bankaKasa.Aciklama,
+                Nitelik = bankaKasa.Nitelik,
+                Giren = bankaKasa.Giren,
+                Cikan = bankaKasa.Cikan,
+                Durum = bankaKasa.Durum,
+                CekKaynak = bankaKasa.CekKaynak,
+                NakitKaynak = bankaKasa.NakitKaynak,
+                SantiyeKasaKaynak = bankaKasa.SantiyeKasaKaynak,
+                BankaHesapId = bankaKasa.BankaHesapId,
+                BankaHesap = bankaKasa.BankaHesap,
+                SistemeGiris = bankaKasa.SistemeGiris,
+                SonGuncelleme = bankaKasa.SonGuncelleme
+            };
+
+            return View(_bankaKasa);
         }
         [HttpGet]
         public IActionResult BankaKasaSil(int? bankakasaid)
         {
             ViewBag.Sayfa = "ANA KASAYA VERİ GÜNCELLEME";
 
-            if (bankakasaid == null) { return NotFound(); }
-            BankaKasa bankaKasa = _bankaKasaService.GetByIdDetay((int)bankakasaid);
-            if (bankaKasa == null) { return NotFound(); }
+            if (bankakasaid == null) { return NotFound();}
+
+            EBankaKasa bankaKasa = _bankaKasaService.GetByIdDetay((int)bankakasaid);
+
+            if (bankaKasa == null) { return NotFound();}
 
             bankaKasa.SonGuncelleme = System.DateTime.Now;
+
             bankaKasa.Durum = false;
 
             _bankaKasaService.Update(bankaKasa);
+
             return RedirectToAction("BankaKasa");
         }
         //EXCEL//
@@ -212,14 +304,17 @@ namespace SantiyeOnMuh.WebUI.Controllers
         {
             ViewBag.Sayfa = "ANA KASAYA VERİ GÜNCELLEME";
 
-            if (bankakasaid == null) { return NotFound(); }
-            BankaKasa bankaKasa = _bankaKasaService.GetByIdDetay((int)bankakasaid);
-            if (bankaKasa == null) { return NotFound(); }
+            if (bankakasaid == null) { return NotFound();}
+
+            EBankaKasa bankaKasa = _bankaKasaService.GetByIdDetay((int)bankakasaid);
+
+            if (bankaKasa == null) { return NotFound();}
 
             bankaKasa.SonGuncelleme = System.DateTime.Now;
             bankaKasa.Durum = true;
 
             _bankaKasaService.Update(bankaKasa);
+
             return RedirectToAction("BankaKasa");
         }
 
@@ -235,8 +330,8 @@ namespace SantiyeOnMuh.WebUI.Controllers
         [HttpPost]
         public IActionResult BankaKasaEklemeEFT(BankaKasaEftModel b)
         {
-            BankaKasa EFTGonderenHesap = new BankaKasa();
-            BankaKasa EFTAlanHesap = new BankaKasa();
+            EBankaKasa EFTGonderenHesap = new EBankaKasa();
+            EBankaKasa EFTAlanHesap = new EBankaKasa();
 
             //OTOMATİK AÇIKLAMA YAZDIRMAK İÇİN BANKA İSİMLERİNİ ÇEKİCEM
             var GonderenBankaHesabi = _bankaHesapService.GetById((int)b.GonderenBanka);
@@ -261,6 +356,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
 
             _bankaKasaService.Create(EFTGonderenHesap);
             _bankaKasaService.Create(EFTAlanHesap);
+
             return RedirectToAction("BankaKasa");
         }
         #endregion
@@ -282,7 +378,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
             string bankahesapadi = _bankaHesapService.GetById((int)b.BankaHesapId).BankaAdi;
             string santiyeadi = _santiyeService.GetById((int)b.SantiyeId).Ad;
 
-            BankaKasa entityBankaKasa = new BankaKasa()
+            EBankaKasa entityBankaKasa = new EBankaKasa()
             {
                 Tarih = b.Tarih,
                 Aciklama = santiyeadi + " ŞANTİYESİNE GÖNDERİLEN EFT" + " - " + b.Aciklama,
@@ -294,7 +390,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
 
             //ARA MODELE DAYANARAK ŞANTİYE KASA MODELİ TANIMLANDI VE EKLENDİ
             //EKLENMİŞ BANKA KASA MODELİNDEN KAYNAK ID ÇEKİLEREK ŞANTİYE KASASINA YAZILDI
-            SantiyeKasa entitySantiyeKasa = new SantiyeKasa()
+            ESantiyeKasa entitySantiyeKasa = new ESantiyeKasa()
             {
                 Tarih = b.Tarih,
                 Aciklama = bankahesapadi + " HESABINDAN KASAYA GELEN EFT" + " - " + b.Aciklama,
@@ -326,11 +422,11 @@ namespace SantiyeOnMuh.WebUI.Controllers
             #region BANKA VE SANTİYE KASA NESNELERİ
             //Gelen ID üzerinden BANKAKASA nesnesini çekiyorum
             if (bankakasasantiyeid == null) { return NotFound(); }
-            BankaKasa bankaKasa = _bankaKasaService.GetByIdDetay((int)bankakasasantiyeid);
+            EBankaKasa bankaKasa = _bankaKasaService.GetByIdDetay((int)bankakasasantiyeid);
             if (bankaKasa == null) { return NotFound(); }
             //BankaKasa nesnesi üzerinden santiyekasakaynak id ile ŞANTİYEKASA nesnesini buluyorum
             if (bankakasasantiyeid == null) { return NotFound(); }
-            SantiyeKasa santiyeKasa = _santiyeKasaService.GetByIdDetay((int)bankaKasa.SantiyeKasaKaynak);
+            ESantiyeKasa santiyeKasa = _santiyeKasaService.GetByIdDetay((int)bankaKasa.SantiyeKasaKaynak);
             if (bankaKasa == null) { return NotFound(); }
             #endregion
 
@@ -360,7 +456,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
 
             #region BANKAKASA NESNESİ
             //BULUNDU
-            BankaKasa entityBankaKasa = _bankaKasaService.GetByIdDetay((int)b.BankaKasaId);
+            EBankaKasa entityBankaKasa = _bankaKasaService.GetByIdDetay((int)b.BankaKasaId);
             //GÜNCELLENDİ
             entityBankaKasa.Tarih = b.Tarih;
             entityBankaKasa.Aciklama = b.Aciklama;
@@ -373,7 +469,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
 
             #region SANTİYEKASA NESNESİ
             //BULUNDU
-            SantiyeKasa entitySantiyeKasa = _santiyeKasaService.GetByIdDetay((int)b.SantiyeKasaId);
+            ESantiyeKasa entitySantiyeKasa = _santiyeKasaService.GetByIdDetay((int)b.SantiyeKasaId);
             //GÜNCELLENDİ
             entitySantiyeKasa.Tarih = b.Tarih;
             entitySantiyeKasa.Aciklama = bankahesapadi + " HESABINDAN KASAYA GELEN EFT" + " - " + b.Aciklama;
@@ -398,11 +494,11 @@ namespace SantiyeOnMuh.WebUI.Controllers
             #region BANKA VE SANTİYE KASA NESNELERİ
             //Gelen ID üzerinden BANKAKASA nesnesini çekiyorum
             if (bankakasasantiyeid == null) { return NotFound(); }
-            BankaKasa bankaKasa = _bankaKasaService.GetByIdDetay((int)bankakasasantiyeid);
+            EBankaKasa bankaKasa = _bankaKasaService.GetByIdDetay((int)bankakasasantiyeid);
             if (bankaKasa == null) { return NotFound(); }
             //BankaKasa nesnesi üzerinden santiyekasakaynak id ile ŞANTİYEKASA nesnesini buluyorum
             if (bankakasasantiyeid == null) { return NotFound(); }
-            SantiyeKasa santiyeKasa = _santiyeKasaService.GetByIdDetay((int)bankaKasa.SantiyeKasaKaynak);
+            ESantiyeKasa santiyeKasa = _santiyeKasaService.GetByIdDetay((int)bankaKasa.SantiyeKasaKaynak);
             if (bankaKasa == null) { return NotFound(); }
             #endregion
 
@@ -430,7 +526,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
 
             #region BANKAKASA NESNESİ
             //BULUNDU
-            BankaKasa entityBankaKasa = _bankaKasaService.GetByIdDetay((int)b.BankaKasaId);
+            EBankaKasa entityBankaKasa = _bankaKasaService.GetByIdDetay((int)b.BankaKasaId);
             //GÜNCELLENDİ
             entityBankaKasa.SonGuncelleme = System.DateTime.Now;
             entityBankaKasa.Durum = false;
@@ -440,7 +536,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
 
             #region SANTİYEKASA NESNESİ
             //BULUNDU
-            SantiyeKasa entitySantiyeKasa = _santiyeKasaService.GetByIdDetay((int)b.SantiyeKasaId);
+            ESantiyeKasa entitySantiyeKasa = _santiyeKasaService.GetByIdDetay((int)b.SantiyeKasaId);
             //GÜNCELLENDİ
             entitySantiyeKasa.SonGuncelleme = System.DateTime.Now;
             entitySantiyeKasa.Durum = false;

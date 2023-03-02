@@ -17,42 +17,42 @@ namespace SantiyeOnMuh.Business.Concrete
             _cariKasaRepository = cariKasaRepository;
         }
 
-        public void Create(CariKasa entity)
+        public void Create(ECariKasa entity)
         {
             _cariKasaRepository.Create(entity);
         }
 
-        public void Update(CariKasa entity)
+        public void Update(ECariKasa entity)
         {
             _cariKasaRepository.Update(entity);
         }
 
-        public void Delete(CariKasa entity)
+        public void Delete(ECariKasa entity)
         {
             _cariKasaRepository.Delete(entity);
         }
 
-        public List<CariKasa> GetAll()
+        public List<ECariKasa> GetAll()
         {
             return _cariKasaRepository.GetAll();
         }
 
-        public CariKasa GetById(int id)
+        public ECariKasa GetById(int id)
         {
             return _cariKasaRepository.GetById(id);
         }
 
-        public CariKasa GetByIdDetay(int id)
+        public ECariKasa GetByIdDetay(int id)
         {
             return _cariKasaRepository.GetByIdDetay(id);
         }
 
-        public List<CariKasa> GetAll(int carihesapid, int? gkid, bool drm)
+        public List<ECariKasa> GetAll(int carihesapid, int? gkid, bool drm)
         {
             return _cariKasaRepository.GetAll(carihesapid, gkid, drm);
         }
 
-        public List<CariKasa> GetAll(int carihesapid, int? gkid, bool drm, int page, int pageSize)
+        public List<ECariKasa> GetAll(int carihesapid, int? gkid, bool drm, int page, int pageSize)
         {
             return _cariKasaRepository.GetAll(carihesapid,gkid, drm, page, pageSize);
         }

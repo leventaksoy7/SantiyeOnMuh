@@ -1,4 +1,5 @@
-﻿using SantiyeOnMuh.WebUI.Models.Modeller;
+﻿using SantiyeOnMuh.Entity;
+using SantiyeOnMuh.WebUI.Models.Modeller;
 using System.ComponentModel.DataAnnotations;
 
 namespace SantiyeOnMuh.WebUI.Models.Modeller
@@ -11,7 +12,7 @@ namespace SantiyeOnMuh.WebUI.Models.Modeller
         public string Ad { get; set; }
         public bool Durum { get; set; }
         public bool Tur { get; set; }
-        public List<CariKasa> CariKasas { get; set; }
+        public List<ECariKasa> CariKasas { get; set; }
         public CariGiderKalemi()
         {
             Durum = true;

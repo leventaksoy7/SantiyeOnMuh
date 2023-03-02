@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace SantiyeOnMuh.Entity.AraModeller
 {
-    public class BankaHesapKasaEftSantiyeKasaModel
+    public class EBankaHesapKasaEftSantiyeKasaModel
     {
         public int Id { get; set; }
         [Required(ErrorMessage = "TARİH GİRMELİSİNİZ")]
@@ -20,7 +20,7 @@ namespace SantiyeOnMuh.Entity.AraModeller
         public int SantiyeId { get; set; }
         public int? BankaKasaId { get; set; }
         public int? SantiyeKasaId { get; set; }
-        public BankaHesapKasaEftSantiyeKasaModel()
+        public EBankaHesapKasaEftSantiyeKasaModel()
         {
             BankaKasaId = null;
             SantiyeKasaId = null;

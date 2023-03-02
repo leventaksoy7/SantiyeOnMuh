@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace SantiyeOnMuh.Business.Abstract
 {
-    public interface INakitService : IService<Nakit>
+    public interface INakitService : IService<ENakit>
     {
-        Nakit GetByIdDetay(int id);
-        List<Nakit> GetAll(int? santiyeid, int? sirketid, int? bankahesapid, bool drm);
-        List<Nakit> GetAll(int? santiyeid, int? sirketid, int? bankahesapid, bool drm, int page, int pageSize);
+        ENakit GetByIdDetay(int id);
+        List<ENakit> GetAll(int? santiyeid, int? sirketid, int? bankahesapid, bool drm);
+        List<ENakit> GetAll(int? santiyeid, int? sirketid, int? bankahesapid, bool drm, int page, int pageSize);
         int GetCount(int? santiyeid, int? sirketid, int? bankahesapid, bool drm);
     }
 }

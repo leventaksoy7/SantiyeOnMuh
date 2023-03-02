@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 
 namespace SantiyeOnMuh.DataAccess.Concrete.EfCore
 {
-    public class EfCoreSirketRepository : EfCoreGenericRepository<Sirket, Context>, ISirketRepository
+    public class EfCoreSirketRepository : EfCoreGenericRepository<ESirket, Context>, ISirketRepository
     {
-        public List<Sirket> GetAll(bool drm)
+        public List<ESirket> GetAll(bool drm)
         {
             using (var context = new Context())
             {

@@ -19,7 +19,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult SantiyeGiderKalemiEkleme(SantiyeGiderKalemi s)
+        public IActionResult SantiyeGiderKalemiEkleme(ESantiyeGiderKalemi s)
         {
             _santiyeGiderKalemiService.Create(s);
             return RedirectToAction("Index", "Admin");
@@ -33,7 +33,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
                 return NotFound();
             }
 
-            SantiyeGiderKalemi santiyeGiderKalemi = _santiyeGiderKalemiService.GetById((int)id);
+            ESantiyeGiderKalemi santiyeGiderKalemi = _santiyeGiderKalemiService.GetById((int)id);
 
             if (santiyeGiderKalemi == null)
             {
@@ -42,7 +42,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
             return View(santiyeGiderKalemi);
         }
         [HttpPost]
-        public IActionResult SantiyeGiderKalemiGuncelle(SantiyeGiderKalemi s)
+        public IActionResult SantiyeGiderKalemiGuncelle(ESantiyeGiderKalemi s)
         {
             var entitySantiyeGiderKalemi = _santiyeGiderKalemiService.GetById(s.Id);
             if (entitySantiyeGiderKalemi == null)
@@ -62,7 +62,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
                 return NotFound();
             }
 
-            SantiyeGiderKalemi santiyeGiderKalemi = _santiyeGiderKalemiService.GetById((int)id);
+            ESantiyeGiderKalemi santiyeGiderKalemi = _santiyeGiderKalemiService.GetById((int)id);
 
             if (santiyeGiderKalemi == null)
             {
@@ -82,7 +82,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
                 return NotFound();
             }
 
-            SantiyeGiderKalemi santiyeGiderKalemi = _santiyeGiderKalemiService.GetById((int)id);
+            ESantiyeGiderKalemi santiyeGiderKalemi = _santiyeGiderKalemiService.GetById((int)id);
 
             if (santiyeGiderKalemi == null)
             {

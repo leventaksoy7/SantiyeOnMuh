@@ -20,7 +20,6 @@ namespace SantiyeOnMuh.WebUI.Controllers
         }
         public IActionResult CariHesap(int? santiyeid, int page = 1)
         {
-
             const int pageSize = 10;
 
             var cariHesapViewModel = new CariHesapViewListModel()
@@ -42,11 +41,8 @@ namespace SantiyeOnMuh.WebUI.Controllers
             {
                 var santiye = _santiyeService.GetById((int)santiyeid);
                 ViewBag.Sayfa = santiye.Ad + " CARİ HESAPLARI";
-            }
-            else
-            {
+            }else{
                 ViewBag.Sayfa = "CARİ HESAPLAR";
-
             };
 
             return View(cariHesapViewModel);
@@ -59,9 +55,27 @@ namespace SantiyeOnMuh.WebUI.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult CariHesapEkleme(CariHesap c)
+        public IActionResult CariHesapEkleme(CariHesap cariHesap)
         {
-            _cariHesapService.Create(c);
+            ECariHesap _cariHesap = new ECariHesap()
+            {
+                Ad = cariHesap.Ad,
+                Adres = cariHesap.Adres,
+                Telefon = cariHesap.Telefon,
+                VergiNo = cariHesap.VergiNo,
+                IlgiliKisi = cariHesap.IlgiliKisi,
+                IlgiliKisiTelefon = cariHesap.IlgiliKisiTelefon,
+                Odeme = cariHesap.Odeme,
+                Vade = cariHesap.Vade,
+                Durum = cariHesap.Durum,
+                Ceks = cariHesap.Ceks,
+                Nakits = cariHesap.Nakits,
+                CariKasas = cariHesap.CariKasas,
+                SantiyeId = cariHesap.SantiyeId,
+                Santiye = cariHesap.Santiye,
+            };
+
+            _cariHesapService.Create(_cariHesap);
 
             return RedirectToAction("CariHesap");
         }
@@ -76,7 +90,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
                 return NotFound();
             }
 
-            CariHesap cariHesap = _cariHesapService.GetById((int)carihesapid);
+            ECariHesap cariHesap = _cariHesapService.GetById((int)carihesapid);
 
             if (cariHesap == null)
             {
@@ -116,7 +130,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
                 return NotFound();
             }
 
-            CariHesap cariHesap = _cariHesapService.GetById((int)carihesapid);
+            ECariHesap cariHesap = _cariHesapService.GetById((int)carihesapid);
 
             if (cariHesap == null)
             {
@@ -246,7 +260,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
                 return NotFound();
             }
 
-            CariHesap cariHesap = _cariHesapService.GetById((int)carihesapid);
+            ECariHesap cariHesap = _cariHesapService.GetById((int)carihesapid);
 
             if (cariHesap == null)
             {

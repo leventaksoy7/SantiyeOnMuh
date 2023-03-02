@@ -4,10 +4,10 @@ namespace SantiyeOnMuh.WebUI.Models
 {
     public class AnaSayfaViewListModel
     {
-        public List<Santiye> Santiyes { get; set; }
-        public List<SantiyeGiderKalemi> SantiyeGiderKalemis { get; set; }
-        public List<BankaHesap> BankaHesaps { get; set; }
-        public List<BankaKasa> BankaKasas { get; set; }
-        public List<SantiyeKasa> SantiyeKasas { get; set; }
+        public List<ESantiye> Santiyes { get; set; }
+        public List<ESantiyeGiderKalemi> SantiyeGiderKalemis { get; set; }
+        public List<EBankaHesap> BankaHesaps { get; set; }
+        public List<EBankaKasa> BankaKasas { get; set; }
+        public List<ESantiyeKasa> SantiyeKasas { get; set; }
     }
 }

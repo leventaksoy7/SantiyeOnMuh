@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace SantiyeOnMuh.Entity
 {
-    public class CariHesap
+    public class ECariHesap
     {
         public int Id { get; set; }
         public string Ad { get; set; }
@@ -19,12 +19,12 @@ namespace SantiyeOnMuh.Entity
         public string Odeme { get; set; }
         public string Vade { get; set; }
         public bool Durum { get; set; }
-        public List<Cek> Ceks { get; set; }
-        public List<Nakit> Nakits { get; set; }
-        public List<CariKasa> CariKasas { get; set; }
+        public List<ECek> Ceks { get; set; }
+        public List<ENakit> Nakits { get; set; }
+        public List<ECariKasa> CariKasas { get; set; }
         public int SantiyeId { get; set; }
-        public Santiye Santiye { get; set; }
-        public CariHesap()
+        public ESantiye Santiye { get; set; }
+        public ECariHesap()
         {
             Durum = true;
         }

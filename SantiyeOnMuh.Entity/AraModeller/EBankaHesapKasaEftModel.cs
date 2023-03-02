@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SantiyeOnMuh.Entity
+namespace SantiyeOnMuh.Entity.AraModeller
 {
-    public class CariKasa
+    public class EBankaHesapKasaEftModel
     {
         public int Id { get; set; }
         [Required(ErrorMessage = "TARİH GİRMELİSİNİZ")]
@@ -15,30 +15,20 @@ namespace SantiyeOnMuh.Entity
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
         public DateTime Tarih { get; set; }
         public string Aciklama { get; set; }
-        public decimal Miktar { get; set; }
-        public decimal BirimFiyat { get; set; }
-        public decimal Borc { get; set; }
-        public decimal Alacak { get; set; }
-        public string ImgUrl { get; set; }
-        public int? CekKaynak { get; set; }
-        public int? NakitKaynak { get; set; }
+        public string Nitelik { get; set; }
+        public decimal Tutar { get; set; }
+        public int GonderenBanka { get; set; }
+        public int AliciBanka { get; set; }
         public DateTime SistemeGiris { get; set; }
         public DateTime SonGuncelleme { get; set; }
         public bool Durum { get; set; }
-        public int CariGiderKalemiId { get; set; }
-        public CariGiderKalemi CariGiderKalemi { get; set; }
-        public int CariHesapId { get; set; }
-        public CariHesap CariHesap { get; set; }
-        public CariKasa()
+        public EBankaHesapKasaEftModel()
         {
             Tarih = System.DateTime.Now;
-            Miktar = 1;
-            BirimFiyat = 1;
-            Borc = 0;
-            Alacak = 0;
-            CekKaynak = null;
-            NakitKaynak = null;
+            Nitelik = "EFT";
+            Tutar = 0;
             Durum = true;
+
             SistemeGiris = System.DateTime.Now;
             SonGuncelleme = System.DateTime.Now;
         }

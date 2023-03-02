@@ -9,9 +9,9 @@ using System.Threading.Tasks;
 
 namespace SantiyeOnMuh.DataAccess.Concrete.EfCore
 {
-    public class EfCoreCariKasaRepository : EfCoreGenericRepository<CariKasa, Context>, ICariKasaRepository
+    public class EfCoreCariKasaRepository : EfCoreGenericRepository<ECariKasa, Context>, ICariKasaRepository
     {
-        public List<CariKasa> GetAll(bool drm)
+        public List<ECariKasa> GetAll(bool drm)
         {
             using (var context = new Context())
             {
@@ -21,7 +21,7 @@ namespace SantiyeOnMuh.DataAccess.Concrete.EfCore
             }
         }
 
-        public CariKasa GetByIdDetay(int id)
+        public ECariKasa GetByIdDetay(int id)
         {
             using (var context = new Context())
             {
@@ -32,7 +32,7 @@ namespace SantiyeOnMuh.DataAccess.Concrete.EfCore
                     .FirstOrDefault(x => x.Id == id);
             }
         }
-        public List<CariKasa> GetAll(int carihesapid, int? gkid, bool drm)
+        public List<ECariKasa> GetAll(int carihesapid, int? gkid, bool drm)
         {
             using (var context = new Context())
             {
@@ -64,7 +64,7 @@ namespace SantiyeOnMuh.DataAccess.Concrete.EfCore
             }
         }
 
-        public List<CariKasa> GetAll(int carihesapid, int? gkid, bool drm, int page, int pageSize)
+        public List<ECariKasa> GetAll(int carihesapid, int? gkid, bool drm, int page, int pageSize)
         {
             using (var context = new Context())
             {

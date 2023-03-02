@@ -10,17 +10,17 @@ namespace SantiyeOnMuh.DataAccess.Concrete
 {
     public class Context:DbContext
     {
-        public DbSet<Santiye> Santiyes { get; set; }
-        public DbSet<SantiyeKasa> SantiyesKasas { get; set; }
-        public DbSet<SantiyeGiderKalemi> SantiyeGiderKalemis { get; set; }
-        public DbSet<CariHesap> CariHesaps { get; set; }
-        public DbSet<CariKasa> CariKasas { get; set; }
-        public DbSet<CariGiderKalemi> CariGiderKalemis { get; set; }
-        public DbSet<BankaHesap> BankaHesaps { get; set; }
-        public DbSet<BankaKasa> BankaKasas { get; set; }
-        public DbSet<Cek> Ceks { get; set; }
-        public DbSet<Nakit> Nakits { get; set; }
-        public DbSet<Sirket> Sirkets { get; set; }
+        public DbSet<ESantiye> Santiyes { get; set; }
+        public DbSet<ESantiyeKasa> SantiyesKasas { get; set; }
+        public DbSet<ESantiyeGiderKalemi> SantiyeGiderKalemis { get; set; }
+        public DbSet<ECariHesap> CariHesaps { get; set; }
+        public DbSet<ECariKasa> CariKasas { get; set; }
+        public DbSet<ECariGiderKalemi> CariGiderKalemis { get; set; }
+        public DbSet<EBankaHesap> BankaHesaps { get; set; }
+        public DbSet<EBankaKasa> BankaKasas { get; set; }
+        public DbSet<ECek> Ceks { get; set; }
+        public DbSet<ENakit> Nakits { get; set; }
+        public DbSet<ESirket> Sirkets { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

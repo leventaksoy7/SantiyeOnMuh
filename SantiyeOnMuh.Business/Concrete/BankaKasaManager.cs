@@ -17,42 +17,42 @@ namespace SantiyeOnMuh.Business.Concrete
             _bankaKasaRepository = bankaKasaRepository;
         }
 
-        public void Create(BankaKasa entity)
+        public void Create(EBankaKasa entity)
         {
             _bankaKasaRepository.Create(entity);
         }
 
-        public void Update(BankaKasa entity)
+        public void Update(EBankaKasa entity)
         {
             _bankaKasaRepository.Update(entity);
         }
 
-        public void Delete(BankaKasa entity)
+        public void Delete(EBankaKasa entity)
         {
             _bankaKasaRepository.Delete(entity);
         }
 
-        public List<BankaKasa> GetAll()
+        public List<EBankaKasa> GetAll()
         {
             return _bankaKasaRepository.GetAll();
         }
 
-        public BankaKasa GetById(int id)
+        public EBankaKasa GetById(int id)
         {
             return _bankaKasaRepository.GetById(id);
         }
 
-        public BankaKasa GetByIdDetay(int id)
+        public EBankaKasa GetByIdDetay(int id)
         {
             return _bankaKasaRepository.GetById(id);
         }
 
-        public List<BankaKasa> GetAll(int? bankahesapid, bool drm)
+        public List<EBankaKasa> GetAll(int? bankahesapid, bool drm)
         {
             return _bankaKasaRepository.GetAll(bankahesapid, drm);
         }
 
-        public List<BankaKasa> GetAll(int? bankahesapid, bool drm, int page, int pageSize)
+        public List<EBankaKasa> GetAll(int? bankahesapid, bool drm, int page, int pageSize)
         {
             return _bankaKasaRepository.GetAll(bankahesapid,drm,page,pageSize);
         }

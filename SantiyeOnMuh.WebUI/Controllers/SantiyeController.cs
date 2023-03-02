@@ -54,7 +54,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult SantiyeEkleme(Santiye s)
+        public IActionResult SantiyeEkleme(ESantiye s)
         {
             _santiyeService.Create(s);
             return RedirectToAction("Index");
@@ -67,7 +67,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
             {
                 return NotFound();
             }
-            Santiye santiye = _santiyeService.GetById((int)id);
+            ESantiye santiye = _santiyeService.GetById((int)id);
             if (santiye == null)
             {
                 return NotFound();
@@ -75,7 +75,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
             return View(santiye);
         }
         [HttpPost]
-        public IActionResult SantiyeGuncelle(Santiye s)
+        public IActionResult SantiyeGuncelle(ESantiye s)
         {
             var entitySantiye = _santiyeService.GetById(s.Id);
             if (entitySantiye == null)
@@ -95,14 +95,14 @@ namespace SantiyeOnMuh.WebUI.Controllers
 
             if (id == null) { return NotFound(); }
 
-            Santiye santiye = _santiyeService.GetById((int)id);
+            ESantiye santiye = _santiyeService.GetById((int)id);
 
             if (santiye == null) { return NotFound(); }
 
             return View(santiye);
         }
         [HttpPost]
-        public IActionResult SantiyeSil(Santiye s)
+        public IActionResult SantiyeSil(ESantiye s)
         {
             var entity = _santiyeService.GetById(s.Id);
 

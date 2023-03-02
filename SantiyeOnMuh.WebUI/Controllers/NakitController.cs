@@ -63,10 +63,10 @@ namespace SantiyeOnMuh.WebUI.Controllers
             ViewBag.Cari = new SelectList(_cariHesapService.GetAll(null, true), "Id", "Ad");
             ViewBag.Banka = new SelectList(_bankaHesapService.GetAll(true), "Id", "Ad");
 
-            return View(new Nakit());
+            return View(new ENakit());
         }
         [HttpPost]
-        public IActionResult NakitEkleme(Nakit n, IFormFile file)
+        public IActionResult NakitEkleme(ENakit n, IFormFile file)
         {
 
             ViewBag.Sirket = new SelectList(_sirketService.GetAll(true), "Id", "Ad");
@@ -77,7 +77,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
             {
                 _nakitService.Create(n);
                 //CARİ KASA İÇİN ÇEK OLUŞTURULDU VE ÇEK KAYNAĞI İLE EKLENDİ
-                CariKasa entityCariKasa = new CariKasa()
+                ECariKasa entityCariKasa = new ECariKasa()
                 {
                     Tarih = n.Tarih,
                     Aciklama = n.Aciklama,
@@ -94,7 +94,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
                 _cariKasaService.Create(entityCariKasa);
 
                 //BANKA KASA İÇİN ÇEK OLUŞTURULDU VE ÇEK KAYNAĞI İLE EKLENDİ
-                BankaKasa entityBankaKasa = new BankaKasa()
+                EBankaKasa entityBankaKasa = new EBankaKasa()
                 {
                     Tarih = n.Tarih,
                     Aciklama = n.Aciklama,
@@ -136,7 +136,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
             {
                 return NotFound();
             }
-            Nakit nakit = _nakitService.GetById((int)nakitid);
+            ENakit nakit = _nakitService.GetById((int)nakitid);
 
             if (nakit == null)
             {
@@ -145,7 +145,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
             return View(nakit);
         }
         [HttpPost]
-        public IActionResult NakitGuncelle(Nakit n)
+        public IActionResult NakitGuncelle(ENakit n)
         {
             var entityNakit = _nakitService.GetById(n.Id);
 
@@ -217,7 +217,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
                 return NotFound();
             }
 
-            Nakit nakit = _nakitService.GetById((int)nakitid);
+            ENakit nakit = _nakitService.GetById((int)nakitid);
 
             if (nakit == null)
             {
@@ -240,7 +240,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
             {
                 return NotFound();
             }
-            Nakit nakit = _nakitService.GetById((int)nakitid);
+            ENakit nakit = _nakitService.GetById((int)nakitid);
 
             if (nakit == null)
             {
@@ -249,7 +249,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
             return View(nakit);
         }
         [HttpPost]
-        public IActionResult NakitSil(Nakit n)
+        public IActionResult NakitSil(ENakit n)
         {
             var entityNakit = _nakitService.GetById(n.Id);
             if (entityNakit == null)
@@ -397,10 +397,10 @@ namespace SantiyeOnMuh.WebUI.Controllers
 
             ViewBag.CariHesapId = carihesapid;
 
-            return View(new Nakit());
+            return View(new ENakit());
         }
         [HttpPost]
-        public async Task<IActionResult> NakitEklemeFromCari(Nakit n, IFormFile file)
+        public async Task<IActionResult> NakitEklemeFromCari(ENakit n, IFormFile file)
         {
             #region  RESİM VS. EKLENMEMİŞSE SAYFAYA GERİ GİDİYOR, GERİ GİDİLEN SAYFANIN İHTİYACI OLAN BİLGİLER
             ViewBag.Sayfa = _cariHesapService.GetById((int)n.CariHesapId).Ad + " CARİSİNE YENİ NAKİT ÖDEMESİ GİRİŞİ";
@@ -434,7 +434,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
             //CARİ KASA İÇİN ÇEK OLUŞTURULDU VE ÇEK KAYNAĞI İLE EKLENDİ
             String FirmaAdiForAciklama = _cariHesapService.GetById((int)n.CariHesapId).Ad;
 
-            CariKasa EntityCariKasa = new CariKasa()
+            ECariKasa EntityCariKasa = new ECariKasa()
             {
                 Tarih = n.Tarih,
                 Aciklama = FirmaAdiForAciklama + " AİT ÖDEME. " + n.Aciklama,
@@ -449,7 +449,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
             };
             _cariKasaService.Create(EntityCariKasa);
             //BANKA KASA İÇİN ÇEK OLUŞTURULDU VE ÇEK KAYNAĞI İLE EKLENDİ
-            BankaKasa EntityBankaKasa = new BankaKasa()
+            EBankaKasa EntityBankaKasa = new EBankaKasa()
             {
                 Tarih = n.Tarih,
                 Aciklama = FirmaAdiForAciklama + " AİT ÖDEME. " + n.Aciklama,

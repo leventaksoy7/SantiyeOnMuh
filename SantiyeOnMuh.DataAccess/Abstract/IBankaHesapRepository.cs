@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace SantiyeOnMuh.DataAccess.Abstract
 {
-    public interface IBankaHesapRepository:IRepository<BankaHesap>, IRepositoryGetAllDurum<BankaHesap>
+    public interface IBankaHesapRepository:IRepository<EBankaHesap>, IRepositoryGetAllDurum<EBankaHesap>
     {
     }
 }

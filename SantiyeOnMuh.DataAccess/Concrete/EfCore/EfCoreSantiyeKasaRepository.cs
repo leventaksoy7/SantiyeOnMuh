@@ -9,10 +9,10 @@ using System.Threading.Tasks;
 
 namespace SantiyeOnMuh.DataAccess.Concrete.EfCore
 {
-    public class EfCoreSantiyeKasaRepository : EfCoreGenericRepository<SantiyeKasa, Context>, ISantiyeKasaRepository
+    public class EfCoreSantiyeKasaRepository : EfCoreGenericRepository<ESantiyeKasa, Context>, ISantiyeKasaRepository
     {
 
-        public List<SantiyeKasa> GetAll(int? santiyeid, int? gkid, bool drm)
+        public List<ESantiyeKasa> GetAll(int? santiyeid, int? gkid, bool drm)
         {
             using (var context = new Context())
             {
@@ -53,7 +53,7 @@ namespace SantiyeOnMuh.DataAccess.Concrete.EfCore
             }
         }
 
-        public List<SantiyeKasa> GetAll(int santiyeid, int? gkid, bool drm, int page, int pageSize)
+        public List<ESantiyeKasa> GetAll(int santiyeid, int? gkid, bool drm, int page, int pageSize)
         {
             using (var context = new Context())
             {
@@ -86,7 +86,7 @@ namespace SantiyeOnMuh.DataAccess.Concrete.EfCore
             }
         }
 
-        public SantiyeKasa GetByIdDetay(int id)
+        public ESantiyeKasa GetByIdDetay(int id)
         {
             using (var context = new Context())
             {

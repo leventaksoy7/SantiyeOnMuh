@@ -17,42 +17,42 @@ namespace SantiyeOnMuh.Business.Concrete
             _santiyeKasaRepository = santiyeKasaRepository;
         }
 
-        public void Create(SantiyeKasa entity)
+        public void Create(ESantiyeKasa entity)
         {
             _santiyeKasaRepository.Create(entity);
         }
 
-        public void Delete(SantiyeKasa entity)
+        public void Delete(ESantiyeKasa entity)
         {
             _santiyeKasaRepository.Delete(entity);
         }
 
-        public void Update(SantiyeKasa entity)
+        public void Update(ESantiyeKasa entity)
         {
             _santiyeKasaRepository.Update(entity);
         }
 
-        public List<SantiyeKasa> GetAll()
+        public List<ESantiyeKasa> GetAll()
         {
             return _santiyeKasaRepository.GetAll();
         }
 
-        public SantiyeKasa GetById(int id)
+        public ESantiyeKasa GetById(int id)
         {
             return _santiyeKasaRepository.GetById(id);
         }
 
-        public List<SantiyeKasa> GetAll(int? santiyeid, int? gkid, bool drm)
+        public List<ESantiyeKasa> GetAll(int? santiyeid, int? gkid, bool drm)
         {
             return _santiyeKasaRepository.GetAll(santiyeid,gkid,drm);
         }
 
-        public SantiyeKasa GetByIdDetay(int id)
+        public ESantiyeKasa GetByIdDetay(int id)
         {
             return _santiyeKasaRepository.GetByIdDetay(id);
         }
 
-        public List<SantiyeKasa> GetAll(int santiyeid, int? gkid, bool drm, int page, int pageSize)
+        public List<ESantiyeKasa> GetAll(int santiyeid, int? gkid, bool drm, int page, int pageSize)
         {
             return _santiyeKasaRepository.GetAll(santiyeid, gkid, drm, page, pageSize);
         }

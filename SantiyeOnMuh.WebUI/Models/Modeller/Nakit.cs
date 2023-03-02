@@ -1,4 +1,5 @@
-﻿using SantiyeOnMuh.WebUI.Models.Modeller;
+﻿using SantiyeOnMuh.Entity;
+using SantiyeOnMuh.WebUI.Models.Modeller;
 using System.ComponentModel.DataAnnotations;
 
 namespace SantiyeOnMuh.WebUI.Models.Modeller
@@ -19,11 +20,11 @@ namespace SantiyeOnMuh.WebUI.Models.Modeller
         public DateTime SonGuncelleme { get; set; }
         public bool Durum { get; set; }
         public int CariHesapId { get; set; }
-        public CariHesap CariHesap { get; set; }
+        public ECariHesap CariHesap { get; set; }
         public int SirketId { get; set; }
-        public Sirket Sirket { get; set; }
+        public ESirket Sirket { get; set; }
         public int BankaHesapId { get; set; }
-        public BankaHesap BankaHesap { get; set; }
+        public EBankaHesap BankaHesap { get; set; }
         public Nakit()
         {
             Tarih = System.DateTime.Now;

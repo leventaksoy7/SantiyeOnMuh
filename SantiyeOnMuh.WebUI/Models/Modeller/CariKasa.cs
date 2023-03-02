@@ -1,4 +1,5 @@
-﻿using SantiyeOnMuh.WebUI.Models.Modeller;
+﻿using SantiyeOnMuh.Entity;
+using SantiyeOnMuh.WebUI.Models.Modeller;
 using System.ComponentModel.DataAnnotations;
 
 namespace SantiyeOnMuh.WebUI.Models.Modeller
@@ -22,9 +23,9 @@ namespace SantiyeOnMuh.WebUI.Models.Modeller
         public DateTime SonGuncelleme { get; set; }
         public bool Durum { get; set; }
         public int CariGiderKalemiId { get; set; }
-        public CariGiderKalemi CariGiderKalemi { get; set; }
+        public ECariGiderKalemi CariGiderKalemi { get; set; }
         public int CariHesapId { get; set; }
-        public CariHesap CariHesap { get; set; }
+        public ECariHesap CariHesap { get; set; }
         public CariKasa()
         {
             Tarih = System.DateTime.Now;

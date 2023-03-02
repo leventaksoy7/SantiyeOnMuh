@@ -20,33 +20,33 @@ namespace SantiyeOnMuh.Business.Concrete
             _santiyeRepository = santiyeRepository;
         }
         //CRUD
-        public void Create(Santiye entity)
+        public void Create(ESantiye entity)
         {
             //İŞ KURALLARI
             _santiyeRepository.Create(entity);
         }
 
-        public void Update(Santiye entity)
+        public void Update(ESantiye entity)
         {
             _santiyeRepository.Update(entity);
         }
 
-        public void Delete(Santiye entity)
+        public void Delete(ESantiye entity)
         {
             _santiyeRepository.Delete(entity);
         }
 
-        public Santiye GetById(int id)
+        public ESantiye GetById(int id)
         {
             return _santiyeRepository.GetById(id);
         }
 
-        public List<Santiye> GetAll()
+        public List<ESantiye> GetAll()
         {
             return _santiyeRepository.GetAll();
         }
 
-        public List<Santiye> GetAll(bool drm)
+        public List<ESantiye> GetAll(bool drm)
         {
             return _santiyeRepository.GetAll(drm);
         }

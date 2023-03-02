@@ -10,9 +10,9 @@ using System.Threading.Tasks;
 
 namespace SantiyeOnMuh.DataAccess.Concrete.EfCore
 {
-    public class EfCoreCekRepository : EfCoreGenericRepository<Cek, Context>, ICekRepository
+    public class EfCoreCekRepository : EfCoreGenericRepository<ECek, Context>, ICekRepository
     {
-        public List<Cek> GetAll(bool drm)
+        public List<ECek> GetAll(bool drm)
         {
             using (var context = new Context())
             {
@@ -21,7 +21,7 @@ namespace SantiyeOnMuh.DataAccess.Concrete.EfCore
                     .ToList();
             }
         }
-        public Cek GetByIdDetay(int id)
+        public ECek GetByIdDetay(int id)
         {
             using (var context = new Context())
             {
@@ -32,7 +32,7 @@ namespace SantiyeOnMuh.DataAccess.Concrete.EfCore
                     .FirstOrDefault(x => x.Id == id);
             }
         }
-        public List<Cek> GetAll(int? santiyeid, int? sirketid, int? bankahesapid, bool drm)
+        public List<ECek> GetAll(int? santiyeid, int? sirketid, int? bankahesapid, bool drm)
         {
             using (var context = new Context())
             {
@@ -69,7 +69,7 @@ namespace SantiyeOnMuh.DataAccess.Concrete.EfCore
                     .ToList();
             }
         }
-        public List<Cek> GetAll(int? santiyeid, int? sirketid, int? bankahesapid, bool drm, int page, int pageSize)
+        public List<ECek> GetAll(int? santiyeid, int? sirketid, int? bankahesapid, bool drm, int page, int pageSize)
         {
             using (var context = new Context())
             {

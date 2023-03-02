@@ -9,9 +9,9 @@ using System.Threading.Tasks;
 
 namespace SantiyeOnMuh.DataAccess.Concrete.EfCore
 {
-    public class EfCoreNakitRepository : EfCoreGenericRepository<Nakit, Context>, INakitRepository
+    public class EfCoreNakitRepository : EfCoreGenericRepository<ENakit, Context>, INakitRepository
     {
-        public List<Nakit> GetAll(bool drm)
+        public List<ENakit> GetAll(bool drm)
         {
             using (var context = new Context())
             {
@@ -20,7 +20,7 @@ namespace SantiyeOnMuh.DataAccess.Concrete.EfCore
                     .ToList();
             }
         }
-        public Nakit GetByIdDetay(int id)
+        public ENakit GetByIdDetay(int id)
         {
             using (var context = new Context())
             {
@@ -31,7 +31,7 @@ namespace SantiyeOnMuh.DataAccess.Concrete.EfCore
                     .FirstOrDefault(x => x.Id == id);
             }
         }
-        public List<Nakit> GetAll(int? santiyeid, int? sirketid, int? bankahesapid, bool drm)
+        public List<ENakit> GetAll(int? santiyeid, int? sirketid, int? bankahesapid, bool drm)
         {
             using (var context = new Context())
             {
@@ -63,7 +63,7 @@ namespace SantiyeOnMuh.DataAccess.Concrete.EfCore
                     .ToList();
             }
         }
-        public List<Nakit> GetAll(int? santiyeid, int? sirketid, int? bankahesapid, bool drm, int page, int pageSize)
+        public List<ENakit> GetAll(int? santiyeid, int? sirketid, int? bankahesapid, bool drm, int page, int pageSize)
         {
             using (var context = new Context())
             {

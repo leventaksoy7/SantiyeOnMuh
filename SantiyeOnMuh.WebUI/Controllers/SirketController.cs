@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SantiyeOnMuh.Business.Abstract;
+using SantiyeOnMuh.Entity;
 using SantiyeOnMuh.WebUI.Models;
 using SantiyeOnMuh.WebUI.Models.Modeller;
 
@@ -31,30 +32,29 @@ namespace SantiyeOnMuh.WebUI.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult SirketEkleme(Sirket s)
+        public IActionResult SirketEkleme(Sirket sirket)
         {
-            var entity = new Sirket()
+            var _sirket = new ESirket()
             {
-
-            }
-            _sirketService.Create(s);
+                Ad=sirket.Ad,
+                VergiNo=sirket.VergiNo,
+                Durum=sirket.Durum,
+                Ceks=sirket.Ceks,
+                Nakits=sirket.Nakits,
+            };
+            _sirketService.Create(_sirket);
             return RedirectToAction("Index", "Admin");
         }
         [HttpGet]
         public IActionResult SirketGuncelle(int? id)
         {
             ViewBag.Sayfa = "ŞİRKET BİLGİLERİNİ BİLGİLERİNİ GÜNCELLEME";
-            if (id == null)
-            {
-                return NotFound();
-            }
+            if (id == null){return NotFound();}
 
-            Sirket sirket = _sirketService.GetById((int)id);
+            ESirket sirket = _sirketService.GetById((int)id);
 
-            if (sirket == null)
-            {
-                return NotFound();
-            }
+            if (sirket == null){return NotFound();}
+
             return View(sirket);
         }
         [HttpPost]
@@ -74,17 +74,11 @@ namespace SantiyeOnMuh.WebUI.Controllers
         [HttpGet]
         public IActionResult SirketSil(int? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            if (id == null){return NotFound();}
 
-            Sirket sirket = _sirketService.GetById((int)id);
+            ESirket sirket = _sirketService.GetById((int)id);
 
-            if (sirket == null)
-            {
-                return NotFound();
-            }
+            if (sirket == null){ return NotFound();}
 
             sirket.Durum = false;
 
@@ -95,17 +89,11 @@ namespace SantiyeOnMuh.WebUI.Controllers
         [HttpGet]
         public IActionResult SirketGeriYukle(int? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            if (id == null){return NotFound();}
 
-            Sirket sirket = _sirketService.GetById((int)id);
+            ESirket sirket = _sirketService.GetById((int)id);
 
-            if (sirket == null)
-            {
-                return NotFound();
-            }
+            if (sirket == null){return NotFound();}
 
             sirket.Durum = false;
 

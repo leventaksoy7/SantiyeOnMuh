@@ -16,32 +16,32 @@ namespace SantiyeOnMuh.Business.Concrete
         {
             _santiyeGiderKalemiRepository = santiyeGiderKalemiRepositoryservice;
         }
-        public void Create(SantiyeGiderKalemi entity)
+        public void Create(ESantiyeGiderKalemi entity)
         {
             _santiyeGiderKalemiRepository.Create(entity);
         }
 
-        public void Delete(SantiyeGiderKalemi entity)
+        public void Delete(ESantiyeGiderKalemi entity)
         {
             _santiyeGiderKalemiRepository.Delete(entity);
         }
 
-        public void Update(SantiyeGiderKalemi entity)
+        public void Update(ESantiyeGiderKalemi entity)
         {
             _santiyeGiderKalemiRepository.Update(entity);
         }
 
-        public List<SantiyeGiderKalemi> GetAll()
+        public List<ESantiyeGiderKalemi> GetAll()
         {
             return _santiyeGiderKalemiRepository.GetAll();
         }
 
-        public SantiyeGiderKalemi GetById(int id)
+        public ESantiyeGiderKalemi GetById(int id)
         {
             return _santiyeGiderKalemiRepository.GetById(id);
         }
 
-        public List<SantiyeGiderKalemi> GetAll(bool drm, bool tur)
+        public List<ESantiyeGiderKalemi> GetAll(bool drm, bool tur)
         {
             return _santiyeGiderKalemiRepository.GetAll(drm, tur);
         }

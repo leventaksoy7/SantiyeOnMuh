@@ -16,42 +16,42 @@ namespace SantiyeOnMuh.Business.Concrete
         {
             _nakitRepository = NakitRepository;
         }
-        public void Create(Nakit entity)
+        public void Create(ENakit entity)
         {
             _nakitRepository.Create(entity);
         }
 
-        public void Delete(Nakit entity)
+        public void Delete(ENakit entity)
         {
             _nakitRepository.Delete(entity);
         }
 
-        public void Update(Nakit entity)
+        public void Update(ENakit entity)
         {
             _nakitRepository.Update(entity);
         }
 
-        public List<Nakit> GetAll()
+        public List<ENakit> GetAll()
         {
             return _nakitRepository.GetAll();
         }
 
-        public Nakit GetById(int id)
+        public ENakit GetById(int id)
         {
             return _nakitRepository.GetById(id);
         }
 
-        public Nakit GetByIdDetay(int id)
+        public ENakit GetByIdDetay(int id)
         {
             return _nakitRepository.GetByIdDetay(id);
         }
 
-        public List<Nakit> GetAll(int? santiyeid, int? sirketid, int? bankahesapid, bool drm)
+        public List<ENakit> GetAll(int? santiyeid, int? sirketid, int? bankahesapid, bool drm)
         {
             return _nakitRepository.GetAll(santiyeid, sirketid, bankahesapid, drm);
         }
 
-        public List<Nakit> GetAll(int? santiyeid, int? sirketid, int? bankahesapid, bool drm, int page, int pageSize)
+        public List<ENakit> GetAll(int? santiyeid, int? sirketid, int? bankahesapid, bool drm, int page, int pageSize)
         {
             return _nakitRepository.GetAll(santiyeid,sirketid,bankahesapid,drm,page,pageSize);
         }

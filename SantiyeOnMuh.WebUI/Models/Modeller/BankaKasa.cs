@@ -1,4 +1,5 @@
-﻿using SantiyeOnMuh.WebUI.Models.Modeller;
+﻿using SantiyeOnMuh.Entity;
+using SantiyeOnMuh.WebUI.Models.Modeller;
 using System.ComponentModel.DataAnnotations;
 
 namespace SantiyeOnMuh.WebUI.Models.Modeller
@@ -20,7 +21,7 @@ namespace SantiyeOnMuh.WebUI.Models.Modeller
         public int? NakitKaynak { get; set; }
         public int? SantiyeKasaKaynak { get; set; }
         public int BankaHesapId { get; set; }
-        public BankaHesap BankaHesap { get; set; }
+        public EBankaHesap BankaHesap { get; set; }
         public DateTime SistemeGiris { get; set; }
         public DateTime SonGuncelleme { get; set; }
         public BankaKasa()

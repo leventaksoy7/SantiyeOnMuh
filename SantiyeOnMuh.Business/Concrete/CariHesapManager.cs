@@ -16,37 +16,37 @@ namespace SantiyeOnMuh.Business.Concrete
         {
             _cariHesapRepository = cariHesapRepository;
         }
-        public void Create(CariHesap entity)
+        public void Create(ECariHesap entity)
         {
             _cariHesapRepository.Create(entity);
         }
 
-        public void Delete(CariHesap entity)
+        public void Delete(ECariHesap entity)
         {
             _cariHesapRepository.Delete(entity);
         }
 
-        public void Update(CariHesap entity)
+        public void Update(ECariHesap entity)
         {
             _cariHesapRepository.Update(entity);
         }
 
-        public List<CariHesap> GetAll()
+        public List<ECariHesap> GetAll()
         {
             return _cariHesapRepository.GetAll();
         }
 
-        public CariHesap GetById(int id)
+        public ECariHesap GetById(int id)
         {
             return _cariHesapRepository.GetById(id);
         }
 
-        public List<CariHesap> GetAll(int? santiyeid, bool drm)
+        public List<ECariHesap> GetAll(int? santiyeid, bool drm)
         {
             return _cariHesapRepository.GetAll(santiyeid, drm);
         }
 
-        public List<CariHesap> GetAll(int? santiyeid, bool drm, int page, int pageSize)
+        public List<ECariHesap> GetAll(int? santiyeid, bool drm, int page, int pageSize)
         {
             return _cariHesapRepository.GetAll(santiyeid, drm, page, pageSize);
         }

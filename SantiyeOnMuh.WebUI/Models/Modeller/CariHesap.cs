@@ -1,4 +1,5 @@
-﻿using SantiyeOnMuh.WebUI.Models.Modeller;
+﻿using SantiyeOnMuh.Entity;
+using SantiyeOnMuh.WebUI.Models.Modeller;
 
 namespace SantiyeOnMuh.WebUI.Models.Modeller
 {
@@ -14,11 +15,11 @@ namespace SantiyeOnMuh.WebUI.Models.Modeller
         public string Odeme { get; set; }
         public string? Vade { get; set; }
         public bool Durum { get; set; }
-        public List<Cek> Ceks { get; set; }
-        public List<Nakit> Nakits { get; set; }
-        public List<CariKasa> CariKasas { get; set; }
+        public List<ECek> Ceks { get; set; }
+        public List<ENakit> Nakits { get; set; }
+        public List<ECariKasa> CariKasas { get; set; }
         public int SantiyeId { get; set; }
-        public Santiye Santiye { get; set; }
+        public ESantiye Santiye { get; set; }
         public CariHesap()
         {
             Durum = true;

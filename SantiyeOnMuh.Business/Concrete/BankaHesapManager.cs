@@ -17,32 +17,32 @@ namespace SantiyeOnMuh.Business.Concrete
             _bankaHesapRepository = bankaHesapRepository;
         }
 
-        public void Create(BankaHesap entity)
+        public void Create(EBankaHesap entity)
         {
             _bankaHesapRepository.Create(entity);
         }
 
-        public void Delete(BankaHesap entity)
+        public void Delete(EBankaHesap entity)
         {
             _bankaHesapRepository.Delete(entity);
         }
 
-        public void Update(BankaHesap entity)
+        public void Update(EBankaHesap entity)
         {
             _bankaHesapRepository.Update(entity);
         }
 
-        public List<BankaHesap> GetAll()
+        public List<EBankaHesap> GetAll()
         {
             return _bankaHesapRepository.GetAll();
         }
 
-        public List<BankaHesap> GetAll(bool drm)
+        public List<EBankaHesap> GetAll(bool drm)
         {
             return _bankaHesapRepository.GetAll(drm);
         }
 
-        public BankaHesap GetById(int id)
+        public EBankaHesap GetById(int id)
         {
             return _bankaHesapRepository.GetById(id);
         }

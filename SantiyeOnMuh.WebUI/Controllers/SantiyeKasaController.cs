@@ -60,10 +60,10 @@ namespace SantiyeOnMuh.WebUI.Controllers
             ViewBag.GK = _santiyeGiderKalemiService.GetAll(true, true);
             ViewBag.Santiye = _santiyeService.GetAll(true);
 
-            return View(new SantiyeKasa());
+            return View(new ESantiyeKasa());
         }
         [HttpPost]
-        public async Task<IActionResult> SantiyeKasaEkleme(SantiyeKasa s, IFormFile file)
+        public async Task<IActionResult> SantiyeKasaEkleme(ESantiyeKasa s, IFormFile file)
         {
             #region ESKİ TİP UZANTI KONTROL EDİP RESİM YÜKLEME
             //if (file != null)
@@ -124,7 +124,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
             ViewBag.Sayfa = "GİDER DETAYI";
             if (id == null)
             { return NotFound(); }
-            SantiyeKasa santiyeKasa = _santiyeKasaService.GetById((int)id);
+            ESantiyeKasa santiyeKasa = _santiyeKasaService.GetById((int)id);
             if (santiyeKasa == null)
             { return NotFound(); }
             return View(santiyeKasa);
@@ -140,7 +140,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
                 return NotFound();
             }
 
-            SantiyeKasa santiyeKasa = _santiyeKasaService.GetById((int)santiyekasaid);
+            ESantiyeKasa santiyeKasa = _santiyeKasaService.GetById((int)santiyekasaid);
             ViewBag.SantiyeId = santiyeKasa.SantiyeId;
 
             if (santiyeKasa == null)
@@ -151,7 +151,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
             return View(santiyeKasa);
         }
         [HttpPost]
-        public IActionResult SantiyeKasaSil(SantiyeKasa s)
+        public IActionResult SantiyeKasaSil(ESantiyeKasa s)
         {
             var entity = _santiyeKasaService.GetById(s.Id);
 
@@ -281,7 +281,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
                 return NotFound();
             }
 
-            SantiyeKasa santiyeKasa = _santiyeKasaService.GetById((int)santiyekasaid);
+            ESantiyeKasa santiyeKasa = _santiyeKasaService.GetById((int)santiyekasaid);
 
             if (santiyeKasa == null)
             {
@@ -303,10 +303,10 @@ namespace SantiyeOnMuh.WebUI.Controllers
             ViewBag.GK = _santiyeGiderKalemiService.GetAll(true, true);
 
             ViewBag.SantiyeId = santiyeid;
-            return View(new SantiyeKasa());
+            return View(new ESantiyeKasa());
         }
         [HttpPost]
-        public async Task<IActionResult> SantiyeKasaEklemeFromSantiye(SantiyeKasa s, IFormFile file)
+        public async Task<IActionResult> SantiyeKasaEklemeFromSantiye(ESantiyeKasa s, IFormFile file)
         {
             #region EĞER RESİM EKLİ DEĞİLSE GERİ DÖNÜŞTE GEREKLİ BİLGİLER
             ViewBag.Sayfa = _santiyeService.GetById(s.SantiyeId).Ad + " ŞANTİYE KASASI GİDER EKLE";
@@ -350,7 +350,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
                 return NotFound();
             }
 
-            SantiyeKasa santiyeKasa = _santiyeKasaService.GetById((int)santiyekasaid);
+            ESantiyeKasa santiyeKasa = _santiyeKasaService.GetById((int)santiyekasaid);
             ViewBag.SantiyeId = santiyeKasa.SantiyeId;
 
             if (santiyeKasa == null)
@@ -361,7 +361,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
             return View(santiyeKasa);
         }
         [HttpPost]
-        public IActionResult SantiyeKasaGuncelleFromSantiye(SantiyeKasa s)
+        public IActionResult SantiyeKasaGuncelleFromSantiye(ESantiyeKasa s)
         {
             var entitySantiyeKasa = _santiyeKasaService.GetById(s.Id);
             if (entitySantiyeKasa == null)

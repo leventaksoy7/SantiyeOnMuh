@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 
 namespace SantiyeOnMuh.DataAccess.Abstract
 {
-    public interface ICariHesapRepository : IRepository<CariHesap>, IRepositoryGetAllDurum<CariHesap>
+    public interface ICariHesapRepository : IRepository<ECariHesap>, IRepositoryGetAllDurum<ECariHesap>
     {
-        List<CariHesap> GetAll(int? santiyeid, bool drm);
-        List<CariHesap> GetAll(int? santiyeid, bool drm, int page, int pageSize);
+        List<ECariHesap> GetAll(int? santiyeid, bool drm);
+        List<ECariHesap> GetAll(int? santiyeid, bool drm, int page, int pageSize);
         int GetCount(int? santiyeid, bool drm);
     }
 }

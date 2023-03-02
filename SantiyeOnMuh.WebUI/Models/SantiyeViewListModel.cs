@@ -4,7 +4,7 @@ namespace SantiyeOnMuh.WebUI.Models
 {
     public class SantiyeViewListModel
     {
-        public List<Santiye> Santiyes { get; set; }
-        public List<SantiyeKasa> SantiyeKasas { get; set; }
+        public List<ESantiye> Santiyes { get; set; }
+        public List<ESantiyeKasa> SantiyeKasas { get; set; }
     }
 }

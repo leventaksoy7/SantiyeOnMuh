@@ -1,23 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using System.Runtime.ConstrainedExecution;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace SantiyeOnMuh.Entity
 {
-    public class Sirket
+    public class ESantiyeGiderKalemi
     {
         public int Id { get; set; }
+        [Required]
+        [StringLength(50)]
         public string Ad { get; set; }
-        public string VergiNo { get; set; }
         public bool Durum { get; set; }
-        public List<Cek> Ceks { get; set; }
-        public List<Nakit> Nakits { get; set; }
-        public Sirket()
+        public bool Tur { get; set; }
+        public List<ESantiyeKasa> SantiyeKasas { get; set; }
+        public ESantiyeGiderKalemi()
         {
             Durum = true;
+            Tur = true;
         }
     }
 }

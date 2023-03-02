@@ -4,6 +4,6 @@ namespace SantiyeOnMuh.WebUI.Models
 {
     public class SirkerViewListModel
     {
-        public List<Sirket> Sirkets { get; set; }
+        public List<ESirket> Sirkets { get; set; }
     }
 }

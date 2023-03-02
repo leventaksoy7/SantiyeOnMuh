@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace SantiyeOnMuh.Business.Abstract
 {
-    public interface ICariKasaService : IService<CariKasa>
+    public interface ICariKasaService : IService<ECariKasa>
     {
-        CariKasa GetByIdDetay(int id);
-        List<CariKasa> GetAll(int carihesapid, int? gkid, bool drm);
-        List<CariKasa> GetAll(int carihesapid, int? gkid, bool drm, int page, int pageSize);
+        ECariKasa GetByIdDetay(int id);
+        List<ECariKasa> GetAll(int carihesapid, int? gkid, bool drm);
+        List<ECariKasa> GetAll(int carihesapid, int? gkid, bool drm, int page, int pageSize);
         int GetCount(int carihesapid, int? gkid, bool drm);
     }
 }

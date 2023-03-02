@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace SantiyeOnMuh.Entity
 {
-    public class BankaHesap
+    public class EBankaHesap
     {
         public int Id { get; set; }
         public string HesapAdi { get; set; }
@@ -15,10 +15,10 @@ namespace SantiyeOnMuh.Entity
         public string HesapNo{ get; set; }
         public string IbanNo { get; set; }
         public bool Durum { get; set; }
-        public List<Cek> Ceks { get; set; }
-        public List<Nakit> Nakits { get; set; }
-        public List<BankaKasa> BankaKasas { get; set; }
-        public BankaHesap()
+        public List<ECek> Ceks { get; set; }
+        public List<ENakit> Nakits { get; set; }
+        public List<EBankaKasa> BankaKasas { get; set; }
+        public EBankaHesap()
         {
             Durum = true;
         }

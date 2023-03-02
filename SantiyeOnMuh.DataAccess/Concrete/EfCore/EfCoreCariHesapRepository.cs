@@ -9,9 +9,9 @@ using System.Threading.Tasks;
 
 namespace SantiyeOnMuh.DataAccess.Concrete.EfCore
 {
-    public class EfCoreCariHesapRepository : EfCoreGenericRepository<CariHesap, Context>, ICariHesapRepository
+    public class EfCoreCariHesapRepository : EfCoreGenericRepository<ECariHesap, Context>, ICariHesapRepository
     {
-        public List<CariHesap> GetAll(bool drm)
+        public List<ECariHesap> GetAll(bool drm)
         {
             using (var context = new Context())
             {
@@ -21,7 +21,7 @@ namespace SantiyeOnMuh.DataAccess.Concrete.EfCore
             }
         }
 
-        public List<CariHesap> GetAll(int? santiyeid, bool drm)
+        public List<ECariHesap> GetAll(int? santiyeid, bool drm)
         {
             using (var context = new Context())
             {
@@ -47,7 +47,7 @@ namespace SantiyeOnMuh.DataAccess.Concrete.EfCore
             }
         }
 
-        public List<CariHesap> GetAll(int? santiyeid, bool drm, int page, int pageSize)
+        public List<ECariHesap> GetAll(int? santiyeid, bool drm, int page, int pageSize)
         {
             using (var context = new Context())
             {

@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace SantiyeOnMuh.Business.Abstract
 {
-    public interface IBankaKasaService : IService<BankaKasa>
+    public interface IBankaKasaService : IService<EBankaKasa>
     {
-        BankaKasa GetByIdDetay(int id);
-        List<BankaKasa> GetAll(int? bankahesapid, bool drm);
-        List<BankaKasa> GetAll(int? bankahesapid, bool drm, int page, int pageSize);
+        EBankaKasa GetByIdDetay(int id);
+        List<EBankaKasa> GetAll(int? bankahesapid, bool drm);
+        List<EBankaKasa> GetAll(int? bankahesapid, bool drm, int page, int pageSize);
         int GetCount(int? bankahesapid, bool drm);
     }
 }

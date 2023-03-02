@@ -17,32 +17,32 @@ namespace SantiyeOnMuh.Business.Concrete
             _sirketRepository = sirketRepository;
         }
 
-        public void Create(Sirket entity)
+        public void Create(ESirket entity)
         {
             _sirketRepository.Create(entity);
         }
 
-        public void Delete(Sirket entity)
+        public void Delete(ESirket entity)
         {
             _sirketRepository.Delete(entity);
         }
 
-        public void Update(Sirket entity)
+        public void Update(ESirket entity)
         {
             _sirketRepository.Update(entity);
         }
 
-        public List<Sirket> GetAll()
+        public List<ESirket> GetAll()
         {
             return _sirketRepository.GetAll();
         }
 
-        public List<Sirket> GetAll(bool drm)
+        public List<ESirket> GetAll(bool drm)
         {
             return _sirketRepository.GetAll(drm);
         }
 
-        public Sirket GetById(int id)
+        public ESirket GetById(int id)
         {
             return _sirketRepository.GetById(id);
         }

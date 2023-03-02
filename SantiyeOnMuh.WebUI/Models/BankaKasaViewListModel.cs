@@ -17,7 +17,7 @@ namespace SantiyeOnMuh.WebUI.Models
     public class BankaKasaViewListModel
     {
         public PageInfo PageInfo { get; set; }
-        public List<BankaKasa> BankaKasas { get; set; }
-        public List<BankaHesap> BankaHesaps { get; set; }
+        public List<EBankaKasa> BankaKasas { get; set; }
+        public List<EBankaHesap> BankaHesaps { get; set; }
     }
 }

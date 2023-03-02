@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace SantiyeOnMuh.DataAccess.Abstract
 {
-    public interface ISantiyeKasaRepository : IRepository<SantiyeKasa>
+    public interface ISantiyeKasaRepository : IRepository<ESantiyeKasa>
     {
-        SantiyeKasa GetByIdDetay(int id);
-        List<SantiyeKasa> GetAll(int? santiyeid, int? gkid, bool drm);
-        List<SantiyeKasa> GetAll(int santiyeid, int? gkid, bool drm, int page, int pageSize);
+        ESantiyeKasa GetByIdDetay(int id);
+        List<ESantiyeKasa> GetAll(int? santiyeid, int? gkid, bool drm);
+        List<ESantiyeKasa> GetAll(int santiyeid, int? gkid, bool drm, int page, int pageSize);
         int GetCount(int santiyeid, int? gkid, bool drm);
     }
 }

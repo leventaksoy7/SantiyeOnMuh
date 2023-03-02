@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 
 namespace SantiyeOnMuh.Business.Abstract
 {
-    public interface ICariHesapService : IService<CariHesap>
+    public interface ICariHesapService : IService<ECariHesap>
     {
-        List<CariHesap> GetAll(int? santiyeid, bool drm);
-        List<CariHesap> GetAll(int? santiyeid, bool drm, int page, int pageSize);
+        List<ECariHesap> GetAll(int? santiyeid, bool drm);
+        List<ECariHesap> GetAll(int? santiyeid, bool drm, int page, int pageSize);
         int GetCount(int? santiyeid, bool drm);
     }
 }

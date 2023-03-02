@@ -61,10 +61,10 @@ namespace SantiyeOnMuh.WebUI.Controllers
             ViewBag.Sayfa = "CARİ HESABA FATURA GİRİŞİ";
             ViewBag.CariHesap = _cariHesapService.GetAll(null, true);
             ViewBag.CariGK = _cariGiderKalemiService.GetAll(true, true);
-            return View(new CariKasa());
+            return View(new ECariKasa());
         }
         [HttpPost]
-        public async Task<IActionResult> CariKasaEkleme(CariKasa c, IFormFile file)
+        public async Task<IActionResult> CariKasaEkleme(ECariKasa c, IFormFile file)
         {
             #region ESKİ TİP RESİM EKLEME
             //if (file != null)
@@ -136,7 +136,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
             ViewBag.Sayfa = "FATURA DETAYI";
             if (carikasaid == null)
             { return NotFound(); }
-            CariKasa cariKasa = _cariKasaService.GetById((int)carikasaid);
+            ECariKasa cariKasa = _cariKasaService.GetById((int)carikasaid);
             if (cariKasa == null)
             { return NotFound(); }
             return View(cariKasa);
@@ -151,7 +151,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
                 return NotFound();
             }
 
-            CariKasa cariKasa = _cariKasaService.GetByIdDetay((int)carikasaid);
+            ECariKasa cariKasa = _cariKasaService.GetByIdDetay((int)carikasaid);
 
             if (cariKasa == null)
             {
@@ -160,7 +160,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
             return View(cariKasa);
         }
         [HttpPost]
-        public IActionResult CariKasaSil(CariKasa c)
+        public IActionResult CariKasaSil(ECariKasa c)
         {
             var entity = _cariKasaService.GetByIdDetay(c.Id);
 
@@ -310,7 +310,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
                 return NotFound();
             }
 
-            CariKasa cariKasa = _cariKasaService.GetByIdDetay((int)carikasaid);
+            ECariKasa cariKasa = _cariKasaService.GetByIdDetay((int)carikasaid);
 
             if (cariKasa == null)
             {
@@ -319,7 +319,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
             return View(cariKasa);
         }
         [HttpPost]
-        public IActionResult CariKasaGeriYukle(CariKasa c)
+        public IActionResult CariKasaGeriYukle(ECariKasa c)
         {
             var entity = _cariKasaService.GetByIdDetay(c.Id);
 
@@ -344,10 +344,10 @@ namespace SantiyeOnMuh.WebUI.Controllers
             ViewBag.CariGK = _cariGiderKalemiService.GetAll(true, true);
             ViewBag.CariHesapId = carihesapid;
 
-            return View(new CariKasa());
+            return View(new ECariKasa());
         }
         [HttpPost]
-        public async Task<IActionResult> CariKasaFaturaEklemeFromCari(CariKasa c, IFormFile file)
+        public async Task<IActionResult> CariKasaFaturaEklemeFromCari(ECariKasa c, IFormFile file)
         {
             #region  RESİM VS. EKLENMEMİŞSE SAYFAYA GERİ GİDİYOR, GERİ GİDİLEN SAYFANIN İHTİYACI OLAN BİLGİLER
             ViewBag.Sayfa = _cariHesapService.GetById(c.CariHesapId).Ad + " FİRMA CARİSİNE FATURA GİRİŞİ";
@@ -394,7 +394,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
                 return NotFound();
             }
 
-            CariKasa cariKasa = _cariKasaService.GetByIdDetay((int)carikasaid);
+            ECariKasa cariKasa = _cariKasaService.GetByIdDetay((int)carikasaid);
 
             if (cariKasa == null)
             {
@@ -404,7 +404,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
             return View(cariKasa);
         }
         [HttpPost]
-        public IActionResult CariKasaFaturaGuncelleFromCari(CariKasa c)
+        public IActionResult CariKasaFaturaGuncelleFromCari(ECariKasa c)
         {
             ViewBag.Sayfa = "FATURA BİLGİLERİNİ GÜNCELLEME";
             ViewBag.CariGK = _cariGiderKalemiService.GetAll(true, true);

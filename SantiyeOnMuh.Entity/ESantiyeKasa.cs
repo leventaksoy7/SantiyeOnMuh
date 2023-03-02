@@ -1,10 +1,13 @@
-﻿using SantiyeOnMuh.Entity;
-using SantiyeOnMuh.WebUI.Models.Modeller;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace SantiyeOnMuh.WebUI.Models.Modeller
+namespace SantiyeOnMuh.Entity
 {
-    public class SantiyeKasa
+    public class ESantiyeKasa
     {
         public int Id { get; set; }
         [Required(ErrorMessage = "TARİH GİRMELİSİNİZ")]
@@ -25,7 +28,7 @@ namespace SantiyeOnMuh.WebUI.Models.Modeller
         public ESantiyeGiderKalemi SantiyeGiderKalemi { get; set; }
         public int SantiyeId { get; set; }
         public ESantiye Santiye { get; set; }
-        public SantiyeKasa()
+        public ESantiyeKasa()
         {
             Tarih = DateTime.Today;
 

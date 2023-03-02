@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SantiyeOnMuh.Entity.AraModeller
+namespace SantiyeOnMuh.Entity
 {
-    public class BankaHesapKasaEftModel
+    public class EBankaKasa
     {
         public int Id { get; set; }
         [Required(ErrorMessage = "TARİH GİRMELİSİNİZ")]
@@ -15,20 +15,30 @@ namespace SantiyeOnMuh.Entity.AraModeller
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
         public DateTime Tarih { get; set; }
         public string Aciklama { get; set; }
+        //PARA AKIŞININ NİCELİĞİ ÖRN: EFT HAVALE ÖDEME VB
         public string Nitelik { get; set; }
-        public decimal Tutar { get; set; }
-        public int GonderenBanka { get; set; }
-        public int AliciBanka { get; set; }
+        public decimal Giren { get; set; }
+        public decimal Cikan { get; set; }
+        public bool Durum { get; set; }
+        public int? CekKaynak { get; set; }
+        public int? NakitKaynak { get; set; }
+        public int? SantiyeKasaKaynak { get; set; }
+        public int BankaHesapId { get; set; }
+        public EBankaHesap BankaHesap { get; set; }
         public DateTime SistemeGiris { get; set; }
         public DateTime SonGuncelleme { get; set; }
-        public bool Durum { get; set; }
-        public BankaHesapKasaEftModel()
+        public EBankaKasa()
         {
-            Tarih = System.DateTime.Now;
-            Nitelik = "EFT";
-            Tutar = 0;
             Durum = true;
 
+            CekKaynak = null;
+            NakitKaynak = null;
+            SantiyeKasaKaynak = null;
+
+            Giren = 0;
+            Cikan = 0;
+
+            Tarih = System.DateTime.Now;
             SistemeGiris = System.DateTime.Now;
             SonGuncelleme = System.DateTime.Now;
         }

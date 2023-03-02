@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace SantiyeOnMuh.Business.Abstract
 {
-    public interface IBankaHesapService : IService<BankaHesap>,IServiceGetAllDurum<BankaHesap>
+    public interface IBankaHesapService : IService<EBankaHesap>,IServiceGetAllDurum<EBankaHesap>
     {
 
     }

@@ -4,6 +4,6 @@ namespace SantiyeOnMuh.WebUI.Models
 {
     public class SantiyeGiderKalemiViewListModel
     {
-        public List<SantiyeGiderKalemi> SantiyeGiderKalemis { get; set; } 
+        public List<ESantiyeGiderKalemi> SantiyeGiderKalemis { get; set; } 
     }
 }

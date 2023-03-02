@@ -34,16 +34,16 @@ namespace SantiyeOnMuh.DataAccess.Concrete.EfCore
             context.SaveChanges();
         }
 
-        private static Santiye[] Santiyes =
+        private static ESantiye[] Santiyes =
         {
-            new Santiye(){ Ad="Santiye1"},
-            new Santiye(){ Ad="Santiye2"},
-            new Santiye(){ Ad="Santiye3"}
+            new ESantiye(){ Ad="Santiye1"},
+            new ESantiye(){ Ad="Santiye2"},
+            new ESantiye(){ Ad="Santiye3"}
         };
 
-        private static SantiyeKasa[] SantiyeKasas =
+        private static ESantiyeKasa[] SantiyeKasas =
         {
-            new SantiyeKasa(){ Aciklama="test",Gelir=1,Gider=1,Kisi="test",Tarih=DateTime.Today,SantiyeId=1,No="test",SonGuncelleme=DateTime.Today}
+            new ESantiyeKasa(){ Aciklama="test",Gelir=1,Gider=1,Kisi="test",Tarih=DateTime.Today,SantiyeId=1,No="test",SonGuncelleme=DateTime.Today}
         };
     }
 }

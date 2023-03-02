@@ -4,6 +4,6 @@ namespace SantiyeOnMuh.WebUI.Models
 {
     public class BankaHesapViewListModel
     {
-        public List<BankaHesap> BankaHesaps { get; set; }
+        public List<EBankaHesap> BankaHesaps { get; set; }
     }
 }

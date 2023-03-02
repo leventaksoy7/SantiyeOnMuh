@@ -4,6 +4,6 @@ namespace SantiyeOnMuh.WebUI.Models
 {
     public class CariGiderKalemiViewListModel
     {
-        public List<CariGiderKalemi> CariGiderKalemis { get; set; }
+        public List<ECariGiderKalemi> CariGiderKalemis { get; set; }
     }
 }

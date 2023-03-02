@@ -59,10 +59,10 @@ namespace SantiyeOnMuh.WebUI.Controllers
             ViewBag.Cari = _cariHesapService.GetAll(null, true);
             ViewBag.Banka = _bankaHesapService.GetAll(true);
 
-            return View(new Cek());
+            return View(new ECek());
         }
         [HttpPost]
-        public async Task<IActionResult> CekEkleme(Cek c, IFormFile file)
+        public async Task<IActionResult> CekEkleme(ECek c, IFormFile file)
         {
             #region RESİM VS. EKLENMEMİŞSE SAYFAYA GERİ GİDİYOR, GERİ GİDİLEN SAYFANIN İHTİYACI OLAN BİLGİLER
             ViewBag.Sayfa = "YENİ ÇEK EKLEME";
@@ -92,7 +92,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
             #endregion
             _cekService.Create(c);
             //CARİ KASA İÇİN ÇEK OLUŞTURULDU VE ÇEK KAYNAĞI İLE EKLENDİ
-            CariKasa EntityCariKasa = new CariKasa()
+            ECariKasa EntityCariKasa = new ECariKasa()
             {
                 Tarih = c.Tarih,
                 Aciklama = c.CekNo + " NOLU CEK ÖDEMESİ " + c.Aciklama,
@@ -127,7 +127,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
                 return NotFound();
             }
 
-            Cek c = _cekService.GetByIdDetay((int)cekid);
+            ECek c = _cekService.GetByIdDetay((int)cekid);
 
             if (c == null)
             {
@@ -144,7 +144,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
             //CARİ KASA İÇİN ÇEK OLUŞTURULDU VE ÇEK KAYNAĞI İLE EKLENDİ
             String FirmaAdiForAciklama = _cariHesapService.GetById((int)c.CariHesapId).Ad;
 
-            BankaKasa EntityBankaKasa = new BankaKasa()
+            EBankaKasa EntityBankaKasa = new EBankaKasa()
             {
                 Tarih = entity.Tarih,
                 Aciklama = FirmaAdiForAciklama + " AİT " + entity.CekNo + " NOLU ÇEK ÖDEMESİ. " + " - " + entity.Aciklama,
@@ -179,7 +179,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
             {
                 return NotFound();
             }
-            Cek cek = _cekService.GetById((int)cekid);
+            ECek cek = _cekService.GetById((int)cekid);
 
             if (cek == null)
             {
@@ -188,7 +188,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
             return View(cek);
         }
         [HttpPost]
-        public IActionResult CekGuncelle(Cek c)
+        public IActionResult CekGuncelle(ECek c)
         {
             var entityCek = _cekService.GetById(c.Id);
 
@@ -259,7 +259,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
                 return NotFound();
             }
 
-            Cek cek = _cekService.GetByIdDetay((int)cekid);
+            ECek cek = _cekService.GetByIdDetay((int)cekid);
 
             if (cek == null)
             {
@@ -277,7 +277,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
             {
                 return NotFound();
             }
-            Cek cek = _cekService.GetByIdDetay((int)cekid);
+            ECek cek = _cekService.GetByIdDetay((int)cekid);
 
             if (cek == null)
             {
@@ -286,7 +286,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
             return View(cek);
         }
         [HttpPost]
-        public IActionResult CekSil(Cek c)
+        public IActionResult CekSil(ECek c)
         {
             var entityCek = _cekService.GetByIdDetay(c.Id);
 
@@ -453,10 +453,10 @@ namespace SantiyeOnMuh.WebUI.Controllers
 
             ViewBag.CariHesapId = carihesapid;
 
-            return View(new Cek());
+            return View(new ECek());
         }
         [HttpPost]
-        public async Task<IActionResult> CekEklemeFromCari(Cek c, IFormFile file)
+        public async Task<IActionResult> CekEklemeFromCari(ECek c, IFormFile file)
         {
             #region  RESİM VS. EKLENMEMİŞSE SAYFAYA GERİ GİDİYOR, GERİ GİDİLEN SAYFANIN İHTİYACI OLAN BİLGİLER
             ViewBag.Sayfa = _cariHesapService.GetById((int)c.CariHesapId).Ad + " CARİSİNE YENİ ÇEK GİRİŞİ";
@@ -489,7 +489,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
             #endregion
             _cekService.Create(c);
             //CARİ KASA İÇİN ÇEK OLUŞTURULDU VE ÇEK KAYNAĞI İLE EKLENDİ
-            CariKasa EntityCariKasa = new CariKasa()
+            ECariKasa EntityCariKasa = new ECariKasa()
             {
                 Tarih = c.Tarih,
                 Aciklama = c.CekNo + " NOLU CEK ÖDEMESİ " + c.Aciklama,

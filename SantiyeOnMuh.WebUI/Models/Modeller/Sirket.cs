@@ -1,4 +1,5 @@
 ﻿using DocumentFormat.OpenXml.Wordprocessing;
+using SantiyeOnMuh.Entity;
 using SantiyeOnMuh.WebUI.Models.Modeller;
 using System.ComponentModel.DataAnnotations;
 
@@ -16,8 +17,8 @@ namespace SantiyeOnMuh.WebUI.Models.Modeller
         //[Display(Name = "Vergi Numarası", Prompt ="LÜTFEN VERGİ NUMARASINI GİRİNİZ")]
         public string VergiNo { get; set; }
         public bool Durum { get; set; }
-        public List<Cek> Ceks { get; set; }
-        public List<Nakit> Nakits { get; set; }
+        public List<ECek> Ceks { get; set; }
+        public List<ENakit> Nakits { get; set; }
         public Sirket()
         {
             Durum = true;

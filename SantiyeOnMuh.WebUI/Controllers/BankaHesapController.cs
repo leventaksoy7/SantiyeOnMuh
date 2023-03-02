@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SantiyeOnMuh.Business.Abstract;
 using SantiyeOnMuh.Entity;
+using SantiyeOnMuh.WebUI.Models.Modeller;
 
 namespace SantiyeOnMuh.WebUI.Controllers
 {
@@ -19,59 +20,94 @@ namespace SantiyeOnMuh.WebUI.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult BankaHesapEkleme(BankaHesap b)
+        public IActionResult BankaHesapEkleme(BankaHesap bankaHesap)
         {
-            _bankaHesapService.Create(b);
+            /* View'larda kullanılan modeller, entitylerin WebUI içindeki kopyaları
+             * WebUI ve Entity katmanlarındaki modelleri new'lediğim için
+             * CRUD işlemlerinde verileri bir modelden diğerine aktarmak zorundayım.
+             * Form tarafında data annotation ve validation kullanımında
+             * Sürekli entity katmanına gitmek yerine
+             * WebUI katmanındaki modeller üzerinde değişiklik yapıyorum.
+             * entity katmanında sadece saf database deseni var.
+            */
+
+            EBankaHesap _bankaHesap = new EBankaHesap() 
+            { 
+                BankaAdi = bankaHesap.BankaAdi,
+                HesapAdi = bankaHesap.HesapAdi,
+                HesapNo = bankaHesap.HesapNo,
+                IbanNo = bankaHesap.IbanNo,
+                Durum = bankaHesap.Durum,
+                Ceks = bankaHesap.Ceks,
+                Nakits = bankaHesap.Nakits,
+                BankaKasas = bankaHesap.BankaKasas,
+            };
+
+            _bankaHesapService.Create(_bankaHesap);
+
             return RedirectToAction("Index", "Admin");
         }
         [HttpGet]
         public IActionResult BankaHesapGuncelle(int? id)
         {
             ViewBag.Sayfa = "BANKA HESAP BİLGİLERİNİ GÜNCELLEME";
-            if (id == null)
-            {
-                return NotFound();
-            }
+            if (id == null){return NotFound();}
 
-            BankaHesap bankaHesap = _bankaHesapService.GetById((int)id);
+            EBankaHesap bankaHesap = _bankaHesapService.GetById((int)id);
 
-            if (bankaHesap == null)
+            if (bankaHesap == null){return NotFound();}
+
+            /* View'larda kullanılan modeller, entitylerin WebUI içindeki kopyaları
+             * WebUI ve Entity katmanlarındaki modelleri new'lediğim için
+             * CRUD işlemlerinde verileri bir modelden diğerine aktarmak zorundayım.
+             * Form tarafında data annotation ve validation kullanımında
+             * Sürekli entity katmanına gitmek yerine
+             * WebUI katmanındaki modeller üzerinde değişiklik yapıyorum.
+             * entity katmanında sadece saf database deseni var.
+            */
+
+            var _bankaHesap = new BankaHesap()
             {
-                return NotFound();
-            }
-            return View(bankaHesap);
+                Id=bankaHesap.Id,
+                BankaAdi = bankaHesap.BankaAdi,
+                HesapAdi = bankaHesap.HesapAdi,
+                HesapNo = bankaHesap.HesapNo,
+                IbanNo = bankaHesap.IbanNo,
+                Durum = bankaHesap.Durum,
+                Ceks = bankaHesap.Ceks,
+                Nakits = bankaHesap.Nakits,
+                BankaKasas = bankaHesap.BankaKasas,
+            };
+
+            return View(_bankaHesap);
         }
         [HttpPost]
-        public IActionResult BankaHesapGuncelle(BankaHesap b)
+        public IActionResult BankaHesapGuncelle(BankaHesap bankaHesap)
         {
-            var entityBankaHesap = _bankaHesapService.GetById(b.Id);
+            EBankaHesap _bankaHesap = _bankaHesapService.GetById(bankaHesap.Id);
 
-            if (entityBankaHesap == null)
+            if (_bankaHesap == null)
             {
                 return NotFound();
             }
-            entityBankaHesap.HesapAdi = b.HesapAdi;
-            entityBankaHesap.BankaAdi = b.BankaAdi;
-            entityBankaHesap.HesapNo = b.HesapNo;
-            entityBankaHesap.IbanNo = b.IbanNo;
 
-            _bankaHesapService.Update(entityBankaHesap);
+            _bankaHesap.HesapAdi = bankaHesap.HesapAdi;
+            _bankaHesap.BankaAdi = bankaHesap.BankaAdi;
+            _bankaHesap.HesapNo = bankaHesap.HesapNo;
+            _bankaHesap.IbanNo = bankaHesap.IbanNo;
+
+            _bankaHesapService.Update(_bankaHesap);
+
             return RedirectToAction("Index", "Admin");
         }
         [HttpGet]
         public IActionResult BankaHesapSil(int? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            if (id == null){return NotFound();}
 
-            BankaHesap bankaHesap = _bankaHesapService.GetById((int)id);
+            EBankaHesap bankaHesap = _bankaHesapService.GetById((int)id);
 
-            if (bankaHesap == null)
-            {
-                return NotFound();
-            }
+            if (bankaHesap == null){return NotFound();}
 
             bankaHesap.Durum = false;
 
@@ -82,17 +118,11 @@ namespace SantiyeOnMuh.WebUI.Controllers
         [HttpGet]
         public IActionResult BankaHesapGeriYukle(int? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            if (id == null){return NotFound();}
 
-            BankaHesap bankaHesap = _bankaHesapService.GetById((int)id);
+            EBankaHesap bankaHesap = _bankaHesapService.GetById((int)id);
 
-            if (bankaHesap == null)
-            {
-                return NotFound();
-            }
+            if (bankaHesap == null){return NotFound();}
 
             bankaHesap.Durum = true;
 

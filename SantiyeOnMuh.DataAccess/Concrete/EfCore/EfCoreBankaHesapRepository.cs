@@ -9,9 +9,9 @@ using System.Threading.Tasks;
 
 namespace SantiyeOnMuh.DataAccess.Concrete.EfCore
 {
-    public class EfCoreBankaHesapRepository : EfCoreGenericRepository<BankaHesap, Context>, IBankaHesapRepository
+    public class EfCoreBankaHesapRepository : EfCoreGenericRepository<EBankaHesap, Context>, IBankaHesapRepository
     {
-        public List<BankaHesap> GetAll(bool drm)
+        public List<EBankaHesap> GetAll(bool drm)
         {
             using (var context = new Context())
             {

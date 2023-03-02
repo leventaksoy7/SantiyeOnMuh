@@ -16,42 +16,42 @@ namespace SantiyeOnMuh.Business.Concrete
         {
             _cekRepository = CekRepository;
         }
-        public void Create(Cek entity)
+        public void Create(ECek entity)
         {
             _cekRepository.Create(entity);
         }
 
-        public void Delete(Cek entity)
+        public void Delete(ECek entity)
         {
             _cekRepository.Delete(entity);
         }
 
-        public void Update(Cek entity)
+        public void Update(ECek entity)
         {
             _cekRepository.Update(entity);
         }
 
-        public List<Cek> GetAll()
+        public List<ECek> GetAll()
         {
             return _cekRepository.GetAll();
         }
 
-        public Cek GetById(int id)
+        public ECek GetById(int id)
         {
             return _cekRepository.GetById(id);
         }
 
-        public Cek GetByIdDetay(int id)
+        public ECek GetByIdDetay(int id)
         {
             return _cekRepository.GetByIdDetay(id);
         }
 
-        public List<Cek> GetAll(int? santiyeid, int? sirketid, int? bankahesapid, bool drm)
+        public List<ECek> GetAll(int? santiyeid, int? sirketid, int? bankahesapid, bool drm)
         {
             return _cekRepository.GetAll(santiyeid, sirketid, bankahesapid,drm);
         }
 
-        public List<Cek> GetAll(int? santiyeid, int? sirketid, int? bankahesapid, bool drm, int page, int pageSize)
+        public List<ECek> GetAll(int? santiyeid, int? sirketid, int? bankahesapid, bool drm, int page, int pageSize)
         {
             return _cekRepository.GetAll(santiyeid,sirketid,bankahesapid,drm,page,pageSize);
         }

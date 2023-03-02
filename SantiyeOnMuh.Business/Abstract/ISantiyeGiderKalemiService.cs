@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace SantiyeOnMuh.Business.Abstract
 {
-    public interface ISantiyeGiderKalemiService : IService<SantiyeGiderKalemi>
+    public interface ISantiyeGiderKalemiService : IService<ESantiyeGiderKalemi>
     {
-        List<SantiyeGiderKalemi> GetAll(bool drm, bool tur);
+        List<ESantiyeGiderKalemi> GetAll(bool drm, bool tur);
     }
 }

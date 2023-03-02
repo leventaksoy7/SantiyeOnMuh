@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SantiyeOnMuh.Business.Abstract;
 using SantiyeOnMuh.Entity;
+using SantiyeOnMuh.WebUI.Models.Modeller;
+using System.ComponentModel.DataAnnotations;
 
 namespace SantiyeOnMuh.WebUI.Controllers
 {
@@ -19,9 +21,27 @@ namespace SantiyeOnMuh.WebUI.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult CariGiderKalemiEkleme(CariGiderKalemi c)
+        public IActionResult CariGiderKalemiEkleme(CariGiderKalemi cariGiderKalemi)
         {
-            _cariGiderKalemiService.Create(c);
+            /* View'larda kullanılan modeller, entitylerin WebUI içindeki kopyaları
+             * WebUI ve Entity katmanlarındaki modelleri new'lediğim için
+             * CRUD işlemlerinde verileri bir modelden diğerine aktarmak zorundayım.
+             * Form tarafında data annotation ve validation kullanımında
+             * Sürekli entity katmanına gitmek yerine
+             * WebUI katmanındaki modeller üzerinde değişiklik yapıyorum.
+             * entity katmanında sadece saf database deseni var.
+            */
+
+            ECariGiderKalemi _cariGiderKalemi = new ECariGiderKalemi()
+            {
+                Ad = cariGiderKalemi.Ad,
+                Durum = cariGiderKalemi.Durum,
+                Tur = cariGiderKalemi.Tur,
+                CariKasas = cariGiderKalemi.CariKasas,
+            };
+
+            _cariGiderKalemiService.Create(_cariGiderKalemi);
+
             return RedirectToAction("Index", "Admin");
         }
         [HttpGet]
@@ -30,39 +50,44 @@ namespace SantiyeOnMuh.WebUI.Controllers
             ViewBag.Sayfa = "CARİ KALEM BİLGİLERİNİ GÜNCELLEME";
 
             if (id == null) { return NotFound(); }
-            CariGiderKalemi cariGiderKalemi = _cariGiderKalemiService.GetById((int)id);
+
+            ECariGiderKalemi cariGiderKalemi = _cariGiderKalemiService.GetById((int)id);
+
+            CariGiderKalemi _cariGiderKalemi = new CariGiderKalemi()
+            {
+                Ad = cariGiderKalemi.Ad,
+                Durum = cariGiderKalemi.Durum,
+                Tur = cariGiderKalemi.Tur,
+                CariKasas = cariGiderKalemi.CariKasas,
+            };
+
             if (cariGiderKalemi == null) { return NotFound(); }
 
-            return View(cariGiderKalemi);
+            return View(_cariGiderKalemi);
         }
         [HttpPost]
         public IActionResult CariGiderKalemiGuncelle(CariGiderKalemi c)
         {
-            var entityGiderKalemi = _cariGiderKalemiService.GetById(c.Id);
-            if (entityGiderKalemi == null)
+            var _giderKalemi = _cariGiderKalemiService.GetById(c.Id);
+
+            if (_giderKalemi == null)
             {
                 return NotFound();
             }
-            entityGiderKalemi.Ad = c.Ad;
+            _giderKalemi.Ad = c.Ad;
 
-            _cariGiderKalemiService.Update(entityGiderKalemi);
+            _cariGiderKalemiService.Update(_giderKalemi);
+
             return RedirectToAction("Index", "Admin");
         }
         [HttpGet]
         public IActionResult CariGKSil(int? id)
         {
+            if (id == null){return NotFound();}
 
-            if (id == null)
-            {
-                return NotFound();
-            }
+            ECariGiderKalemi cariGiderKalemi = _cariGiderKalemiService.GetById((int)id);
 
-            CariGiderKalemi cariGiderKalemi = _cariGiderKalemiService.GetById((int)id);
-
-            if (cariGiderKalemi == null)
-            {
-                return NotFound();
-            }
+            if (cariGiderKalemi == null){return NotFound();}
 
             cariGiderKalemi.Durum = false;
 
@@ -73,18 +98,11 @@ namespace SantiyeOnMuh.WebUI.Controllers
         [HttpGet]
         public IActionResult CariGKGeriYukle(int? id)
         {
+            if (id == null){return NotFound();}
 
-            if (id == null)
-            {
-                return NotFound();
-            }
+            ECariGiderKalemi cariGiderKalemi = _cariGiderKalemiService.GetById((int)id);
 
-            CariGiderKalemi cariGiderKalemi = _cariGiderKalemiService.GetById((int)id);
-
-            if (cariGiderKalemi == null)
-            {
-                return NotFound();
-            }
+            if (cariGiderKalemi == null){return NotFound();}
 
             cariGiderKalemi.Durum = true;
 

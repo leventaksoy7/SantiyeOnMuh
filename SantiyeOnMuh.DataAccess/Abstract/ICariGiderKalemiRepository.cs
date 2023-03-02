@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace SantiyeOnMuh.DataAccess.Abstract
 {
-    public interface ICariGiderKalemiRepository : IRepository<CariGiderKalemi>, IRepositoryGetAllDurum<CariGiderKalemi>
+    public interface ICariGiderKalemiRepository : IRepository<ECariGiderKalemi>, IRepositoryGetAllDurum<ECariGiderKalemi>
     {
-        public List<CariGiderKalemi> GetAll(bool drm,bool tur);
+        public List<ECariGiderKalemi> GetAll(bool drm,bool tur);
     }
 }
