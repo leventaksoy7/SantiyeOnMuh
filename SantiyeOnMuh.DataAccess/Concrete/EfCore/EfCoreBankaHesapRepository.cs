@@ -15,7 +15,9 @@ namespace SantiyeOnMuh.DataAccess.Concrete.EfCore
         {
             using (var context = new Context())
             {
-                return context.BankaHesaps
+                var BankaHesaps = context.BankaHesaps.AsQueryable();
+
+                return BankaHesaps
                     .Where(i => i.Durum == drm)
                     .ToList();
             }

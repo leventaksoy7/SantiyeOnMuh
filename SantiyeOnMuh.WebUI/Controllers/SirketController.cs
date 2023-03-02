@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SantiyeOnMuh.Business.Abstract;
-using SantiyeOnMuh.Entity;
 using SantiyeOnMuh.WebUI.Models;
+using SantiyeOnMuh.WebUI.Models.Modeller;
 
 namespace SantiyeOnMuh.WebUI.Controllers
 {
@@ -33,6 +33,10 @@ namespace SantiyeOnMuh.WebUI.Controllers
         [HttpPost]
         public IActionResult SirketEkleme(Sirket s)
         {
+            var entity = new Sirket()
+            {
+
+            }
             _sirketService.Create(s);
             return RedirectToAction("Index", "Admin");
         }
