@@ -10,13 +10,18 @@ namespace SantiyeOnMuh.Entity
     public class ESantiye
     {
         public int Id { get; set; }
-        [Required]
-        [StringLength(50)]
+
+        [StringLength(30)]
         public string Ad { get; set; }
-        public string Adres { get; set; }
+
+        public string? Adres { get; set; }
+
         public bool Durum { get; set; }
+
         public List<ESantiyeKasa> SantiyeKasas { get; set; }
+
         public List<ECariHesap> CariHesaps { get; set; }
+
         public ESantiye()
         {
             Durum = true;

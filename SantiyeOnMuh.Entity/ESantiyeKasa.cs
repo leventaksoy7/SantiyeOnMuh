@@ -15,11 +15,11 @@ namespace SantiyeOnMuh.Entity
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
         public DateTime Tarih { get; set; }
         public string Aciklama { get; set; }
-        public string Kisi { get; set; }
-        public string No { get; set; }//PLAKA-CEP-FATURA VEYA FİŞ NO
+        public string? Kisi { get; set; }
+        public string? No { get; set; }//PLAKA-CEP-FATURA VEYA FİŞ NO
         public decimal Gelir { get; set; }
         public decimal Gider { get; set; }
-        public string ImgUrl { get; set; }
+        public string? ImgUrl { get; set; }
         public bool Durum { get; set; }
         public int? BankaKasaKaynak { get; set; }
         public DateTime SistemeGiris { get; set; }

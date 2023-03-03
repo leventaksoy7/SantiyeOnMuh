@@ -11,7 +11,7 @@ namespace SantiyeOnMuh.Entity
     {
         public int Id { get; set; }
         public string Ad { get; set; }
-        public string VergiNo { get; set; }
+        public string? VergiNo { get; set; }
         public bool Durum { get; set; }
         public List<ECek> Ceks { get; set; }
         public List<ENakit> Nakits { get; set; }

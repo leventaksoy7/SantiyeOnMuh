@@ -10,19 +10,28 @@ namespace SantiyeOnMuh.WebUI.Models.Modeller
     {
         public int Id { get; set; }
 
-        [Display(Name = "Hesap Adı")]
+        [Required(ErrorMessage = "HESAP ADI BOŞ BIRAKILAMAZ!")]
+        [Display(Name = "HESAP ADI GİRİLMESİ ZORUNLUDUR")]
         public string HesapAdi { get; set; }
 
-        [Display(Name = "Banka Adı")]
-        public string? BankaAdi { get; set; }
+        [Required(ErrorMessage = "BANKA ADI BOŞ BIRAKILAMAZ!")]
+        [Display(Name = "BANKA ADI GİRİLMESİ ZORUNLUDUR")]
+        public string BankaAdi { get; set; }
 
-        [Display(Name = "Hesap Numarası")]
-        public string HesapNo { get; set; }
-        public string IbanNo { get; set; }
+        [Display(Name = "HESAP NUMARASI")]
+        public string? HesapNo { get; set; }
+
+        [Display(Name = "IBAN NUMARASI")]
+        public string? IbanNo { get; set; }
+
         public bool Durum { get; set; }
+
         public List<ECek> Ceks { get; set; }
+
         public List<ENakit> Nakits { get; set; }
+
         public List<EBankaKasa> BankaKasas { get; set; }
+
         public BankaHesap()
         {
             Durum = true;

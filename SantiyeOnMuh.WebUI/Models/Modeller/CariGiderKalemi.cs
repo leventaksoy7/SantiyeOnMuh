@@ -7,12 +7,18 @@ namespace SantiyeOnMuh.WebUI.Models.Modeller
     public class CariGiderKalemi
     {
         public int Id { get; set; }
-        [Required]
-        [StringLength(50)]
+
+        [StringLength(30)]
+        [Required(ErrorMessage = "EN FAZLA 30 KARAKTER GİRMELİSİNİZ, GİDER KALEMİ ADINI GİRİNİZ")]
+        [Display(Name = "GİDER KALEMİ GİRİLMESİ ZORUNLUDUR")]
         public string Ad { get; set; }
+
         public bool Durum { get; set; }
+
         public bool Tur { get; set; }
+
         public List<ECariKasa> CariKasas { get; set; }
+
         public CariGiderKalemi()
         {
             Durum = true;

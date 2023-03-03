@@ -7,13 +7,21 @@ namespace SantiyeOnMuh.WebUI.Models.Modeller
     public class Nakit
     {
         public int Id { get; set; }
+
         [Required(ErrorMessage = "TARİH GİRMELİSİNİZ")]
         [DataType(DataType.Date)]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
         public DateTime Tarih { get; set; }
+
+        [Display(Name = "AÇIKLAMA GİRİLMESİ ZORUNLUDUR")]
+        [Required(ErrorMessage = "AÇIKLAMA GİRMELİSİNİZ")]
         public string Aciklama { get; set; }
+
+        [Display(Name = "TUTAR GİRİLMESİ ZORUNLUDUR")]
+        [Required(ErrorMessage = "TUTAR GİRMELİSİNİZ")]
         public decimal Tutar { get; set; }
-        public string ImgUrl { get; set; }
+
+        public string? ImgUrl { get; set; }
         public int? BankaKasaKaynak { get; set; }
         public int? CariKasaKaynak { get; set; }
         public DateTime SistemeGiris { get; set; }

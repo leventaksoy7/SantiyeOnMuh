@@ -10,14 +10,13 @@ namespace SantiyeOnMuh.Entity
     public class ECek
     {
         public int Id { get; set; }
-        [Required(ErrorMessage = "TARİH GİRMELİSİNİZ")]
         [DataType(DataType.Date)]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
         public DateTime Tarih { get; set; }
         public string Aciklama { get; set; }
         public string CekNo { get; set; }
         public decimal Tutar { get; set; }
-        public string ImgUrl { get; set; }
+        public string? ImgUrl { get; set; }
         public int? BankaKasaKaynak { get; set; }
         public int? CariKasaKaynak { get; set; }
         public DateTime SistemeGiris { get; set; }

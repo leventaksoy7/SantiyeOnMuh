@@ -10,7 +10,6 @@ namespace SantiyeOnMuh.Entity
     public class ECariKasa
     {
         public int Id { get; set; }
-        [Required(ErrorMessage = "TARİH GİRMELİSİNİZ")]
         [DataType(DataType.Date)]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
         public DateTime Tarih { get; set; }
@@ -19,7 +18,7 @@ namespace SantiyeOnMuh.Entity
         public decimal BirimFiyat { get; set; }
         public decimal Borc { get; set; }
         public decimal Alacak { get; set; }
-        public string ImgUrl { get; set; }
+        public string? ImgUrl { get; set; }
         public int? CekKaynak { get; set; }
         public int? NakitKaynak { get; set; }
         public DateTime SistemeGiris { get; set; }

@@ -11,13 +11,17 @@ namespace SantiyeOnMuh.WebUI.Models.Modeller
         //VALIDATION
         public int Id { get; set; }
 
-        //[Display(Name = "Şirket Adı",Prompt ="ZORUNLU ALAN")]
+        [Required(ErrorMessage = "ŞİRKET ADI BOŞ BIRAKILAMAZ!")]
+        [Display(Name = "ŞİRKET ADI GİRİNİZ", Prompt = "ZORUNLU ALAN")]
         public string Ad { get; set; }
 
-        //[Display(Name = "Vergi Numarası", Prompt ="LÜTFEN VERGİ NUMARASINI GİRİNİZ")]
-        public string VergiNo { get; set; }
+        [Display(Name = "VERGİ NUMARASI")]
+        public string? VergiNo { get; set; }
+
         public bool Durum { get; set; }
+
         public List<ECek> Ceks { get; set; }
+
         public List<ENakit> Nakits { get; set; }
         public Sirket()
         {

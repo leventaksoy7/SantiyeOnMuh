@@ -10,12 +10,15 @@ namespace SantiyeOnMuh.Entity
     public class ECariGiderKalemi
     {
         public int Id { get; set; }
-        [Required]
-        [StringLength(50)]
+
         public string Ad { get; set; }
+
         public bool Durum { get; set; }
+
         public bool Tur { get; set; }
+
         public List<ECariKasa> CariKasas { get; set; }
+
         public ECariGiderKalemi()
         {
             Durum = true;

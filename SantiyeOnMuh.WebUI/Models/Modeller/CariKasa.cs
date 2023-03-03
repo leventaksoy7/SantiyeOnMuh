@@ -11,21 +11,43 @@ namespace SantiyeOnMuh.WebUI.Models.Modeller
         [DataType(DataType.Date)]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
         public DateTime Tarih { get; set; }
+
+        [Display(Name = "AÇIKLAMA GİRİLMESİ ZORUNLUDUR")]
+        [Required(ErrorMessage = "AÇIKLAMA GİRMELİSİNİZ")]
         public string Aciklama { get; set; }
+
+        [Display(Name = "MİKTAR")]
         public decimal Miktar { get; set; }
+
+        [Display(Name = "BİRİM FİYATI")]
         public decimal BirimFiyat { get; set; }
+
+        [Display(Name = "TUTAR")]
         public decimal Borc { get; set; }
+
+        [Display(Name = "TUTAR")]
         public decimal Alacak { get; set; }
-        public string ImgUrl { get; set; }
+
+        public string? ImgUrl { get; set; }
+
         public int? CekKaynak { get; set; }
+
         public int? NakitKaynak { get; set; }
+
         public DateTime SistemeGiris { get; set; }
+
         public DateTime SonGuncelleme { get; set; }
+
         public bool Durum { get; set; }
+
         public int CariGiderKalemiId { get; set; }
+
         public ECariGiderKalemi CariGiderKalemi { get; set; }
+
         public int CariHesapId { get; set; }
+
         public ECariHesap CariHesap { get; set; }
+
         public CariKasa()
         {
             Tarih = System.DateTime.Now;

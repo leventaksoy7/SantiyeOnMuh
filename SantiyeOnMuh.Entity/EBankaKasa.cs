@@ -10,12 +10,10 @@ namespace SantiyeOnMuh.Entity
     public class EBankaKasa
     {
         public int Id { get; set; }
-        [Required(ErrorMessage = "TARİH GİRMELİSİNİZ")]
         [DataType(DataType.Date)]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
         public DateTime Tarih { get; set; }
         public string Aciklama { get; set; }
-        //PARA AKIŞININ NİCELİĞİ ÖRN: EFT HAVALE ÖDEME VB
         public string Nitelik { get; set; }
         public decimal Giren { get; set; }
         public decimal Cikan { get; set; }
