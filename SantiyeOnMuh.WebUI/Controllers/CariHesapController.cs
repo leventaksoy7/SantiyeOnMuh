@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using SantiyeOnMuh.Business.Abstract;
 using SantiyeOnMuh.Entity;
 using SantiyeOnMuh.WebUI.Models;
+using SantiyeOnMuh.WebUI.Models.Modeller;
 
 namespace SantiyeOnMuh.WebUI.Controllers
 {
@@ -85,39 +86,51 @@ namespace SantiyeOnMuh.WebUI.Controllers
             ViewBag.Sayfa = "CARİ HESAP BİLGİLERİNİ GÜNCELLEME";
             ViewBag.Santiye = _santiyeService.GetAll(true);
 
-            if (carihesapid == null)
-            {
-                return NotFound();
-            }
+            if (carihesapid == null){return NotFound();}
 
             ECariHesap cariHesap = _cariHesapService.GetById((int)carihesapid);
 
-            if (cariHesap == null)
-            {
-                return NotFound();
-            }
+            if (cariHesap == null){return NotFound();}
 
-            return View(cariHesap);
+            CariHesap _cariHesap = new CariHesap()
+            {
+                Id = cariHesap.Id,
+                Ad = cariHesap.Ad,
+                Adres = cariHesap.Adres,
+                Telefon = cariHesap.Telefon,
+                VergiNo = cariHesap.VergiNo,
+                IlgiliKisi = cariHesap.IlgiliKisi,
+                IlgiliKisiTelefon = cariHesap.IlgiliKisiTelefon,
+                Odeme = cariHesap.Odeme,
+                Vade = cariHesap.Vade,
+                Durum = cariHesap.Durum,
+                Ceks = cariHesap.Ceks,
+                Nakits = cariHesap.Nakits,
+                CariKasas = cariHesap.CariKasas,
+                SantiyeId = cariHesap.SantiyeId,
+                Santiye = cariHesap.Santiye,
+            };
+
+            return View(_cariHesap);
         }
         [HttpPost]
-        public IActionResult CariHesapGuncelle(CariHesap c)
+        public IActionResult CariHesapGuncelle(CariHesap cariHesap)
         {
-            var entityCariHesap = _cariHesapService.GetById(c.Id);
-            if (entityCariHesap == null)
-            {
-                return NotFound();
-            }
+            var _cariHesap = _cariHesapService.GetById(cariHesap.Id);
 
-            entityCariHesap.Ad = c.Ad;
-            entityCariHesap.Adres = c.Adres;
-            entityCariHesap.Telefon = c.Telefon;
-            entityCariHesap.VergiNo = c.VergiNo;
-            entityCariHesap.IlgiliKisi = c.IlgiliKisi;
-            entityCariHesap.IlgiliKisiTelefon = c.IlgiliKisiTelefon;
-            entityCariHesap.Odeme = c.Odeme;
-            entityCariHesap.Vade = c.Vade;
+            if (_cariHesap == null){return NotFound();}
 
-            _cariHesapService.Update(entityCariHesap);
+            _cariHesap.Ad = cariHesap.Ad;
+            _cariHesap.Adres = cariHesap.Adres;
+            _cariHesap.Telefon = cariHesap.Telefon;
+            _cariHesap.VergiNo = cariHesap.VergiNo;
+            _cariHesap.IlgiliKisi = cariHesap.IlgiliKisi;
+            _cariHesap.IlgiliKisiTelefon = cariHesap.IlgiliKisiTelefon;
+            _cariHesap.Odeme = cariHesap.Odeme;
+            _cariHesap.Vade = cariHesap.Vade;
+
+            _cariHesapService.Update(_cariHesap);
+
             return RedirectToAction("CariHesap");
         }
         [HttpGet]
@@ -125,17 +138,12 @@ namespace SantiyeOnMuh.WebUI.Controllers
         {
             ViewBag.Sayfa = "CARİ HESABI SİL";
 
-            if (carihesapid == null)
-            {
-                return NotFound();
-            }
+            if (carihesapid == null){return NotFound();}
 
             ECariHesap cariHesap = _cariHesapService.GetById((int)carihesapid);
 
-            if (cariHesap == null)
-            {
-                return NotFound();
-            }
+            if (cariHesap == null){return NotFound();}
+
             return View(cariHesap);
         }
         [HttpPost]

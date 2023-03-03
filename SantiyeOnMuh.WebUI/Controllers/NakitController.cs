@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using SantiyeOnMuh.Business.Abstract;
 using SantiyeOnMuh.Entity;
 using SantiyeOnMuh.WebUI.Models;
+using SantiyeOnMuh.WebUI.Models.Modeller;
+using System.ComponentModel.DataAnnotations;
 
 namespace SantiyeOnMuh.WebUI.Controllers
 {
@@ -66,62 +68,81 @@ namespace SantiyeOnMuh.WebUI.Controllers
             return View(new ENakit());
         }
         [HttpPost]
-        public IActionResult NakitEkleme(ENakit n, IFormFile file)
+        public IActionResult NakitEkleme(Nakit nakit, IFormFile file)
         {
-
             ViewBag.Sirket = new SelectList(_sirketService.GetAll(true), "Id", "Ad");
             ViewBag.Cari = new SelectList(_cariHesapService.GetAll(null, true), "Id", "Ad");
             ViewBag.Banka = new SelectList(_bankaHesapService.GetAll(true), "Id", "Ad");
 
             if (ModelState.IsValid)
             {
-                _nakitService.Create(n);
-                //CARİ KASA İÇİN ÇEK OLUŞTURULDU VE ÇEK KAYNAĞI İLE EKLENDİ
-                ECariKasa entityCariKasa = new ECariKasa()
+                ENakit _nakit = new ENakit()
                 {
-                    Tarih = n.Tarih,
-                    Aciklama = n.Aciklama,
+                    Tarih = nakit.Tarih,
+                    Aciklama = nakit.Aciklama,
+                    Tutar = nakit.Tutar,
+                    ImgUrl = nakit.ImgUrl,
+                    BankaKasaKaynak = nakit.BankaKasaKaynak,
+                    CariKasaKaynak = nakit.CariKasaKaynak,
+                    SistemeGiris = nakit.SistemeGiris,
+                    SonGuncelleme = nakit.SonGuncelleme,
+                    Durum = nakit.Durum,
+                    CariHesapId = nakit.CariHesapId,
+                    CariHesap = nakit.CariHesap,
+                    SirketId = nakit.SirketId,
+                    Sirket = nakit.Sirket,
+                    BankaHesapId = nakit.BankaHesapId,
+                    BankaHesap = nakit.BankaHesap,
+                };
+
+                _nakitService.Create(_nakit);
+
+                //CARİ KASA İÇİN NAKİT OLUŞTURULDU VE KAYNAĞI İLE EKLENDİ
+                ECariKasa _cariKasa = new ECariKasa()
+                {
+                    Tarih = nakit.Tarih,
+                    Aciklama = nakit.Aciklama,
                     Miktar = 1,
                     BirimFiyat = 1,
-                    Borc = n.Tutar,
+                    Borc = nakit.Tutar,
                     Alacak = 0,
                     ImgUrl = null,
-                    NakitKaynak = n.Id,
+                    NakitKaynak = _nakit.Id,
                     CekKaynak = null,
                     CariGiderKalemiId = 2,
-                    CariHesapId = n.CariHesapId
+                    CariHesapId = nakit.CariHesapId
                 };
-                _cariKasaService.Create(entityCariKasa);
+                _cariKasaService.Create(_cariKasa);
 
-                //BANKA KASA İÇİN ÇEK OLUŞTURULDU VE ÇEK KAYNAĞI İLE EKLENDİ
-                EBankaKasa entityBankaKasa = new EBankaKasa()
+                //BANKA KASA İÇİN NAKİT OLUŞTURULDU VE KAYNAĞI İLE EKLENDİ
+                EBankaKasa _bankaKasa = new EBankaKasa()
                 {
-                    Tarih = n.Tarih,
-                    Aciklama = n.Aciklama,
+                    Tarih = nakit.Tarih,
+                    Aciklama = nakit.Aciklama,
                     Nitelik = "NAKİT ÖDEME",
-                    Cikan = n.Tutar,
+                    Cikan = nakit.Tutar,
                     Giren = 0,
-                    NakitKaynak = n.Id,
-                    BankaHesapId = n.BankaHesapId
+                    NakitKaynak = _nakit.Id,
+                    BankaHesapId = nakit.BankaHesapId
                 };
-                _bankaKasaService.Create(entityBankaKasa);
 
-                //ŞİMDİ BANKA KASA VE CARİ HESAP'a AİT NAKİT ÖDEMESİ KAYNAĞI EKLENİYOR
-                var EntityEklenenNakit = _nakitService.GetById(n.Id);
-                if (EntityEklenenNakit == null)
-                {
-                    return NotFound();
-                }
+                _bankaKasaService.Create(_bankaKasa);
 
-                EntityEklenenNakit.CariKasaKaynak = entityCariKasa.Id;
-                EntityEklenenNakit.BankaKasaKaynak = entityBankaKasa.Id;
+                //ŞİMDİ NAKİT ÖDEMEYE, BANKA KASA VE CARİ HESAP KAYNAĞI EKLENİYOR
+                var _eklenenNakit = _nakitService.GetById(_nakit.Id);
 
-                _nakitService.Update(EntityEklenenNakit);
+                if (_eklenenNakit == null){return NotFound();}
+
+                _eklenenNakit.CariKasaKaynak = _cariKasa.Id;
+
+                _eklenenNakit.BankaKasaKaynak = _bankaKasa.Id;
+
+                _nakitService.Update(_eklenenNakit);
 
                 return RedirectToAction("BankaKasa", "BankaKasa");
             }
 
-            return View(n);
+            return View(nakit);
 
         }
         [HttpGet]
@@ -132,79 +153,88 @@ namespace SantiyeOnMuh.WebUI.Controllers
             ViewBag.Cari = _cariHesapService.GetAll(null, true);
             ViewBag.Banka = _bankaHesapService.GetAll(true);
 
-            if (nakitid == null)
-            {
-                return NotFound();
-            }
+            if (nakitid == null){return NotFound();}
+
             ENakit nakit = _nakitService.GetById((int)nakitid);
 
-            if (nakit == null)
+            if (nakit == null){return NotFound();}
+
+            Nakit _nakit = new Nakit()
             {
-                return NotFound();
-            }
-            return View(nakit);
+                Id = nakit.Id,
+                Tarih = nakit.Tarih,
+                Aciklama = nakit.Aciklama,
+                Tutar = nakit.Tutar,
+                ImgUrl = nakit.ImgUrl,
+                BankaKasaKaynak = nakit.BankaKasaKaynak,
+                CariKasaKaynak = nakit.CariKasaKaynak,
+                SistemeGiris = nakit.SistemeGiris,
+                SonGuncelleme = nakit.SonGuncelleme,
+                Durum = nakit.Durum,
+                CariHesapId = nakit.CariHesapId,
+                CariHesap = nakit.CariHesap,
+                SirketId = nakit.SirketId,
+                Sirket = nakit.Sirket,
+                BankaHesapId = nakit.BankaHesapId,
+                BankaHesap = nakit.BankaHesap,
+            };
+
+            return View(_nakit);
         }
         [HttpPost]
-        public IActionResult NakitGuncelle(ENakit n)
+        public IActionResult NakitGuncelle(Nakit nakit)
         {
-            var entityNakit = _nakitService.GetById(n.Id);
+            ENakit _nakit = _nakitService.GetById(nakit.Id);
 
-            if (entityNakit == null)
-            {
-                return NotFound();
-            }
+            if (_nakit == null){return NotFound();}
 
-            int? bankakasaid = entityNakit.BankaKasaKaynak;
-            int? carikasaid = entityNakit.CariKasaKaynak;
+            int? bankakasaid = _nakit.BankaKasaKaynak;
+            int? carikasaid = _nakit.CariKasaKaynak;
 
             if (bankakasaid != null)
             {
-                var entityBankaKasa = _bankaKasaService.GetById((int)bankakasaid);
-                if (entityBankaKasa == null)
-                {
-                    return NotFound();
-                }
+                EBankaKasa _bankaKasa = _bankaKasaService.GetById((int)bankakasaid);
 
-                entityBankaKasa.Tarih = n.Tarih;
-                entityBankaKasa.Aciklama = n.Aciklama;
-                entityBankaKasa.Nitelik = "NAKİT ÖDEME";
-                entityBankaKasa.Cikan = n.Tutar;
-                entityBankaKasa.BankaHesapId = n.BankaHesapId;
-                entityBankaKasa.SonGuncelleme = System.DateTime.Now;
+                if (_bankaKasa == null){return NotFound();}
 
-                _bankaKasaService.Update(entityBankaKasa);
+                _bankaKasa.Tarih = nakit.Tarih;
+                _bankaKasa.Aciklama = nakit.Aciklama;
+                _bankaKasa.Nitelik = "NAKİT ÖDEME";
+                _bankaKasa.Cikan = nakit.Tutar;
+                _bankaKasa.BankaHesapId = nakit.BankaHesapId;
+                _bankaKasa.SonGuncelleme = System.DateTime.Now;
+
+                _bankaKasaService.Update(_bankaKasa);
             }
 
             if (carikasaid != null)
             {
-                var entityCariKasa = _cariKasaService.GetById((int)carikasaid);
-                if (entityCariKasa == null)
-                {
-                    return NotFound();
-                }
+                ECariKasa _cariKasa = _cariKasaService.GetById((int)carikasaid);
 
-                entityCariKasa.Tarih = n.Tarih;
-                entityCariKasa.Aciklama = n.Aciklama;
-                entityCariKasa.Miktar = 1;
-                entityCariKasa.BirimFiyat = 1;
-                entityCariKasa.Borc = n.Tutar;
-                entityCariKasa.Alacak = 0;
-                entityCariKasa.CariHesapId = n.CariHesapId;
-                entityCariKasa.SonGuncelleme = System.DateTime.Now;
+                if (_cariKasa == null){return NotFound();}
 
-                _cariKasaService.Update(entityCariKasa);
+                _cariKasa.Tarih = nakit.Tarih;
+                _cariKasa.Aciklama = nakit.Aciklama;
+                _cariKasa.Miktar = 1;
+                _cariKasa.BirimFiyat = 1;
+                _cariKasa.Borc = nakit.Tutar;
+                _cariKasa.Alacak = 0;
+                _cariKasa.CariHesapId = nakit.CariHesapId;
+                _cariKasa.SonGuncelleme = System.DateTime.Now;
+
+                _cariKasaService.Update(_cariKasa);
             }
 
-            entityNakit.Tarih = n.Tarih;
-            entityNakit.Aciklama = n.Aciklama;
-            entityNakit.Tutar = n.Tutar;
-            entityNakit.ImgUrl = n.ImgUrl;
-            entityNakit.SonGuncelleme = System.DateTime.Now;
-            entityNakit.CariHesapId = n.CariHesapId;
-            entityNakit.SirketId = n.SirketId;
-            entityNakit.BankaHesapId = n.BankaHesapId;
+            _nakit.Tarih = nakit.Tarih;
+            _nakit.Aciklama = nakit.Aciklama;
+            _nakit.Tutar = nakit.Tutar;
+            _nakit.ImgUrl = nakit.ImgUrl;
+            _nakit.SonGuncelleme = System.DateTime.Now;
+            _nakit.CariHesapId = nakit.CariHesapId;
+            _nakit.SirketId = nakit.SirketId;
+            _nakit.BankaHesapId = nakit.BankaHesapId;
 
-            _nakitService.Update(entityNakit);
+            _nakitService.Update(_nakit);
 
             return RedirectToAction("Index");
         }
@@ -212,83 +242,111 @@ namespace SantiyeOnMuh.WebUI.Controllers
         public IActionResult Nakit(int? nakitid)
         {
             ViewBag.Sayfa = "NAKİT DETAYI";
-            if (nakitid == null)
-            {
-                return NotFound();
-            }
+
+            if (nakitid == null){return NotFound();}
 
             ENakit nakit = _nakitService.GetById((int)nakitid);
 
-            if (nakit == null)
-            {
-                return NotFound();
-            }
+            if (nakit == null){return NotFound();}
 
             ViewBag.Sirket = _sirketService.GetAll();
             ViewBag.Cari = _cariHesapService.GetAll();
             ViewBag.Banka = _bankaHesapService.GetAll();
 
-            return View(nakit);
+            ENakit _nakit = new ENakit()
+            {
+                Id = nakit.Id,
+                Tarih = nakit.Tarih,
+                Aciklama = nakit.Aciklama,
+                Tutar = nakit.Tutar,
+                ImgUrl = nakit.ImgUrl,
+                BankaKasaKaynak = nakit.BankaKasaKaynak,
+                CariKasaKaynak = nakit.CariKasaKaynak,
+                SistemeGiris = nakit.SistemeGiris,
+                SonGuncelleme = nakit.SonGuncelleme,
+                Durum = nakit.Durum,
+                CariHesapId = nakit.CariHesapId,
+                CariHesap = nakit.CariHesap,
+                SirketId = nakit.SirketId,
+                Sirket = nakit.Sirket,
+                BankaHesapId = nakit.BankaHesapId,
+                BankaHesap = nakit.BankaHesap,
+            };
+
+            return View(_nakit);
         }
         [HttpGet]
         public IActionResult NakitSil(int? nakitid)
         {
             ViewBag.Sayfa = "NAKİT ÖDEMESİNİ SİL";
 
+            if (nakitid == null){return NotFound();}
 
-            if (nakitid == null)
-            {
-                return NotFound();
-            }
             ENakit nakit = _nakitService.GetById((int)nakitid);
 
-            if (nakit == null)
+            if (nakit == null){return NotFound();}
+
+            Nakit _nakit = new Nakit()
             {
-                return NotFound();
-            }
-            return View(nakit);
+                Id = nakit.Id,
+                Tarih = nakit.Tarih,
+                Aciklama = nakit.Aciklama,
+                Tutar = nakit.Tutar,
+                ImgUrl = nakit.ImgUrl,
+                BankaKasaKaynak = nakit.BankaKasaKaynak,
+                CariKasaKaynak = nakit.CariKasaKaynak,
+                SistemeGiris = nakit.SistemeGiris,
+                SonGuncelleme = nakit.SonGuncelleme,
+                Durum = nakit.Durum,
+                CariHesapId = nakit.CariHesapId,
+                CariHesap = nakit.CariHesap,
+                SirketId = nakit.SirketId,
+                Sirket = nakit.Sirket,
+                BankaHesapId = nakit.BankaHesapId,
+                BankaHesap = nakit.BankaHesap,
+            };
+
+            return View(_nakit);
         }
         [HttpPost]
-        public IActionResult NakitSil(ENakit n)
+        public IActionResult NakitSil(Nakit nakit)
         {
-            var entityNakit = _nakitService.GetById(n.Id);
-            if (entityNakit == null)
-            {
-                return NotFound();
-            }
+            ENakit _nakit = _nakitService.GetById(nakit.Id);
 
-            entityNakit.SonGuncelleme = System.DateTime.Now;
-            entityNakit.Durum = false;
+            if (_nakit == null){return NotFound();}
 
-            int? bankakasaid = entityNakit.BankaKasaKaynak;
-            int? carikasaid = entityNakit.CariKasaKaynak;
+            _nakit.SonGuncelleme = System.DateTime.Now;
+            _nakit.Durum = false;
+
+            int? bankakasaid = _nakit.BankaKasaKaynak;
+            int? carikasaid = _nakit.CariKasaKaynak;
 
             if (bankakasaid != null)
             {
-                var entityBankaKasa = _bankaKasaService.GetById((int)bankakasaid);
-                if (entityBankaKasa == null)
-                {
-                    return NotFound();
-                }
+                EBankaKasa _bankaKasa = _bankaKasaService.GetById((int)bankakasaid);
 
-                entityBankaKasa.SonGuncelleme = System.DateTime.Now;
-                entityBankaKasa.Durum = false;
-                _bankaKasaService.Update(entityBankaKasa);
+                if (_bankaKasa == null){return NotFound();}
+
+                _bankaKasa.SonGuncelleme = System.DateTime.Now;
+                _bankaKasa.Durum = false;
+
+                _bankaKasaService.Update(_bankaKasa);
             }
 
             if (carikasaid != null)
             {
-                var entityCariKasa = _cariKasaService.GetById((int)carikasaid);
-                if (entityCariKasa == null)
-                {
-                    return NotFound();
-                }
-                entityCariKasa.SonGuncelleme = System.DateTime.Now;
-                entityCariKasa.Durum = false;
-                _cariKasaService.Update(entityCariKasa);
+                ECariKasa _cariKasa = _cariKasaService.GetById((int)carikasaid);
+
+                if (_cariKasa == null){return NotFound();}
+
+                _cariKasa.SonGuncelleme = System.DateTime.Now;
+                _cariKasa.Durum = false;
+
+                _cariKasaService.Update(_cariKasa);
             }
 
-            _nakitService.Update(entityNakit);
+            _nakitService.Update(_nakit);
+
             return RedirectToAction("Index");
         }
 
@@ -397,17 +455,17 @@ namespace SantiyeOnMuh.WebUI.Controllers
 
             ViewBag.CariHesapId = carihesapid;
 
-            return View(new ENakit());
+            return View(new Nakit());
         }
         [HttpPost]
-        public async Task<IActionResult> NakitEklemeFromCari(ENakit n, IFormFile file)
+        public async Task<IActionResult> NakitEklemeFromCari(Nakit nakit, IFormFile file)
         {
             #region  RESİM VS. EKLENMEMİŞSE SAYFAYA GERİ GİDİYOR, GERİ GİDİLEN SAYFANIN İHTİYACI OLAN BİLGİLER
-            ViewBag.Sayfa = _cariHesapService.GetById((int)n.CariHesapId).Ad + " CARİSİNE YENİ NAKİT ÖDEMESİ GİRİŞİ";
+            ViewBag.Sayfa = _cariHesapService.GetById((int)nakit.CariHesapId).Ad + " CARİSİNE YENİ NAKİT ÖDEMESİ GİRİŞİ";
             ViewBag.Sirket = _sirketService.GetAll(true);
             ViewBag.Banka = _bankaHesapService.GetAll(true);
 
-            ViewBag.CariHesapId = n.CariHesapId;
+            ViewBag.CariHesapId = nakit.CariHesapId;
             //ÜSTTEKİ SIFIRDAN EKLEMENİN BİREBİR AYNISI, GEREKLİ BİLGİLER
             #endregion
             #region RESİM EKLEME BÖLÜMÜ
@@ -417,8 +475,8 @@ namespace SantiyeOnMuh.WebUI.Controllers
 
                 if (extension == ".jpg" || extension == ".png" || extension == ".pdf")
                 {
-                    var nakitName = string.Format($"{n.Aciklama}{"-"}{Guid.NewGuid()}{extension}");
-                    n.ImgUrl = nakitName;
+                    var nakitName = string.Format($"{nakit.Aciklama}{"-"}{Guid.NewGuid()}{extension}");
+                    nakit.ImgUrl = nakitName;
                     var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\NakitResim", nakitName);
 
                     using (var stream = new FileStream(path, FileMode.Create))
@@ -426,52 +484,76 @@ namespace SantiyeOnMuh.WebUI.Controllers
                         await file.CopyToAsync(stream);
                     }
                 }
-                else { return View(n); }
+                else { return View(nakit); }
             }
-            else { return View(n); }
-            #endregion
-            _nakitService.Create(n);
-            //CARİ KASA İÇİN ÇEK OLUŞTURULDU VE ÇEK KAYNAĞI İLE EKLENDİ
-            String FirmaAdiForAciklama = _cariHesapService.GetById((int)n.CariHesapId).Ad;
+            else { return View(nakit); }
 
-            ECariKasa EntityCariKasa = new ECariKasa()
+            #endregion
+
+            ENakit _nakit = new ENakit()
             {
-                Tarih = n.Tarih,
-                Aciklama = FirmaAdiForAciklama + " AİT ÖDEME. " + n.Aciklama,
+                Tarih = nakit.Tarih,
+                Aciklama = nakit.Aciklama,
+                Tutar = nakit.Tutar,
+                ImgUrl = nakit.ImgUrl,
+                BankaKasaKaynak = nakit.BankaKasaKaynak,
+                CariKasaKaynak = nakit.CariKasaKaynak,
+                SistemeGiris = nakit.SistemeGiris,
+                SonGuncelleme = nakit.SonGuncelleme,
+                Durum = nakit.Durum,
+                CariHesapId = nakit.CariHesapId,
+                CariHesap = nakit.CariHesap,
+                SirketId = nakit.SirketId,
+                Sirket = nakit.Sirket,
+                BankaHesapId = nakit.BankaHesapId,
+                BankaHesap = nakit.BankaHesap,
+            };
+
+            _nakitService.Create(_nakit);
+            //CARİ KASA İÇİN ÇEK OLUŞTURULDU VE ÇEK KAYNAĞI İLE EKLENDİ
+            String FirmaAdiForAciklama = _cariHesapService.GetById((int)nakit.CariHesapId).Ad;
+
+            ECariKasa _cariKasa = new ECariKasa()
+            {
+                Tarih = nakit.Tarih,
+                Aciklama = FirmaAdiForAciklama + " AİT ÖDEME. " + nakit.Aciklama,
                 Miktar = 1,
                 BirimFiyat = 1,
-                Borc = n.Tutar,
+                Borc = nakit.Tutar,
                 Alacak = 0,
                 ImgUrl = null,
-                NakitKaynak = n.Id,
+                NakitKaynak = nakit.Id,
                 CariGiderKalemiId = 2,
-                CariHesapId = n.CariHesapId
+                CariHesapId = nakit.CariHesapId
             };
-            _cariKasaService.Create(EntityCariKasa);
+
+            _cariKasaService.Create(_cariKasa);
+
             //BANKA KASA İÇİN ÇEK OLUŞTURULDU VE ÇEK KAYNAĞI İLE EKLENDİ
-            EBankaKasa EntityBankaKasa = new EBankaKasa()
+            EBankaKasa _bankaKasa = new EBankaKasa()
             {
-                Tarih = n.Tarih,
-                Aciklama = FirmaAdiForAciklama + " AİT ÖDEME. " + n.Aciklama,
+                Tarih = nakit.Tarih,
+                Aciklama = FirmaAdiForAciklama + " AİT ÖDEME. " + nakit.Aciklama,
                 Nitelik = "NAKİT ÖDEME",
-                Cikan = n.Tutar,
+                Cikan = nakit.Tutar,
                 Giren = 0,
-                NakitKaynak = n.Id,
-                BankaHesapId = n.BankaHesapId
+                NakitKaynak = nakit.Id,
+                BankaHesapId = nakit.BankaHesapId
             };
-            _bankaKasaService.Create(EntityBankaKasa);
+
+            _bankaKasaService.Create(_bankaKasa);
+
             //ŞİMDİ BANKA KASA VE CARİ HESAP'a AİT NAKİT ÖDEMESİ KAYNAĞI EKLENİYOR
-            var EntityEklenenNakit = _nakitService.GetById(n.Id);
-            if (EntityEklenenNakit == null)
-            {
-                return NotFound();
-            }
-            EntityEklenenNakit.CariKasaKaynak = EntityCariKasa.Id;
-            EntityEklenenNakit.BankaKasaKaynak = EntityBankaKasa.Id;
+            ENakit _eklenenNakit = _nakitService.GetById(nakit.Id);
 
-            _nakitService.Update(EntityEklenenNakit);
+            if (_eklenenNakit == null){return NotFound();}
 
-            return RedirectToAction("CariKasa", "CariKasa", new { carihesapid = n.CariHesapId });
+            _eklenenNakit.CariKasaKaynak = _eklenenNakit.Id;
+            _eklenenNakit.BankaKasaKaynak = _eklenenNakit.Id;
+
+            _nakitService.Update(_eklenenNakit);
+
+            return RedirectToAction("CariKasa", "CariKasa", new { carihesapid = _nakit.CariHesapId });
         }
         #endregion
 

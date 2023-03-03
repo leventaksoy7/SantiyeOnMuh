@@ -34,7 +34,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
         [HttpPost]
         public IActionResult SirketEkleme(Sirket sirket)
         {
-            var _sirket = new ESirket()
+            ESirket _sirket = new ESirket()
             {
                 Ad=sirket.Ad,
                 VergiNo=sirket.VergiNo,
@@ -49,26 +49,37 @@ namespace SantiyeOnMuh.WebUI.Controllers
         public IActionResult SirketGuncelle(int? id)
         {
             ViewBag.Sayfa = "ŞİRKET BİLGİLERİNİ BİLGİLERİNİ GÜNCELLEME";
+
             if (id == null){return NotFound();}
 
             ESirket sirket = _sirketService.GetById((int)id);
 
             if (sirket == null){return NotFound();}
 
-            return View(sirket);
+            Sirket _sirket = new Sirket()
+            {
+                Id = sirket.Id,
+                Ad = sirket.Ad,
+                VergiNo = sirket.VergiNo,
+                Durum = sirket.Durum,
+                Ceks = sirket.Ceks,
+                Nakits = sirket.Nakits,
+            };
+
+            return View(_sirket);
         }
         [HttpPost]
-        public IActionResult SirketGuncelle(Sirket s)
+        public IActionResult SirketGuncelle(Sirket sirket)
         {
-            var entitySirket = _sirketService.GetById(s.Id);
-            if (entitySirket == null)
-            {
-                return NotFound();
-            }
-            entitySirket.Ad = s.Ad;
-            entitySirket.VergiNo = s.VergiNo;
+            var _sirket = _sirketService.GetById(sirket.Id);
 
-            _sirketService.Update(entitySirket);
+            if (_sirket == null){return NotFound();}
+
+            _sirket.Ad = sirket.Ad;
+            _sirket.VergiNo = sirket.VergiNo;
+
+            _sirketService.Update(_sirket);
+
             return RedirectToAction("Index", "Admin");
         }
         [HttpGet]

@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 using SantiyeOnMuh.Business.Abstract;
 using SantiyeOnMuh.Entity;
 using SantiyeOnMuh.WebUI.Models;
+using SantiyeOnMuh.WebUI.Models.Modeller;
+using System.ComponentModel.DataAnnotations;
 
 namespace SantiyeOnMuh.WebUI.Controllers
 {
@@ -61,10 +63,11 @@ namespace SantiyeOnMuh.WebUI.Controllers
             ViewBag.Sayfa = "CARİ HESABA FATURA GİRİŞİ";
             ViewBag.CariHesap = _cariHesapService.GetAll(null, true);
             ViewBag.CariGK = _cariGiderKalemiService.GetAll(true, true);
-            return View(new ECariKasa());
+
+            return View(new CariKasa());
         }
         [HttpPost]
-        public async Task<IActionResult> CariKasaEkleme(ECariKasa c, IFormFile file)
+        public async Task<IActionResult> CariKasaEkleme(CariKasa cariKasa, IFormFile file)
         {
             #region ESKİ TİP RESİM EKLEME
             //if (file != null)
@@ -113,8 +116,8 @@ namespace SantiyeOnMuh.WebUI.Controllers
 
                 if (extension == ".jpg" || extension == ".png" || extension == ".pdf")
                 {
-                    var cariKasaName = string.Format($"{c.Aciklama}{"-"}{Guid.NewGuid()}{extension}");
-                    c.ImgUrl = cariKasaName;
+                    var cariKasaName = string.Format($"{cariKasa.Aciklama}{"-"}{Guid.NewGuid()}{extension}");
+                    cariKasa.ImgUrl = cariKasaName;
                     var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\CariKasaResim", cariKasaName);
 
                     using (var stream = new FileStream(path, FileMode.Create))
@@ -122,59 +125,115 @@ namespace SantiyeOnMuh.WebUI.Controllers
                         await file.CopyToAsync(stream);
                     }
                 }
-                else { return View(c); }
+                else { return View(cariKasa); }
             }
-            else { return View(c); }
+            else { return View(cariKasa); }
             #endregion
 
-            _cariKasaService.Create(c);
-            return RedirectToAction("CariKasa", "CariKasa", new { carihesapid = c.CariHesap.Id });
+            ECariKasa _cariKasa = new ECariKasa()
+            {
+                Tarih = cariKasa.Tarih,
+                Aciklama = cariKasa.Aciklama,
+                Miktar = cariKasa.Miktar,
+                BirimFiyat = cariKasa.BirimFiyat,
+                Borc = cariKasa.Borc,
+                Alacak = cariKasa.Alacak,
+                ImgUrl = cariKasa.ImgUrl,
+                CekKaynak = cariKasa.CekKaynak,
+                NakitKaynak = cariKasa.NakitKaynak,
+                SistemeGiris = cariKasa.SistemeGiris,
+                SonGuncelleme = cariKasa.SonGuncelleme,
+                Durum = cariKasa.Durum,
+                CariGiderKalemiId = cariKasa.CariGiderKalemiId,
+                CariGiderKalemi = cariKasa.CariGiderKalemi,
+                CariHesapId = cariKasa.CariHesapId,
+                CariHesap = cariKasa.CariHesap,
+            };
+
+            _cariKasaService.Create(_cariKasa);
+
+            return RedirectToAction("CariKasa", "CariKasa", new { carihesapid = cariKasa.CariHesap.Id });
         }
         [HttpGet]
         public IActionResult CariKasaDetay(int? carikasaid)
         {
             ViewBag.Sayfa = "FATURA DETAYI";
-            if (carikasaid == null)
-            { return NotFound(); }
+            if (carikasaid == null){ return NotFound(); }
+
             ECariKasa cariKasa = _cariKasaService.GetById((int)carikasaid);
-            if (cariKasa == null)
-            { return NotFound(); }
-            return View(cariKasa);
+
+            if (cariKasa == null){ return NotFound();}
+
+            CariKasa _cariKasa = new CariKasa()
+            {
+                Id = cariKasa.Id,
+                Tarih = cariKasa.Tarih,
+                Aciklama = cariKasa.Aciklama,
+                Miktar = cariKasa.Miktar,
+                BirimFiyat = cariKasa.BirimFiyat,
+                Borc = cariKasa.Borc,
+                Alacak = cariKasa.Alacak,
+                ImgUrl = cariKasa.ImgUrl,
+                CekKaynak = cariKasa.CekKaynak,
+                NakitKaynak = cariKasa.NakitKaynak,
+                SistemeGiris = cariKasa.SistemeGiris,
+                SonGuncelleme = cariKasa.SonGuncelleme,
+                Durum = cariKasa.Durum,
+                CariGiderKalemiId = cariKasa.CariGiderKalemiId,
+                CariGiderKalemi = cariKasa.CariGiderKalemi,
+                CariHesapId = cariKasa.CariHesapId,
+                CariHesap = cariKasa.CariHesap,
+            };
+
+            return View(_cariKasa);
         }
         [HttpGet]
         public IActionResult CariKasaSil(int? carikasaid)
         {
             ViewBag.Sayfa = "FATURAYI SİL";
 
-            if (carikasaid == null)
-            {
-                return NotFound();
-            }
+            if (carikasaid == null){return NotFound();}
 
             ECariKasa cariKasa = _cariKasaService.GetByIdDetay((int)carikasaid);
 
-            if (cariKasa == null)
+            if (cariKasa == null){return NotFound();}
+
+            CariKasa _cariKasa = new CariKasa()
             {
-                return NotFound();
-            }
-            return View(cariKasa);
+                Id = cariKasa.Id,
+                Tarih = cariKasa.Tarih,
+                Aciklama = cariKasa.Aciklama,
+                Miktar = cariKasa.Miktar,
+                BirimFiyat = cariKasa.BirimFiyat,
+                Borc = cariKasa.Borc,
+                Alacak = cariKasa.Alacak,
+                ImgUrl = cariKasa.ImgUrl,
+                CekKaynak = cariKasa.CekKaynak,
+                NakitKaynak = cariKasa.NakitKaynak,
+                SistemeGiris = cariKasa.SistemeGiris,
+                SonGuncelleme = cariKasa.SonGuncelleme,
+                Durum = cariKasa.Durum,
+                CariGiderKalemiId = cariKasa.CariGiderKalemiId,
+                CariGiderKalemi = cariKasa.CariGiderKalemi,
+                CariHesapId = cariKasa.CariHesapId,
+                CariHesap = cariKasa.CariHesap,
+            };
+
+            return View(_cariKasa);
         }
         [HttpPost]
-        public IActionResult CariKasaSil(ECariKasa c)
+        public IActionResult CariKasaSil(CariKasa cariKasa)
         {
-            var entity = _cariKasaService.GetByIdDetay(c.Id);
+            ECariKasa _cariKasa = _cariKasaService.GetByIdDetay(cariKasa.Id);
 
-            if (entity == null)
-            {
-                return NotFound();
-            }
+            if (_cariKasa == null){return NotFound();}
 
-            entity.SonGuncelleme = System.DateTime.Now;
-            entity.Durum = false;
+            _cariKasa.SonGuncelleme = System.DateTime.Now;
+            _cariKasa.Durum = false;
 
-            _cariKasaService.Update(entity);
+            _cariKasaService.Update(_cariKasa);
 
-            return RedirectToAction("CariKasa", "CariKasa", new { carihesapid = entity.CariHesapId });
+            return RedirectToAction("CariKasa", "CariKasa", new { carihesapid = _cariKasa.CariHesapId });
         }
 
         //EXCEL
@@ -305,35 +364,48 @@ namespace SantiyeOnMuh.WebUI.Controllers
         {
             ViewBag.Sayfa = "FATURAYI SİL";
 
-            if (carikasaid == null)
-            {
-                return NotFound();
-            }
+            if (carikasaid == null){return NotFound();}
 
             ECariKasa cariKasa = _cariKasaService.GetByIdDetay((int)carikasaid);
 
-            if (cariKasa == null)
+            if (cariKasa == null){return NotFound();}
+
+            CariKasa _cariKasa = new CariKasa()
             {
-                return NotFound();
-            }
-            return View(cariKasa);
+                Id = cariKasa.Id,
+                Tarih = cariKasa.Tarih,
+                Aciklama = cariKasa.Aciklama,
+                Miktar = cariKasa.Miktar,
+                BirimFiyat = cariKasa.BirimFiyat,
+                Borc = cariKasa.Borc,
+                Alacak = cariKasa.Alacak,
+                ImgUrl = cariKasa.ImgUrl,
+                CekKaynak = cariKasa.CekKaynak,
+                NakitKaynak = cariKasa.NakitKaynak,
+                SistemeGiris = cariKasa.SistemeGiris,
+                SonGuncelleme = cariKasa.SonGuncelleme,
+                Durum = cariKasa.Durum,
+                CariGiderKalemiId = cariKasa.CariGiderKalemiId,
+                CariGiderKalemi = cariKasa.CariGiderKalemi,
+                CariHesapId = cariKasa.CariHesapId,
+                CariHesap = cariKasa.CariHesap,
+            };
+
+            return View(_cariKasa);
         }
         [HttpPost]
-        public IActionResult CariKasaGeriYukle(ECariKasa c)
+        public IActionResult CariKasaGeriYukle(CariKasa cariKasa)
         {
-            var entity = _cariKasaService.GetByIdDetay(c.Id);
+            ECariKasa _cariKasa = _cariKasaService.GetByIdDetay(cariKasa.Id);
 
-            if (entity == null)
-            {
-                return NotFound();
-            }
+            if (_cariKasa == null){return NotFound();}
 
-            entity.SonGuncelleme = System.DateTime.Now;
-            entity.Durum = true;
+            _cariKasa.SonGuncelleme = System.DateTime.Now;
+            _cariKasa.Durum = true;
 
-            _cariKasaService.Update(entity);
+            _cariKasaService.Update(_cariKasa);
 
-            return RedirectToAction("CariKasa", "CariKasa", new { carihesapid = entity.CariHesapId });
+            return RedirectToAction("CariKasa", "CariKasa", new { carihesapid = _cariKasa.CariHesapId });
         }
 
         #region CARİDEN
@@ -344,16 +416,16 @@ namespace SantiyeOnMuh.WebUI.Controllers
             ViewBag.CariGK = _cariGiderKalemiService.GetAll(true, true);
             ViewBag.CariHesapId = carihesapid;
 
-            return View(new ECariKasa());
+            return View(new CariKasa());
         }
         [HttpPost]
-        public async Task<IActionResult> CariKasaFaturaEklemeFromCari(ECariKasa c, IFormFile file)
+        public async Task<IActionResult> CariKasaFaturaEklemeFromCari(CariKasa cariKasa, IFormFile file)
         {
             #region  RESİM VS. EKLENMEMİŞSE SAYFAYA GERİ GİDİYOR, GERİ GİDİLEN SAYFANIN İHTİYACI OLAN BİLGİLER
-            ViewBag.Sayfa = _cariHesapService.GetById(c.CariHesapId).Ad + " FİRMA CARİSİNE FATURA GİRİŞİ";
+            ViewBag.Sayfa = _cariHesapService.GetById(cariKasa.CariHesapId).Ad + " FİRMA CARİSİNE FATURA GİRİŞİ";
             ViewBag.CariGK = _cariGiderKalemiService.GetAll(true, true);
 
-            ViewBag.CariHesapId = c.CariHesapId;
+            ViewBag.CariHesapId = cariKasa.CariHesapId;
             //ÜSTTEKİ SIFIRDAN EKLEMENİN BİREBİR AYNISI, GEREKLİ BİLGİLER
             #endregion
             #region RESİM EKLEME BÖLÜMÜ
@@ -363,8 +435,8 @@ namespace SantiyeOnMuh.WebUI.Controllers
 
                 if (extension == ".jpg" || extension == ".png" || extension == ".pdf")
                 {
-                    var cariKasaName = string.Format($"{c.Aciklama}{"-"}{Guid.NewGuid()}{extension}");
-                    c.ImgUrl = cariKasaName;
+                    var cariKasaName = string.Format($"{cariKasa.Aciklama}{"-"}{Guid.NewGuid()}{extension}");
+                    cariKasa.ImgUrl = cariKasaName;
                     var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\CariKasaResim", cariKasaName);
 
                     using (var stream = new FileStream(path, FileMode.Create))
@@ -372,109 +444,96 @@ namespace SantiyeOnMuh.WebUI.Controllers
                         await file.CopyToAsync(stream);
                     }
                 }
-                else { return View(c); }
+                else { return View(cariKasa); }
             }
-            else { return View(c); }
+            else { return View(cariKasa); }
             #endregion
 
-            _cariKasaService.Create(c);
+            ECariKasa _cariKasa = new ECariKasa()
+            {
+                Id = cariKasa.Id,
+                Tarih = cariKasa.Tarih,
+                Aciklama = cariKasa.Aciklama,
+                Miktar = cariKasa.Miktar,
+                BirimFiyat = cariKasa.BirimFiyat,
+                Borc = cariKasa.Borc,
+                Alacak = cariKasa.Alacak,
+                ImgUrl = cariKasa.ImgUrl,
+                CekKaynak = cariKasa.CekKaynak,
+                NakitKaynak = cariKasa.NakitKaynak,
+                SistemeGiris = cariKasa.SistemeGiris,
+                SonGuncelleme = cariKasa.SonGuncelleme,
+                Durum = cariKasa.Durum,
+                CariGiderKalemiId = cariKasa.CariGiderKalemiId,
+                CariGiderKalemi = cariKasa.CariGiderKalemi,
+                CariHesapId = cariKasa.CariHesapId,
+                CariHesap = cariKasa.CariHesap,
+            };
 
-            return RedirectToAction("CariKasa", new { carihesapid = c.CariHesapId });
+            _cariKasaService.Create(_cariKasa);
+
+            return RedirectToAction("CariKasa", new { carihesapid = cariKasa.CariHesapId });
         }
         [HttpGet]
         public IActionResult CariKasaFaturaGuncelleFromCari(int? carikasaid)
         {
-
             ViewBag.Sayfa = "FATURA BİLGİLERİNİ GÜNCELLEME";
 
             ViewBag.CariGK = _cariGiderKalemiService.GetAll(true, true);
 
-            if (carikasaid == null)
-            {
-                return NotFound();
-            }
+            if (carikasaid == null){return NotFound();}
 
             ECariKasa cariKasa = _cariKasaService.GetByIdDetay((int)carikasaid);
 
-            if (cariKasa == null)
-            {
-                return NotFound();
-            }
+            if (cariKasa == null){return NotFound();}
 
-            return View(cariKasa);
+            CariKasa _cariKasa = new CariKasa()
+            {
+                Id = cariKasa.Id,
+                Tarih = cariKasa.Tarih,
+                Aciklama = cariKasa.Aciklama,
+                Miktar = cariKasa.Miktar,
+                BirimFiyat = cariKasa.BirimFiyat,
+                Borc = cariKasa.Borc,
+                Alacak = cariKasa.Alacak,
+                ImgUrl = cariKasa.ImgUrl,
+                CekKaynak = cariKasa.CekKaynak,
+                NakitKaynak = cariKasa.NakitKaynak,
+                SistemeGiris = cariKasa.SistemeGiris,
+                SonGuncelleme = cariKasa.SonGuncelleme,
+                Durum = cariKasa.Durum,
+                CariGiderKalemiId = cariKasa.CariGiderKalemiId,
+                CariGiderKalemi = cariKasa.CariGiderKalemi,
+                CariHesapId = cariKasa.CariHesapId,
+                CariHesap = cariKasa.CariHesap,
+            };
+
+            return View(_cariKasa);
         }
         [HttpPost]
-        public IActionResult CariKasaFaturaGuncelleFromCari(ECariKasa c)
+        public IActionResult CariKasaFaturaGuncelleFromCari(CariKasa cariKasa)
         {
             ViewBag.Sayfa = "FATURA BİLGİLERİNİ GÜNCELLEME";
             ViewBag.CariGK = _cariGiderKalemiService.GetAll(true, true);
 
-            var entityCariKasa = _cariKasaService.GetById(c.Id);
-            if (entityCariKasa == null)
-            {
-                return NotFound();
-            }
+            ECariKasa _cariKasa = _cariKasaService.GetById(cariKasa.Id);
 
-            entityCariKasa.Tarih = c.Tarih;
-            entityCariKasa.Aciklama = c.Aciklama;
-            entityCariKasa.Miktar = c.Miktar;
-            entityCariKasa.BirimFiyat = c.BirimFiyat;
-            entityCariKasa.Alacak = c.Alacak;
-            entityCariKasa.ImgUrl = c.ImgUrl;
-            entityCariKasa.SonGuncelleme = System.DateTime.Today;
+            if (_cariKasa == null){return NotFound();}
 
-            entityCariKasa.CariGiderKalemiId = c.CariGiderKalemiId;
-            entityCariKasa.CariHesapId = c.CariHesapId;
+            _cariKasa.Tarih = cariKasa.Tarih;
+            _cariKasa.Aciklama = cariKasa.Aciklama;
+            _cariKasa.Miktar = cariKasa.Miktar;
+            _cariKasa.BirimFiyat = cariKasa.BirimFiyat;
+            _cariKasa.Alacak = cariKasa.Alacak;
+            _cariKasa.ImgUrl = cariKasa.ImgUrl;
+            _cariKasa.SonGuncelleme = System.DateTime.Today;
 
-            _cariKasaService.Update(entityCariKasa);
-            return RedirectToAction("CariKasa", new { carihesapid = c.CariHesapId });
+            _cariKasa.CariGiderKalemiId = cariKasa.CariGiderKalemiId;
+            _cariKasa.CariHesapId = cariKasa.CariHesapId;
+
+            _cariKasaService.Update(_cariKasa);
+            return RedirectToAction("CariKasa", new { carihesapid = cariKasa.CariHesapId });
         }
-        #endregion
-
-        #region ESKİDEN YAZMIŞIM VEYA KOPYALAMIŞIM TAM BİLMEDİĞİM İÇİN SİLMEDİM
-        //[HttpGet]
-        //public IActionResult CariKasaGuncelleFromSantiye(int? carikasaid)
-        //{
-
-        //    ViewBag.Sayfa = "FATURA BİLGİLERİNİ GÜNCELLEME";
-        //    ViewBag.GK = _cariGKService.GetAllWithDetay(true);
-
-        //    if (carikasaid == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    CariKasa cariKasa = _cariKasaService.GetById((int)carikasaid);
-        //    ViewBag.CariHesapId = cariKasa.CariHesapId;
-
-        //    if (cariKasa == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    return View(cariKasa);
-        //}
-        //[HttpPost]
-        //public IActionResult CariKasaGuncelleFromSantiye(CariKasa c)
-        //{
-        //    var entityCariKasa = _cariKasaService.GetById(c.Id);
-        //    if (entityCariKasa == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    entityCariKasa.Tarih = c.Tarih;
-        //    entityCariKasa.Aciklama = c.Aciklama;
-        //    entityCariKasa.Miktar = c.Miktar;
-        //    entityCariKasa.BirimFiyat = c.BirimFiyat;
-        //    entityCariKasa.Alacak = c.Alacak;
-        //    entityCariKasa.ImgUrl = c.ImgUrl;
-        //    entityCariKasa.SonGuncelleme = System.DateTime.Today;
-        //    entityCariKasa.CariGKId = c.CariHesapId;
-
-        //    _cariKasaService.Update(entityCariKasa);
-        //    return RedirectToAction("CariKasa", new { carihesapid = c.CariHesapId });
-        //}
         #endregion
     }
 }

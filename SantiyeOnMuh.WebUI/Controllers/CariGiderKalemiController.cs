@@ -34,6 +34,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
 
             ECariGiderKalemi _cariGiderKalemi = new ECariGiderKalemi()
             {
+                
                 Ad = cariGiderKalemi.Ad,
                 Durum = cariGiderKalemi.Durum,
                 Tur = cariGiderKalemi.Tur,
@@ -55,6 +56,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
 
             CariGiderKalemi _cariGiderKalemi = new CariGiderKalemi()
             {
+                Id = cariGiderKalemi.Id,
                 Ad = cariGiderKalemi.Ad,
                 Durum = cariGiderKalemi.Durum,
                 Tur = cariGiderKalemi.Tur,

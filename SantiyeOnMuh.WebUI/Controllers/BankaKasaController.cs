@@ -175,6 +175,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
 
             var _bankaKasa = new BankaKasa()
             {
+                Id=bankaKasa.Id,
                 Tarih = bankaKasa.Tarih,
                 Aciklama = bankaKasa.Aciklama,
                 Nitelik = bankaKasa.Nitelik,

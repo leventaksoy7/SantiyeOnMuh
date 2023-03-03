@@ -2,6 +2,8 @@
 using SantiyeOnMuh.Business.Abstract;
 using SantiyeOnMuh.Entity;
 using SantiyeOnMuh.WebUI.Models;
+using SantiyeOnMuh.WebUI.Models.Modeller;
+using System.ComponentModel.DataAnnotations;
 
 namespace SantiyeOnMuh.WebUI.Controllers
 {
@@ -54,38 +56,55 @@ namespace SantiyeOnMuh.WebUI.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult SantiyeEkleme(ESantiye s)
+        public IActionResult SantiyeEkleme(Santiye santiye)
         {
-            _santiyeService.Create(s);
+            ESantiye _santiye = new ESantiye()
+            {
+                Ad = santiye.Ad,
+                Adres = santiye.Adres,
+                Durum = santiye.Durum,
+                SantiyeKasas = santiye.SantiyeKasas,
+                CariHesaps = santiye.CariHesaps,
+            };
+
+            _santiyeService.Create(_santiye);
+
             return RedirectToAction("Index");
         }
         [HttpGet]
         public IActionResult SantiyeGuncelle(int? id)
         {
             ViewBag.Sayfa = "ŞANTİYE BİLGİLERİNİ GÜNCELLEME";
-            if (id == null)
-            {
-                return NotFound();
-            }
+
+            if (id == null){return NotFound();}
+
             ESantiye santiye = _santiyeService.GetById((int)id);
-            if (santiye == null)
+
+            if (santiye == null){return NotFound();}
+
+           Santiye _santiye = new Santiye()
             {
-                return NotFound();
-            }
-            return View(santiye);
+                Ad = santiye.Ad,
+                Adres = santiye.Adres,
+                Durum = santiye.Durum,
+                SantiyeKasas = santiye.SantiyeKasas,
+                CariHesaps = santiye.CariHesaps,
+            };
+
+            return View(_santiye);
         }
         [HttpPost]
-        public IActionResult SantiyeGuncelle(ESantiye s)
+        public IActionResult SantiyeGuncelle(Santiye santiye)
         {
-            var entitySantiye = _santiyeService.GetById(s.Id);
-            if (entitySantiye == null)
-            {
-                return NotFound();
-            }
-            entitySantiye.Ad = s.Ad;
-            entitySantiye.Adres = s.Adres;
+            ESantiye _santiye = _santiyeService.GetById(santiye.Id);
 
-            _santiyeService.Update(entitySantiye);
+            if (_santiye == null){return NotFound();}
+
+            _santiye.Ad = santiye.Ad;
+            _santiye.Adres = santiye.Adres;
+
+            _santiyeService.Update(_santiye);
+
             return RedirectToAction("Index");
         }
         [HttpGet]
@@ -93,24 +112,35 @@ namespace SantiyeOnMuh.WebUI.Controllers
         {
             ViewBag.Sayfa = "ŞANTİYEYİ SİL";
 
-            if (id == null) { return NotFound(); }
+            if (id == null) {return NotFound();}
 
             ESantiye santiye = _santiyeService.GetById((int)id);
 
-            if (santiye == null) { return NotFound(); }
+            if (santiye == null) { return NotFound();}
 
-            return View(santiye);
+            Santiye _santiye = new Santiye()
+            {
+                Ad = santiye.Ad,
+                Adres = santiye.Adres,
+                Durum = santiye.Durum,
+                SantiyeKasas = santiye.SantiyeKasas,
+                CariHesaps = santiye.CariHesaps,
+            };
+
+            return View(_santiye);
         }
+
         [HttpPost]
-        public IActionResult SantiyeSil(ESantiye s)
+        public IActionResult SantiyeSil(Santiye santiye)
         {
-            var entity = _santiyeService.GetById(s.Id);
+            ESantiye _santiye = _santiyeService.GetById(santiye.Id);
 
-            if (entity == null) { return NotFound(); }
+            if (_santiye == null) { return NotFound(); }
 
-            entity.Durum = false;
+            _santiye.Durum = false;
 
-            _santiyeService.Update(entity);
+            _santiyeService.Update(_santiye);
+
             return RedirectToAction("Index");
         }
 

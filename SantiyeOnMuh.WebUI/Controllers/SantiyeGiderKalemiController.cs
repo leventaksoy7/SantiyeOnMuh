@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SantiyeOnMuh.Business.Abstract;
 using SantiyeOnMuh.Entity;
+using SantiyeOnMuh.WebUI.Models.Modeller;
+using System.ComponentModel.DataAnnotations;
 
 namespace SantiyeOnMuh.WebUI.Controllers
 {
@@ -19,79 +21,82 @@ namespace SantiyeOnMuh.WebUI.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult SantiyeGiderKalemiEkleme(ESantiyeGiderKalemi s)
+        public IActionResult SantiyeGiderKalemiEkleme(SantiyeGiderKalemi santiyeGiderKalemi)
         {
-            _santiyeGiderKalemiService.Create(s);
+            ESantiyeGiderKalemi _santiyeGiderKalemi = new ESantiyeGiderKalemi()
+            {
+                Ad = santiyeGiderKalemi.Ad,
+                Durum = santiyeGiderKalemi.Durum,
+                Tur = santiyeGiderKalemi.Tur,
+                SantiyeKasas = santiyeGiderKalemi.SantiyeKasas,
+            };
+
+            _santiyeGiderKalemiService.Create(_santiyeGiderKalemi);
+
             return RedirectToAction("Index", "Admin");
         }
         [HttpGet]
         public IActionResult SantiyeGiderKalemiGuncelle(int? id)
         {
             ViewBag.Sayfa = "ŞANTİYE GİDER KALEMİ BİLGİLERİNİ GÜNCELLEME";
-            if (id == null)
-            {
-                return NotFound();
-            }
+
+            if (id == null){return NotFound();}
 
             ESantiyeGiderKalemi santiyeGiderKalemi = _santiyeGiderKalemiService.GetById((int)id);
 
-            if (santiyeGiderKalemi == null)
+            if (santiyeGiderKalemi == null){return NotFound();}
+
+            SantiyeGiderKalemi _santiyeGiderKalemi = new SantiyeGiderKalemi()
             {
-                return NotFound();
-            }
-            return View(santiyeGiderKalemi);
+                Ad = santiyeGiderKalemi.Ad,
+                Durum = santiyeGiderKalemi.Durum,
+                Tur = santiyeGiderKalemi.Tur,
+                SantiyeKasas = santiyeGiderKalemi.SantiyeKasas,
+            };
+
+            return View(_santiyeGiderKalemi);
         }
         [HttpPost]
-        public IActionResult SantiyeGiderKalemiGuncelle(ESantiyeGiderKalemi s)
+        public IActionResult SantiyeGiderKalemiGuncelle(SantiyeGiderKalemi santiyeGiderKalemi)
         {
-            var entitySantiyeGiderKalemi = _santiyeGiderKalemiService.GetById(s.Id);
-            if (entitySantiyeGiderKalemi == null)
-            {
-                return NotFound();
-            }
-            entitySantiyeGiderKalemi.Ad = s.Ad;
+            ESantiyeGiderKalemi _santiyeGiderKalemi = _santiyeGiderKalemiService.GetById(santiyeGiderKalemi.Id);
 
-            _santiyeGiderKalemiService.Update(entitySantiyeGiderKalemi);
+            if (_santiyeGiderKalemi == null){return NotFound();}
+
+            _santiyeGiderKalemi.Ad = santiyeGiderKalemi.Ad;
+
+            _santiyeGiderKalemiService.Update(_santiyeGiderKalemi);
+
             return RedirectToAction("Index", "Admin");
         }
         [HttpGet]
         public IActionResult SantiyeGiderKalemiSil(int? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            if (id == null){return NotFound();}
 
             ESantiyeGiderKalemi santiyeGiderKalemi = _santiyeGiderKalemiService.GetById((int)id);
 
-            if (santiyeGiderKalemi == null)
-            {
-                return NotFound();
-            }
+            if (santiyeGiderKalemi == null){return NotFound();}
 
             santiyeGiderKalemi.Durum = false;
 
             _santiyeGiderKalemiService.Update(santiyeGiderKalemi);
+
             return RedirectToAction("Index", "Admin");
         }
         [HttpGet]
         public IActionResult SantiyeGiderKalemiGeriYukle(int? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            if (id == null){return NotFound();}
 
             ESantiyeGiderKalemi santiyeGiderKalemi = _santiyeGiderKalemiService.GetById((int)id);
 
-            if (santiyeGiderKalemi == null)
-            {
-                return NotFound();
-            }
+            if (santiyeGiderKalemi == null){return NotFound();}
 
             santiyeGiderKalemi.Durum = true;
 
             _santiyeGiderKalemiService.Update(santiyeGiderKalemi);
+
             return RedirectToAction("Index", "Admin");
         }
     }
