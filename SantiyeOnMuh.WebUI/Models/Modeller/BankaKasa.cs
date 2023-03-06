@@ -1,6 +1,7 @@
 ﻿using SantiyeOnMuh.Entity;
 using SantiyeOnMuh.WebUI.Models.Modeller;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SantiyeOnMuh.WebUI.Models.Modeller
 {
@@ -26,10 +27,12 @@ namespace SantiyeOnMuh.WebUI.Models.Modeller
 
         [Required(ErrorMessage = "TUTAR BOŞ BIRAKILAMAZ!")]
         [Display(Name = "TUTAR BOŞ BIRAKILAMAZ!")]
+        [Column(TypeName = "decimal(18, 2)")]
         public decimal Giren { get; set; }
 
         [Required(ErrorMessage = "TUTAR BOŞ BIRAKILAMAZ!")]
         [Display(Name = "TUTAR BOŞ BIRAKILAMAZ!")]
+        [Column(TypeName = "decimal(18, 2)")]
         public decimal Cikan { get; set; }
 
         public bool Durum { get; set; }

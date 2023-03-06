@@ -1,6 +1,7 @@
 ﻿using SantiyeOnMuh.Entity;
 using SantiyeOnMuh.WebUI.Models.Modeller;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SantiyeOnMuh.WebUI.Models.Modeller
 {
@@ -24,10 +25,12 @@ namespace SantiyeOnMuh.WebUI.Models.Modeller
         public string? No { get; set; }
 
         [Display(Name = "TUTAR")]
-        public decimal Gelir { get; set; }
+        //[Column(TypeName = "decimal(18. 2)")]
+        public string Gelir { get; set; }
 
         [Display(Name = "TUTAR")]
-        public decimal Gider { get; set; }
+        //[Column(TypeName = "decimal(18. 2)")]
+        public string Gider { get; set; }
 
         public string? ImgUrl { get; set; }
 
@@ -44,8 +47,8 @@ namespace SantiyeOnMuh.WebUI.Models.Modeller
         {
             Tarih = DateTime.Today;
 
-            Gelir = 0;
-            Gider = 0;
+            Gelir = "0";
+            Gider = "0";
 
             Durum = true;
 

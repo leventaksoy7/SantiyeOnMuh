@@ -92,7 +92,8 @@ namespace SantiyeOnMuh.WebUI.Controllers
                 }
                 else { return View(santiyeKasa); }
             }
-            else { return View(santiyeKasa); }
+            //else { return View(santiyeKasa); }
+            //FATURA EKLENMESE BİLE SİSTEME FATURA GİRİLEBİLSİN DİYE ELSE KISMINI ÇIKARDIM
             #endregion
 
             ESantiyeKasa _santiyeKasa = new ESantiyeKasa()
@@ -101,8 +102,8 @@ namespace SantiyeOnMuh.WebUI.Controllers
                 Aciklama = santiyeKasa.Aciklama,
                 Kisi = santiyeKasa.Kisi,
                 No = santiyeKasa.No,
-                Gelir = santiyeKasa.Gelir,
-                Gider = santiyeKasa.Gider,
+                //Gelir = santiyeKasa.Gelir,
+                //Gider = santiyeKasa.Gider,
                 ImgUrl = santiyeKasa.ImgUrl,
                 Durum = santiyeKasa.Durum,
                 BankaKasaKaynak = santiyeKasa.BankaKasaKaynak,
@@ -136,8 +137,8 @@ namespace SantiyeOnMuh.WebUI.Controllers
                 Aciklama = santiyeKasa.Aciklama,
                 Kisi = santiyeKasa.Kisi,
                 No = santiyeKasa.No,
-                Gelir = santiyeKasa.Gelir,
-                Gider = santiyeKasa.Gider,
+                //Gelir = santiyeKasa.Gelir,
+                //Gider = santiyeKasa.Gider,
                 ImgUrl = santiyeKasa.ImgUrl,
                 Durum = santiyeKasa.Durum,
                 BankaKasaKaynak = santiyeKasa.BankaKasaKaynak,
@@ -326,15 +327,25 @@ namespace SantiyeOnMuh.WebUI.Controllers
             ViewBag.SantiyeId = santiyeKasa.SantiyeId;
             #endregion
 
+            #region VİRGÜL VEYA NOKTA KULLANIMININ İKİSİNİN DE SERBEST OLMASINI SAĞLAMAK İÇİN
+            var convertGelir = Convert.ToString(santiyeKasa.Gelir);
+            var convertGider = Convert.ToString(santiyeKasa.Gider);
+            convertGelir = convertGelir.Replace(".", ",");
+            convertGider = convertGider.Replace(".", ",");
+            var convertGelirD = Convert.ToDecimal(convertGelir);
+            var convertGiderD = Convert.ToDecimal(convertGider);
+            #endregion
+
             ESantiyeKasa _santiyeKasa = new ESantiyeKasa()
             {
-                Id = santiyeKasa.Id,
                 Tarih = santiyeKasa.Tarih,
                 Aciklama = santiyeKasa.Aciklama,
                 Kisi = santiyeKasa.Kisi,
                 No = santiyeKasa.No,
-                Gelir = santiyeKasa.Gelir,
-                Gider = santiyeKasa.Gider,
+                //Gelir = santiyeKasa.Gelir,
+                //Gider = santiyeKasa.Gider,
+                Gelir = convertGelirD,
+                Gider = convertGiderD,
                 ImgUrl = santiyeKasa.ImgUrl,
                 Durum = santiyeKasa.Durum,
                 BankaKasaKaynak = santiyeKasa.BankaKasaKaynak,
@@ -365,7 +376,8 @@ namespace SantiyeOnMuh.WebUI.Controllers
                 }
                 else { return View(santiyeKasa); }
             }
-            else { return View(santiyeKasa); }
+            //else { return View(santiyeKasa); }
+            //FATURA EKLENMESE BİLE SİSTEME FATURA GİRİLEBİLSİN DİYE ELSE KISMINI ÇIKARDIM
             #endregion
 
             _santiyeKasaService.Create(_santiyeKasa);
@@ -393,8 +405,8 @@ namespace SantiyeOnMuh.WebUI.Controllers
                 Aciklama = santiyeKasa.Aciklama,
                 Kisi = santiyeKasa.Kisi,
                 No = santiyeKasa.No,
-                Gelir = santiyeKasa.Gelir,
-                Gider = santiyeKasa.Gider,
+                //Gelir = santiyeKasa.Gelir,
+                //Gider = santiyeKasa.Gider,
                 ImgUrl = santiyeKasa.ImgUrl,
                 Durum = santiyeKasa.Durum,
                 BankaKasaKaynak = santiyeKasa.BankaKasaKaynak,

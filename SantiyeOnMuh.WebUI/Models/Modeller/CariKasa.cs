@@ -1,6 +1,7 @@
 ﻿using SantiyeOnMuh.Entity;
 using SantiyeOnMuh.WebUI.Models.Modeller;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SantiyeOnMuh.WebUI.Models.Modeller
 {
@@ -17,15 +18,19 @@ namespace SantiyeOnMuh.WebUI.Models.Modeller
         public string Aciklama { get; set; }
 
         [Display(Name = "MİKTAR")]
+        [Column(TypeName = "decimal(18, 2)")]
         public decimal Miktar { get; set; }
 
         [Display(Name = "BİRİM FİYATI")]
+        [Column(TypeName = "decimal(18, 2)")]
         public decimal BirimFiyat { get; set; }
 
         [Display(Name = "TUTAR")]
+        [Column(TypeName = "decimal(18, 2)")]
         public decimal Borc { get; set; }
 
         [Display(Name = "TUTAR")]
+        [Column(TypeName = "decimal(18, 2)")]
         public decimal Alacak { get; set; }
 
         public string? ImgUrl { get; set; }

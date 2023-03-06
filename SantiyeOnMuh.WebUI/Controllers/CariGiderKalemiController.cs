@@ -83,7 +83,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
             return RedirectToAction("Index", "Admin");
         }
         [HttpGet]
-        public IActionResult CariGKSil(int? id)
+        public IActionResult CariGiderKalemiSil(int? id)
         {
             if (id == null){return NotFound();}
 
@@ -98,7 +98,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
             return RedirectToAction("Index", "Admin");
         }
         [HttpGet]
-        public IActionResult CariGKGeriYukle(int? id)
+        public IActionResult CariGiderKalemiGeriYukle(int? id)
         {
             if (id == null){return NotFound();}
 

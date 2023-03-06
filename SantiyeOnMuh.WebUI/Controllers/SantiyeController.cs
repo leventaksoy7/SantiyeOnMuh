@@ -76,14 +76,15 @@ namespace SantiyeOnMuh.WebUI.Controllers
         {
             ViewBag.Sayfa = "ŞANTİYE BİLGİLERİNİ GÜNCELLEME";
 
-            if (id == null){return NotFound();}
+            if (id == null) { return NotFound(); }
 
             ESantiye santiye = _santiyeService.GetById((int)id);
 
-            if (santiye == null){return NotFound();}
+            if (santiye == null) { return NotFound(); }
 
-           Santiye _santiye = new Santiye()
+            Santiye _santiye = new Santiye()
             {
+                Id = santiye.Id,
                 Ad = santiye.Ad,
                 Adres = santiye.Adres,
                 Durum = santiye.Durum,
@@ -120,6 +121,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
 
             Santiye _santiye = new Santiye()
             {
+                Id= santiye.Id,
                 Ad = santiye.Ad,
                 Adres = santiye.Adres,
                 Durum = santiye.Durum,
@@ -151,7 +153,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
 
             var santiyeViewModel = new SantiyeViewListModel()
             {
-                Santiyes = _santiyeService.GetAll(),
+                Santiyes = _santiyeService.GetAll(false),
                 SantiyeKasas = _santiyeKasaService.GetAll(null, null, false),
             };
 
@@ -174,6 +176,21 @@ namespace SantiyeOnMuh.WebUI.Controllers
             ViewBag.Net = netbakiye;
 
             return View(santiyeViewModel);
+        }
+
+        public IActionResult SantiyeGeriYukle(int? id)
+        {
+            if (id == null) { return NotFound(); }
+
+            ESantiye santiye = _santiyeService.GetById((int)id);
+
+            if (santiye == null) { return NotFound(); }
+
+            santiye.Durum = true;
+
+            _santiyeService.Update(santiye);
+
+            return RedirectToAction("Index");
         }
     }
 }

@@ -205,16 +205,12 @@ namespace SantiyeOnMuh.WebUI.Controllers
             ViewBag.Cari = _cariHesapService.GetAll(null, true);
             ViewBag.Banka = _bankaHesapService.GetAll(true);
 
-            if (cekid == null)
-            {
-                return NotFound();
-            }
+            if (cekid == null) { return NotFound();}
+
             ECek cek = _cekService.GetById((int)cekid);
 
-            if (cek == null)
-            {
-                return NotFound();
-            }
+            if (cek == null) { return NotFound(); }
+
             return View(cek);
         }
         [HttpPost]
@@ -222,10 +218,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
         {
             var entityCek = _cekService.GetById(c.Id);
 
-            if (entityCek == null)
-            {
-                return NotFound();
-            }
+            if (entityCek == null) { return NotFound(); }
 
             int? bankakasaid = entityCek.BankaKasaKaynak;
             int? carikasaid = entityCek.CariKasaKaynak;
@@ -234,10 +227,9 @@ namespace SantiyeOnMuh.WebUI.Controllers
             {
                 String FirmaAdiForAciklama = _cariHesapService.GetById((int)c.CariHesapId).Ad;
                 var entityBankaKasa = _bankaKasaService.GetById((int)bankakasaid);
+
                 if (entityBankaKasa == null)
-                {
-                    return NotFound();
-                }
+                { return NotFound(); }
 
                 entityBankaKasa.Tarih = entityCek.Tarih;
                 entityBankaKasa.Aciklama = FirmaAdiForAciklama + " AİT " + entityCek.CekNo + " NOLU ÇEK ÖDEMESİ" + " - " + entityCek.Aciklama;
@@ -251,10 +243,8 @@ namespace SantiyeOnMuh.WebUI.Controllers
             if (carikasaid != null)
             {
                 var entityCariKasa = _cariKasaService.GetById((int)carikasaid);
-                if (entityCariKasa == null)
-                {
-                    return NotFound();
-                }
+
+                if (entityCariKasa == null) { return NotFound(); }
 
                 entityCariKasa.Tarih = c.Tarih;
                 entityCariKasa.Aciklama = c.CekNo + " NOLU CEK ÖDEMESİ" + " - " + c.Aciklama;
@@ -303,16 +293,12 @@ namespace SantiyeOnMuh.WebUI.Controllers
         {
             ViewBag.Sayfa = "ÇEKİ SİL";
 
-            if (cekid == null)
-            {
-                return NotFound();
-            }
+            if (cekid == null) { return NotFound(); }
+
             ECek cek = _cekService.GetByIdDetay((int)cekid);
 
-            if (cek == null)
-            {
-                return NotFound();
-            }
+            if (cek == null) { return NotFound(); }
+
             return View(cek);
         }
         [HttpPost]
@@ -320,10 +306,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
         {
             var entityCek = _cekService.GetByIdDetay(c.Id);
 
-            if (entityCek == null)
-            {
-                return NotFound();
-            }
+            if (entityCek == null) { return NotFound(); }
 
             entityCek.SonGuncelleme = System.DateTime.Now;
             entityCek.Durum = false;
@@ -335,10 +318,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
             {
                 var entityBankaKasa = _bankaKasaService.GetById((int)bankakasaid);
 
-                if (entityBankaKasa == null)
-                {
-                    return NotFound();
-                }
+                if (entityBankaKasa == null) { return NotFound(); }
 
                 entityBankaKasa.SonGuncelleme = System.DateTime.Now;
                 entityBankaKasa.Durum = false;
@@ -350,10 +330,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
             {
                 var entityCariKasa = _cariKasaService.GetById((int)carikasaid);
 
-                if (entityCariKasa == null)
-                {
-                    return NotFound();
-                }
+                if (entityCariKasa == null) { return NotFound(); }
 
                 entityCariKasa.SonGuncelleme = System.DateTime.Now;
                 entityCariKasa.Durum = false;

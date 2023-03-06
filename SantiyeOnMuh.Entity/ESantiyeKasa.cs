@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,7 +18,9 @@ namespace SantiyeOnMuh.Entity
         public string Aciklama { get; set; }
         public string? Kisi { get; set; }
         public string? No { get; set; }//PLAKA-CEP-FATURA VEYA FİŞ NO
+        [Column(TypeName = "decimal(18. 2)")]
         public decimal Gelir { get; set; }
+        [Column(TypeName = "decimal(18. 2)")]
         public decimal Gider { get; set; }
         public string? ImgUrl { get; set; }
         public bool Durum { get; set; }

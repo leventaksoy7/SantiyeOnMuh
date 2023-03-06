@@ -106,7 +106,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
 
             if (sirket == null){return NotFound();}
 
-            sirket.Durum = false;
+            sirket.Durum = true;
 
             _sirketService.Update(sirket);
 

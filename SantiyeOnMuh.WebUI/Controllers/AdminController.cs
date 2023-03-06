@@ -40,8 +40,8 @@ namespace SantiyeOnMuh.WebUI.Controllers
             ViewBag.Sayfa = "ADMİN PANELİ SİLİNMİŞLER LİSTESİ";
             var adminViewModel = new AdminViewListModel()
             {
-                SantiyeGiderKalemis = _santiyeGiderKalemiService.GetAll(false, true),
-                CariGiderKalemis = _cariGiderKalemiService.GetAll(false, true),
+                SantiyeGiderKalemis = _santiyeGiderKalemiService.GetAll(false),
+                CariGiderKalemis = _cariGiderKalemiService.GetAll(false),
                 BankaHesaps = _bankaHesapService.GetAll(false),
                 Sirkets = _sirketService.GetAll(false),
             };

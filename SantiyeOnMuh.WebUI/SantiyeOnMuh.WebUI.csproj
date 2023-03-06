@@ -24,4 +24,8 @@
     <ProjectReference Include="..\SantiyeOnMuh.Entity\SantiyeOnMuh.Entity.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\SantiyeKasaResim\" />
+  </ItemGroup>
+
 </Project>

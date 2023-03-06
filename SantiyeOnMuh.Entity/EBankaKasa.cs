@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,7 +16,9 @@ namespace SantiyeOnMuh.Entity
         public DateTime Tarih { get; set; }
         public string Aciklama { get; set; }
         public string Nitelik { get; set; }
+        [Column(TypeName = "decimal(18, 2)")]
         public decimal Giren { get; set; }
+        [Column(TypeName = "decimal(18, 2)")]
         public decimal Cikan { get; set; }
         public bool Durum { get; set; }
         public int? CekKaynak { get; set; }

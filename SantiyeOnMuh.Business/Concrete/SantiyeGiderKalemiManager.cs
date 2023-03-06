@@ -45,5 +45,10 @@ namespace SantiyeOnMuh.Business.Concrete
         {
             return _santiyeGiderKalemiRepository.GetAll(drm, tur);
         }
+
+        public List<ESantiyeGiderKalemi> GetAll(bool drm)
+        {
+            return _santiyeGiderKalemiRepository.GetAll(drm);
+        }
     }
 }

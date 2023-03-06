@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,9 +15,13 @@ namespace SantiyeOnMuh.Entity
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
         public DateTime Tarih { get; set; }
         public string Aciklama { get; set; }
+        [Column(TypeName = "decimal(18, 2)")]
         public decimal Miktar { get; set; }
+        [Column(TypeName = "decimal(18, 2)")]
         public decimal BirimFiyat { get; set; }
+        [Column(TypeName = "decimal(18, 2)")]
         public decimal Borc { get; set; }
+        [Column(TypeName = "decimal(18, 2)")]
         public decimal Alacak { get; set; }
         public string? ImgUrl { get; set; }
         public int? CekKaynak { get; set; }

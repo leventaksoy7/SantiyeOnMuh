@@ -80,53 +80,56 @@ app.UseAuthorization();
 //    name: "default",
 //    pattern: "{controller=AnaSayfa}/{action=AnaSayfa}/{id?}");
 
-    //INDEX
-    //EKLE
-    //GUNCELLE
-    //DETAY
-    //SÝL
+//INDEX
+//EKLE
+//GUNCELLE
+//DETAY
+//SÝL
+    app.MapControllerRoute(
+        name: "default",
+        pattern: "{controller=AnaSayfa}/{action=Index}/{id?}");
     #region ÞANTÝYE KASA
     //INDEX
     app.MapControllerRoute(
-        name: "SantiyeKasa",
-        pattern: "SantiyeKasa/SantiyeKasa/{santiyeid}/{gkid?}",
-        defaults: new { controller = "SantiyeKasa", action = "SantiyeKasa" }
-        );
-    app.MapControllerRoute(
-        name: "SantiyeKasaArsiv",
-        pattern: "SantiyeKasa/SantiyeKasaArsiv/{santiyeid}/{gkid?}",
-        defaults: new { controller = "SantiyeKasa", action = "SantiyeKasaArsiv" }
-        );
-    //EKLE
-    app.MapControllerRoute(
-        name: "SantiyeKasaEkleme",
-        pattern: "SantiyeKasa/SantiyeKasaEkleme",
-        defaults: new { controller = "SantiyeKasa", action = "SantiyeKasaEkleme" }
-        );
-    app.MapControllerRoute(
-        name: "SantiyeKasaEklemeFromSantiye",
-        pattern: "SantiyeKasa/SantiyeKasaFaturaEklemeFromSantiye/{santiyeid}",
-        defaults: new { controller = "SantiyeKasa", action = "SantiyeKasaEklemeFromSantiye" }
-        );
-    //GUNCELLE
-    app.MapControllerRoute(
-        name: "SantiyeKasaGuncelleFromSantiye",
-        pattern: "SantiyeKasa/SantiyeKasaGuncelleFromSantiye/{santiyekasaid?}",
-        defaults: new { controller = "SantiyeKasa", action = "SantiyeKasaGuncelleFromSantiye" }
-        );
-    //DETAY
-    app.MapControllerRoute(
-        name: "SantiyeKasaDetay",
-        pattern: "SantiyeKasa/SantiyeKasaDetay/{id}",
-        defaults: new { controller = "SantiyeKasa", action = "SantiyeKasaDetay" }
-        );
-    //SÝL
-    app.MapControllerRoute(
-        name: "SantiyeKasaSil",
-        pattern: "SantiyeKasa/SantiyeKasaSil/{santiyekasaid?}",
-        defaults: new { controller = "SantiyeKasa", action = "SantiyeKasaSil" }
-        );
-    #endregion
+            name: "SantiyeKasa",
+            pattern: "SantiyeKasa/SantiyeKasa/{santiyeid}/{gkid?}",
+            defaults: new { controller = "SantiyeKasa", action = "SantiyeKasa" }
+            );
+        app.MapControllerRoute(
+            name: "SantiyeKasaArsiv",
+            pattern: "SantiyeKasa/SantiyeKasaArsiv/{santiyeid}/{gkid?}",
+            defaults: new { controller = "SantiyeKasa", action = "SantiyeKasaArsiv" }
+            );
+        //EKLE
+        app.MapControllerRoute(
+            name: "SantiyeKasaEkleme",
+            pattern: "SantiyeKasa/SantiyeKasaEkleme",
+            defaults: new { controller = "SantiyeKasa", action = "SantiyeKasaEkleme" }
+            );
+        app.MapControllerRoute(
+            name: "SantiyeKasaEklemeFromSantiye",
+            pattern: "SantiyeKasa/SantiyeKasaFaturaEklemeFromSantiye/{santiyeid}",
+            defaults: new { controller = "SantiyeKasa", action = "SantiyeKasaEklemeFromSantiye" }
+            );
+        //GUNCELLE
+        app.MapControllerRoute(
+            name: "SantiyeKasaGuncelleFromSantiye",
+            pattern: "SantiyeKasa/SantiyeKasaGuncelleFromSantiye/{santiyekasaid?}",
+            defaults: new { controller = "SantiyeKasa", action = "SantiyeKasaGuncelleFromSantiye" }
+            );
+        //DETAY
+        app.MapControllerRoute(
+            name: "SantiyeKasaDetay",
+            pattern: "SantiyeKasa/SantiyeKasaDetay/{id}",
+            defaults: new { controller = "SantiyeKasa", action = "SantiyeKasaDetay" }
+            );
+        //SÝL
+        app.MapControllerRoute(
+            name: "SantiyeKasaSil",
+            pattern: "SantiyeKasa/SantiyeKasaSil/{santiyekasaid?}",
+            defaults: new { controller = "SantiyeKasa", action = "SantiyeKasaSil" }
+            );
+        #endregion
 
     #region CARÝ HESAP
     //INDEX
@@ -357,9 +360,7 @@ app.UseAuthorization();
         );
     #endregion
 
-    app.MapControllerRoute(
-        name: "default",
-        pattern: "{controller=AnaSayfa}/{action=Index}/{id?}");
+    
 
 
 app.Run();
