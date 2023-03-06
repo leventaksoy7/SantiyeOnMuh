@@ -1,0 +1,223 @@
+﻿@model AdminViewListModel
+@{
+
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+</head>
+<body style="background-color:black">
+    <div>
+
+        <div style="background-color: black" class="col col-md-12">
+            <div class="col col-md-11">
+                <table class="table">
+                    <tr>
+                        <th>
+                            <br />
+                        </th>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <div style="background-color:aliceblue" class="col col-md-12">
+            <br />
+            <div>
+                <a asp-controller="Admin"
+                   asp-action="Index"
+                   class="btn btn-success btn-sm">AKTİF PANEL</a>
+            </div>
+            <br />
+            <table class="table table-bordered">
+                <tr>
+                    <th style="width:50%; vertical-align:middle">ŞİRKET ADI</th>
+                    <th style="width:40%; vertical-align:middle">VERGİ NO</th>
+                    <th style="width:10%; vertical-align:middle">GERİ YÜKLE</th>
+
+                </tr>
+                @if (Model.Sirkets.Count == 0)
+                {
+                    <tr><td>SİSTEME KAYITLI ŞİRKET HESAP BULUNMAMAKTADIR</td></tr>
+                }
+                else
+                {
+                    @foreach (var item in Model.Sirkets)
+                    {
+                        <tr>
+                            <td style="width:50%; vertical-align:middle">@item.Ad</td>
+                            <td style="width:40%; vertical-align:middle">@item.VergiNo</td>
+                            <td style="width:10%; vertical-align:middle">
+                                <a asp-controller="Sirket"
+                                   asp-action="SirketGeriYukle"
+                                   asp-route-id="@item.Id"
+                                   class="btn btn-success btn-sm">GERİ YÜKLE</a>
+                            </td>
+                        </tr>
+                    }
+                }
+            </table>
+        </div>
+
+        <div style="background-color: black" class="col col-md-12">
+            <div class="col col-md-11">
+                <table class="table">
+                    <tr>
+                        <th>
+                            <br />
+                        </th>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <div style="background-color:antiquewhite" class="col col-md-12">
+            <div>
+                <br />
+                <a asp-controller="Admin"
+                   asp-action="Index"
+                   class="btn btn-success btn-sm">AKTİF PANEL</a>
+            </div>
+            <br />
+            <table class="table table-bordered">
+                <tr>
+                    <th style="vertical-align: middle; width: 50%">HESAP ADI</th>
+                    <th style="vertical-align: middle; width: 40%">IBAN</th>
+                    <th style="vertical-align: middle; width: 10%">GERİ YÜKLE</th>
+                </tr>
+                @if (Model.BankaHesaps.Count == 0)
+                {
+                    <tr><td>SİSTEME KAYITLI BANKA HESAP BULUNMAMAKTADIR</td></tr>
+                }
+                else
+                {
+                    @foreach (var item in Model.BankaHesaps)
+                    {
+                        <tr>
+                            <td style=" vertical-align: middle; width: 50%">@item.HesapAdi</td>
+                            <td style=" vertical-align: middle; width: 40%">@item.IbanNo</td>
+                            <td style=" vertical-align: middle; width: 10%">
+                                <a asp-controller="BankaHesap"
+                                   asp-action="BankaHesapGeriYukle"
+                                   asp-route-id="@item.Id"
+                                   class="btn btn-success btn-sm">GERİ YÜKLE</a>
+                            </td>
+                        </tr>
+                    }
+                }
+            </table>
+        </div>
+
+        <div style="background-color: black" class="col col-md-12">
+            <div class="col col-md-11">
+                <table class="table">
+                    <tr>
+                        <th>
+                            <br />
+                        </th>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <div style="background-color:aliceblue" class="col col-md-12">
+            <div>
+                <br />
+                <a asp-controller="Admin"
+                   asp-action="Index"
+                   class="btn btn-success btn-sm">AKTİF PANEL</a>
+            </div>
+            <br />
+            <table class="table table-bordered">
+                <tr>
+                    <th style="vertical-align: middle; width: 90%">CARİ HESAP KALEM ADLARI</th>
+                    <th style="vertical-align: middle; width: 10%">GERİ YÜKLE</th>
+                </tr>
+                @if (Model.CariGiderKalemis.Count == 0)
+                {
+                    <tr><td>SİSTEME KAYITLI CARİ KALEMİ BULUNMAMAKTADIR</td></tr>
+                }
+                else
+                {
+                    @foreach (var item in Model.CariGiderKalemis)
+                    {
+                        <tr>
+                            <td style=" vertical-align: middle; width: 90%">@item.Ad</td>
+                            <td style=" vertical-align: middle; width: 10%">
+                                <a asp-controller="CariGiderKalemi"
+                                   asp-action="CariGiderKalemiGeriYukle"
+                                   asp-route-id="@item.Id"
+                                   class="btn btn-success btn-sm">GERİ YÜKLE</a>
+                            </td>
+                        </tr>
+                    }
+                }
+            </table>
+        </div>
+
+        <div style="background-color: black" class="col col-md-12">
+            <div class="col col-md-11">
+                <table class="table">
+                    <tr>
+                        <th>
+                            <br />
+                        </th>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <div style="background-color:antiquewhite" class="col col-md-12">
+            <div>
+                <br />
+                <a asp-controller="Admin"
+                   asp-action="Index"
+                   class="btn btn-success btn-sm">AKTİF PANEL</a>
+            </div>
+            <br />
+            <table class="table table-bordered">
+                <tr>
+                    <th style="vertical-align: middle; width: 90%">ŞANTİYE KASASI KALEM ADI</th>
+                    <th style="vertical-align: middle; width: 10%">GERİ YÜKLE</th>
+                </tr>
+                @if (Model.SantiyeGiderKalemis.Count == 0)
+                {
+                    <tr><td>SİSTEME KAYITLI ŞANTİYE KASASI İÇİN GİDER KALEMİ BULUNMAMAKTADIR</td></tr>
+                }
+                else
+                {
+                    @foreach (var item in Model.SantiyeGiderKalemis)
+                    {
+                        <tr>
+                            <td style=" vertical-align: middle; width: 90%">@item.Ad</td>
+
+                            <td style=" vertical-align: middle; width: 10%">
+                                <a asp-controller="SantiyeGiderKalemi"
+                           asp-action="SantiyeGiderKalemiGeriYukle"
+                           asp-route-id="@item.Id"
+                                   class="btn btn-success btn-sm">GERİ YÜKLE</a>
+                            </td>
+                        </tr>
+                    }
+                }
+            </table>
+        </div>
+
+        <div style="background-color: black" class="col col-md-12">
+            <div class="col col-md-11">
+                <table class="table">
+                    <tr>
+                        <th>
+                            <br />
+                        </th>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

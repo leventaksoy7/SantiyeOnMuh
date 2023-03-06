@@ -1,11 +1,13 @@
 ﻿using ClosedXML.Excel;
 using DocumentFormat.OpenXml.Wordprocessing;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using SantiyeOnMuh.Business.Abstract;
 using SantiyeOnMuh.Entity;
 using SantiyeOnMuh.WebUI.Models;
 using SantiyeOnMuh.WebUI.Models.Modeller;
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace SantiyeOnMuh.WebUI.Controllers
 {
@@ -89,6 +91,14 @@ namespace SantiyeOnMuh.WebUI.Controllers
             };
 
             _bankaKasaService.Create(_bankaKasa);
+
+            AlertMessage msg = new AlertMessage()
+            {
+                Message = $"{_bankaKasa.Aciklama} kasaya eklendi.",
+                AlertType= "warning"
+            };
+
+            TempData["message"] = JsonConvert.SerializeObject(msg);
 
             return RedirectToAction("BankaKasa");
         }
