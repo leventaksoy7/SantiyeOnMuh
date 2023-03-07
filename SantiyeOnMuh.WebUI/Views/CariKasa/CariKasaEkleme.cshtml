@@ -51,25 +51,25 @@
         <br />
         <div class="form-group">
             <div class="col-sm-2"><label for="Miktar">MİKTAR:</label></div>
-            <div class="col-sm-2"><input asp-for="Miktar" value="@Model.Miktar" class="form-control" /></div>
+            <div class="col-sm-2"><input asp-for="Miktar" value="@Model.Miktar" class="form-control" type="number" min="1" step=".01" /></div>
         </div>
         <br />
         <br />
         <div class="form-group">
             <div class="col-sm-2"><label for="BirimFiyat">BİRİM:</label></div>
-            <div class="col-sm-2"><input asp-for="BirimFiyat" value="@Model.BirimFiyat" class="form-control" /></div>
+            <div class="col-sm-2"><input asp-for="BirimFiyat" value="@Model.BirimFiyat" class="form-control" type="number" min="1" step=".01" /></div>
         </div>
         <br />
         <br />
         <div class="form-group">
             <div class="col-sm-2"><label for="Borc">BORÇ:</label></div>
-            <div class="col-sm-2"><input asp-for="Borc" class="form-control" value="0" /></div>
+            <div class="col-sm-2"><input asp-for="Borc" class="form-control" value="0" type="number" min="0" step=".01" /></div>
         </div>
         <br />
         <br />
         <div class="form-group">
             <div class="col-sm-2"><label for="Gider">ALACAK:</label></div>
-            <div class="col-sm-2"><input asp-for="Alacak" value="@Model.Alacak" class="form-control" /></div>
+            <div class="col-sm-2"><input asp-for="Alacak" value="@Model.Alacak" class="form-control" type="number" min="0" step=".01" /></div>
         </div>
         <br />
         <br />

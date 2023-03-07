@@ -1,5 +1,90 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model CariKasa
 @{
+
 }
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+</head>
+<body>
+    <form asp-controller="CariKasa" asp-action="CariKasaGuncelle" method="post" enctype="multipart/form-data">
+        <br />
+        <input type="hidden" name="Id" value="@Model.Id" />
+        <br />
+        <div class="form-group">
+            <div class="col-sm-2"><label asp-for="CariHesapId">FİRMA ADI:</label></div>
+            <div class="col-sm-2">
+                <div asp-validation-summary="ModelOnly"></div>
+                <select asp-for="CariHesapId"
+                        class="form-control"
+                        asp-items="@(new SelectList(@ViewBag.CariHesap,"Id","Ad"))">
+                </select>
+            </div>
+        </div>
+        <br />
+        <br />
+        <div class="form-group">
+            <div class="col-sm-2"><label asp-for="CariGiderKalemiId">TÜR:</label></div>
+            <div class="col-sm-2">
+                <div asp-validation-summary="ModelOnly"></div>
+                <select asp-for="CariGiderKalemiId"
+                        class="form-control"
+                        asp-items="@(new SelectList(@ViewBag.CariGK,"Id","Ad"))">
+                </select>
+            </div>
+        </div>
+        <br />
+        <br />
+        <div class="form-group">
+            <div class="col-sm-2"><label for="Tarih">TARİH:</label></div>
+            <div class="col-sm-2"><input asp-for="Tarih" class="form-control" value="@DateTime.Now.ToString("yyyy-MM-dd")" /></div>
+        </div>
+        <br />
+        <br />
+        <div class="form-group">
+            <div class="col-sm-2"><label for="Aciklama">AÇIKLAMA:</label></div>
+            <div class="col-sm-10"><input asp-for="Aciklama" value="@Model.Aciklama" class="form-control" /></div>
+        </div>
+        <br />
+        <br />
+        <div class="form-group">
+            <div class="col-sm-2"><label for="Kisi">MİKTAR:</label></div>
+            <div class="col-sm-2"><input asp-for="Miktar" value="@Model.Miktar" class="form-control" type="number" min="0" step=".01" /></div>
+        </div>
+        <br />
+        <br />
+        <div class="form-group">
+            <div class="col-sm-2"><label for="No">BİRİM:</label></div>
+            <div class="col-sm-2"><input asp-for="BirimFiyat" value="@Model.BirimFiyat" class="form-control" type="number" min="0" step=".01" /></div>
+        </div>
+        <br />
+        <br />
+        <div class="form-group">
+            <div class="col-sm-2"><label for="Gelir">BORÇ:</label></div>
+            <div class="col-sm-2"><input asp-for="Borc" value="@Model.Borc" class="form-control" type="number" min="0" step=".01" /></div>
+        </div>
+        <br />
+        <br />
+        <div class="form-group">
+            <div class="col-sm-2"><label for="Gider">ALACAK:</label></div>
+            <div class="col-sm-2"><input asp-for="Alacak" value="@Model.Alacak" class="form-control" type="number" min="0" step=".01" /></div>
+        </div>
+        <br />
+        <br />
+        <div class="form-group">
+            <div class="col-sm-2"><label for="ImgUrl">IMG:</label></div>
+            <div class="col-sm-2">
+                <input type="hidden" asp-for="ImgUrl" />
+                <input type="file" name="file" />
+            </div>
+        </div>
+        <br />
+        <br />
+        <button type="submit" class="btn btn-success">EKLE</button>
+
+    </form>
+</body>
+</html>

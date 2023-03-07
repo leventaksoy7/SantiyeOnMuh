@@ -102,8 +102,12 @@ namespace SantiyeOnMuh.WebUI.Controllers
                 Aciklama = santiyeKasa.Aciklama,
                 Kisi = santiyeKasa.Kisi,
                 No = santiyeKasa.No,
-                //Gelir = santiyeKasa.Gelir,
-                //Gider = santiyeKasa.Gider,
+
+                #region VİRGÜL VEYA NOKTA KULLANIMININ İKİSİNİN DE SERBEST OLMASINI SAĞLAMAK İÇİN
+                Gelir = Convert.ToDecimal(santiyeKasa.Gelir.Replace(".", ",")),
+                Gider = Convert.ToDecimal(santiyeKasa.Gider.Replace(".", ",")),
+                #endregion
+
                 ImgUrl = santiyeKasa.ImgUrl,
                 Durum = santiyeKasa.Durum,
                 BankaKasaKaynak = santiyeKasa.BankaKasaKaynak,
@@ -137,8 +141,10 @@ namespace SantiyeOnMuh.WebUI.Controllers
                 Aciklama = santiyeKasa.Aciklama,
                 Kisi = santiyeKasa.Kisi,
                 No = santiyeKasa.No,
-                //Gelir = santiyeKasa.Gelir,
-                //Gider = santiyeKasa.Gider,
+
+                Gelir = Convert.ToString(santiyeKasa.Gelir),
+                Gider = Convert.ToString(santiyeKasa.Gider),
+
                 ImgUrl = santiyeKasa.ImgUrl,
                 Durum = santiyeKasa.Durum,
                 BankaKasaKaynak = santiyeKasa.BankaKasaKaynak,
@@ -327,25 +333,18 @@ namespace SantiyeOnMuh.WebUI.Controllers
             ViewBag.SantiyeId = santiyeKasa.SantiyeId;
             #endregion
 
-            #region VİRGÜL VEYA NOKTA KULLANIMININ İKİSİNİN DE SERBEST OLMASINI SAĞLAMAK İÇİN
-            var convertGelir = Convert.ToString(santiyeKasa.Gelir);
-            var convertGider = Convert.ToString(santiyeKasa.Gider);
-            convertGelir = convertGelir.Replace(".", ",");
-            convertGider = convertGider.Replace(".", ",");
-            var convertGelirD = Convert.ToDecimal(convertGelir);
-            var convertGiderD = Convert.ToDecimal(convertGider);
-            #endregion
-
             ESantiyeKasa _santiyeKasa = new ESantiyeKasa()
             {
                 Tarih = santiyeKasa.Tarih,
                 Aciklama = santiyeKasa.Aciklama,
                 Kisi = santiyeKasa.Kisi,
                 No = santiyeKasa.No,
-                //Gelir = santiyeKasa.Gelir,
-                //Gider = santiyeKasa.Gider,
-                Gelir = convertGelirD,
-                Gider = convertGiderD,
+
+                #region VİRGÜL VEYA NOKTA KULLANIMININ İKİSİNİN DE SERBEST OLMASINI SAĞLAMAK İÇİN
+                Gelir = Convert.ToDecimal(santiyeKasa.Gelir.Replace(".", ",")),
+                Gider = Convert.ToDecimal(santiyeKasa.Gider.Replace(".", ",")),
+                #endregion
+
                 ImgUrl = santiyeKasa.ImgUrl,
                 Durum = santiyeKasa.Durum,
                 BankaKasaKaynak = santiyeKasa.BankaKasaKaynak,
@@ -384,6 +383,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
 
             return RedirectToAction("SantiyeKasa", new { santiyeid = santiyeKasa.SantiyeId });
         }
+
         [HttpGet]
         public IActionResult SantiyeKasaGuncelleFromSantiye(int? santiyekasaid)
         {
@@ -405,8 +405,10 @@ namespace SantiyeOnMuh.WebUI.Controllers
                 Aciklama = santiyeKasa.Aciklama,
                 Kisi = santiyeKasa.Kisi,
                 No = santiyeKasa.No,
-                //Gelir = santiyeKasa.Gelir,
-                //Gider = santiyeKasa.Gider,
+
+                Gelir = Convert.ToString(santiyeKasa.Gelir),
+                Gider = Convert.ToString(santiyeKasa.Gider),
+
                 ImgUrl = santiyeKasa.ImgUrl,
                 Durum = santiyeKasa.Durum,
                 BankaKasaKaynak = santiyeKasa.BankaKasaKaynak,

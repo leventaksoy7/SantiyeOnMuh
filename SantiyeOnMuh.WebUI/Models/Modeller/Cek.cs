@@ -26,7 +26,7 @@ namespace SantiyeOnMuh.WebUI.Models.Modeller
         [Display(Name = "TUTAR GİRİLMESİ ZORUNLUDUR")]
         [Required(ErrorMessage = "TUTAR GİRMELİSİNİZ")]
         [Column(TypeName = "decimal(18, 2)")]
-        public decimal Tutar { get; set; }
+        public string Tutar { get; set; }
         public string? ImgUrl { get; set; }
         public int? BankaKasaKaynak { get; set; }
         public int? CariKasaKaynak { get; set; }
@@ -47,7 +47,7 @@ namespace SantiyeOnMuh.WebUI.Models.Modeller
             Durum = true;
             OdemeDurumu = false;
 
-            Tutar = 0;
+            Tutar = "0";
 
             BankaKasaKaynak = null;
             CariKasaKaynak = null;

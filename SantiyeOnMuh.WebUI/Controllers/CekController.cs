@@ -1,10 +1,13 @@
 ﻿using ClosedXML.Excel;
+using DocumentFormat.OpenXml.Office2010.Excel;
+using MathNet.Numerics;
 using Microsoft.AspNetCore.Mvc;
 using SantiyeOnMuh.Business.Abstract;
 using SantiyeOnMuh.Entity;
 using SantiyeOnMuh.WebUI.Models;
 using SantiyeOnMuh.WebUI.Models.Modeller;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Runtime.ConstrainedExecution;
 
 namespace SantiyeOnMuh.WebUI.Controllers
@@ -99,7 +102,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
                 Tarih = cek.Tarih,
                 Aciklama = cek.Aciklama,
                 CekNo = cek.CekNo,
-                Tutar = cek.Tutar,
+                Tutar = Convert.ToDecimal(cek.Tutar.Replace(".",",")),
                 ImgUrl = cek.ImgUrl,
                 BankaKasaKaynak = cek.BankaKasaKaynak,
                 CariKasaKaynak = cek.CariKasaKaynak,
@@ -124,7 +127,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
                 Aciklama = cek.CekNo + " NOLU CEK ÖDEMESİ " + cek.Aciklama,
                 Miktar = 1,
                 BirimFiyat = 1,
-                Borc = cek.Tutar,
+                Borc = Convert.ToDecimal(cek.Tutar.Replace(".",",")),
                 Alacak = 0,
                 ImgUrl = null,
                 CekKaynak = cek.Id,
@@ -211,7 +214,30 @@ namespace SantiyeOnMuh.WebUI.Controllers
 
             if (cek == null) { return NotFound(); }
 
-            return View(cek);
+            Cek _cek = new Cek()
+            {
+                Id= cek.Id,
+                Tarih = cek.Tarih,
+                Aciklama = cek.Aciklama,
+                CekNo = cek.CekNo,
+                Tutar = Convert.ToString(cek.Tutar),
+                ImgUrl = cek.ImgUrl,
+                BankaKasaKaynak = cek.BankaKasaKaynak,
+                CariKasaKaynak = cek.CariKasaKaynak,
+                SistemeGiris = cek.SistemeGiris,
+                SonGuncelleme = cek.SonGuncelleme,
+                Durum = cek.Durum,
+                OdemeDurumu = cek.OdemeDurumu,
+                CariHesapId = cek.CariHesapId,
+                CariHesap = cek.CariHesap,
+                SirketId = cek.SirketId,
+                Sirket = cek.Sirket,
+                BankaHesapId = cek.BankaHesapId,
+                BankaHesap = cek.BankaHesap,
+            };
+            
+
+            return View(_cek);
         }
         [HttpPost]
         public IActionResult CekGuncelle(ECek c)

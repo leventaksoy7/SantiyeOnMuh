@@ -16,7 +16,7 @@ namespace SantiyeOnMuh.Entity.AraModeller
         public DateTime Tarih { get; set; }
         public string Aciklama { get; set; }
         public string Nitelik { get; set; }
-        public decimal Tutar { get; set; }
+        public string Tutar { get; set; }
         public int GonderenBanka { get; set; }
         public int AliciBanka { get; set; }
         public DateTime SistemeGiris { get; set; }
@@ -26,7 +26,7 @@ namespace SantiyeOnMuh.Entity.AraModeller
         {
             Tarih = System.DateTime.Now;
             Nitelik = "EFT";
-            Tutar = 0;
+            Tutar = "0";
             Durum = true;
 
             SistemeGiris = System.DateTime.Now;

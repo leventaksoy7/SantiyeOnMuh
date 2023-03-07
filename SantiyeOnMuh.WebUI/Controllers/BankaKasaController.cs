@@ -73,13 +73,17 @@ namespace SantiyeOnMuh.WebUI.Controllers
              * entity katmanında sadece saf database deseni var.
             */
 
-            var _bankaKasa = new EBankaKasa()
+            EBankaKasa _bankaKasa = new EBankaKasa()
             {
                 Tarih = bankaKasa.Tarih,
                 Aciklama = bankaKasa.Aciklama,
                 Nitelik = bankaKasa.Nitelik,
-                Giren = bankaKasa.Giren,
-                Cikan = bankaKasa.Cikan,
+                //Giren = bankaKasa.Giren,
+                //Cikan = bankaKasa.Cikan,
+                #region VİRGÜL VEYA NOKTA KULLANIMININ İKİSİNİN DE SERBEST OLMASINI SAĞLAMAK İÇİN
+                Giren = Convert.ToDecimal(bankaKasa.Giren.Replace(".", ",")),
+                Cikan = Convert.ToDecimal(bankaKasa.Cikan.Replace(".", ",")),
+                #endregion
                 Durum = bankaKasa.Durum,
                 CekKaynak = bankaKasa.CekKaynak,
                 NakitKaynak = bankaKasa.NakitKaynak,
@@ -124,14 +128,18 @@ namespace SantiyeOnMuh.WebUI.Controllers
              * entity katmanında sadece saf database deseni var.
             */
 
-            var _bankaKasa = new BankaKasa()
+            BankaKasa _bankaKasa = new BankaKasa()
             {
                 Id = bankaKasa.Id,
                 Tarih = bankaKasa.Tarih,
                 Aciklama = bankaKasa.Aciklama,
                 Nitelik = bankaKasa.Nitelik,
-                Giren = bankaKasa.Giren,
-                Cikan = bankaKasa.Cikan,
+                //Giren = bankaKasa.Giren,
+                //Cikan = bankaKasa.Cikan,
+                #region VİRGÜL VEYA NOKTA KULLANIMININ İKİSİNİN DE SERBEST OLMASINI SAĞLAMAK İÇİN
+                Giren = Convert.ToString(bankaKasa.Giren),
+                Cikan = Convert.ToString(bankaKasa.Cikan),
+                #endregion
                 Durum = bankaKasa.Durum,
                 CekKaynak = bankaKasa.CekKaynak,
                 NakitKaynak = bankaKasa.NakitKaynak,
@@ -147,15 +155,19 @@ namespace SantiyeOnMuh.WebUI.Controllers
         [HttpPost]
         public IActionResult BankaKasaGuncelle(BankaKasa bankaKasa)
         {
-            var _bankaKasa = _bankaKasaService.GetByIdDetay(bankaKasa.Id);
+            EBankaKasa _bankaKasa = _bankaKasaService.GetByIdDetay(bankaKasa.Id);
 
             if (_bankaKasa == null){return NotFound();}
 
             _bankaKasa.Tarih = bankaKasa.Tarih;
             _bankaKasa.Aciklama = bankaKasa.Aciklama;
             _bankaKasa.Nitelik = bankaKasa.Nitelik;
-            _bankaKasa.Giren = bankaKasa.Giren;
-            _bankaKasa.Cikan = bankaKasa.Cikan;
+            //_bankaKasa.Giren = bankaKasa.Giren;
+            //_bankaKasa.Cikan = bankaKasa.Cikan;
+            #region VİRGÜL VEYA NOKTA KULLANIMININ İKİSİNİN DE SERBEST OLMASINI SAĞLAMAK İÇİN
+            _bankaKasa.Giren = Convert.ToDecimal(bankaKasa.Giren.Replace(".", ","));
+            _bankaKasa.Cikan = Convert.ToDecimal(bankaKasa.Cikan.Replace(".", ","));
+            #endregion
             _bankaKasa.SonGuncelleme = System.DateTime.Now;
             _bankaKasa.BankaHesapId = bankaKasa.BankaHesapId;
 
@@ -189,8 +201,12 @@ namespace SantiyeOnMuh.WebUI.Controllers
                 Tarih = bankaKasa.Tarih,
                 Aciklama = bankaKasa.Aciklama,
                 Nitelik = bankaKasa.Nitelik,
-                Giren = bankaKasa.Giren,
-                Cikan = bankaKasa.Cikan,
+                //Giren = bankaKasa.Giren,
+                //Cikan = bankaKasa.Cikan,
+                #region VİRGÜL VEYA NOKTA KULLANIMININ İKİSİNİN DE SERBEST OLMASINI SAĞLAMAK İÇİN
+                Giren = Convert.ToString(bankaKasa.Giren),
+                Cikan = Convert.ToString(bankaKasa.Cikan),
+                #endregion
                 Durum = bankaKasa.Durum,
                 CekKaynak = bankaKasa.CekKaynak,
                 NakitKaynak = bankaKasa.NakitKaynak,

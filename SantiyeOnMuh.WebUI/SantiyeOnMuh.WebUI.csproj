@@ -25,6 +25,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="wwwroot\CariKasaResim\" />
     <Folder Include="wwwroot\SantiyeKasaResim\" />
   </ItemGroup>
 

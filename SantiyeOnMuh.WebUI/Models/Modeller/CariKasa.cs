@@ -19,19 +19,19 @@ namespace SantiyeOnMuh.WebUI.Models.Modeller
 
         [Display(Name = "MİKTAR")]
         [Column(TypeName = "decimal(18, 2)")]
-        public decimal Miktar { get; set; }
+        public string Miktar { get; set; }
 
         [Display(Name = "BİRİM FİYATI")]
         [Column(TypeName = "decimal(18, 2)")]
-        public decimal BirimFiyat { get; set; }
+        public string BirimFiyat { get; set; }
 
         [Display(Name = "TUTAR")]
         [Column(TypeName = "decimal(18, 2)")]
-        public decimal Borc { get; set; }
+        public string Borc { get; set; }
 
         [Display(Name = "TUTAR")]
         [Column(TypeName = "decimal(18, 2)")]
-        public decimal Alacak { get; set; }
+        public string Alacak { get; set; }
 
         public string? ImgUrl { get; set; }
 
@@ -56,10 +56,10 @@ namespace SantiyeOnMuh.WebUI.Models.Modeller
         public CariKasa()
         {
             Tarih = System.DateTime.Now;
-            Miktar = 1;
-            BirimFiyat = 1;
-            Borc = 0;
-            Alacak = 0;
+            Miktar = "1";
+            BirimFiyat = "1";
+            Borc = "0";
+            Alacak = "0";
             CekKaynak = null;
             NakitKaynak = null;
             Durum = true;

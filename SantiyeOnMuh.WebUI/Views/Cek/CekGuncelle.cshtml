@@ -34,7 +34,7 @@
         <br />
         <div class="form-group">
             <div class="col-sm-2"><label asp-for="Tutar">TUTAR:</label></div>
-            <div class="col-sm-2"><input asp-for="Tutar" class="form-control" value=@Model.Tutar /></div>
+            <div class="col-sm-2"><input asp-for="Tutar" class="form-control" value=@Model.Tutar type="number" min="1" step=".01" /></div>
         </div>
         <br />
         <br />

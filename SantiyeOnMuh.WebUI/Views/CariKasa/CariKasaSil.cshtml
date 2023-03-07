@@ -1,5 +1,50 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model CariKasa
 @{
+
 }
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+</head>
+<body>
+    <div>
+        <br />
+        <div>
+            <a asp-controller="CariKasa"
+               asp-action="CariKasa"
+               asp-route-carihesapid="@Model.CariHesapId"
+               class="btn btn-primary btn-sm">GERİ GEL</a>
+        </div>
+        <br />
+    </div>
+    <form asp-controller="CariKasa" asp-action="CariKasaSil" method="post" enctype="multipart/form-data">
+        <input type="hidden" name="Id" value="@Model.Id" />
+        <div class="row">
+            <div class="col-xl-6 col-md-4">
+                <table class="w3-table w3-striped w3-white">
+
+                    <tr><th>TARİH</th><td>@Model.Tarih.ToString("dd/MM/yyyy")</td></tr>
+                    <tr><th>AÇIKLAMA</th><td>@Model.Aciklama</td></tr>
+                    <tr><th>MİKTAR</th><td>@Model.Miktar</td></tr>
+                    <tr><th>BİRİM FİYAT</th><td>@Model.BirimFiyat</td></tr>
+                    <tr><th>BORÇ</th><td>@Model.Borc</td></tr>
+                    <tr><th>ALACAK</th><td>@Model.Alacak</td></tr>
+
+                    <tr><th>SİSTEME GİRİŞ</th><td>@Model.SistemeGiris.ToString("dd/MM/yyyy")</td></tr>
+                    <tr><th>SON GÜNCELLEME</th><td>@Model.SonGuncelleme.ToString("dd/MM/yyyy")</td></tr>
+                </table>
+            </div>
+            <div class="col-xl-6 col-md-4">
+                <div class="card-body">
+                    <img style='height: 100%; width: 100%; object-fit: contain' src="~/CariKasaResim/@Model.ImgUrl" />
+                </div>
+            </div>
+        </div>
+        <br />
+        <button type="submit" class="btn btn-danger">SİL</button>
+    </form>
+</body>
+</html>

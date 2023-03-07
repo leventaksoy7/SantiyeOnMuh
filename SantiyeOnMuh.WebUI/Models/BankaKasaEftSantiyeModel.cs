@@ -10,7 +10,7 @@ namespace SantiyeOnMuh.WebUI.Models
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
         public DateTime Tarih { get; set; }
         public string Aciklama { get; set; }
-        public decimal Tutar { get; set; }
+        public string Tutar { get; set; }
         public int BankaHesapId { get; set; }
         public int SantiyeId { get; set; }
         public int? BankaKasaId { get; set; }

@@ -20,8 +20,8 @@ namespace SantiyeOnMuh.WebUI.Models.Modeller
 
         [Display(Name = "TUTAR GİRİLMESİ ZORUNLUDUR")]
         [Required(ErrorMessage = "TUTAR GİRMELİSİNİZ")]
-        [Column(TypeName = "decimal(18, 2)")]
-        public decimal Tutar { get; set; }
+
+        public string Tutar { get; set; }
 
         public string? ImgUrl { get; set; }
         public int? BankaKasaKaynak { get; set; }

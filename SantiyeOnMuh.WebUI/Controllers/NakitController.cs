@@ -80,7 +80,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
                 {
                     Tarih = nakit.Tarih,
                     Aciklama = nakit.Aciklama,
-                    Tutar = nakit.Tutar,
+                    Tutar = Convert.ToDecimal(nakit.Tutar.Replace(".",",")),
                     ImgUrl = nakit.ImgUrl,
                     BankaKasaKaynak = nakit.BankaKasaKaynak,
                     CariKasaKaynak = nakit.CariKasaKaynak,
@@ -104,7 +104,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
                     Aciklama = nakit.Aciklama,
                     Miktar = 1,
                     BirimFiyat = 1,
-                    Borc = nakit.Tutar,
+                    Borc = Convert.ToDecimal(nakit.Tutar.Replace(".",",")),
                     Alacak = 0,
                     ImgUrl = null,
                     NakitKaynak = _nakit.Id,
@@ -120,7 +120,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
                     Tarih = nakit.Tarih,
                     Aciklama = nakit.Aciklama,
                     Nitelik = "NAKİT ÖDEME",
-                    Cikan = nakit.Tutar,
+                    Cikan = Convert.ToDecimal(nakit.Tutar.Replace(".",",")),
                     Giren = 0,
                     NakitKaynak = _nakit.Id,
                     BankaHesapId = nakit.BankaHesapId
@@ -164,7 +164,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
                 Id = nakit.Id,
                 Tarih = nakit.Tarih,
                 Aciklama = nakit.Aciklama,
-                Tutar = nakit.Tutar,
+                Tutar = Convert.ToString(nakit.Tutar),
                 ImgUrl = nakit.ImgUrl,
                 BankaKasaKaynak = nakit.BankaKasaKaynak,
                 CariKasaKaynak = nakit.CariKasaKaynak,
@@ -200,7 +200,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
                 _bankaKasa.Tarih = nakit.Tarih;
                 _bankaKasa.Aciklama = nakit.Aciklama;
                 _bankaKasa.Nitelik = "NAKİT ÖDEME";
-                _bankaKasa.Cikan = nakit.Tutar;
+                _bankaKasa.Cikan = Convert.ToDecimal(nakit.Tutar.Replace(".",","));
                 _bankaKasa.BankaHesapId = nakit.BankaHesapId;
                 _bankaKasa.SonGuncelleme = System.DateTime.Now;
 
@@ -217,7 +217,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
                 _cariKasa.Aciklama = nakit.Aciklama;
                 _cariKasa.Miktar = 1;
                 _cariKasa.BirimFiyat = 1;
-                _cariKasa.Borc = nakit.Tutar;
+                _cariKasa.Borc = Convert.ToDecimal(nakit.Tutar.Replace(".",","));
                 _cariKasa.Alacak = 0;
                 _cariKasa.CariHesapId = nakit.CariHesapId;
                 _cariKasa.SonGuncelleme = System.DateTime.Now;
@@ -227,7 +227,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
 
             _nakit.Tarih = nakit.Tarih;
             _nakit.Aciklama = nakit.Aciklama;
-            _nakit.Tutar = nakit.Tutar;
+            _nakit.Tutar = Convert.ToDecimal(nakit.Tutar.Replace(".",","));
             _nakit.ImgUrl = nakit.ImgUrl;
             _nakit.SonGuncelleme = System.DateTime.Now;
             _nakit.CariHesapId = nakit.CariHesapId;
@@ -291,7 +291,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
                 Id = nakit.Id,
                 Tarih = nakit.Tarih,
                 Aciklama = nakit.Aciklama,
-                Tutar = nakit.Tutar,
+                Tutar = Convert.ToString(nakit.Tutar),
                 ImgUrl = nakit.ImgUrl,
                 BankaKasaKaynak = nakit.BankaKasaKaynak,
                 CariKasaKaynak = nakit.CariKasaKaynak,
@@ -494,7 +494,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
             {
                 Tarih = nakit.Tarih,
                 Aciklama = nakit.Aciklama,
-                Tutar = nakit.Tutar,
+                Tutar = Convert.ToDecimal(nakit.Tutar.Replace(".",",")),
                 ImgUrl = nakit.ImgUrl,
                 BankaKasaKaynak = nakit.BankaKasaKaynak,
                 CariKasaKaynak = nakit.CariKasaKaynak,
@@ -519,7 +519,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
                 Aciklama = FirmaAdiForAciklama + " AİT ÖDEME. " + nakit.Aciklama,
                 Miktar = 1,
                 BirimFiyat = 1,
-                Borc = nakit.Tutar,
+                Borc = Convert.ToDecimal(nakit.Tutar.Replace(".",",")),
                 Alacak = 0,
                 ImgUrl = null,
                 NakitKaynak = nakit.Id,
@@ -535,7 +535,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
                 Tarih = nakit.Tarih,
                 Aciklama = FirmaAdiForAciklama + " AİT ÖDEME. " + nakit.Aciklama,
                 Nitelik = "NAKİT ÖDEME",
-                Cikan = nakit.Tutar,
+                Cikan = Convert.ToDecimal(nakit.Tutar.Replace(".",",")),
                 Giren = 0,
                 NakitKaynak = nakit.Id,
                 BankaHesapId = nakit.BankaHesapId

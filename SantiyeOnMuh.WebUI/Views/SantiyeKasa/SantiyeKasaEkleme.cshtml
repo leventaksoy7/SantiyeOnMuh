@@ -63,13 +63,13 @@
         <br />
         <div class="form-group">
             <div class="col-sm-2"><label for="Gelir">GELİR:</label></div>
-            <div class="col-sm-2"><input asp-for="Gelir" value="@Model.Gelir" class="form-control" /></div>
+            <div class="col-sm-2"><input asp-for="Gelir" value="@Model.Gelir" class="form-control" type="number" min="0" step=".01" /></div>
         </div>
         <br />
         <br />
         <div class="form-group">
             <div class="col-sm-2"><label for="Gider">GİDER:</label></div>
-            <div class="col-sm-2"><input asp-for="Gider" value="@Model.Gider" class="form-control" /></div>
+            <div class="col-sm-2"><input asp-for="Gider" value="@Model.Gider" class="form-control" type="number" min="0" step=".01" /></div>
         </div>
         <br />
         <br />

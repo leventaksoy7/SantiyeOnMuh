@@ -27,13 +27,13 @@ namespace SantiyeOnMuh.WebUI.Models.Modeller
 
         [Required(ErrorMessage = "TUTAR BOŞ BIRAKILAMAZ!")]
         [Display(Name = "TUTAR BOŞ BIRAKILAMAZ!")]
-        [Column(TypeName = "decimal(18, 2)")]
-        public decimal Giren { get; set; }
+        
+        public string Giren { get; set; }
 
         [Required(ErrorMessage = "TUTAR BOŞ BIRAKILAMAZ!")]
         [Display(Name = "TUTAR BOŞ BIRAKILAMAZ!")]
-        [Column(TypeName = "decimal(18, 2)")]
-        public decimal Cikan { get; set; }
+        
+        public string Cikan { get; set; }
 
         public bool Durum { get; set; }
 
@@ -59,8 +59,8 @@ namespace SantiyeOnMuh.WebUI.Models.Modeller
             NakitKaynak = null;
             SantiyeKasaKaynak = null;
 
-            Giren = 0;
-            Cikan = 0;
+            Giren = "0";
+            Cikan = "0";
 
             Tarih = System.DateTime.Now;
             SistemeGiris = System.DateTime.Now;

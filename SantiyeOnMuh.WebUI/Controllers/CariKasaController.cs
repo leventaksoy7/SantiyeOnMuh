@@ -1,4 +1,5 @@
 ﻿using ClosedXML.Excel;
+using DocumentFormat.OpenXml.Drawing;
 using Microsoft.AspNetCore.Mvc;
 using SantiyeOnMuh.Business.Abstract;
 using SantiyeOnMuh.Entity;
@@ -69,40 +70,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
         [HttpPost]
         public async Task<IActionResult> CariKasaEkleme(CariKasa cariKasa, IFormFile file)
         {
-            #region ESKİ TİP RESİM EKLEME
-            //if (file != null)
-            //{
-            //    string[] permittedExtensions = { ".jpeg", ".pdf", ".png" };
-            //    var extention = Path.GetExtension(file.FileName);
-            //    if (string.IsNullOrEmpty(extention) || !permittedExtensions.Contains(extention))
-            //    {
-            //        ViewBag.Sayfa = "FATURA GİRİŞİ";
-            //        ViewBag.CariHesap = _cariHesapService.GetAllWithSantiye(null, true);
-            //        ViewBag.CariGK = _cariGKService.GetAllWithDetay(true);
-            //        c.ImgUrl = null;
-            //        return View(c);
-            //    }
-            //    else
-            //    {
-            //        var isim = string.Format($"{c.CariHesap.FirmaAdi}{c.Tarih.ToString("yyyy-MM-dd")}{extention}");
-            //        c.ImgUrl = isim;
-            //        var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\CariKasaResim", isim);
-
-            //        using (var stream = new FileStream(path, FileMode.Create))
-            //        {
-            //            await file.CopyToAsync(stream);
-            //        }
-            //    }
-            //}
-            //else
-            //{
-            //    ViewBag.Sayfa = "FATURA GİRİŞİ";
-            //    ViewBag.CariHesap = _cariHesapService.GetAllWithSantiye(null, true);
-            //    ViewBag.CariGK = _cariGKService.GetAllWithDetay(true);
-            //    c.ImgUrl = null;
-            //    return View(c);
-            //};
-            #endregion
+            
             #region  RESİM VS. EKLENMEMİŞSE SAYFAYA GERİ GİDİYOR, GERİ GİDİLEN SAYFANIN İHTİYACI OLAN BİLGİLER
             ViewBag.Sayfa = "CARİ HESABA FATURA GİRİŞİ";
             ViewBag.CariHesap = _cariHesapService.GetAll(null, true);
@@ -112,13 +80,13 @@ namespace SantiyeOnMuh.WebUI.Controllers
             #region RESİM EKLEME BÖLÜMÜ
             if (file != null)
             {
-                var extension = Path.GetExtension(file.FileName);
+                var extension = System.IO.Path.GetExtension(file.FileName);
 
                 if (extension == ".jpg" || extension == ".png" || extension == ".pdf")
                 {
                     var cariKasaName = string.Format($"{cariKasa.Aciklama}{"-"}{Guid.NewGuid()}{extension}");
                     cariKasa.ImgUrl = cariKasaName;
-                    var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\CariKasaResim", cariKasaName);
+                    var path = System.IO.Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\CariKasaResim", cariKasaName);
 
                     using (var stream = new FileStream(path, FileMode.Create))
                     {
@@ -134,10 +102,16 @@ namespace SantiyeOnMuh.WebUI.Controllers
             {
                 Tarih = cariKasa.Tarih,
                 Aciklama = cariKasa.Aciklama,
-                Miktar = cariKasa.Miktar,
-                BirimFiyat = cariKasa.BirimFiyat,
-                Borc = cariKasa.Borc,
-                Alacak = cariKasa.Alacak,
+                //Miktar = cariKasa.Miktar,
+                //BirimFiyat = cariKasa.BirimFiyat,
+                //Borc = cariKasa.Borc,
+                //Alacak = cariKasa.Alacak,
+                #region VİRGÜL VEYA NOKTA KULLANIMININ İKİSİNİN DE SERBEST OLMASINI SAĞLAMAK İÇİN
+                Miktar = Convert.ToDecimal(cariKasa.Miktar.Replace(".", ",")),
+                BirimFiyat = Convert.ToDecimal(cariKasa.BirimFiyat.Replace(".", ",")),
+                Borc = Convert.ToDecimal(cariKasa.Borc.Replace(".", ",")),
+                Alacak = Convert.ToDecimal(cariKasa.Alacak.Replace(".", ",")),
+                #endregion
                 ImgUrl = cariKasa.ImgUrl,
                 CekKaynak = cariKasa.CekKaynak,
                 NakitKaynak = cariKasa.NakitKaynak,
@@ -169,10 +143,16 @@ namespace SantiyeOnMuh.WebUI.Controllers
                 Id = cariKasa.Id,
                 Tarih = cariKasa.Tarih,
                 Aciklama = cariKasa.Aciklama,
-                Miktar = cariKasa.Miktar,
-                BirimFiyat = cariKasa.BirimFiyat,
-                Borc = cariKasa.Borc,
-                Alacak = cariKasa.Alacak,
+                //Miktar = cariKasa.Miktar,
+                //BirimFiyat = cariKasa.BirimFiyat,
+                //Borc = cariKasa.Borc,
+                //Alacak = cariKasa.Alacak,
+                #region VİRGÜL VEYA NOKTA KULLANIMININ İKİSİNİN DE SERBEST OLMASINI SAĞLAMAK İÇİN
+                Miktar = Convert.ToString(cariKasa.Miktar),
+                BirimFiyat = Convert.ToString(cariKasa.BirimFiyat),
+                Borc = Convert.ToString(cariKasa.Borc),
+                Alacak = Convert.ToString(cariKasa.Alacak),
+                #endregion
                 ImgUrl = cariKasa.ImgUrl,
                 CekKaynak = cariKasa.CekKaynak,
                 NakitKaynak = cariKasa.NakitKaynak,
@@ -203,10 +183,16 @@ namespace SantiyeOnMuh.WebUI.Controllers
                 Id = cariKasa.Id,
                 Tarih = cariKasa.Tarih,
                 Aciklama = cariKasa.Aciklama,
-                Miktar = cariKasa.Miktar,
-                BirimFiyat = cariKasa.BirimFiyat,
-                Borc = cariKasa.Borc,
-                Alacak = cariKasa.Alacak,
+                //Miktar = cariKasa.Miktar,
+                //BirimFiyat = cariKasa.BirimFiyat,
+                //Borc = cariKasa.Borc,
+                //Alacak = cariKasa.Alacak,
+                #region VİRGÜL VEYA NOKTA KULLANIMININ İKİSİNİN DE SERBEST OLMASINI SAĞLAMAK İÇİN
+                Miktar = Convert.ToString(cariKasa.Miktar),
+                BirimFiyat = Convert.ToString(cariKasa.BirimFiyat),
+                Borc = Convert.ToString(cariKasa.Borc),
+                Alacak = Convert.ToString(cariKasa.Alacak),
+                #endregion
                 ImgUrl = cariKasa.ImgUrl,
                 CekKaynak = cariKasa.CekKaynak,
                 NakitKaynak = cariKasa.NakitKaynak,
@@ -375,10 +361,16 @@ namespace SantiyeOnMuh.WebUI.Controllers
                 Id = cariKasa.Id,
                 Tarih = cariKasa.Tarih,
                 Aciklama = cariKasa.Aciklama,
-                Miktar = cariKasa.Miktar,
-                BirimFiyat = cariKasa.BirimFiyat,
-                Borc = cariKasa.Borc,
-                Alacak = cariKasa.Alacak,
+                //Miktar = cariKasa.Miktar,
+                //BirimFiyat = cariKasa.BirimFiyat,
+                //Borc = cariKasa.Borc,
+                //Alacak = cariKasa.Alacak,
+                #region VİRGÜL VEYA NOKTA KULLANIMININ İKİSİNİN DE SERBEST OLMASINI SAĞLAMAK İÇİN
+                Miktar = Convert.ToString(cariKasa.Miktar),
+                BirimFiyat = Convert.ToString(cariKasa.BirimFiyat),
+                Borc = Convert.ToString(cariKasa.Borc),
+                Alacak = Convert.ToString(cariKasa.Alacak),
+                #endregion
                 ImgUrl = cariKasa.ImgUrl,
                 CekKaynak = cariKasa.CekKaynak,
                 NakitKaynak = cariKasa.NakitKaynak,
@@ -431,13 +423,13 @@ namespace SantiyeOnMuh.WebUI.Controllers
             #region RESİM EKLEME BÖLÜMÜ
             if (file != null)
             {
-                var extension = Path.GetExtension(file.FileName);
+                var extension = System.IO.Path.GetExtension(file.FileName);
 
                 if (extension == ".jpg" || extension == ".png" || extension == ".pdf")
                 {
                     var cariKasaName = string.Format($"{cariKasa.Aciklama}{"-"}{Guid.NewGuid()}{extension}");
                     cariKasa.ImgUrl = cariKasaName;
-                    var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\CariKasaResim", cariKasaName);
+                    var path = System.IO.Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\CariKasaResim", cariKasaName);
 
                     using (var stream = new FileStream(path, FileMode.Create))
                     {
@@ -454,10 +446,16 @@ namespace SantiyeOnMuh.WebUI.Controllers
                 Id = cariKasa.Id,
                 Tarih = cariKasa.Tarih,
                 Aciklama = cariKasa.Aciklama,
-                Miktar = cariKasa.Miktar,
-                BirimFiyat = cariKasa.BirimFiyat,
-                Borc = cariKasa.Borc,
-                Alacak = cariKasa.Alacak,
+                //Miktar = cariKasa.Miktar,
+                //BirimFiyat = cariKasa.BirimFiyat,
+                //Borc = cariKasa.Borc,
+                //Alacak = cariKasa.Alacak,
+                #region VİRGÜL VEYA NOKTA KULLANIMININ İKİSİNİN DE SERBEST OLMASINI SAĞLAMAK İÇİN
+                Miktar = Convert.ToDecimal(cariKasa.Miktar.Replace(".", ",")),
+                BirimFiyat = Convert.ToDecimal(cariKasa.BirimFiyat.Replace(".", ",")),
+                Borc = Convert.ToDecimal(cariKasa.Borc.Replace(".", ",")),
+                Alacak = Convert.ToDecimal(cariKasa.Alacak.Replace(".", ",")),
+                #endregion
                 ImgUrl = cariKasa.ImgUrl,
                 CekKaynak = cariKasa.CekKaynak,
                 NakitKaynak = cariKasa.NakitKaynak,
@@ -492,10 +490,16 @@ namespace SantiyeOnMuh.WebUI.Controllers
                 Id = cariKasa.Id,
                 Tarih = cariKasa.Tarih,
                 Aciklama = cariKasa.Aciklama,
-                Miktar = cariKasa.Miktar,
-                BirimFiyat = cariKasa.BirimFiyat,
-                Borc = cariKasa.Borc,
-                Alacak = cariKasa.Alacak,
+                //Miktar = cariKasa.Miktar,
+                //BirimFiyat = cariKasa.BirimFiyat,
+                //Borc = cariKasa.Borc,
+                //Alacak = cariKasa.Alacak,
+                #region VİRGÜL VEYA NOKTA KULLANIMININ İKİSİNİN DE SERBEST OLMASINI SAĞLAMAK İÇİN
+                Miktar = Convert.ToString(cariKasa.Miktar),
+                BirimFiyat = Convert.ToString(cariKasa.BirimFiyat),
+                Borc = Convert.ToString(cariKasa.Borc),
+                Alacak = Convert.ToString(cariKasa.Alacak),
+                #endregion
                 ImgUrl = cariKasa.ImgUrl,
                 CekKaynak = cariKasa.CekKaynak,
                 NakitKaynak = cariKasa.NakitKaynak,
@@ -522,9 +526,15 @@ namespace SantiyeOnMuh.WebUI.Controllers
 
             _cariKasa.Tarih = cariKasa.Tarih;
             _cariKasa.Aciklama = cariKasa.Aciklama;
-            _cariKasa.Miktar = cariKasa.Miktar;
-            _cariKasa.BirimFiyat = cariKasa.BirimFiyat;
-            _cariKasa.Alacak = cariKasa.Alacak;
+            //_cariKasa.Miktar = cariKasa.Miktar;
+            //_cariKasa.BirimFiyat = cariKasa.BirimFiyat;
+            //_cariKasa.Alacak = cariKasa.Alacak;
+            #region VİRGÜL VEYA NOKTA KULLANIMININ İKİSİNİN DE SERBEST OLMASINI SAĞLAMAK İÇİN
+            _cariKasa.Miktar = Convert.ToDecimal(cariKasa.Miktar.Replace(".", ","));
+            _cariKasa.BirimFiyat = Convert.ToDecimal(cariKasa.BirimFiyat.Replace(".", ","));
+            _cariKasa.Borc = Convert.ToDecimal(cariKasa.Borc.Replace(".", ","));
+            _cariKasa.Alacak = Convert.ToDecimal(cariKasa.Alacak.Replace(".", ","));
+            #endregion
             _cariKasa.ImgUrl = cariKasa.ImgUrl;
             _cariKasa.SonGuncelleme = System.DateTime.Today;
 
