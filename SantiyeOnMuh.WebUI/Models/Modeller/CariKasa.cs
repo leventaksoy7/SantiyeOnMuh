@@ -13,24 +13,24 @@ namespace SantiyeOnMuh.WebUI.Models.Modeller
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
         public DateTime Tarih { get; set; }
 
-        [Display(Name = "AÇIKLAMA GİRİLMESİ ZORUNLUDUR")]
-        [Required(ErrorMessage = "AÇIKLAMA GİRMELİSİNİZ")]
+        [Display(Name ="AÇIKLAMA",Prompt = "AÇIKLAMA GİRİLMESİ ZORUNLUDUR!")]
+        [Required(ErrorMessage = "AÇIKLAMA GİRİLMESİ ZORUNLUDUR!")]
         public string Aciklama { get; set; }
 
         [Display(Name = "MİKTAR")]
-        [Column(TypeName = "decimal(18, 2)")]
-        public string Miktar { get; set; }
+
+        public string? Miktar { get; set; }
 
         [Display(Name = "BİRİM FİYATI")]
-        [Column(TypeName = "decimal(18, 2)")]
-        public string BirimFiyat { get; set; }
+
+        public string? BirimFiyat { get; set; }
 
         [Display(Name = "TUTAR")]
-        [Column(TypeName = "decimal(18, 2)")]
+
         public string Borc { get; set; }
 
         [Display(Name = "TUTAR")]
-        [Column(TypeName = "decimal(18, 2)")]
+
         public string Alacak { get; set; }
 
         public string? ImgUrl { get; set; }

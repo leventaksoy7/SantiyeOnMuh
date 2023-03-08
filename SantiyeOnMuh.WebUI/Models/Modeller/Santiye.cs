@@ -9,7 +9,7 @@ namespace SantiyeOnMuh.WebUI.Models.Modeller
         public int Id { get; set; }
 
         [StringLength(30)]
-        [Display(Name = "ŞANTİYE ADI GİRİLMESİ ZORUNLUDUR")]
+        [Display(Name ="ŞANTİYE ADI",Prompt = "ŞANTİYE ADI GİRİLMESİ ZORUNLUDUR")]
         [Required(ErrorMessage = "ŞANTİYE ADI GİRMELİSİNİZ")]
         public string Ad { get; set; }
 

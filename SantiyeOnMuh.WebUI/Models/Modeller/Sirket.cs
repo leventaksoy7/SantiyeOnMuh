@@ -12,7 +12,7 @@ namespace SantiyeOnMuh.WebUI.Models.Modeller
         public int Id { get; set; }
 
         [Required(ErrorMessage = "ŞİRKET ADI BOŞ BIRAKILAMAZ!")]
-        [Display(Name = "ŞİRKET ADI GİRİNİZ", Prompt = "ZORUNLU ALAN")]
+        [Display(Name = "ŞİRKET ADI", Prompt = "ŞİRKET ADI BOŞ BIRAKILAMAZ!")]
         public string Ad { get; set; }
 
         [Display(Name = "VERGİ NUMARASI")]

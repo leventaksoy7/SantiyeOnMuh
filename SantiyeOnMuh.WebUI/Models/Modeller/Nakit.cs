@@ -9,17 +9,17 @@ namespace SantiyeOnMuh.WebUI.Models.Modeller
     {
         public int Id { get; set; }
 
-        [Required(ErrorMessage = "TARİH GİRMELİSİNİZ")]
+        [Required(ErrorMessage = "TARİH GİRMELİSİNİZ!")]
         [DataType(DataType.Date)]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
         public DateTime Tarih { get; set; }
 
-        [Display(Name = "AÇIKLAMA GİRİLMESİ ZORUNLUDUR")]
-        [Required(ErrorMessage = "AÇIKLAMA GİRMELİSİNİZ")]
+        [Display(Name ="AÇIKLAMA",Prompt = "AÇIKLAMA GİRİLMESİ ZORUNLUDUR!")]
+        [Required(ErrorMessage = "AÇIKLAMA GİRİLMESİ ZORUNLUDUR!")]
         public string Aciklama { get; set; }
 
-        [Display(Name = "TUTAR GİRİLMESİ ZORUNLUDUR")]
-        [Required(ErrorMessage = "TUTAR GİRMELİSİNİZ")]
+        [Display(Name ="ÖDEME TUTARI",Prompt = "ÖDEME TUTARI GİRİLMESİ ZORUNLUDUR!")]
+        [Required(ErrorMessage = "ÖDEME TUTARI GİRİLMESİ ZORUNLUDUR!")]
 
         public string Tutar { get; set; }
 

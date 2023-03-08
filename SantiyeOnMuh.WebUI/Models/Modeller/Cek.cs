@@ -15,17 +15,17 @@ namespace SantiyeOnMuh.WebUI.Models.Modeller
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
         public DateTime Tarih { get; set; }
 
-        [Display(Name = "AÇIKLAMA GİRİLMESİ ZORUNLUDUR")]
-        [Required(ErrorMessage = "AÇIKLAMA GİRMELİSİNİZ")]
+        [Display(Name ="AÇIKLAMA",Prompt = "AÇIKLAMA GİRİLMESİ ZORUNLUDUR!")]
+        [Required(ErrorMessage = "AÇIKLAMA GİRİLMESİ ZORUNLUDUR!")]
         public string Aciklama { get; set; }
 
-        [Display(Name = "ÇEK NUMARASI GİRİLMESİ ZORUNLUDUR")]
-        [Required(ErrorMessage = "ÇEK NUMARASI GİRMELİSİNİZ")]
+        [Display(Name ="ÇEK NUMARASI",Prompt = "ÇEK NUMARASI GİRİLMESİ ZORUNLUDUR!")]
+        [Required(ErrorMessage = "ÇEK NUMARASI GİRİLMESİ ZORUNLUDUR!")]
         public string CekNo { get; set; }
 
-        [Display(Name = "TUTAR GİRİLMESİ ZORUNLUDUR")]
-        [Required(ErrorMessage = "TUTAR GİRMELİSİNİZ")]
-        [Column(TypeName = "decimal(18, 2)")]
+        [Display(Name = "ÖDEME TUTARI",Prompt ="ÖDEME TUTAR GİRİLMESİ ZORUNLUDUR!")]
+        [Required(ErrorMessage = "ÖDEME TUTAR GİRİLMESİ ZORUNLUDUR!")]
+
         public string Tutar { get; set; }
         public string? ImgUrl { get; set; }
         public int? BankaKasaKaynak { get; set; }

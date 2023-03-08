@@ -64,6 +64,8 @@ namespace SantiyeOnMuh.WebUI.Controllers
         [HttpPost]
         public IActionResult BankaKasaEkleme(BankaKasa bankaKasa)
         {
+            if (!ModelState.IsValid) { return View(bankaKasa); }
+
             /* View'larda kullanılan modeller, entitylerin WebUI içindeki kopyaları
              * WebUI ve Entity katmanlarındaki modelleri new'lediğim için
              * CRUD işlemlerinde verileri bir modelden diğerine aktarmak zorundayım.
@@ -72,6 +74,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
              * WebUI katmanındaki modeller üzerinde değişiklik yapıyorum.
              * entity katmanında sadece saf database deseni var.
             */
+
 
             EBankaKasa _bankaKasa = new EBankaKasa()
             {
@@ -99,7 +102,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
             AlertMessage msg = new AlertMessage()
             {
                 Message = $"{_bankaKasa.Aciklama} kasaya eklendi.",
-                AlertType= "warning"
+                AlertType = "warning"
             };
 
             TempData["message"] = JsonConvert.SerializeObject(msg);
@@ -155,6 +158,8 @@ namespace SantiyeOnMuh.WebUI.Controllers
         [HttpPost]
         public IActionResult BankaKasaGuncelle(BankaKasa bankaKasa)
         {
+            if (!ModelState.IsValid) { return View(bankaKasa); }
+
             EBankaKasa _bankaKasa = _bankaKasaService.GetByIdDetay(bankaKasa.Id);
 
             if (_bankaKasa == null){return NotFound();}
@@ -357,6 +362,8 @@ namespace SantiyeOnMuh.WebUI.Controllers
         [HttpPost]
         public IActionResult BankaKasaEklemeEFT(BankaKasaEftModel b)
         {
+            if (!ModelState.IsValid) { return View(b); }
+
             EBankaKasa EFTGonderenHesap = new EBankaKasa();
             EBankaKasa EFTAlanHesap = new EBankaKasa();
 
@@ -401,6 +408,8 @@ namespace SantiyeOnMuh.WebUI.Controllers
         [HttpPost]
         public IActionResult BankaKasaEklemeSantiyeEft(BankaKasaEftSantiyeModel b)
         {
+            if (!ModelState.IsValid) { return View(b); }
+
             //ARA MODELE DAYANARAK BANKA KASA MODELİ TANIMLANDI VE EKLENDİ
             string bankahesapadi = _bankaHesapService.GetById((int)b.BankaHesapId).BankaAdi;
             string santiyeadi = _santiyeService.GetById((int)b.SantiyeId).Ad;
@@ -475,6 +484,8 @@ namespace SantiyeOnMuh.WebUI.Controllers
         [HttpPost]
         public IActionResult BankaKasaGuncelleSantiyeEft(BankaKasaEftSantiyeModel b)
         {
+            if (!ModelState.IsValid) { return View(b); }
+
             #region BANKA HESAP ADI VE ŞANTİYE HESAP ADINI BULUYORUZ
             //ARA MODELE DAYANARAK BANKA KASA MODELİ TANIMLANDI VE EKLENDİ
             string bankahesapadi = _bankaHesapService.GetById((int)b.BankaHesapId).BankaAdi;
@@ -517,7 +528,6 @@ namespace SantiyeOnMuh.WebUI.Controllers
         {
             ViewBag.Sayfa = "ŞANTİYE KASASINA EFT GUNCELLEME";
 
-
             #region BANKA VE SANTİYE KASA NESNELERİ
             //Gelen ID üzerinden BANKAKASA nesnesini çekiyorum
             if (bankakasasantiyeid == null) { return NotFound(); }
@@ -550,6 +560,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
         [HttpPost]
         public IActionResult BankaKasaSilSantiyeEft(BankaKasaEftSantiyeModel b)
         {
+            if (!ModelState.IsValid) { return View(b); }
 
             #region BANKAKASA NESNESİ
             //BULUNDU

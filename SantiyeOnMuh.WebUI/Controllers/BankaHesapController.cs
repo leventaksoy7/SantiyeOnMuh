@@ -22,6 +22,8 @@ namespace SantiyeOnMuh.WebUI.Controllers
         [HttpPost]
         public IActionResult BankaHesapEkleme(BankaHesap bankaHesap)
         {
+            if (!ModelState.IsValid) { return View(bankaHesap); }
+
             /* View'larda kullanılan modeller, entitylerin WebUI içindeki kopyaları
              * WebUI ve Entity katmanlarındaki modelleri new'lediğim için
              * CRUD işlemlerinde verileri bir modelden diğerine aktarmak zorundayım.
@@ -31,26 +33,23 @@ namespace SantiyeOnMuh.WebUI.Controllers
              * entity katmanında sadece saf database deseni var.
             */
 
-            if (ModelState.IsValid) 
+
+            EBankaHesap _bankaHesap = new EBankaHesap()
             {
-                EBankaHesap _bankaHesap = new EBankaHesap()
-                {
-                    BankaAdi = bankaHesap.BankaAdi,
-                    HesapAdi = bankaHesap.HesapAdi,
-                    HesapNo = bankaHesap.HesapNo,
-                    IbanNo = bankaHesap.IbanNo,
-                    Durum = bankaHesap.Durum,
-                    Ceks = bankaHesap.Ceks,
-                    Nakits = bankaHesap.Nakits,
-                    BankaKasas = bankaHesap.BankaKasas,
-                };
+                BankaAdi = bankaHesap.BankaAdi,
+                HesapAdi = bankaHesap.HesapAdi,
+                HesapNo = bankaHesap.HesapNo,
+                IbanNo = bankaHesap.IbanNo,
+                Durum = bankaHesap.Durum,
+                Ceks = bankaHesap.Ceks,
+                Nakits = bankaHesap.Nakits,
+                BankaKasas = bankaHesap.BankaKasas,
+            };
 
-                _bankaHesapService.Create(_bankaHesap);
+            _bankaHesapService.Create(_bankaHesap);
 
-                return RedirectToAction("Index", "Admin");
-            }
+            return RedirectToAction("Index", "Admin");
 
-            return View(bankaHesap);
         }
         [HttpGet]
         public IActionResult BankaHesapGuncelle(int? id)
@@ -89,6 +88,9 @@ namespace SantiyeOnMuh.WebUI.Controllers
         [HttpPost]
         public IActionResult BankaHesapGuncelle(BankaHesap bankaHesap)
         {
+
+            if (!ModelState.IsValid) { return View(bankaHesap); }
+
             EBankaHesap _bankaHesap = _bankaHesapService.GetById(bankaHesap.Id);
 
             if (_bankaHesap == null)
@@ -104,6 +106,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
             _bankaHesapService.Update(_bankaHesap);
 
             return RedirectToAction("Index", "Admin");
+            
         }
         [HttpGet]
         public IActionResult BankaHesapSil(int? id)

@@ -1,7 +1,5 @@
 ﻿@model BankaHesap
-@{
-
-}
+@{}
 
 <!DOCTYPE html>
 
@@ -9,50 +7,44 @@
 <head>
     <meta name="viewport" content="width=device-width" />
 </head>
-
 <body>
     <br />
     <form asp-controller="BankaHesap" asp-action="BankaHesapEkleme" method="post">
         <br />
-        <br />
-        <div class="form-group">
-            <div class="col-sm-2"><label for="HesapAdi">HESAP ADI:</label></div>
-            <div class="col-sm-2">
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label" asp-for="HesapAdi"></label>
+            <div class="col-sm-5">
                 <input asp-for="HesapAdi" class="form-control" />
                 <span asp-validation-for="HesapAdi"></span>
             </div>
         </div>
         <br />
-        <br />
-        <div class="form-group">
-            <div class="col-sm-2"><label for="BankaAdi">BANKA ADI:</label></div>
-            <div class="col-sm-2">
+        <div class="form-group row">
+            <label class="col-sm-2" asp-for="BankaAdi"></label>
+            <div class="col-sm-5">
                 <input asp-for="BankaAdi" class="form-control" />
                 <span asp-validation-for="BankaAdi"></span>
             </div>
         </div>
         <br />
-        <br />
-        <div class="form-group">
-            <div class="col-sm-2"><label for="HesapNo">HESAP NUMARASI:</label></div>
-            <div class="col-sm-2">
+        <div class="form-group row">
+            <label class="col-sm-2" asp-for="HesapNo"></label>
+            <div class="col-sm-5">
                 <input asp-for="HesapNo" class="form-control" />
                 <span asp-validation-for="HesapNo"></span>
             </div>
         </div>
         <br />
-        <br />
-        <div class="form-group">
-            <div class="col-sm-2"><label for="IbanNo">IBAN NUMARASI:</label></div>
-            <div class="col-sm-2">
+        <div class="form-group row">
+            <label class="col-sm-2" asp-for="IbanNo"></label>
+            <div class="col-sm-5">
                 <input asp-for="IbanNo" class="form-control" />
                 <span asp-validation-for="IbanNo"></span>
             </div>
         </div>
         <br />
-        <br />
-        <div class="col-sm-offset-2 col-sm-6">
-            <button class="btn btn-success">EKLE</button>
+        <div class="form-group row">
+            <button class="col-sm-offset-2 col-sm-5 btn btn-success">EKLE</button>
         </div>
     </form>
 </body>

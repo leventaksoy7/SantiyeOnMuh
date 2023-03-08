@@ -15,21 +15,20 @@ namespace SantiyeOnMuh.WebUI.Models.Modeller
         public DateTime Tarih { get; set; }
 
         [Required(ErrorMessage = "AÇIKLAMA BOŞ BIRAKILAMAZ!")]
-        [Display(Name = "AÇIKLAMA", Prompt = "ZORUNLU ALAN")]
+        [Display(Name = "AÇIKLAMA", Prompt = "AÇIKLAMA BOŞ BIRAKILAMAZ!")]
         public string Aciklama { get; set; }
 
-        [Display(Name = "HARCAMADAN MESHUL KİŞİ")]
-        public string? Kisi { get; set; }
+        [Required(ErrorMessage = "HARCAMADAN MESHUL KİŞİ BOŞ BIRAKILAMAZ!")]
+        [Display(Name = "HARCAMADAN MESHUL KİŞİ",Prompt = "HARCAMADAN MESHUL KİŞİ BOŞ BIRAKILAMAZ!")]
+        public string Kisi { get; set; }
 
         [Display(Name = "VARSA PLAKA-CEP-FATURA VEYA FİŞ NO")]
         public string? No { get; set; }
 
-        [Display(Name = "TUTAR")]
-        //[Column(TypeName = "decimal(18. 2)")]
+        [Display(Name = "GELİR")]
         public string Gelir { get; set; }
 
-        [Display(Name = "TUTAR")]
-        //[Column(TypeName = "decimal(18. 2)")]
+        [Display(Name = "GİDER")]
         public string Gider { get; set; }
 
         public string? ImgUrl { get; set; }

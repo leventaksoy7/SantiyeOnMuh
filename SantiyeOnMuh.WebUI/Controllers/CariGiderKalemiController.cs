@@ -23,6 +23,8 @@ namespace SantiyeOnMuh.WebUI.Controllers
         [HttpPost]
         public IActionResult CariGiderKalemiEkleme(CariGiderKalemi cariGiderKalemi)
         {
+            if (!ModelState.IsValid) { return View(cariGiderKalemi); }
+
             /* View'larda kullanılan modeller, entitylerin WebUI içindeki kopyaları
              * WebUI ve Entity katmanlarındaki modelleri new'lediğim için
              * CRUD işlemlerinde verileri bir modelden diğerine aktarmak zorundayım.
@@ -34,7 +36,6 @@ namespace SantiyeOnMuh.WebUI.Controllers
 
             ECariGiderKalemi _cariGiderKalemi = new ECariGiderKalemi()
             {
-                
                 Ad = cariGiderKalemi.Ad,
                 Durum = cariGiderKalemi.Durum,
                 Tur = cariGiderKalemi.Tur,
@@ -70,12 +71,11 @@ namespace SantiyeOnMuh.WebUI.Controllers
         [HttpPost]
         public IActionResult CariGiderKalemiGuncelle(CariGiderKalemi c)
         {
+            if (!ModelState.IsValid) { return View(c); }
+
             var _giderKalemi = _cariGiderKalemiService.GetById(c.Id);
 
-            if (_giderKalemi == null)
-            {
-                return NotFound();
-            }
+            if (_giderKalemi == null) { return NotFound(); }
             _giderKalemi.Ad = c.Ad;
 
             _cariGiderKalemiService.Update(_giderKalemi);

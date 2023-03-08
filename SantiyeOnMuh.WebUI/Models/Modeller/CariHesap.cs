@@ -10,7 +10,7 @@ namespace SantiyeOnMuh.WebUI.Models.Modeller
         public int Id { get; set; }
 
         [Required(ErrorMessage = "CARİ HESAP ADI BOŞ BIRAKILAMAZ!")]
-        [Display(Name = "CARİ HESAP ADI GİRİLMESİ ZORUNLUDUR")]
+        [Display(Name = "CARİ HESAP ADI" ,Prompt = "CARİ HESAP ADI BOŞ BIRAKILAMAZ!")]
         [MinLength(5)]
         public string Ad { get; set; }
 
@@ -18,7 +18,7 @@ namespace SantiyeOnMuh.WebUI.Models.Modeller
         public string? Adres { get; set; }
 
         [Required(ErrorMessage = "SADECE RAKAM GİRİNİZ, BOŞLUK BIRAKMAYINIZ.")]
-        [Display(Name = "TELEFON NUMARASI GİRİLMESİ ZORUNLUDUR, BOŞLUK BIRAKMAYINIZ.")]
+        [Display(Name = "TELEFON NUMARASI",Prompt = "SADECE RAKAM GİRİNİZ, BOŞLUK BIRAKMAYINIZ.")]
         [MinLength(10)]
         public string Telefon { get; set; }
 
@@ -26,7 +26,7 @@ namespace SantiyeOnMuh.WebUI.Models.Modeller
         public string? VergiNo { get; set; }
 
         [Required(ErrorMessage = "YETKİLİ KİŞİNİN ADININ YAZILMASI ZORUNLUDUR.")]
-        [Display(Name = "YETKİLİ KİŞİNİN ADININ YAZILMASI ZORUNLUDUR.")]
+        [Display(Name = "YETKİLİ KİŞİ",Prompt = "YETKİLİ KİŞİNİN ADININ YAZILMASI ZORUNLUDUR.")]
         public string IlgiliKisi { get; set; }
 
         [Display(Name = "YETKİLİ KİŞİ TELEFON NUMARASI")]

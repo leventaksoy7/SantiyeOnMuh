@@ -58,6 +58,8 @@ namespace SantiyeOnMuh.WebUI.Controllers
         [HttpPost]
         public IActionResult CariHesapEkleme(CariHesap cariHesap)
         {
+            if (!ModelState.IsValid) { return View(cariHesap); }
+
             ECariHesap _cariHesap = new ECariHesap()
             {
                 Ad = cariHesap.Ad,
@@ -116,6 +118,8 @@ namespace SantiyeOnMuh.WebUI.Controllers
         [HttpPost]
         public IActionResult CariHesapGuncelle(CariHesap cariHesap)
         {
+            if (!ModelState.IsValid) { return View(cariHesap); }
+
             var _cariHesap = _cariHesapService.GetById(cariHesap.Id);
 
             if (_cariHesap == null){return NotFound();}
@@ -149,12 +153,11 @@ namespace SantiyeOnMuh.WebUI.Controllers
         [HttpPost]
         public IActionResult CariHesapSil(CariHesap c)
         {
+            if (!ModelState.IsValid) { return View(c); }
+
             var entity = _cariHesapService.GetById(c.Id);
 
-            if (entity == null)
-            {
-                return NotFound();
-            }
+            if (entity == null) { return NotFound(); }
 
             entity.Durum = false;
 

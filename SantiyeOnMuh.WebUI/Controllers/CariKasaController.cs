@@ -70,7 +70,8 @@ namespace SantiyeOnMuh.WebUI.Controllers
         [HttpPost]
         public async Task<IActionResult> CariKasaEkleme(CariKasa cariKasa, IFormFile file)
         {
-            
+            if (!ModelState.IsValid) { return View(cariKasa); }
+
             #region  RESİM VS. EKLENMEMİŞSE SAYFAYA GERİ GİDİYOR, GERİ GİDİLEN SAYFANIN İHTİYACI OLAN BİLGİLER
             ViewBag.Sayfa = "CARİ HESABA FATURA GİRİŞİ";
             ViewBag.CariHesap = _cariHesapService.GetAll(null, true);
@@ -210,6 +211,8 @@ namespace SantiyeOnMuh.WebUI.Controllers
         [HttpPost]
         public IActionResult CariKasaSil(CariKasa cariKasa)
         {
+            if (!ModelState.IsValid) { return View(cariKasa); }
+
             ECariKasa _cariKasa = _cariKasaService.GetByIdDetay(cariKasa.Id);
 
             if (_cariKasa == null){return NotFound();}
@@ -388,6 +391,8 @@ namespace SantiyeOnMuh.WebUI.Controllers
         [HttpPost]
         public IActionResult CariKasaGeriYukle(CariKasa cariKasa)
         {
+            if (!ModelState.IsValid) { return View(cariKasa); }
+
             ECariKasa _cariKasa = _cariKasaService.GetByIdDetay(cariKasa.Id);
 
             if (_cariKasa == null){return NotFound();}
@@ -413,6 +418,8 @@ namespace SantiyeOnMuh.WebUI.Controllers
         [HttpPost]
         public async Task<IActionResult> CariKasaFaturaEklemeFromCari(CariKasa cariKasa, IFormFile file)
         {
+            if (!ModelState.IsValid) { return View(cariKasa); }
+
             #region  RESİM VS. EKLENMEMİŞSE SAYFAYA GERİ GİDİYOR, GERİ GİDİLEN SAYFANIN İHTİYACI OLAN BİLGİLER
             ViewBag.Sayfa = _cariHesapService.GetById(cariKasa.CariHesapId).Ad + " FİRMA CARİSİNE FATURA GİRİŞİ";
             ViewBag.CariGK = _cariGiderKalemiService.GetAll(true, true);
@@ -517,6 +524,8 @@ namespace SantiyeOnMuh.WebUI.Controllers
         [HttpPost]
         public IActionResult CariKasaFaturaGuncelleFromCari(CariKasa cariKasa)
         {
+            if (!ModelState.IsValid) { return View(cariKasa); }
+
             ViewBag.Sayfa = "FATURA BİLGİLERİNİ GÜNCELLEME";
             ViewBag.CariGK = _cariGiderKalemiService.GetAll(true, true);
 
