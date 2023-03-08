@@ -328,24 +328,47 @@ namespace SantiyeOnMuh.WebUI.Controllers
 
             if (cek == null) { return NotFound(); }
 
-            return View(cek);
+            Cek _cek = new Cek()
+            {
+                Tarih = cek.Tarih,
+                Aciklama = cek.Aciklama,
+                CekNo = cek.CekNo,
+                Tutar = Convert.ToString(cek.Tutar),
+                ImgUrl = cek.ImgUrl,
+                BankaKasaKaynak = cek.BankaKasaKaynak,
+                CariKasaKaynak = cek.CariKasaKaynak,
+                SistemeGiris = cek.SistemeGiris,
+                SonGuncelleme = cek.SonGuncelleme,
+                Durum = cek.Durum,
+                OdemeDurumu = cek.OdemeDurumu,
+                CariHesapId = cek.CariHesapId,
+                CariHesap = cek.CariHesap,
+                SirketId = cek.SirketId,
+                Sirket = cek.Sirket,
+                BankaHesapId = cek.BankaHesapId,
+                BankaHesap = cek.BankaHesap,
+            };
+
+            return View(_cek);
         }
         [HttpPost]
-        public IActionResult CekSil(ECek c)
+        public IActionResult CekSil(Cek c)
         {
-            var entityCek = _cekService.GetByIdDetay(c.Id);
+            if (!ModelState.IsValid) { return View(c); }
 
-            if (entityCek == null) { return NotFound(); }
+            ECek _cek = _cekService.GetByIdDetay(c.Id);
 
-            entityCek.SonGuncelleme = System.DateTime.Now;
-            entityCek.Durum = false;
+            if (_cek == null) { return NotFound(); }
 
-            int? bankakasaid = entityCek.BankaKasaKaynak;
-            int? carikasaid = entityCek.CariKasaKaynak;
+            _cek.SonGuncelleme = System.DateTime.Now;
+            _cek.Durum = false;
+
+            int? bankakasaid = _cek.BankaKasaKaynak;
+            int? carikasaid = _cek.CariKasaKaynak;
 
             if (bankakasaid != null)
             {
-                var entityBankaKasa = _bankaKasaService.GetById((int)bankakasaid);
+                EBankaKasa entityBankaKasa = _bankaKasaService.GetById((int)bankakasaid);
 
                 if (entityBankaKasa == null) { return NotFound(); }
 
@@ -357,7 +380,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
 
             if (carikasaid != null)
             {
-                var entityCariKasa = _cariKasaService.GetById((int)carikasaid);
+                ECariKasa entityCariKasa = _cariKasaService.GetById((int)carikasaid);
 
                 if (entityCariKasa == null) { return NotFound(); }
 
@@ -367,7 +390,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
                 _cariKasaService.Update(entityCariKasa);
             }
 
-            _cekService.Update(entityCek);
+            _cekService.Update(_cek);
 
             return RedirectToAction("Index");
         }
@@ -489,18 +512,20 @@ namespace SantiyeOnMuh.WebUI.Controllers
 
             ViewBag.CariHesapId = carihesapid;
 
-            return View(new ECek());
+            return View(new Cek());
         }
         [HttpPost]
-        public async Task<IActionResult> CekEklemeFromCari(ECek c, IFormFile file)
+        public async Task<IActionResult> CekEklemeFromCari(Cek cek, IFormFile file)
         {
+            if (!ModelState.IsValid) { return View(cek); }
+
             #region  RESİM VS. EKLENMEMİŞSE SAYFAYA GERİ GİDİYOR, GERİ GİDİLEN SAYFANIN İHTİYACI OLAN BİLGİLER
-            ViewBag.Sayfa = _cariHesapService.GetById((int)c.CariHesapId).Ad + " CARİSİNE YENİ ÇEK GİRİŞİ";
+            ViewBag.Sayfa = _cariHesapService.GetById((int)cek.CariHesapId).Ad + " CARİSİNE YENİ ÇEK GİRİŞİ";
 
             ViewBag.Sirket = _sirketService.GetAll(true);
             ViewBag.Banka = _bankaHesapService.GetAll(true);
 
-            ViewBag.CariHesapId = c.CariHesapId;
+            ViewBag.CariHesapId = cek.CariHesapId;
             //ÜSTTEKİ SIFIRDAN EKLEMENİN BİREBİR AYNISI, GEREKLİ BİLGİLER
             #endregion
             #region RESİM EKLEME BÖLÜMÜ
@@ -510,8 +535,8 @@ namespace SantiyeOnMuh.WebUI.Controllers
 
                 if (extension == ".jpg" || extension == ".png" || extension == ".pdf")
                 {
-                    var cekName = string.Format($"{c.CekNo}{"-"}{c.Aciklama}{"-"}{Guid.NewGuid()}{extension}");
-                    c.ImgUrl = cekName;
+                    var cekName = string.Format($"{cek.CekNo}{"-"}{cek.Aciklama}{"-"}{Guid.NewGuid()}{extension}");
+                    cek.ImgUrl = cekName;
                     var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\CekResim", cekName);
 
                     using (var stream = new FileStream(path, FileMode.Create))
@@ -519,37 +544,56 @@ namespace SantiyeOnMuh.WebUI.Controllers
                         await file.CopyToAsync(stream);
                     }
                 }
-                else { return View(c); }
+                else { return View(cek); }
             }
-            else { return View(c); }
+            //else { return View(cek); }
             #endregion
-            _cekService.Create(c);
+            ECek _cek = new ECek()
+            {
+                Tarih = cek.Tarih,
+                Aciklama = cek.Aciklama,
+                CekNo = cek.CekNo,
+                Tutar = Convert.ToDecimal(cek.Tutar.Replace(".",",")),
+                ImgUrl = cek.ImgUrl,
+                BankaKasaKaynak = cek.BankaKasaKaynak,
+                CariKasaKaynak = cek.CariKasaKaynak,
+                SistemeGiris = cek.SistemeGiris,
+                SonGuncelleme = cek.SonGuncelleme,
+                Durum = cek.Durum,
+                OdemeDurumu = cek.OdemeDurumu,
+                CariHesapId = cek.CariHesapId,
+                CariHesap = cek.CariHesap,
+                SirketId = cek.SirketId,
+                Sirket = cek.Sirket,
+                BankaHesapId = cek.BankaHesapId,
+                BankaHesap = cek.BankaHesap,
+            };
+            _cekService.Create(_cek);
             //CARİ KASA İÇİN ÇEK OLUŞTURULDU VE ÇEK KAYNAĞI İLE EKLENDİ
             ECariKasa EntityCariKasa = new ECariKasa()
             {
-                Tarih = c.Tarih,
-                Aciklama = c.CekNo + " NOLU CEK ÖDEMESİ " + c.Aciklama,
+                Tarih = cek.Tarih,
+                Aciklama = cek.CekNo + " NOLU CEK ÖDEMESİ " + cek.Aciklama,
                 Miktar = 1,
                 BirimFiyat = 1,
-                Borc = c.Tutar,
+                Borc = Convert.ToDecimal(cek.Tutar.Replace(".",",")),
                 Alacak = 0,
                 ImgUrl = null,
-                CekKaynak = c.Id,
+                CekKaynak = cek.Id,
                 CariGiderKalemiId = 1,
-                CariHesapId = c.CariHesapId
+                CariHesapId = cek.CariHesapId
             };
             _cariKasaService.Create(EntityCariKasa);
             //ŞİMDİ DE ÇEKE, CARİ KAYNAĞI EKLENİYOR-GÜNCELLENİYOR
-            var EntityEklenenCek = _cekService.GetById(c.Id);
-            if (EntityEklenenCek == null)
-            {
-                return NotFound();
-            }
+            var EntityEklenenCek = _cekService.GetById(cek.Id);
+
+            if (EntityEklenenCek == null){ return NotFound(); }
+
             EntityEklenenCek.CariKasaKaynak = EntityCariKasa.Id;
 
             _cekService.Update(EntityEklenenCek);
 
-            return RedirectToAction("CariKasa", "CariKasa", new { carihesapid = c.CariHesapId });
+            return RedirectToAction("CariKasa", "CariKasa", new { carihesapid = cek.CariHesapId });
         }
         #endregion
 

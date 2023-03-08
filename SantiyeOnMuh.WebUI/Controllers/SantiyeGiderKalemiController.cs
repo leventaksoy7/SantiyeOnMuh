@@ -23,6 +23,8 @@ namespace SantiyeOnMuh.WebUI.Controllers
         [HttpPost]
         public IActionResult SantiyeGiderKalemiEkleme(SantiyeGiderKalemi santiyeGiderKalemi)
         {
+            if (!ModelState.IsValid) { return View(santiyeGiderKalemi); }
+
             ESantiyeGiderKalemi _santiyeGiderKalemi = new ESantiyeGiderKalemi()
             {
                 Ad = santiyeGiderKalemi.Ad,
@@ -59,6 +61,8 @@ namespace SantiyeOnMuh.WebUI.Controllers
         [HttpPost]
         public IActionResult SantiyeGiderKalemiGuncelle(SantiyeGiderKalemi santiyeGiderKalemi)
         {
+            if (!ModelState.IsValid) { return View(santiyeGiderKalemi); }
+
             ESantiyeGiderKalemi _santiyeGiderKalemi = _santiyeGiderKalemiService.GetById(santiyeGiderKalemi.Id);
 
             if (_santiyeGiderKalemi == null){return NotFound();}

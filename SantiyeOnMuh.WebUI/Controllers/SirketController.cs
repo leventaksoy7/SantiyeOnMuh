@@ -34,6 +34,8 @@ namespace SantiyeOnMuh.WebUI.Controllers
         [HttpPost]
         public IActionResult SirketEkleme(Sirket sirket)
         {
+            if (!ModelState.IsValid) { return View(sirket); }
+
             ESirket _sirket = new ESirket()
             {
                 Ad=sirket.Ad,
@@ -71,6 +73,8 @@ namespace SantiyeOnMuh.WebUI.Controllers
         [HttpPost]
         public IActionResult SirketGuncelle(Sirket sirket)
         {
+            if (!ModelState.IsValid) { return View(sirket); }
+
             var _sirket = _sirketService.GetById(sirket.Id);
 
             if (_sirket == null){return NotFound();}

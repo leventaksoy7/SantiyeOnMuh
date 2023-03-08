@@ -67,6 +67,8 @@ namespace SantiyeOnMuh.WebUI.Controllers
         [HttpPost]
         public async Task<IActionResult> SantiyeKasaEkleme(SantiyeKasa santiyeKasa, IFormFile file)
         {
+            if (!ModelState.IsValid) { return View(santiyeKasa); }
+
 
             #region EĞER RESİM EKLİ DEĞİLSE GERİ DÖNÜŞTE GEREKLİ BİLGİLER
             ViewBag.Sayfa = "GİDER EKLEME";
@@ -174,9 +176,11 @@ namespace SantiyeOnMuh.WebUI.Controllers
             return View(santiyeKasa);
         }
         [HttpPost]
-        public IActionResult SantiyeKasaSil(ESantiyeKasa s)
+        public IActionResult SantiyeKasaSil(SantiyeKasa santiyeKasa)
         {
-            var entity = _santiyeKasaService.GetById(s.Id);
+            if (!ModelState.IsValid) { return View(santiyeKasa); }
+
+            var entity = _santiyeKasaService.GetById(santiyeKasa.Id);
 
             if (entity == null){return NotFound();}
 
@@ -327,6 +331,8 @@ namespace SantiyeOnMuh.WebUI.Controllers
         [HttpPost]
         public async Task<IActionResult> SantiyeKasaEklemeFromSantiye(SantiyeKasa santiyeKasa, IFormFile file)
         {
+            if (!ModelState.IsValid) { return View(santiyeKasa); }
+
             #region EĞER RESİM EKLİ DEĞİLSE GERİ DÖNÜŞTE GEREKLİ BİLGİLER
             ViewBag.Sayfa = _santiyeService.GetById(santiyeKasa.SantiyeId).Ad + " ŞANTİYE KASASI GİDER EKLE";
             ViewBag.GK = _santiyeGiderKalemiService.GetAll(true, true);
@@ -423,8 +429,10 @@ namespace SantiyeOnMuh.WebUI.Controllers
             return View(_santiyeKasa);
         }
         [HttpPost]
-        public IActionResult SantiyeKasaGuncelleFromSantiye(ESantiyeKasa s)
+        public IActionResult SantiyeKasaGuncelleFromSantiye(SantiyeKasa s)
         {
+            if (!ModelState.IsValid) { return View(s); }
+
             var entitySantiyeKasa = _santiyeKasaService.GetById(s.Id);
 
             if (entitySantiyeKasa == null)
@@ -436,7 +444,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
             entitySantiyeKasa.Aciklama = s.Aciklama;
             entitySantiyeKasa.Kisi = s.Kisi;
             entitySantiyeKasa.No = s.No;
-            entitySantiyeKasa.Gider = s.Gider;
+            entitySantiyeKasa.Gider = Convert.ToDecimal(s.Gider.Replace(".",","));
             entitySantiyeKasa.ImgUrl = s.ImgUrl;
             entitySantiyeKasa.SantiyeGiderKalemiId = s.SantiyeGiderKalemiId;
             entitySantiyeKasa.SonGuncelleme = DateTime.Today;

@@ -58,6 +58,8 @@ namespace SantiyeOnMuh.WebUI.Controllers
         [HttpPost]
         public IActionResult SantiyeEkleme(Santiye santiye)
         {
+            if (!ModelState.IsValid) { return View(santiye); }
+
             ESantiye _santiye = new ESantiye()
             {
                 Ad = santiye.Ad,
@@ -97,6 +99,8 @@ namespace SantiyeOnMuh.WebUI.Controllers
         [HttpPost]
         public IActionResult SantiyeGuncelle(Santiye santiye)
         {
+            if (!ModelState.IsValid) { return View(santiye); }
+
             ESantiye _santiye = _santiyeService.GetById(santiye.Id);
 
             if (_santiye == null){return NotFound();}
@@ -135,6 +139,8 @@ namespace SantiyeOnMuh.WebUI.Controllers
         [HttpPost]
         public IActionResult SantiyeSil(Santiye santiye)
         {
+            if (!ModelState.IsValid) { return View(santiye); }
+
             ESantiye _santiye = _santiyeService.GetById(santiye.Id);
 
             if (_santiye == null) { return NotFound(); }

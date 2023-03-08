@@ -6,6 +6,7 @@ using SantiyeOnMuh.Entity;
 using SantiyeOnMuh.WebUI.Models;
 using SantiyeOnMuh.WebUI.Models.Modeller;
 using System.ComponentModel.DataAnnotations;
+using System.Runtime.ConstrainedExecution;
 
 namespace SantiyeOnMuh.WebUI.Controllers
 {
@@ -184,6 +185,8 @@ namespace SantiyeOnMuh.WebUI.Controllers
         [HttpPost]
         public IActionResult NakitGuncelle(Nakit nakit)
         {
+            if (!ModelState.IsValid) { return View(nakit); }
+
             ENakit _nakit = _nakitService.GetById(nakit.Id);
 
             if (_nakit == null){return NotFound();}
@@ -311,6 +314,8 @@ namespace SantiyeOnMuh.WebUI.Controllers
         [HttpPost]
         public IActionResult NakitSil(Nakit nakit)
         {
+            if (!ModelState.IsValid) { return View(nakit); }
+
             ENakit _nakit = _nakitService.GetById(nakit.Id);
 
             if (_nakit == null){return NotFound();}
@@ -460,6 +465,8 @@ namespace SantiyeOnMuh.WebUI.Controllers
         [HttpPost]
         public async Task<IActionResult> NakitEklemeFromCari(Nakit nakit, IFormFile file)
         {
+            if (!ModelState.IsValid) { return View(nakit); }
+
             #region  RESİM VS. EKLENMEMİŞSE SAYFAYA GERİ GİDİYOR, GERİ GİDİLEN SAYFANIN İHTİYACI OLAN BİLGİLER
             ViewBag.Sayfa = _cariHesapService.GetById((int)nakit.CariHesapId).Ad + " CARİSİNE YENİ NAKİT ÖDEMESİ GİRİŞİ";
             ViewBag.Sirket = _sirketService.GetAll(true);
@@ -486,7 +493,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
                 }
                 else { return View(nakit); }
             }
-            else { return View(nakit); }
+            //else { return View(nakit); }
 
             #endregion
 
