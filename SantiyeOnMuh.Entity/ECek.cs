@@ -11,12 +11,11 @@ namespace SantiyeOnMuh.Entity
     public class ECek
     {
         public int Id { get; set; }
-        [DataType(DataType.Date)]
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
+
         public DateTime Tarih { get; set; }
         public string Aciklama { get; set; }
         public string CekNo { get; set; }
-        [Column(TypeName = "decimal(18, 2)")]
+
         public decimal Tutar { get; set; }
         public string? ImgUrl { get; set; }
         public int? BankaKasaKaynak { get; set; }

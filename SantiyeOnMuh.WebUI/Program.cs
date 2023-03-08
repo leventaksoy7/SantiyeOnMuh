@@ -87,7 +87,7 @@ app.UseAuthorization();
 //SÝL
     app.MapControllerRoute(
         name: "default",
-        pattern: "{controller=AnaSayfa}/{action=Index}/{id?}");
+        pattern: "{controller=AnaSayfa}/{action=Anasayfa}/{id?}");
     #region ÞANTÝYE KASA
     //INDEX
     app.MapControllerRoute(

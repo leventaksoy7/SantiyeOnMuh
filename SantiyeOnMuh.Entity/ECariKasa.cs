@@ -11,17 +11,16 @@ namespace SantiyeOnMuh.Entity
     public class ECariKasa
     {
         public int Id { get; set; }
-        [DataType(DataType.Date)]
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
+
         public DateTime Tarih { get; set; }
         public string Aciklama { get; set; }
-        [Column(TypeName = "decimal(18, 2)")]
+
         public decimal Miktar { get; set; }
-        [Column(TypeName = "decimal(18, 2)")]
+
         public decimal BirimFiyat { get; set; }
-        [Column(TypeName = "decimal(18, 2)")]
+
         public decimal Borc { get; set; }
-        [Column(TypeName = "decimal(18, 2)")]
+ 
         public decimal Alacak { get; set; }
         public string? ImgUrl { get; set; }
         public int? CekKaynak { get; set; }

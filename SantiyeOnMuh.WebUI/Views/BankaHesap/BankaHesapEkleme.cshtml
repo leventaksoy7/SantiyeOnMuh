@@ -17,25 +17,37 @@
         <br />
         <div class="form-group">
             <div class="col-sm-2"><label for="HesapAdi">HESAP ADI:</label></div>
-            <div class="col-sm-2"><input asp-for="HesapAdi" class="form-control" /></div>
+            <div class="col-sm-2">
+                <input asp-for="HesapAdi" class="form-control" />
+                <span asp-validation-for="HesapAdi"></span>
+            </div>
         </div>
         <br />
         <br />
         <div class="form-group">
             <div class="col-sm-2"><label for="BankaAdi">BANKA ADI:</label></div>
-            <div class="col-sm-2"><input asp-for="BankaAdi" class="form-control" /></div>
+            <div class="col-sm-2">
+                <input asp-for="BankaAdi" class="form-control" />
+                <span asp-validation-for="BankaAdi"></span>
+            </div>
         </div>
         <br />
         <br />
         <div class="form-group">
             <div class="col-sm-2"><label for="HesapNo">HESAP NUMARASI:</label></div>
-            <div class="col-sm-2"><input asp-for="HesapNo" class="form-control" /></div>
+            <div class="col-sm-2">
+                <input asp-for="HesapNo" class="form-control" />
+                <span asp-validation-for="HesapNo"></span>
+            </div>
         </div>
         <br />
         <br />
         <div class="form-group">
             <div class="col-sm-2"><label for="IbanNo">IBAN NUMARASI:</label></div>
-            <div class="col-sm-2"><input asp-for="IbanNo" class="form-control" /></div>
+            <div class="col-sm-2">
+                <input asp-for="IbanNo" class="form-control" />
+                <span asp-validation-for="IbanNo"></span>
+            </div>
         </div>
         <br />
         <br />

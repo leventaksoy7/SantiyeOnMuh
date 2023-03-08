@@ -11,16 +11,14 @@ namespace SantiyeOnMuh.Entity
     public class ESantiyeKasa
     {
         public int Id { get; set; }
-        [Required(ErrorMessage = "TARİH GİRMELİSİNİZ")]
-        [DataType(DataType.Date)]
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
+
         public DateTime Tarih { get; set; }
         public string Aciklama { get; set; }
         public string? Kisi { get; set; }
         public string? No { get; set; }//PLAKA-CEP-FATURA VEYA FİŞ NO
-        [Column(TypeName = "decimal(18. 2)")]
+
         public decimal Gelir { get; set; }
-        [Column(TypeName = "decimal(18. 2)")]
+
         public decimal Gider { get; set; }
         public string? ImgUrl { get; set; }
         public bool Durum { get; set; }

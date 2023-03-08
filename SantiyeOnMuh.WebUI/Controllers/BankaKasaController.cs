@@ -371,13 +371,13 @@ namespace SantiyeOnMuh.WebUI.Controllers
             EFTGonderenHesap.Aciklama = AliciHesapAdi + " HESABINA GÖNDERİLEN EFT" + " - " + b.Aciklama;
             EFTGonderenHesap.Nitelik = "EFT";
             EFTGonderenHesap.Giren = 0;
-            EFTGonderenHesap.Cikan = b.Tutar;
+            EFTGonderenHesap.Cikan = Convert.ToDecimal(b.Tutar.Replace(".",","));
             EFTGonderenHesap.BankaHesapId = b.GonderenBanka;
 
             EFTAlanHesap.Tarih = b.Tarih;
             EFTAlanHesap.Aciklama = GonderenHesapAdi + " HESABINDAN GELEN EFT" + " - " + b.Aciklama;
             EFTAlanHesap.Nitelik = "EFT";
-            EFTAlanHesap.Giren = b.Tutar;
+            EFTAlanHesap.Giren = Convert.ToDecimal(b.Tutar.Replace(".", ","));
             EFTAlanHesap.Cikan = 0;
             EFTAlanHesap.BankaHesapId = b.AliciBanka;
 
@@ -410,7 +410,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
                 Tarih = b.Tarih,
                 Aciklama = santiyeadi + " ŞANTİYESİNE GÖNDERİLEN EFT" + " - " + b.Aciklama,
                 Nitelik = "ŞANTİYE KASASINA EFT",
-                Cikan = b.Tutar,
+                Cikan = Convert.ToDecimal(b.Tutar.Replace(".", ",")),
                 BankaHesapId = b.BankaHesapId
             };
             _bankaKasaService.Create(entityBankaKasa);
@@ -423,7 +423,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
                 Aciklama = bankahesapadi + " HESABINDAN KASAYA GELEN EFT" + " - " + b.Aciklama,
                 Kisi = "OFİS",
                 No = "YOK",
-                Gelir = b.Tutar,
+                Gelir = Convert.ToDecimal(b.Tutar.Replace(".", ",")),
                 SantiyeId = b.SantiyeId,
                 SantiyeGiderKalemiId = 1,
                 BankaKasaKaynak = entityBankaKasa.Id
@@ -462,7 +462,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
             {
                 Tarih = bankaKasa.Tarih,
                 Aciklama = bankaKasa.Aciklama,
-                Tutar = bankaKasa.Cikan,
+                Tutar = Convert.ToString(bankaKasa.Cikan),
                 BankaHesapId = bankaKasa.BankaHesapId,
                 SantiyeId = santiyeKasa.SantiyeId,
 
@@ -488,7 +488,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
             entityBankaKasa.Tarih = b.Tarih;
             entityBankaKasa.Aciklama = b.Aciklama;
             entityBankaKasa.Nitelik = "ŞANTİYE KASASINA EFT";
-            entityBankaKasa.Cikan = b.Tutar;
+            entityBankaKasa.Cikan = Convert.ToDecimal(b.Tutar.Replace(".", ","));
             entityBankaKasa.BankaHesapId = b.BankaHesapId;
             //GÜNCELLEME SONRASI KAYIT EDİLDİ
             _bankaKasaService.Update(entityBankaKasa);
@@ -502,7 +502,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
             entitySantiyeKasa.Aciklama = bankahesapadi + " HESABINDAN KASAYA GELEN EFT" + " - " + b.Aciklama;
             entitySantiyeKasa.Kisi = "OFİS";
             entitySantiyeKasa.No = "YOK";
-            entitySantiyeKasa.Gelir = b.Tutar;
+            entitySantiyeKasa.Gelir = Convert.ToDecimal(b.Tutar.Replace(".", ","));
             entitySantiyeKasa.SantiyeId = b.SantiyeId;
             entitySantiyeKasa.SantiyeGiderKalemiId = 1;
             entitySantiyeKasa.BankaKasaKaynak = entityBankaKasa.Id;
@@ -536,7 +536,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
             {
                 Tarih = bankaKasa.Tarih,
                 Aciklama = bankaKasa.Aciklama,
-                Tutar = bankaKasa.Cikan,
+                Tutar = Convert.ToString(bankaKasa.Cikan),
 
                 BankaHesapId = bankaKasa.BankaHesapId,
                 SantiyeId = santiyeKasa.SantiyeId,

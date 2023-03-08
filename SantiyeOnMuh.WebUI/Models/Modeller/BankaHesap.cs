@@ -11,17 +11,17 @@ namespace SantiyeOnMuh.WebUI.Models.Modeller
         public int Id { get; set; }
 
         [Required(ErrorMessage = "HESAP ADI BOŞ BIRAKILAMAZ!")]
-        [Display(Name = "HESAP ADI GİRİLMESİ ZORUNLUDUR")]
+        [Display(Name = "Hesap Adı", Prompt = "HESAP ADI BOŞ BIRAKILAMAZ!")]
         public string HesapAdi { get; set; }
 
         [Required(ErrorMessage = "BANKA ADI BOŞ BIRAKILAMAZ!")]
-        [Display(Name = "BANKA ADI GİRİLMESİ ZORUNLUDUR")]
+        [Display(Name = "Banka Adı")]
         public string BankaAdi { get; set; }
 
-        [Display(Name = "HESAP NUMARASI")]
+        [Display(Name = "Hesap Numarası")]
         public string? HesapNo { get; set; }
 
-        [Display(Name = "IBAN NUMARASI")]
+        [Display(Name = "Iban Numarası")]
         public string? IbanNo { get; set; }
 
         public bool Durum { get; set; }

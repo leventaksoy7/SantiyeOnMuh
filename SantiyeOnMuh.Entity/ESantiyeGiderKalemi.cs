@@ -11,7 +11,7 @@ namespace SantiyeOnMuh.Entity
     {
         public int Id { get; set; }
 
-        [StringLength(30)]
+
         public string Ad { get; set; }
 
         public bool Durum { get; set; }

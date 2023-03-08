@@ -11,14 +11,13 @@ namespace SantiyeOnMuh.Entity
     public class EBankaKasa
     {
         public int Id { get; set; }
-        [DataType(DataType.Date)]
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
+
         public DateTime Tarih { get; set; }
         public string Aciklama { get; set; }
         public string Nitelik { get; set; }
-        [Column(TypeName = "decimal(18, 2)")]
+
         public decimal Giren { get; set; }
-        [Column(TypeName = "decimal(18, 2)")]
+
         public decimal Cikan { get; set; }
         public bool Durum { get; set; }
         public int? CekKaynak { get; set; }

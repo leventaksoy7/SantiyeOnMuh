@@ -31,21 +31,26 @@ namespace SantiyeOnMuh.WebUI.Controllers
              * entity katmanında sadece saf database deseni var.
             */
 
-            EBankaHesap _bankaHesap = new EBankaHesap() 
-            { 
-                BankaAdi = bankaHesap.BankaAdi,
-                HesapAdi = bankaHesap.HesapAdi,
-                HesapNo = bankaHesap.HesapNo,
-                IbanNo = bankaHesap.IbanNo,
-                Durum = bankaHesap.Durum,
-                Ceks = bankaHesap.Ceks,
-                Nakits = bankaHesap.Nakits,
-                BankaKasas = bankaHesap.BankaKasas,
-            };
+            if (ModelState.IsValid) 
+            {
+                EBankaHesap _bankaHesap = new EBankaHesap()
+                {
+                    BankaAdi = bankaHesap.BankaAdi,
+                    HesapAdi = bankaHesap.HesapAdi,
+                    HesapNo = bankaHesap.HesapNo,
+                    IbanNo = bankaHesap.IbanNo,
+                    Durum = bankaHesap.Durum,
+                    Ceks = bankaHesap.Ceks,
+                    Nakits = bankaHesap.Nakits,
+                    BankaKasas = bankaHesap.BankaKasas,
+                };
 
-            _bankaHesapService.Create(_bankaHesap);
+                _bankaHesapService.Create(_bankaHesap);
 
-            return RedirectToAction("Index", "Admin");
+                return RedirectToAction("Index", "Admin");
+            }
+
+            return View(bankaHesap);
         }
         [HttpGet]
         public IActionResult BankaHesapGuncelle(int? id)
