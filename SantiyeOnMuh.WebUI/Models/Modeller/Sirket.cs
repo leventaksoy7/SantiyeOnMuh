@@ -20,9 +20,9 @@ namespace SantiyeOnMuh.WebUI.Models.Modeller
 
         public bool Durum { get; set; }
 
-        public List<ECek> Ceks { get; set; }
+        public List<ECek>? Ceks { get; set; }
 
-        public List<ENakit> Nakits { get; set; }
+        public List<ENakit>? Nakits { get; set; }
         public Sirket()
         {
             Durum = true;

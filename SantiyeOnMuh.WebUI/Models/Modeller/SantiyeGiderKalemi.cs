@@ -17,7 +17,7 @@ namespace SantiyeOnMuh.WebUI.Models.Modeller
 
         public bool Tur { get; set; }
 
-        public List<ESantiyeKasa> SantiyeKasas { get; set; }
+        public List<ESantiyeKasa>? SantiyeKasas { get; set; }
 
         public SantiyeGiderKalemi()
         {

@@ -36,14 +36,14 @@ namespace SantiyeOnMuh.DataAccess.Concrete.EfCore
 
         private static ESantiye[] Santiyes =
         {
-            new ESantiye(){ Ad="Santiye1"},
-            new ESantiye(){ Ad="Santiye2"},
-            new ESantiye(){ Ad="Santiye3"}
+            //new ESantiye(){ Ad="Santiye1"},
+            //new ESantiye(){ Ad="Santiye2"},
+            //new ESantiye(){ Ad="Santiye3"}
         };
 
         private static ESantiyeKasa[] SantiyeKasas =
         {
-            new ESantiyeKasa(){ Aciklama="test",Gelir=1,Gider=1,Kisi="test",Tarih=DateTime.Today,SantiyeId=1,No="test",SonGuncelleme=DateTime.Today}
+            //new ESantiyeKasa(){ Aciklama="test",Gelir=1,Gider=1,Kisi="test",Tarih=DateTime.Today,SantiyeId=1,No="test",SonGuncelleme=DateTime.Today}
         };
     }
 }

@@ -18,7 +18,7 @@ namespace SantiyeOnMuh.WebUI.Models.Modeller
 
         public bool Tur { get; set; }
 
-        public List<ECariKasa> CariKasas { get; set; }
+        public List<ECariKasa>? CariKasas { get; set; }
 
         public CariGiderKalemi()
         {

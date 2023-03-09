@@ -18,9 +18,9 @@ namespace SantiyeOnMuh.WebUI.Models.Modeller
 
         public bool Durum { get; set; }
 
-        public List<ESantiyeKasa> SantiyeKasas { get; set; }
+        public List<ESantiyeKasa>? SantiyeKasas { get; set; }
 
-        public List<ECariHesap> CariHesaps { get; set; }
+        public List<ECariHesap>? CariHesaps { get; set; }
 
         public Santiye()
         {

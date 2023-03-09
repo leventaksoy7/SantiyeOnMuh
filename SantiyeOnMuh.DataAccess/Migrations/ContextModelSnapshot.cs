@@ -365,8 +365,7 @@ namespace SantiyeOnMuh.DataAccess.Migrations
 
                     b.Property<string>("Ad")
                         .IsRequired()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Adres")
                         .HasColumnType("nvarchar(max)");
@@ -389,8 +388,7 @@ namespace SantiyeOnMuh.DataAccess.Migrations
 
                     b.Property<string>("Ad")
                         .IsRequired()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("Durum")
                         .HasColumnType("bit");

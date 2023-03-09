@@ -15,7 +15,7 @@ namespace SantiyeOnMuh.WebUI.Models.Modeller
         public string HesapAdi { get; set; }
 
         [Required(ErrorMessage = "BANKA ADI BOŞ BIRAKILAMAZ!")]
-        [Display(Name = "BANKA ADI")]
+        [Display(Name = "BANKA ADI", Prompt = "BANKA ADI BOŞ BIRAKILAMAZ!")]
         public string BankaAdi { get; set; }
 
         [Display(Name = "BANKA NUMARASI")]
@@ -26,11 +26,11 @@ namespace SantiyeOnMuh.WebUI.Models.Modeller
 
         public bool Durum { get; set; }
 
-        public List<ECek> Ceks { get; set; }
+        public List<ECek>? Ceks { get; set; }
 
-        public List<ENakit> Nakits { get; set; }
+        public List<ENakit>? Nakits { get; set; }
 
-        public List<EBankaKasa> BankaKasas { get; set; }
+        public List<EBankaKasa>? BankaKasas { get; set; }
 
         public BankaHesap()
         {

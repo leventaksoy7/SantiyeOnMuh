@@ -12,8 +12,8 @@ using SantiyeOnMuh.DataAccess.Concrete;
 namespace SantiyeOnMuh.DataAccess.Migrations
 {
     [DbContext(typeof(Context))]
-    [Migration("20230228104205_mig4")]
-    partial class mig4
+    [Migration("20230309145145_ReBuild1")]
+    partial class ReBuild1
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -25,7 +25,7 @@ namespace SantiyeOnMuh.DataAccess.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("SantiyeOnMuh.Entity.BankaHesap", b =>
+            modelBuilder.Entity("SantiyeOnMuh.Entity.EBankaHesap", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -33,23 +33,21 @@ namespace SantiyeOnMuh.DataAccess.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("BankaAd")
+                    b.Property<string>("BankaAdi")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("Durum")
                         .HasColumnType("bit");
 
-                    b.Property<string>("HesapAd")
+                    b.Property<string>("HesapAdi")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("HesapNo")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Iban")
-                        .IsRequired()
+                    b.Property<string>("IbanNo")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -57,7 +55,7 @@ namespace SantiyeOnMuh.DataAccess.Migrations
                     b.ToTable("BankaHesaps");
                 });
 
-            modelBuilder.Entity("SantiyeOnMuh.Entity.BankaKasa", b =>
+            modelBuilder.Entity("SantiyeOnMuh.Entity.EBankaKasa", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -110,7 +108,7 @@ namespace SantiyeOnMuh.DataAccess.Migrations
                     b.ToTable("BankaKasas");
                 });
 
-            modelBuilder.Entity("SantiyeOnMuh.Entity.CariGiderKalemi", b =>
+            modelBuilder.Entity("SantiyeOnMuh.Entity.ECariGiderKalemi", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -120,8 +118,7 @@ namespace SantiyeOnMuh.DataAccess.Migrations
 
                     b.Property<string>("Ad")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("Durum")
                         .HasColumnType("bit");
@@ -134,7 +131,7 @@ namespace SantiyeOnMuh.DataAccess.Migrations
                     b.ToTable("CariGiderKalemis");
                 });
 
-            modelBuilder.Entity("SantiyeOnMuh.Entity.CariHesap", b =>
+            modelBuilder.Entity("SantiyeOnMuh.Entity.ECariHesap", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -147,7 +144,6 @@ namespace SantiyeOnMuh.DataAccess.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Adres")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("Durum")
@@ -158,11 +154,9 @@ namespace SantiyeOnMuh.DataAccess.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("IlgiliKisiTelefon")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Odeme")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("SantiyeId")
@@ -173,11 +167,9 @@ namespace SantiyeOnMuh.DataAccess.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Vade")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("VergiNo")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -187,7 +179,7 @@ namespace SantiyeOnMuh.DataAccess.Migrations
                     b.ToTable("CariHesaps");
                 });
 
-            modelBuilder.Entity("SantiyeOnMuh.Entity.CariKasa", b =>
+            modelBuilder.Entity("SantiyeOnMuh.Entity.ECariKasa", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -221,7 +213,6 @@ namespace SantiyeOnMuh.DataAccess.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("ImgUrl")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("Miktar")
@@ -248,7 +239,7 @@ namespace SantiyeOnMuh.DataAccess.Migrations
                     b.ToTable("CariKasas");
                 });
 
-            modelBuilder.Entity("SantiyeOnMuh.Entity.OdemeCek", b =>
+            modelBuilder.Entity("SantiyeOnMuh.Entity.ECek", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -280,7 +271,6 @@ namespace SantiyeOnMuh.DataAccess.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("ImgUrl")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("OdemeDurumu")
@@ -309,10 +299,10 @@ namespace SantiyeOnMuh.DataAccess.Migrations
 
                     b.HasIndex("SirketId");
 
-                    b.ToTable("OdemeCeks");
+                    b.ToTable("Ceks");
                 });
 
-            modelBuilder.Entity("SantiyeOnMuh.Entity.OdemeNakit", b =>
+            modelBuilder.Entity("SantiyeOnMuh.Entity.ENakit", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -340,7 +330,6 @@ namespace SantiyeOnMuh.DataAccess.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("ImgUrl")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("SirketId")
@@ -366,10 +355,10 @@ namespace SantiyeOnMuh.DataAccess.Migrations
 
                     b.HasIndex("SirketId");
 
-                    b.ToTable("OdemeNakits");
+                    b.ToTable("Nakits");
                 });
 
-            modelBuilder.Entity("SantiyeOnMuh.Entity.Santiye", b =>
+            modelBuilder.Entity("SantiyeOnMuh.Entity.ESantiye", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -379,11 +368,9 @@ namespace SantiyeOnMuh.DataAccess.Migrations
 
                     b.Property<string>("Ad")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Adres")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("Durum")
@@ -394,7 +381,7 @@ namespace SantiyeOnMuh.DataAccess.Migrations
                     b.ToTable("Santiyes");
                 });
 
-            modelBuilder.Entity("SantiyeOnMuh.Entity.SantiyeGiderKalemi", b =>
+            modelBuilder.Entity("SantiyeOnMuh.Entity.ESantiyeGiderKalemi", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -404,8 +391,7 @@ namespace SantiyeOnMuh.DataAccess.Migrations
 
                     b.Property<string>("Ad")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("Durum")
                         .HasColumnType("bit");
@@ -418,7 +404,7 @@ namespace SantiyeOnMuh.DataAccess.Migrations
                     b.ToTable("SantiyeGiderKalemis");
                 });
 
-            modelBuilder.Entity("SantiyeOnMuh.Entity.SantiyeKasa", b =>
+            modelBuilder.Entity("SantiyeOnMuh.Entity.ESantiyeKasa", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -443,15 +429,12 @@ namespace SantiyeOnMuh.DataAccess.Migrations
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("ImgUrl")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Kisi")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("No")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("SantiyeGiderKalemiId")
@@ -478,7 +461,7 @@ namespace SantiyeOnMuh.DataAccess.Migrations
                     b.ToTable("SantiyesKasas");
                 });
 
-            modelBuilder.Entity("SantiyeOnMuh.Entity.Sirket", b =>
+            modelBuilder.Entity("SantiyeOnMuh.Entity.ESirket", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -494,7 +477,6 @@ namespace SantiyeOnMuh.DataAccess.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("VergiNo")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -502,10 +484,10 @@ namespace SantiyeOnMuh.DataAccess.Migrations
                     b.ToTable("Sirkets");
                 });
 
-            modelBuilder.Entity("SantiyeOnMuh.Entity.BankaKasa", b =>
+            modelBuilder.Entity("SantiyeOnMuh.Entity.EBankaKasa", b =>
                 {
-                    b.HasOne("SantiyeOnMuh.Entity.BankaHesap", "BankaHesap")
-                        .WithMany("BankaHesapKasas")
+                    b.HasOne("SantiyeOnMuh.Entity.EBankaHesap", "BankaHesap")
+                        .WithMany("BankaKasas")
                         .HasForeignKey("BankaHesapId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -513,9 +495,9 @@ namespace SantiyeOnMuh.DataAccess.Migrations
                     b.Navigation("BankaHesap");
                 });
 
-            modelBuilder.Entity("SantiyeOnMuh.Entity.CariHesap", b =>
+            modelBuilder.Entity("SantiyeOnMuh.Entity.ECariHesap", b =>
                 {
-                    b.HasOne("SantiyeOnMuh.Entity.Santiye", "Santiye")
+                    b.HasOne("SantiyeOnMuh.Entity.ESantiye", "Santiye")
                         .WithMany("CariHesaps")
                         .HasForeignKey("SantiyeId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -524,16 +506,16 @@ namespace SantiyeOnMuh.DataAccess.Migrations
                     b.Navigation("Santiye");
                 });
 
-            modelBuilder.Entity("SantiyeOnMuh.Entity.CariKasa", b =>
+            modelBuilder.Entity("SantiyeOnMuh.Entity.ECariKasa", b =>
                 {
-                    b.HasOne("SantiyeOnMuh.Entity.CariGiderKalemi", "CariGiderKalemi")
-                        .WithMany("CariHesapKasas")
+                    b.HasOne("SantiyeOnMuh.Entity.ECariGiderKalemi", "CariGiderKalemi")
+                        .WithMany("CariKasas")
                         .HasForeignKey("CariGiderKalemiId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("SantiyeOnMuh.Entity.CariHesap", "CariHesap")
-                        .WithMany("CariHesapKasas")
+                    b.HasOne("SantiyeOnMuh.Entity.ECariHesap", "CariHesap")
+                        .WithMany("CariKasas")
                         .HasForeignKey("CariHesapId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -543,21 +525,21 @@ namespace SantiyeOnMuh.DataAccess.Migrations
                     b.Navigation("CariHesap");
                 });
 
-            modelBuilder.Entity("SantiyeOnMuh.Entity.OdemeCek", b =>
+            modelBuilder.Entity("SantiyeOnMuh.Entity.ECek", b =>
                 {
-                    b.HasOne("SantiyeOnMuh.Entity.BankaHesap", "BankaHesap")
-                        .WithMany("OdemeCeks")
+                    b.HasOne("SantiyeOnMuh.Entity.EBankaHesap", "BankaHesap")
+                        .WithMany("Ceks")
                         .HasForeignKey("BankaHesapId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("SantiyeOnMuh.Entity.CariHesap", "CariHesap")
-                        .WithMany("OdemeCeks")
+                    b.HasOne("SantiyeOnMuh.Entity.ECariHesap", "CariHesap")
+                        .WithMany("Ceks")
                         .HasForeignKey("CariHesapId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("SantiyeOnMuh.Entity.Sirket", "Sirket")
+                    b.HasOne("SantiyeOnMuh.Entity.ESirket", "Sirket")
                         .WithMany("Ceks")
                         .HasForeignKey("SirketId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -570,21 +552,21 @@ namespace SantiyeOnMuh.DataAccess.Migrations
                     b.Navigation("Sirket");
                 });
 
-            modelBuilder.Entity("SantiyeOnMuh.Entity.OdemeNakit", b =>
+            modelBuilder.Entity("SantiyeOnMuh.Entity.ENakit", b =>
                 {
-                    b.HasOne("SantiyeOnMuh.Entity.BankaHesap", "BankaHesap")
-                        .WithMany("OdemeNakits")
+                    b.HasOne("SantiyeOnMuh.Entity.EBankaHesap", "BankaHesap")
+                        .WithMany("Nakits")
                         .HasForeignKey("BankaHesapId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("SantiyeOnMuh.Entity.CariHesap", "CariHesap")
-                        .WithMany("OdemeNakits")
+                    b.HasOne("SantiyeOnMuh.Entity.ECariHesap", "CariHesap")
+                        .WithMany("Nakits")
                         .HasForeignKey("CariHesapId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("SantiyeOnMuh.Entity.Sirket", "Sirket")
+                    b.HasOne("SantiyeOnMuh.Entity.ESirket", "Sirket")
                         .WithMany("Nakits")
                         .HasForeignKey("SirketId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -597,15 +579,15 @@ namespace SantiyeOnMuh.DataAccess.Migrations
                     b.Navigation("Sirket");
                 });
 
-            modelBuilder.Entity("SantiyeOnMuh.Entity.SantiyeKasa", b =>
+            modelBuilder.Entity("SantiyeOnMuh.Entity.ESantiyeKasa", b =>
                 {
-                    b.HasOne("SantiyeOnMuh.Entity.SantiyeGiderKalemi", "SantiyeGiderKalemi")
+                    b.HasOne("SantiyeOnMuh.Entity.ESantiyeGiderKalemi", "SantiyeGiderKalemi")
                         .WithMany("SantiyeKasas")
                         .HasForeignKey("SantiyeGiderKalemiId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("SantiyeOnMuh.Entity.Santiye", "Santiye")
+                    b.HasOne("SantiyeOnMuh.Entity.ESantiye", "Santiye")
                         .WithMany("SantiyeKasas")
                         .HasForeignKey("SantiyeId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -616,42 +598,42 @@ namespace SantiyeOnMuh.DataAccess.Migrations
                     b.Navigation("SantiyeGiderKalemi");
                 });
 
-            modelBuilder.Entity("SantiyeOnMuh.Entity.BankaHesap", b =>
+            modelBuilder.Entity("SantiyeOnMuh.Entity.EBankaHesap", b =>
                 {
-                    b.Navigation("BankaHesapKasas");
+                    b.Navigation("BankaKasas");
 
-                    b.Navigation("OdemeCeks");
+                    b.Navigation("Ceks");
 
-                    b.Navigation("OdemeNakits");
+                    b.Navigation("Nakits");
                 });
 
-            modelBuilder.Entity("SantiyeOnMuh.Entity.CariGiderKalemi", b =>
+            modelBuilder.Entity("SantiyeOnMuh.Entity.ECariGiderKalemi", b =>
                 {
-                    b.Navigation("CariHesapKasas");
+                    b.Navigation("CariKasas");
                 });
 
-            modelBuilder.Entity("SantiyeOnMuh.Entity.CariHesap", b =>
+            modelBuilder.Entity("SantiyeOnMuh.Entity.ECariHesap", b =>
                 {
-                    b.Navigation("CariHesapKasas");
+                    b.Navigation("CariKasas");
 
-                    b.Navigation("OdemeCeks");
+                    b.Navigation("Ceks");
 
-                    b.Navigation("OdemeNakits");
+                    b.Navigation("Nakits");
                 });
 
-            modelBuilder.Entity("SantiyeOnMuh.Entity.Santiye", b =>
+            modelBuilder.Entity("SantiyeOnMuh.Entity.ESantiye", b =>
                 {
                     b.Navigation("CariHesaps");
 
                     b.Navigation("SantiyeKasas");
                 });
 
-            modelBuilder.Entity("SantiyeOnMuh.Entity.SantiyeGiderKalemi", b =>
+            modelBuilder.Entity("SantiyeOnMuh.Entity.ESantiyeGiderKalemi", b =>
                 {
                     b.Navigation("SantiyeKasas");
                 });
 
-            modelBuilder.Entity("SantiyeOnMuh.Entity.Sirket", b =>
+            modelBuilder.Entity("SantiyeOnMuh.Entity.ESirket", b =>
                 {
                     b.Navigation("Ceks");
 

@@ -6,55 +6,21 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace SantiyeOnMuh.DataAccess.Migrations
 {
     /// <inheritdoc />
-    public partial class mig3 : Migration
+    public partial class ReBuild1 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropForeignKey(
-                name: "FK_SantiyeKasa_Santiyes_SantiyeId",
-                table: "SantiyeKasa");
-
-            migrationBuilder.DropPrimaryKey(
-                name: "PK_SantiyeKasa",
-                table: "SantiyeKasa");
-
-            migrationBuilder.RenameTable(
-                name: "SantiyeKasa",
-                newName: "SantiyesKasa");
-
-            migrationBuilder.RenameIndex(
-                name: "IX_SantiyeKasa_SantiyeId",
-                table: "SantiyesKasa",
-                newName: "IX_SantiyesKasa_SantiyeId");
-
-            migrationBuilder.AddColumn<int>(
-                name: "BankaKasaKaynak",
-                table: "SantiyesKasa",
-                type: "int",
-                nullable: true);
-
-            migrationBuilder.AddColumn<int>(
-                name: "SantiyeGiderKalemiId",
-                table: "SantiyesKasa",
-                type: "int",
-                nullable: true);
-
-            migrationBuilder.AddPrimaryKey(
-                name: "PK_SantiyesKasa",
-                table: "SantiyesKasa",
-                column: "Id");
-
             migrationBuilder.CreateTable(
                 name: "BankaHesaps",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    HesapAd = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    BankaAd = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    HesapNo = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Iban = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    HesapAdi = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    BankaAdi = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    HesapNo = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    IbanNo = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Durum = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
@@ -68,7 +34,7 @@ namespace SantiyeOnMuh.DataAccess.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Ad = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    Ad = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Durum = table.Column<bool>(type: "bit", nullable: false),
                     Tur = table.Column<bool>(type: "bit", nullable: false)
                 },
@@ -78,40 +44,12 @@ namespace SantiyeOnMuh.DataAccess.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "CariHesaps",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Ad = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Adres = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Telefon = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    VergiNo = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    IlgiliKisi = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    IlgiliKisiTelefon = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Odeme = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Vade = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Durum = table.Column<bool>(type: "bit", nullable: false),
-                    SantiyeId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_CariHesaps", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_CariHesaps_Santiyes_SantiyeId",
-                        column: x => x.SantiyeId,
-                        principalTable: "Santiyes",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "SantiyeGiderKalemis",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Ad = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    Ad = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Durum = table.Column<bool>(type: "bit", nullable: false),
                     Tur = table.Column<bool>(type: "bit", nullable: false)
                 },
@@ -121,13 +59,28 @@ namespace SantiyeOnMuh.DataAccess.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Santiyes",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Ad = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Adres = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Durum = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Santiyes", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Sirkets",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Ad = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    VergiNo = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    VergiNo = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Durum = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
@@ -166,6 +119,71 @@ namespace SantiyeOnMuh.DataAccess.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "CariHesaps",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Ad = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Adres = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Telefon = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    VergiNo = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    IlgiliKisi = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    IlgiliKisiTelefon = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Odeme = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Vade = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Durum = table.Column<bool>(type: "bit", nullable: false),
+                    SantiyeId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CariHesaps", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_CariHesaps_Santiyes_SantiyeId",
+                        column: x => x.SantiyeId,
+                        principalTable: "Santiyes",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "SantiyesKasas",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Tarih = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Aciklama = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Kisi = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    No = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Gelir = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Gider = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    ImgUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Durum = table.Column<bool>(type: "bit", nullable: false),
+                    BankaKasaKaynak = table.Column<int>(type: "int", nullable: true),
+                    SistemeGiris = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    SonGuncelleme = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    SantiyeGiderKalemiId = table.Column<int>(type: "int", nullable: false),
+                    SantiyeId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_SantiyesKasas", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_SantiyesKasas_SantiyeGiderKalemis_SantiyeGiderKalemiId",
+                        column: x => x.SantiyeGiderKalemiId,
+                        principalTable: "SantiyeGiderKalemis",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_SantiyesKasas_Santiyes_SantiyeId",
+                        column: x => x.SantiyeId,
+                        principalTable: "Santiyes",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "CariKasas",
                 columns: table => new
                 {
@@ -177,22 +195,21 @@ namespace SantiyeOnMuh.DataAccess.Migrations
                     BirimFiyat = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     Borc = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     Alacak = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    ImgUrl = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ImgUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CekKaynak = table.Column<int>(type: "int", nullable: true),
                     NakitKaynak = table.Column<int>(type: "int", nullable: true),
                     SistemeGiris = table.Column<DateTime>(type: "datetime2", nullable: false),
                     SonGuncelleme = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Durum = table.Column<bool>(type: "bit", nullable: false),
-                    CariKasaGiderKalemiId = table.Column<int>(type: "int", nullable: false),
-                    CariHesapKasaGiderKalemiId = table.Column<int>(type: "int", nullable: false),
+                    CariGiderKalemiId = table.Column<int>(type: "int", nullable: false),
                     CariHesapId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_CariKasas", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_CariKasas_CariGiderKalemis_CariHesapKasaGiderKalemiId",
-                        column: x => x.CariHesapKasaGiderKalemiId,
+                        name: "FK_CariKasas_CariGiderKalemis_CariGiderKalemiId",
+                        column: x => x.CariGiderKalemiId,
                         principalTable: "CariGiderKalemis",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -205,7 +222,7 @@ namespace SantiyeOnMuh.DataAccess.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "OdemeCeks",
+                name: "Ceks",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -214,7 +231,7 @@ namespace SantiyeOnMuh.DataAccess.Migrations
                     Aciklama = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CekNo = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Tutar = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    ImgUrl = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ImgUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     BankaKasaKaynak = table.Column<int>(type: "int", nullable: true),
                     CariKasaKaynak = table.Column<int>(type: "int", nullable: true),
                     SistemeGiris = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -227,21 +244,21 @@ namespace SantiyeOnMuh.DataAccess.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_OdemeCeks", x => x.Id);
+                    table.PrimaryKey("PK_Ceks", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_OdemeCeks_BankaHesaps_BankaHesapId",
+                        name: "FK_Ceks_BankaHesaps_BankaHesapId",
                         column: x => x.BankaHesapId,
                         principalTable: "BankaHesaps",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_OdemeCeks_CariHesaps_CariHesapId",
+                        name: "FK_Ceks_CariHesaps_CariHesapId",
                         column: x => x.CariHesapId,
                         principalTable: "CariHesaps",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_OdemeCeks_Sirkets_SirketId",
+                        name: "FK_Ceks_Sirkets_SirketId",
                         column: x => x.SirketId,
                         principalTable: "Sirkets",
                         principalColumn: "Id",
@@ -249,7 +266,7 @@ namespace SantiyeOnMuh.DataAccess.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "OdemeNakits",
+                name: "Nakits",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -257,7 +274,7 @@ namespace SantiyeOnMuh.DataAccess.Migrations
                     Tarih = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Aciklama = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Tutar = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    ImgUrl = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ImgUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     BankaKasaKaynak = table.Column<int>(type: "int", nullable: true),
                     CariKasaKaynak = table.Column<int>(type: "int", nullable: true),
                     SistemeGiris = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -269,31 +286,26 @@ namespace SantiyeOnMuh.DataAccess.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_OdemeNakits", x => x.Id);
+                    table.PrimaryKey("PK_Nakits", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_OdemeNakits_BankaHesaps_BankaHesapId",
+                        name: "FK_Nakits_BankaHesaps_BankaHesapId",
                         column: x => x.BankaHesapId,
                         principalTable: "BankaHesaps",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_OdemeNakits_CariHesaps_CariHesapId",
+                        name: "FK_Nakits_CariHesaps_CariHesapId",
                         column: x => x.CariHesapId,
                         principalTable: "CariHesaps",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_OdemeNakits_Sirkets_SirketId",
+                        name: "FK_Nakits_Sirkets_SirketId",
                         column: x => x.SirketId,
                         principalTable: "Sirkets",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
-
-            migrationBuilder.CreateIndex(
-                name: "IX_SantiyesKasa_SantiyeGiderKalemiId",
-                table: "SantiyesKasa",
-                column: "SantiyeGiderKalemiId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_BankaKasas_BankaHesapId",
@@ -306,72 +318,59 @@ namespace SantiyeOnMuh.DataAccess.Migrations
                 column: "SantiyeId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_CariKasas_CariGiderKalemiId",
+                table: "CariKasas",
+                column: "CariGiderKalemiId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_CariKasas_CariHesapId",
                 table: "CariKasas",
                 column: "CariHesapId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_CariKasas_CariHesapKasaGiderKalemiId",
-                table: "CariKasas",
-                column: "CariHesapKasaGiderKalemiId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_OdemeCeks_BankaHesapId",
-                table: "OdemeCeks",
+                name: "IX_Ceks_BankaHesapId",
+                table: "Ceks",
                 column: "BankaHesapId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_OdemeCeks_CariHesapId",
-                table: "OdemeCeks",
+                name: "IX_Ceks_CariHesapId",
+                table: "Ceks",
                 column: "CariHesapId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_OdemeCeks_SirketId",
-                table: "OdemeCeks",
+                name: "IX_Ceks_SirketId",
+                table: "Ceks",
                 column: "SirketId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_OdemeNakits_BankaHesapId",
-                table: "OdemeNakits",
+                name: "IX_Nakits_BankaHesapId",
+                table: "Nakits",
                 column: "BankaHesapId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_OdemeNakits_CariHesapId",
-                table: "OdemeNakits",
+                name: "IX_Nakits_CariHesapId",
+                table: "Nakits",
                 column: "CariHesapId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_OdemeNakits_SirketId",
-                table: "OdemeNakits",
+                name: "IX_Nakits_SirketId",
+                table: "Nakits",
                 column: "SirketId");
 
-            migrationBuilder.AddForeignKey(
-                name: "FK_SantiyesKasa_SantiyeGiderKalemis_SantiyeGiderKalemiId",
-                table: "SantiyesKasa",
-                column: "SantiyeGiderKalemiId",
-                principalTable: "SantiyeGiderKalemis",
-                principalColumn: "Id");
+            migrationBuilder.CreateIndex(
+                name: "IX_SantiyesKasas_SantiyeGiderKalemiId",
+                table: "SantiyesKasas",
+                column: "SantiyeGiderKalemiId");
 
-            migrationBuilder.AddForeignKey(
-                name: "FK_SantiyesKasa_Santiyes_SantiyeId",
-                table: "SantiyesKasa",
-                column: "SantiyeId",
-                principalTable: "Santiyes",
-                principalColumn: "Id",
-                onDelete: ReferentialAction.Cascade);
+            migrationBuilder.CreateIndex(
+                name: "IX_SantiyesKasas_SantiyeId",
+                table: "SantiyesKasas",
+                column: "SantiyeId");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropForeignKey(
-                name: "FK_SantiyesKasa_SantiyeGiderKalemis_SantiyeGiderKalemiId",
-                table: "SantiyesKasa");
-
-            migrationBuilder.DropForeignKey(
-                name: "FK_SantiyesKasa_Santiyes_SantiyeId",
-                table: "SantiyesKasa");
-
             migrationBuilder.DropTable(
                 name: "BankaKasas");
 
@@ -379,13 +378,13 @@ namespace SantiyeOnMuh.DataAccess.Migrations
                 name: "CariKasas");
 
             migrationBuilder.DropTable(
-                name: "OdemeCeks");
+                name: "Ceks");
 
             migrationBuilder.DropTable(
-                name: "OdemeNakits");
+                name: "Nakits");
 
             migrationBuilder.DropTable(
-                name: "SantiyeGiderKalemis");
+                name: "SantiyesKasas");
 
             migrationBuilder.DropTable(
                 name: "CariGiderKalemis");
@@ -399,43 +398,11 @@ namespace SantiyeOnMuh.DataAccess.Migrations
             migrationBuilder.DropTable(
                 name: "Sirkets");
 
-            migrationBuilder.DropPrimaryKey(
-                name: "PK_SantiyesKasa",
-                table: "SantiyesKasa");
+            migrationBuilder.DropTable(
+                name: "SantiyeGiderKalemis");
 
-            migrationBuilder.DropIndex(
-                name: "IX_SantiyesKasa_SantiyeGiderKalemiId",
-                table: "SantiyesKasa");
-
-            migrationBuilder.DropColumn(
-                name: "BankaKasaKaynak",
-                table: "SantiyesKasa");
-
-            migrationBuilder.DropColumn(
-                name: "SantiyeGiderKalemiId",
-                table: "SantiyesKasa");
-
-            migrationBuilder.RenameTable(
-                name: "SantiyesKasa",
-                newName: "SantiyeKasa");
-
-            migrationBuilder.RenameIndex(
-                name: "IX_SantiyesKasa_SantiyeId",
-                table: "SantiyeKasa",
-                newName: "IX_SantiyeKasa_SantiyeId");
-
-            migrationBuilder.AddPrimaryKey(
-                name: "PK_SantiyeKasa",
-                table: "SantiyeKasa",
-                column: "Id");
-
-            migrationBuilder.AddForeignKey(
-                name: "FK_SantiyeKasa_Santiyes_SantiyeId",
-                table: "SantiyeKasa",
-                column: "SantiyeId",
-                principalTable: "Santiyes",
-                principalColumn: "Id",
-                onDelete: ReferentialAction.Cascade);
+            migrationBuilder.DropTable(
+                name: "Santiyes");
         }
     }
 }

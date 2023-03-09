@@ -19,37 +19,44 @@ namespace SantiyeOnMuh.WebUI.Controllers
             ViewBag.Sayfa = "YENİ BANKA HESABI EKLEME";
             return View();
         }
+
         [HttpPost]
         public IActionResult BankaHesapEkleme(BankaHesap bankaHesap)
         {
-            if (!ModelState.IsValid) { return View(bankaHesap); }
 
-            /* View'larda kullanılan modeller, entitylerin WebUI içindeki kopyaları
-             * WebUI ve Entity katmanlarındaki modelleri new'lediğim için
-             * CRUD işlemlerinde verileri bir modelden diğerine aktarmak zorundayım.
-             * Form tarafında data annotation ve validation kullanımında
-             * Sürekli entity katmanına gitmek yerine
-             * WebUI katmanındaki modeller üzerinde değişiklik yapıyorum.
-             * entity katmanında sadece saf database deseni var.
-            */
-
-
-            EBankaHesap _bankaHesap = new EBankaHesap()
+            if (ModelState.IsValid)
             {
-                BankaAdi = bankaHesap.BankaAdi,
-                HesapAdi = bankaHesap.HesapAdi,
-                HesapNo = bankaHesap.HesapNo,
-                IbanNo = bankaHesap.IbanNo,
-                Durum = bankaHesap.Durum,
-                Ceks = bankaHesap.Ceks,
-                Nakits = bankaHesap.Nakits,
-                BankaKasas = bankaHesap.BankaKasas,
-            };
 
-            _bankaHesapService.Create(_bankaHesap);
+                /* View'larda kullanılan modeller, entitylerin WebUI içindeki kopyaları
+                 * WebUI ve Entity katmanlarındaki modelleri new'lediğim için
+                 * CRUD işlemlerinde verileri bir modelden diğerine aktarmak zorundayım.
+                 * Form tarafında data annotation ve validation kullanımında
+                 * Sürekli entity katmanına gitmek yerine
+                 * WebUI katmanındaki modeller üzerinde değişiklik yapıyorum.
+                 * entity katmanında sadece saf database deseni var.
+                */
 
-            return RedirectToAction("Index", "Admin");
 
+                EBankaHesap _bankaHesap = new EBankaHesap()
+                {
+                    BankaAdi = bankaHesap.BankaAdi,
+                    HesapAdi = bankaHesap.HesapAdi,
+                    HesapNo = bankaHesap.HesapNo,
+                    IbanNo = bankaHesap.IbanNo,
+                    Durum = bankaHesap.Durum,
+                    Ceks = bankaHesap.Ceks,
+                    Nakits = bankaHesap.Nakits,
+                    BankaKasas = bankaHesap.BankaKasas,
+                };
+
+                _bankaHesapService.Create(_bankaHesap);
+
+                return RedirectToAction("Index", "Admin");
+            }
+
+
+
+            return View(bankaHesap);
         }
         [HttpGet]
         public IActionResult BankaHesapGuncelle(int? id)
