@@ -1,7 +1,5 @@
 ﻿@model Sirket
-@{
-
-}
+@{}
 
 <!DOCTYPE html>
 
@@ -12,22 +10,25 @@
 <body>
     <br />
     <form asp-controller="Sirket" asp-action="SirketEkleme" method="post">
+        <br />
         <div class="form-group row">
-            <label class="col-sm-2 col-form-label" asp-for="Ad"></label>
-            <div class="col-sm-10">
+            <label class="col-sm-2" asp-for="Ad"></label>
+            <div class="col-sm-5">
                 <input class="form-control" asp-for="Ad"/>
+                <span asp-validation-for="Ad"></span>
             </div>
         </div>
+        <br />
         <div class="form-group row">
-            <label class="col-sm-2 col-form-label" asp-for="VergiNo"></label>
-            <div class="col-sm-10">
+            <label class="col-sm-2" asp-for="VergiNo"></label>
+            <div class="col-sm-5">
                 <input class="form-control" asp-for="VergiNo" />
+                <span asp-validation-for="VergiNo"></span>
             </div>
         </div>
         <br />
-        <br />
-        <div class="col-sm-offset-2 col-sm-6">
-            <button class="btn btn-success">EKLE</button>
+        <div class="form-group row">
+            <button class="col-sm-offset-2 col-sm-5 btn btn-success" type="submit" >EKLE</button>
         </div>
     </form>
 </body>

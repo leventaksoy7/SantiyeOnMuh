@@ -1,7 +1,5 @@
 ﻿@model Cek
-@{
-
-}
+@{}
 
 <!DOCTYPE html>
 
@@ -11,35 +9,42 @@
 </head>
 <body>
     <form asp-controller="Cek" asp-action="CekGuncelle" method="post">
-        <br />
         <input type="hidden" name="Id" value="@Model.Id" />
         <br />
-        <div class="form-group">
-            <div class="col-sm-2"><label asp-for="Tarih">TARİH:</label></div>
-            <div class="col-sm-2"><input asp-for="Tarih" class="form-control" value="@Model.Tarih.ToString("yyyy-MM-dd")" /></div>
+        <div class="form-group row">
+            <label class="col-sm-2" asp-for="Tarih"></label>
+            <div class="col-sm-5">
+                <input asp-for="Tarih" class="form-control" value="@Model.Tarih.ToString("yyyy-MM-dd")" />
+                <span asp-validation-for="Tarih"></span>
+            </div>
         </div>
         <br />
-        <br />
-        <div class="form-group">
-            <div class="col-sm-2"><label asp-for="CekNo">TARİH:</label></div>
-            <div class="col-sm-2"><input asp-for="CekNo" class="form-control" value="@Model.CekNo" /></div>
+        <div class="form-group row">
+            <label class="col-sm-2" asp-for="CekNo"></label>
+            <div class="col-sm-5">
+                <input asp-for="CekNo" class="form-control" value="@Model.CekNo" />
+                <span asp-validation-for="CekNo"></span>
+            </div>
         </div>
         <br />
-        <br />
-        <div class="form-group">
-            <div class="col-sm-2"><label asp-for="Aciklama">AÇIKLAMA:</label></div>
-            <div class="col-sm-10"><input asp-for="Aciklama" class="form-control" /></div>
+        <div class="form-group row">
+            <label class="col-sm-2" asp-for="Aciklama"></label></>
+            <div class="col-sm-5">
+                <input asp-for="Aciklama" class="form-control" />
+                <span asp-validation-for="Aciklama"></span>
+            </div>
         </div>
         <br />
-        <br />
-        <div class="form-group">
-            <div class="col-sm-2"><label asp-for="Tutar">TUTAR:</label></div>
-            <div class="col-sm-2"><input asp-for="Tutar" class="form-control" value=@Model.Tutar type="number" min="1" step=".01" /></div>
+        <div class="form-group row">
+            <label class="col-sm-2" asp-for="Tutar"></label>
+            <div class="col-sm-2">
+                <input asp-for="Tutar" class="form-control" value=@Model.Tutar type="number" min="1" step=".01" />
+                <span asp-validation-for="Tutar"></span>
+            </div>
         </div>
         <br />
-        <br />
-        <div class="form-group">
-            <div class="col-sm-2"><label asp-for="SirketId">ŞİRKET:</label></div>
+        <div class="form-group row">
+            <label class="col-sm-2" asp-for="SirketId"></label>
             <div class="col-sm-2">
                 <div asp-validation-summary="ModelOnly"></div>
                 <select asp-for="SirketId"
@@ -49,9 +54,8 @@
             </div>
         </div>
         <br />
-        <br />
-        <div class="form-group">
-            <div class="col-sm-2"><label asp-for="CariHesapId">FİRMA:</label></div>
+        <div class="form-group row">
+            <label class="col-sm-2" asp-for="CariHesapId"></label>
             <div class="col-sm-2">
                 <div asp-validation-summary="ModelOnly"></div>
                 <select asp-for="CariHesapId"
@@ -61,9 +65,8 @@
             </div>
         </div>
         <br />
-        <br />
-        <div class="form-group">
-            <div class="col-sm-2"><label asp-for="BankaHesapId">BANKA HESABI:</label></div>
+        <div class="form-group row">
+            <label class="col-sm-2" asp-for="BankaHesapId"></label>
             <div class="col-sm-2">
                 <div asp-validation-summary="ModelOnly"></div>
                 <select asp-for="BankaHesapId"
@@ -73,8 +76,9 @@
             </div>
         </div>
         <br />
-        <br />
-        <button type="submit" class="btn btn-success">GÜNCELLE</button>
+        <div class="form-group row">
+            <button class="col-sm-offset-2 col-sm-5 btn btn-success" type="submit">GÜNCELLE</button>
+        </div>
     </form>
 </body>
 </html>

@@ -12,10 +12,9 @@
 <body>
     <form asp-controller="BankaKasa" asp-action="BankaKasaEklemeSantiyeEft" method="post" enctype="multipart/form-data">
         <br />
-        <br />
-        <div class="form-group">
-            <div class="col-sm-2"><label for="SantiyeId">ŞANTİYE:</label></div>
-            <div class="col-sm-2">
+        <div class="form-group row">
+            <label class="col-sm-2" asp-for="SantiyeId"></label>
+            <div class="col-sm-5">
                 <div asp-validation-summary="ModelOnly"></div>
                 <select asp-for="SantiyeId"
                         class="form-control"
@@ -24,38 +23,35 @@
             </div>
         </div>
         <br />
-        <br />
-        <div class="form-group">
-            <div class="col-sm-2"><label for="BankaHesapId">BANKA HESABI:</label></div>
-            <div class="col-sm-2">
+        <div class="form-group row">
+            <label class="col-sm-2" asp-for="BankaHesapId"></label>
+            <div class="col-sm-5">
                 <div asp-validation-summary="ModelOnly"></div>
                 <select asp-for="BankaHesapId"
                         class="form-control"
-                        asp-items="@(new SelectList(@ViewBag.BankaHesap,"Id","Ad"))">
+                        asp-items="@(new SelectList(@ViewBag.BankaHesap,"Id","HesapAdi"))">
                 </select>
             </div>
         </div>
         <br />
-        <br />
-        <div class="form-group">
-            <div class="col-sm-2"><label for="Tarih">TARİH:</label></div>
-            <div class="col-sm-2"><input asp-for="Tarih" class="form-control" value="@DateTime.Now.ToString("yyyy-MM-dd")" /></div>
+        <div class="form-group row">
+            <label class="col-sm-2" asp-for="Tarih"></label>
+            <div class="col-sm-5"><input asp-for="Tarih" class="form-control" value="@DateTime.Now.ToString("yyyy-MM-dd")" /></div>
         </div>
         <br />
-        <br />
-        <div class="form-group">
-            <div class="col-sm-2"><label for="Aciklama">AÇIKLAMA:</label></div>
-            <div class="col-sm-10"><input asp-for="Aciklama" class="form-control" /></div>
+        <div class="form-group row">
+            <label class="col-sm-2" asp-for="Aciklama"></label>
+            <div class="col-sm-5"><input asp-for="Aciklama" class="form-control" /></div>
         </div>
         <br />
-        <br />
-        <div class="form-group">
-            <div class="col-sm-2"><label for="Tutar">TUTAR:</label></div>
-            <div class="col-sm-2"><input asp-for="Tutar" value="0" class="form-control" type="number" min="0" step=".01" /></div>
+        <div class="form-group row">
+            <label class="col-sm-2" asp-for="Tutar"></label>
+            <div class="col-sm-5"><input asp-for="Tutar" value="0" class="form-control" type="number" min="0" step=".01" /></div>
         </div>
         <br />
-        <br />
-        <button type="submit" class="btn btn-success">GÖNDER</button>
+        <div class="form-group row">
+            <button class="col-sm-offset-2 col-sm-5 btn btn-success" type="submit">GÖNDER</button>
+        </div>
     </form>
 </body>
 </html>

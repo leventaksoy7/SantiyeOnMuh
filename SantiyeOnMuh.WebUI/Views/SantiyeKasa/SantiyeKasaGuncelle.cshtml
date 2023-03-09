@@ -1,7 +1,5 @@
 ﻿@model SantiyeKasa
-@{
-
-}
+@{}
 
 <!DOCTYPE html>
 
@@ -11,12 +9,11 @@
 </head>
 <body>
     <form asp-controller="SantiyeKasa" asp-action="SantiyeKasaGuncelle" method="post" enctype="multipart/form-data">
-        <br />
         <input type="hidden" name="Id" value="@Model.Id" />
         <br />
-        <div class="form-group">
-            <div class="col-sm-2"><label for="SantiyeId">ŞANTİYE:</label></div>
-            <div class="col-sm-2">
+        <div class="form-group row">
+            <label class="col-sm-2" asp-for="SantiyeId"></label>
+            <div class="col-sm-5">
                 <div asp-validation-summary="ModelOnly"></div>
                 <select asp-for="SantiyeId"
                         class="form-control"
@@ -25,28 +22,33 @@
             </div>
         </div>
         <br />
-        <br />
-        <div class="form-group">
-            <div class="col-sm-2"><label for="Tarih">TARİH:</label></div>
-            <div class="col-sm-2"><input asp-for="Tarih" class="form-control" value="@Model.Tarih.ToString("yyyy-MM-dd")" /></div>
+        <div class="form-group row">
+            <label class="col-sm-2" asp-for="Tarih"></label>
+            <div class="col-sm-5">
+                <input asp-for="Tarih" class="form-control" value="@Model.Tarih.ToString("yyyy-MM-dd")" />
+                <span asp-validation-for="Tarih"></span>
+            </div>
         </div>
         <br />
-        <br />
-        <div class="form-group">
-            <div class="col-sm-2"><label for="Aciklama">AÇIKLAMA:</label></div>
-            <div class="col-sm-10"><input asp-for="Aciklama" class="form-control" /></div>
+        <div class="form-group row">
+            <label class="col-sm-2" asp-for="Aciklama"></label>
+            <div class="col-sm-5">
+                <input asp-for="Aciklama" class="form-control" />
+                <span asp-validation-for="Aciklama"></span>
+            </div>
         </div>
         <br />
-        <br />
-        <div class="form-group">
-            <div class="col-sm-2"><label for="Kisi">KİŞİ:</label></div>
-            <div class="col-sm-2"><input asp-for="Kisi" class="form-control" /></div>
+        <div class="form-group row">
+            <label class="col-sm-2" asp-for="Kisi"></label>
+            <div class="col-sm-5">
+                <input asp-for="Kisi" class="form-control" />
+                <span asp-validation-for="Kisi"></span>
+            </div>
         </div>
         <br />
-        <br />
-        <div class="form-group">
-            <div class="col-sm-2"><label for="SantiyeGiderKalemiId">TÜR:</label></div>
-            <div class="col-sm-2">
+        <div class="form-group row">
+            <label class="col-sm-2" asp-for="SantiyeGiderKalemiId"></label>
+            <div class="col-sm-5">
                 <div asp-validation-summary="ModelOnly"></div>
                 <select asp-for="SantiyeGiderKalemiId"
                         class="form-control"
@@ -55,33 +57,41 @@
             </div>
         </div>
         <br />
-        <br />
-        <div class="form-group">
-            <div class="col-sm-2"><label for="No">FATURA/FİŞ NO-PLAKA:</label></div>
-            <div class="col-sm-2"><input asp-for="No" class="form-control" /></div>
+        <div class="form-group row">
+            <label class="col-sm-2" asp-for="No">@*FATURA/FİŞ NO-PLAKA:*@</label>
+            <div class="col-sm-5">
+                <input asp-for="No" class="form-control" />
+                <span asp-validation-for="No"></span>
+            </div>
         </div>
         <br />
-        <br />
-        <div class="form-group">
-            <div class="col-sm-2"><label for="Gelir">GELİR:</label></div>
-            <div class="col-sm-2"><input asp-for="Gelir" class="form-control" type="number" min="0" step=".01" /></div>
+        <div class="form-group row">
+            <label class="col-sm-2" asp-for="Gelir"></label>
+            <div class="col-sm-5">
+                <input asp-for="Gelir" class="form-control" type="number" min="0" step=".01" />
+                <span asp-validation-for="Gelir"></span>
+            </div>
         </div>
         <br />
-        <br />
-        <div class="form-group">
-            <div class="col-sm-2"><label for="Gider">GİDER:</label></div>
-            <div class="col-sm-2"><input asp-for="Gider" class="form-control" type="number" min="0" step=".01" /></div>
+        <div class="form-group row">
+            <label class="col-sm-2" asp-for="Gider"></label>
+            <div class="col-sm-5">
+                <input asp-for="Gider" class="form-control" type="number" min="0" step=".01" />
+                <span asp-validation-for="Gider"></span>
+            </div>
         </div>
         <br />
-        <br />
-        <div class="form-group">
-            <div class="col-sm-2"><label for="ImgUrl">IMG:</label></div>
-            <div class="col-sm-2"><input asp-for="ImgUrl" class="form-control" /></div>
+        <div class="form-group row">
+            <label class="col-sm-2" asp-for="ImgUrl"></label>
+            <div class="col-sm-5">
+                <input asp-for="ImgUrl" class="form-control" />
+                <span asp-validation-for="ImgUrl"></span>
+            </div>
         </div>
         <br />
-        <br />
-        <button type="submit" class="btn btn-success">GÜNCELLE</button>
-
+        <div class="form-group row">
+            <button class="col-sm-offset-2 col-sm-5 btn btn-success" type="submit">GÜNCELLE</button>
+        </div>
     </form>
 </body>
 </html>

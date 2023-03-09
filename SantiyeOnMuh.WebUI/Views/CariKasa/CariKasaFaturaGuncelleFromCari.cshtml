@@ -1,7 +1,5 @@
 ﻿@model CariKasa
-@{
-
-}
+@{}
 
 <!DOCTYPE html>
 
@@ -11,14 +9,12 @@
 </head>
 <body>
     <form asp-controller="CariKasa" asp-action="CariKasaFaturaGuncelleFromCari" method="post" enctype="multipart/form-data">
-        <br />
         <input type="hidden" name="Id" value="@Model.Id" />
         <input type="hidden" name="CariHesapId" value="@Model.CariHesapId" />
         <br />
-        <br />
-        <div class="form-group">
-            <div class="col-sm-2"><label for="CariGKId">TÜR:</label></div>
-            <div class="col-sm-2">
+        <div class="form-group row">
+            <label class="col-sm-2" asp-for="CariGiderKalemiId"></label>
+            <div class="col-sm-5">
                 <div asp-validation-summary="ModelOnly"></div>
                 <select asp-for="CariGiderKalemiId"
                         class="form-control"
@@ -27,48 +23,58 @@
             </div>
         </div>
         <br />
-        <br />
-        <div class="form-group">
-            <div class="col-sm-2"><label for="Tarih">TARİH:</label></div>
-            <div class="col-sm-2"><input asp-for="Tarih" class="form-control" value="@DateTime.Now.ToString("yyyy-MM-dd")" /></div>
-        </div>
-        <br />
-        <br />
-        <div class="form-group">
-            <div class="col-sm-2"><label for="Aciklama">AÇIKLAMA:</label></div>
-            <div class="col-sm-10"><input asp-for="Aciklama" value="@Model.Aciklama" class="form-control" /></div>
-        </div>
-        <br />
-        <br />
-        <div class="form-group">
-            <div class="col-sm-2"><label for="Kisi">MİKTAR:</label></div>
-            <div class="col-sm-2"><input asp-for="Miktar" value="@Model.Miktar" class="form-control" type="number" min="0" step=".01" /></div>
-        </div>
-        <br />
-        <br />
-        <div class="form-group">
-            <div class="col-sm-2"><label for="No">BİRİM:</label></div>
-            <div class="col-sm-2"><input asp-for="BirimFiyat" value="@Model.BirimFiyat" class="form-control" type="number" min="0" step=".01" /></div>
-        </div>
-        <br />
-        <br />
-        <div class="form-group">
-            <div class="col-sm-2"><label for="Gider">ALACAK:</label></div>
-            <div class="col-sm-2"><input asp-for="Alacak" value="@Model.Alacak" class="form-control" type="number" min="0" step=".01" /></div>
-        </div>
-        <br />
-        <br />
-        <div class="form-group">
-            <div class="col-sm-2"><label for="ImgUrl">IMG:</label></div>
-            <div class="col-sm-2">
-                <input type="hidden" asp-for="ImgUrl" />
-                <input type="file" name="file" />
+        <div class="form-group row">
+            <label class="col-sm-2" asp-for="Tarih">TARİH:</label>
+            <div class="col-sm-5">
+                <input asp-for="Tarih" class="form-control" value="@DateTime.Now.ToString("yyyy-MM-dd")" />
+                <span asp-validation-for="Tarih"></span>
             </div>
         </div>
         <br />
+        <div class="form-group row">
+            <label class="col-sm-2" asp-for="Aciklama">AÇIKLAMA:</label>
+            <div class="col-sm-5">
+                <input asp-for="Aciklama" value="@Model.Aciklama" class="form-control" />
+                <span asp-validation-for="Aciklama"></span>
+            </div>
+        </div>
         <br />
-        <button type="submit" class="btn btn-success">EKLE</button>
-
+        <div class="form-group row">
+            <label class="col-sm-2" asp-for="Miktar">MİKTAR:</label>
+            <div class="col-sm-5">
+                <input asp-for="Miktar" value="@Model.Miktar" class="form-control" type="number" min="0" step=".01" />
+                <span asp-validation-for="Miktar"></span>
+            </div>
+        </div>
+        <br />
+        <div class="form-group row">
+            <label class="col-sm-2" asp-for="BirimFiyat">BİRİM:</label>
+            <div class="col-sm-5">
+                <input asp-for="BirimFiyat" value="@Model.BirimFiyat" class="form-control" type="number" min="0" step=".01" />
+                <span asp-validation-for="BirimFiyat"></span>
+            </div>
+        </div>
+        <br />
+        <div class="form-group row">
+            <label class="col-sm-2" asp-for="Alacak">ALACAK:</label>
+            <div class="col-sm-5">
+                <input asp-for="Alacak" value="@Model.Alacak" class="form-control" type="number" min="0" step=".01" />
+                <span asp-validation-for="Alacak"></span>
+            </div>
+        </div>
+        <br />
+        <div class="form-group row">
+            <label class="col-sm-2" asp-for="ImgUrl">IMG:</label>
+            <div class="col-sm-5">
+                <input type="hidden" asp-for="ImgUrl" />
+                <input type="file" name="file" />
+                <span asp-validation-for="ImgUrl"></span>
+            </div>
+        </div>
+        <br />
+        <div class="form-group row">
+            <button class="col-sm-offset-2 col-sm-5 btn btn-success" type="submit">GÜNCELLE</button>
+        </div>
     </form>
 </body>
 </html>

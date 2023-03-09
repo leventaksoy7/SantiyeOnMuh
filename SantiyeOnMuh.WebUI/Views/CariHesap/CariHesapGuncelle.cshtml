@@ -1,7 +1,5 @@
 ﻿@model CariHesap
-@{
-
-}
+@{}
 
 <!DOCTYPE html>
 
@@ -15,47 +13,54 @@
     <br />
     <div class="container">
         <form asp-controller="CariHesap" asp-action="CariHesapGuncelle" method="post">
-            <br />
             <input type="hidden" name="Id" value="@Model.Id" />
             <br />
             <div class="row">
                 <div class="col form-group">
 
-                    <label for="Ad">FİRMA ADI:</label>
+                    <label asp-for="Ad"></label>
                     <input asp-for="Ad" class="form-control" />
+                    <span asp-validation-for="Ad"></span>
 
-                    <label for="Adres">ADRES:</label>
+                    <label asp-for="Adres"></label>
                     <input asp-for="Adres" class="form-control" />
+                    <span asp-validation-for="Adres"></span>
 
-                    <label for="Telefon">TELEFON:</label>
+                    <label asp-for="Telefon"></label>
                     <input asp-for="Telefon" class="form-control" />
+                    <span asp-validation-for="Telefon"></span>
 
-                    <label for="VergiNo">VERGİ NO:</label>
+                    <label asp-for="VergiNo"></label>
                     <input asp-for="VergiNo" class="form-control" />
+                    <span asp-validation-for="VergiNo"></span>
 
                 </div>
                 <div class="col form-group">
 
-                    <label for="IlgiliKisi">İLGİLİ KİŞİ:</label>
+                    <label asp-for="IlgiliKisi"></label>
                     <input asp-for="IlgiliKisi" class="form-control" />
+                    <span asp-validation-for="VergiNo"></span>
 
-                    <label for="IlgiliKisiTelefon">İLGİLİ KİŞİ TEKEFON:</label>
+                    <label asp-for="IlgiliKisiTelefon"></label>
                     <input asp-for="IlgiliKisiTelefon" class="form-control" />
+                    <span asp-validation-for="IlgiliKisiTelefon"></span>
 
-                    <label for="Odeme">ÖDEME:</label>
+                    <label asp-for="Odeme"></label>
                     <input asp-for="Odeme" class="form-control" />
+                    <span asp-validation-for="Odeme"></span>
 
-                    <label for="Vade">VADE:</label>
+                    <label asp-for="Vade"></label>
                     <input asp-for="Vade" class="form-control" />
+                    <span asp-validation-for="Vade"></span>
 
-                    <label for="SantiyeId">ŞANTİYE:</label>
+                    <label asp-for="SantiyeId">ŞANTİYE:</label>
                     <div asp-validation-summary="ModelOnly"></div>
                     <select asp-for="SantiyeId"
                             class="form-control"
                             asp-items="@(new SelectList(@ViewBag.Santiye,"Id","Ad"))">
                     </select>
                 </div>
-                <button class="btn btn-success">GÜNCELLE</button>
+                <button class="col-sm-offset-2 col-sm-5 btn btn-success" type="submit">EKLE</button>
             </div>
         </form>
     </div>

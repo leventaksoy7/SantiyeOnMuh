@@ -10,6 +10,7 @@
 <body>
     <br />
     <form asp-controller="BankaHesap" asp-action="BankaHesapGuncelle" method="post">
+        <input type="hidden" name="Id" value="@Model.Id" />
         <br />
         <div class="form-group row">
             <label class="col-sm-2 col-form-label" asp-for="HesapAdi"></label>
@@ -44,7 +45,7 @@
         </div>
         <br />
         <div class="form-group row">
-            <button class="col-sm-offset-2 col-sm-5 btn btn-success">EKLE</button>
+            <button class="col-sm-offset-2 col-sm-5 btn btn-success" type="submit">EKLE</button>
         </div>
     </form>
 </body>

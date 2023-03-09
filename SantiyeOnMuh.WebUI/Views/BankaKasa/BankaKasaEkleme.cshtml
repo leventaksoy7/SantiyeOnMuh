@@ -1,14 +1,11 @@
 ﻿@model BankaKasa
-@{
-
-}
+@{}
 
 <!DOCTYPE html>
 
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
-
 </head>
 <body>
     <form asp-controller="BankaKasa" asp-action="BankaKasaEkleme" method="post" enctype="multipart/form-data">
@@ -64,7 +61,7 @@
         </div>
         <br />
         <div class="form-group row">
-            <button class="col-sm-offset-2 col-sm-5 btn btn-success">EKLE</button>
+            <button class="col-sm-offset-2 col-sm-5 btn btn-success" type="submit">EKLE</button>
         </div>
     </form>
 </body>
