@@ -76,6 +76,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
             var _giderKalemi = _cariGiderKalemiService.GetById(c.Id);
 
             if (_giderKalemi == null) { return NotFound(); }
+
             _giderKalemi.Ad = c.Ad;
 
             _cariGiderKalemiService.Update(_giderKalemi);
@@ -100,11 +101,11 @@ namespace SantiyeOnMuh.WebUI.Controllers
         [HttpGet]
         public IActionResult CariGiderKalemiGeriYukle(int? id)
         {
-            if (id == null){return NotFound();}
+            if (id == null) { return NotFound(); }
 
             ECariGiderKalemi cariGiderKalemi = _cariGiderKalemiService.GetById((int)id);
 
-            if (cariGiderKalemi == null){return NotFound();}
+            if (cariGiderKalemi == null) { return NotFound(); }
 
             cariGiderKalemi.Durum = true;
 

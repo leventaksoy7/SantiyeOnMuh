@@ -1,5 +1,7 @@
 ﻿@model SantiyeKasaViewListModel
-@{ var santiye = Model.Santiye.Id; }
+@{
+    var santiye = Model.Santiye.Id;
+}
 
 <!DOCTYPE html>
 
@@ -9,17 +11,17 @@
         <br />
         <div>
             <a asp-controller="Santiye" asp-action="Index" class="btn btn-primary btn-sm">TÜM ŞANTİYELER</a>
-            @if (Model.Santiye.Durum != false)
+@*            @if (Model.Santiye.Durum != false)
             {
                 <a asp-controller="SantiyeKasa" asp-action="SantiyeKasaEklemeFromSantiye" asp-route-santiyeid="@santiye" class="btn btn-primary btn-sm">KASAYA GİDER EKLE</a>
-            }
+            }*@
         </div>
         <br />
         <div>
-            <a asp-controller="SantiyeKasa" asp-action="SantiyeKasa" asp-route-gkid=@null class="btn btn-warning btn-sm">TÜM GİDERLER</a>
+            <a asp-controller="SantiyeKasa" asp-action="SantiyeKasaArsiv" asp-route-gkid=@null class="btn btn-warning btn-sm">TÜM GİDERLER</a>
             @foreach (var gk in Model.SantiyeGiderKalemis)
             {
-                <a asp-controller="SantiyeKasa" asp-action="SantiyeKasa" asp-route-gkid="@gk.Id" class="btn btn-warning btn-sm">@gk.Ad</a>
+                <a asp-controller="SantiyeKasa" asp-action="SantiyeKasaArsiv" asp-route-gkid="@gk.Id" class="btn btn-warning btn-sm">@gk.Ad</a>
             }
         </div>
         <br />
@@ -37,9 +39,7 @@
                     <th>GİDER</th>
                     <th>TOPLAM</th>
 
-                    <th>DETAY</th>
-                    <th>GÜNCELLE</th>
-                    <th>SİL</th>
+                    <th>GERİ YÜKLE</th>
                 </tr>
                 @if (Model.SantiyeKasas.Count == 0)
                 {
@@ -57,18 +57,16 @@
 
                             <td>@item.Gelir</td>
                             <td>@item.Gider </td>
-                            <td>@(item.Gelir- item.Gider) </td>
+                            <td>@(item.Gelir - item.Gider) </td>
 
                             @*@if (item.SantiyeGiderKalemiId != 1)
                             {
-                                <td><a asp-controller="SantiyeKasa" asp-action="SantiyeKasaDetay" asp-route-id="@item.Id" class="btn btn-info btn-sm">DETAY</a></td>
-                                <td><a asp-controller="SantiyeKasa" asp-action="SantiyeKasaGuncelleFromSantiye" asp-route-santiyekasaid="@item.Id" class="btn btn-success btn-sm">GÜNCELLEME</a></td>
-                                <td><a asp-controller="SantiyeKasa" asp-action="SantiyeKasaSil" asp-route-santiyekasaid="@item.Id" class="btn btn-danger btn-sm">SİL</a></td>
-                            }*@
-
                             <td><a asp-controller="SantiyeKasa" asp-action="SantiyeKasaDetay" asp-route-id="@item.Id" class="btn btn-info btn-sm">DETAY</a></td>
                             <td><a asp-controller="SantiyeKasa" asp-action="SantiyeKasaGuncelleFromSantiye" asp-route-santiyekasaid="@item.Id" class="btn btn-success btn-sm">GÜNCELLEME</a></td>
                             <td><a asp-controller="SantiyeKasa" asp-action="SantiyeKasaSil" asp-route-santiyekasaid="@item.Id" class="btn btn-danger btn-sm">SİL</a></td>
+                            }*@
+
+                            <td><a asp-controller="SantiyeKasa" asp-action="SantiyeKasaGeriYukle" asp-route-id="@item.Id" class="btn btn-info btn-sm">GERİ YÜKLE</a></td>
 
                         </tr>
                     }
@@ -151,9 +149,9 @@
             </ul>
         </nav>
     </div>
-    <br />
-    <div>
-        <a asp-controller="SantiyeKasa" asp-action="SantiyeKasaExcel" asp-route-santiyeid=@Model.PageInfo.UrlInfo class="btn btn-warning btn-sm">EXCEL</a>
-    </div>
+@*    <br />
+        <div>
+            <a asp-controller="SantiyeKasa" asp-action="SantiyeKasaExcel" asp-route-santiyeid=@Model.PageInfo.UrlInfo class="btn btn-warning btn-sm">EXCEL</a>
+        </div>*@
 </body>
 </html>

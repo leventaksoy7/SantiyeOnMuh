@@ -16,9 +16,7 @@ namespace SantiyeOnMuh.Entity
         public string Aciklama { get; set; }
         public string? Kisi { get; set; }
         public string? No { get; set; }//PLAKA-CEP-FATURA VEYA FİŞ NO
-
         public decimal Gelir { get; set; }
-
         public decimal Gider { get; set; }
         public string? ImgUrl { get; set; }
         public bool Durum { get; set; }

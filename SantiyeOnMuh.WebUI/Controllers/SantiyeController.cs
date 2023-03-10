@@ -135,12 +135,9 @@ namespace SantiyeOnMuh.WebUI.Controllers
 
             return View(_santiye);
         }
-
         [HttpPost]
         public IActionResult SantiyeSil(Santiye santiye)
         {
-            if (!ModelState.IsValid) { return View(santiye); }
-
             ESantiye _santiye = _santiyeService.GetById(santiye.Id);
 
             if (_santiye == null) { return NotFound(); }
@@ -151,7 +148,6 @@ namespace SantiyeOnMuh.WebUI.Controllers
 
             return RedirectToAction("Index");
         }
-
         //ARŞİV
         public IActionResult IndexArsiv()
         {
@@ -183,7 +179,6 @@ namespace SantiyeOnMuh.WebUI.Controllers
 
             return View(santiyeViewModel);
         }
-
         public IActionResult SantiyeGeriYukle(int? id)
         {
             if (id == null) { return NotFound(); }

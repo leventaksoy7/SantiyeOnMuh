@@ -50,6 +50,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
 
             SantiyeGiderKalemi _santiyeGiderKalemi = new SantiyeGiderKalemi()
             {
+                Id = santiyeGiderKalemi.Id,
                 Ad = santiyeGiderKalemi.Ad,
                 Durum = santiyeGiderKalemi.Durum,
                 Tur = santiyeGiderKalemi.Tur,

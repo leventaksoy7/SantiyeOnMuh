@@ -12,7 +12,6 @@
 <body>
     <br />
     <form asp-controller="Santiye" asp-action="SantiyeSil" method="post">
-        <br />
         <input type="hidden" name="Id" value="@Model.Id" />
         <br />
         <div class="form-group">
@@ -28,7 +27,7 @@
         <br />
         <br />
         <div class="col-sm-offset-2 col-sm-10">
-            <button class="btn btn-danger">SİL</button>
+            <button class="btn btn-danger" type="submit" >SİL</button>
         </div>
     </form>
 </body>

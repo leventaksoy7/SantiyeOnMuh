@@ -12,6 +12,7 @@ namespace SantiyeOnMuh.WebUI.Models.Modeller
         [Required(ErrorMessage = "TARİH GİRMELİSİNİZ")]
         [DataType(DataType.Date)]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
+        [Display(Name = "TARİH")]
         public DateTime Tarih { get; set; }
 
         [Required(ErrorMessage = "AÇIKLAMA BOŞ BIRAKILAMAZ!")]
@@ -25,12 +26,12 @@ namespace SantiyeOnMuh.WebUI.Models.Modeller
         [Display(Name = "VARSA PLAKA-CEP-FATURA VEYA FİŞ NO")]
         public string? No { get; set; }
 
-        [Display(Name = "GELİR")]
+        [Display(Name = "GELİR", Prompt = "GELİR BOŞ BIRAKILAMAZ!")]
         public string Gelir { get; set; }
 
-        [Display(Name = "GİDER")]
+        [Display(Name = "GİDER", Prompt = "GİDER BOŞ BIRAKILAMAZ!")]
         public string Gider { get; set; }
-
+        [Display(Name = "FATURA GÖRÜNTÜSÜ")]
         public string? ImgUrl { get; set; }
 
         public bool Durum { get; set; }
@@ -38,10 +39,12 @@ namespace SantiyeOnMuh.WebUI.Models.Modeller
         public int? BankaKasaKaynak { get; set; }
         public DateTime SistemeGiris { get; set; }
         public DateTime SonGuncelleme { get; set; }
+
+        [Display(Name = "ŞANTİYE GİDER KALEMİ")]
         public int SantiyeGiderKalemiId { get; set; }
-        public ESantiyeGiderKalemi SantiyeGiderKalemi { get; set; }
+        public ESantiyeGiderKalemi? SantiyeGiderKalemi { get; set; }
         public int SantiyeId { get; set; }
-        public ESantiye Santiye { get; set; }
+        public ESantiye? Santiye { get; set; }
         public SantiyeKasa()
         {
             Tarih = DateTime.Today;

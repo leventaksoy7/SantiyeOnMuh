@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width" />
 </head>
 <body>
-    <form action="/SantiyeKasa/SantiyeKasaGuncelleFromSantiye" method="post">
+    <form action="/SantiyeKasa/SantiyeKasaGuncelleFromSantiye" method="post" enctype="multipart/form-data">
         <input type="hidden" asp-for="Id" class="form-control" value="@Model.Id" />
         <input type="hidden" asp-for="Durum" class="form-control" value="@Model.Durum" />
         <input type="hidden" asp-for="SantiyeId" class="form-control" value="@ViewBag.SantiyeId" />
@@ -21,7 +21,6 @@
             </div>
         </div>
         <br />
-        <br />
         <div class="form-group row">
             <label class="col-sm-2" asp-for="Aciklama"></label>
             <div class="col-sm-5">
@@ -29,7 +28,6 @@
                 <span asp-validation-for="Aciklama"></span>
             </div>
         </div>
-        <br />
         <br />
         <div class="form-group row">
             <label class="col-sm-2" asp-for="Kisi"></label>
@@ -39,9 +37,8 @@
             </div>
         </div>
         <br />
-        <br />
         <div class="form-group row">
-            <label asp-for="SantiyeGiderKalemiId"></label>
+            <label class="col-sm-2" asp-for="SantiyeGiderKalemiId"></label>
             <div class="col-sm-5">
                 <div asp-validation-summary="ModelOnly"></div>
                 <select asp-for="SantiyeGiderKalemiId"
@@ -51,30 +48,28 @@
             </div>
         </div>
         <br />
-        <br />
         <div class="form-group row">
-            <label class="col-sm-2" asp-for="No">@*FATURA/FİŞ NO-PLAKA:*@</label>
+            <label class="col-sm-2" asp-for="No"></label>
             <div class="col-sm-5">
                 <input asp-for="No" class="form-control" />
                 <span asp-validation-for="No"></span>
             </div>
         </div>
         <br />
-        <br />
         <div class="form-group row">
             <label class="col-sm-2" asp-for="Gider"></label>
             <div class="col-sm-5">
-                <input asp-for="Gider" class="form-control" type="number" min="0" step=".01" />
+                <input asp-for="Gider" class="form-control" placeholder="@Convert.ToDecimal(Model.Gider)" type="number"+"."+"," min="0" step=".01" />
                 <span asp-validation-for="Gider"></span>
             </div>
         </div>
         <br />
-        <br />
         <div class="form-group row">
-            <label class="col-sm-2" asp-for="ImgUrl">IMG:</label>
+            <label class="col-sm-2" asp-for="ImgUrl"></label>
             <div class="col-sm-5">
-                <input asp-for="ImgUrl" class="form-control" />
-                <span asp-validation-for="ImgUrl"></span>
+                <input type="hidden" asp-for="ImgUrl" />
+                <input type="file" name="file" />
+                @*<span asp-validation-for="ImgUrl"></span>*@
             </div>
         </div>
         <br />

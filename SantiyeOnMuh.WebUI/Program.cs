@@ -97,7 +97,7 @@ app.UseAuthorization();
             );
         app.MapControllerRoute(
             name: "SantiyeKasaArsiv",
-            pattern: "SantiyeKasa/SantiyeKasaArsiv/{santiyeid}/{gkid?}",
+            pattern: "SantiyeKasa/SantiyeKasaArsiv/santiyeid/{gkid?}",
             defaults: new { controller = "SantiyeKasa", action = "SantiyeKasaArsiv" }
             );
         //EKLE
@@ -129,11 +129,17 @@ app.UseAuthorization();
             pattern: "SantiyeKasa/SantiyeKasaSil/{santiyekasaid?}",
             defaults: new { controller = "SantiyeKasa", action = "SantiyeKasaSil" }
             );
-        #endregion
+        //GERÝ YÜKLE
+        app.MapControllerRoute(
+            name: "SantiyeKasaSil",
+            pattern: "SantiyeKasa/SantiyeKasaGeriYukle/id",
+            defaults: new { controller = "SantiyeKasa", action = "SantiyeKasaGeriYukle" }
+            );
+#endregion
 
-    #region CARÝ HESAP
-    //INDEX
-    app.MapControllerRoute(
+#region CARÝ HESAP
+//INDEX
+app.MapControllerRoute(
         name: "CariHesap",
         pattern: "CariHesap/CariHesap/{santiyeid?}",
         defaults: new { controller = "CariHesap", action = "CariHesap" }

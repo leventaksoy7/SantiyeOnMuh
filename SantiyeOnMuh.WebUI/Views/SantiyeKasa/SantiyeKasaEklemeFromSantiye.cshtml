@@ -1,7 +1,5 @@
 ﻿@model SantiyeKasa
-@{
-
-}
+@{}
 
 <!DOCTYPE html>
 
@@ -69,7 +67,7 @@
             <div class="col-sm-5">
                 <input type="hidden" asp-for="ImgUrl" />
                 <input type="file" name="file" />
-                <span asp-validation-for="ImgUrl"></span>
+                @*<span asp-validation-for="ImgUrl"></span>*@
             </div>
         </div>
         <br />
