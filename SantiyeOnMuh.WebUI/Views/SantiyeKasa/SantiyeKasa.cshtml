@@ -68,7 +68,14 @@
 
                             <td><a asp-controller="SantiyeKasa" asp-action="SantiyeKasaDetay" asp-route-id="@item.Id" class="btn btn-info btn-sm">DETAY</a></td>
                             <td><a asp-controller="SantiyeKasa" asp-action="SantiyeKasaGuncelleFromSantiye" asp-route-santiyekasaid="@item.Id" class="btn btn-success btn-sm">GÜNCELLEME</a></td>
-                            <td><a asp-controller="SantiyeKasa" asp-action="SantiyeKasaSil" asp-route-santiyekasaid="@item.Id" class="btn btn-danger btn-sm">SİL</a></td>
+                            @if (item.BankaKasaKaynak == null)
+                            {
+                                <td><a asp-controller="SantiyeKasa" asp-action="SantiyeKasaSil" asp-route-santiyekasaid="@item.Id" class="btn btn-danger btn-sm">SİL</a></td>
+                            }
+                            else
+                            {
+                                <td><a asp-controller="BankaKasa" asp-action="BankaKasaSilSantiyeEft" asp-route-bankakasasantiyeid="@item.BankaKasaKaynak" class="btn btn-danger btn-sm">SİL</a></td>
+                            }
 
                         </tr>
                     }

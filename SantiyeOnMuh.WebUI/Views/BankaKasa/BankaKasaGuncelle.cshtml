@@ -55,7 +55,7 @@
         <div class="form-group row">
             <label class="col-sm-2" asp-for="Giren"></label>
             <div class="col-sm-5">
-                <input asp-for="Giren" class="form-control" value="0" type="number" min="0" step=".01" />
+                <input asp-for="Giren" class="form-control" placeholder="@ViewBag.Giren" type="number" min="0" step=".01" />
                 <span asp-validation-for="Giren"></span>
             </div>
         </div>
@@ -63,7 +63,7 @@
         <div class="form-group row">
             <label class="col-sm-2" asp-for="Cikan"></label>
             <div class="col-sm-5">
-                <input asp-for="Cikan" class="form-control" value="0" type="number" min="0" step=".01" />
+                <input asp-for="Cikan" class="form-control" placeholder="@ViewBag.Cikan" type="number" min="0" step=".01" />
                 <span asp-validation-for="Cikan"></span>
             </div>
         </div>

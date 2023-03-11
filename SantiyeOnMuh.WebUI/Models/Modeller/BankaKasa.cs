@@ -44,7 +44,7 @@ namespace SantiyeOnMuh.WebUI.Models.Modeller
 
         public int? SantiyeKasaKaynak { get; set; }
 
-        public EBankaHesap BankaHesap { get; set; }
+        public EBankaHesap? BankaHesap { get; set; }
 
         [Display(Name = "BANKA HESABI")]
         public int BankaHesapId { get; set; }

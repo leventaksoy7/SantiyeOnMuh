@@ -64,6 +64,9 @@ namespace SantiyeOnMuh.WebUI.Controllers
         [HttpPost]
         public IActionResult BankaKasaEkleme(BankaKasa bankaKasa)
         {
+            ViewBag.Sayfa = "ANA KASAYA VERİ GİRİŞ";
+            ViewBag.bankahesap = _bankaHesapService.GetAll(true);
+
             if (!ModelState.IsValid) { return View(bankaKasa); }
 
             /* View'larda kullanılan modeller, entitylerin WebUI içindeki kopyaları
@@ -92,7 +95,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
                 NakitKaynak = bankaKasa.NakitKaynak,
                 SantiyeKasaKaynak = bankaKasa.SantiyeKasaKaynak,
                 BankaHesapId = bankaKasa.BankaHesapId,
-                BankaHesap = bankaKasa.BankaHesap,
+                //BankaHesap = bankaKasa.BankaHesap,
                 SistemeGiris = bankaKasa.SistemeGiris,
                 SonGuncelleme = bankaKasa.SonGuncelleme
             };
@@ -113,7 +116,6 @@ namespace SantiyeOnMuh.WebUI.Controllers
         public IActionResult BankaKasaGuncelle(int? bankakasaid)
         {
             ViewBag.Sayfa = "ANA KASAYA VERİ GÜNCELLEME";
-
             ViewBag.bankahesap = _bankaHesapService.GetAll(true);
 
             if (bankakasaid == null) { return NotFound(); }
@@ -153,11 +155,17 @@ namespace SantiyeOnMuh.WebUI.Controllers
                 SonGuncelleme = bankaKasa.SonGuncelleme
             };
 
+            ViewBag.Giren = bankaKasa.Giren;
+            ViewBag.Cikan = bankaKasa.Cikan;
+
             return View(_bankaKasa);
         }
         [HttpPost]
         public IActionResult BankaKasaGuncelle(BankaKasa bankaKasa)
         {
+            ViewBag.Sayfa = "ANA KASAYA VERİ GÜNCELLEME";
+            ViewBag.bankahesap = _bankaHesapService.GetAll(true);
+
             if (!ModelState.IsValid) { return View(bankaKasa); }
 
             EBankaKasa _bankaKasa = _bankaKasaService.GetByIdDetay(bankaKasa.Id);
@@ -221,6 +229,8 @@ namespace SantiyeOnMuh.WebUI.Controllers
                 SistemeGiris = bankaKasa.SistemeGiris,
                 SonGuncelleme = bankaKasa.SonGuncelleme
             };
+
+            ViewBag.BankaHesapAdi = _bankaHesapService.GetById(bankaKasa.BankaHesapId).HesapAdi;
 
             return View(_bankaKasa);
         }
@@ -308,7 +318,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
         //ARŞİV//
         public IActionResult BankaKasaArsiv(int? bankahesapid, int page = 1)
         {
-            ViewBag.Sayfa = "ANA KASA";
+            ViewBag.Sayfa = "ANA KASA - ARŞİV";
 
             const int pageSize = 10;
             var bankaKasaViewModel = new BankaKasaViewListModel()
@@ -345,6 +355,13 @@ namespace SantiyeOnMuh.WebUI.Controllers
             bankaKasa.SonGuncelleme = System.DateTime.Now;
             bankaKasa.Durum = true;
 
+            if (bankaKasa.SantiyeKasaKaynak != null)
+            {
+                ESantiyeKasa _santiyeKasa = _santiyeKasaService.GetById((int)bankaKasa.SantiyeKasaKaynak);
+                _santiyeKasa.Durum = true;
+                _santiyeKasaService.Update(_santiyeKasa);
+            };
+
             _bankaKasaService.Update(bankaKasa);
 
             return RedirectToAction("BankaKasa");
@@ -362,6 +379,9 @@ namespace SantiyeOnMuh.WebUI.Controllers
         [HttpPost]
         public IActionResult BankaKasaEklemeEFT(BankaKasaEftModel b)
         {
+            ViewBag.Sayfa = "HESAPLAR ARASI PARA TRANSFERİ";
+            ViewBag.bankahesap = _bankaHesapService.GetAll(true);
+
             if (!ModelState.IsValid) { return View(b); }
 
             EBankaKasa EFTGonderenHesap = new EBankaKasa();
@@ -408,6 +428,10 @@ namespace SantiyeOnMuh.WebUI.Controllers
         [HttpPost]
         public IActionResult BankaKasaEklemeSantiyeEft(BankaKasaEftSantiyeModel b)
         {
+            ViewBag.Sayfa = "ŞANTİYE KASASINA EFT";
+            ViewBag.Santiye = _santiyeService.GetAll(true);
+            ViewBag.BankaHesap = _bankaHesapService.GetAll(true);
+
             if (!ModelState.IsValid) { return View(b); }
 
             //ARA MODELE DAYANARAK BANKA KASA MODELİ TANIMLANDI VE EKLENDİ
@@ -484,6 +508,10 @@ namespace SantiyeOnMuh.WebUI.Controllers
         [HttpPost]
         public IActionResult BankaKasaGuncelleSantiyeEft(BankaKasaEftSantiyeModel b)
         {
+            ViewBag.Sayfa = "ŞANTİYE KASASINA EFT GUNCELLEME";
+            ViewBag.Santiye = _santiyeService.GetAll(true);
+            ViewBag.BankaHesap = _bankaHesapService.GetAll(true);
+
             if (!ModelState.IsValid) { return View(b); }
 
             #region BANKA HESAP ADI VE ŞANTİYE HESAP ADINI BULUYORUZ
@@ -560,7 +588,6 @@ namespace SantiyeOnMuh.WebUI.Controllers
         [HttpPost]
         public IActionResult BankaKasaSilSantiyeEft(BankaKasaEftSantiyeModel b)
         {
-            if (!ModelState.IsValid) { return View(b); }
 
             #region BANKAKASA NESNESİ
             //BULUNDU

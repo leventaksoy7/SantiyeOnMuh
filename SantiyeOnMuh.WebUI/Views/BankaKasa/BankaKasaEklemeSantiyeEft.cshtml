@@ -37,16 +37,19 @@
         <div class="form-group row">
             <label class="col-sm-2" asp-for="Tarih"></label>
             <div class="col-sm-5"><input asp-for="Tarih" class="form-control" value="@DateTime.Now.ToString("yyyy-MM-dd")" /></div>
+            <span asp-validation-for="Tarih"></span>
         </div>
         <br />
         <div class="form-group row">
             <label class="col-sm-2" asp-for="Aciklama"></label>
             <div class="col-sm-5"><input asp-for="Aciklama" class="form-control" /></div>
+            <span asp-validation-for="Aciklama"></span>
         </div>
         <br />
         <div class="form-group row">
             <label class="col-sm-2" asp-for="Tutar"></label>
             <div class="col-sm-5"><input asp-for="Tutar" value="0" class="form-control" type="number" min="0" step=".01" /></div>
+            <span asp-validation-for="Tutar"></span>
         </div>
         <br />
         <div class="form-group row">

@@ -35,11 +35,11 @@ namespace SantiyeOnMuh.WebUI.Models.Modeller
         public bool Durum { get; set; }
         public bool OdemeDurumu { get; set; }
         public int CariHesapId { get; set; }
-        public ECariHesap CariHesap { get; set; }
+        public ECariHesap? CariHesap { get; set; }
         public int SirketId { get; set; }
-        public ESirket Sirket { get; set; }
+        public ESirket? Sirket { get; set; }
         public int BankaHesapId { get; set; }
-        public EBankaHesap BankaHesap { get; set; }
+        public EBankaHesap? BankaHesap { get; set; }
         public Cek()
         {
             Tarih = System.DateTime.Now;

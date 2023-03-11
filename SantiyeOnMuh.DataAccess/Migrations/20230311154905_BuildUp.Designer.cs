@@ -12,8 +12,8 @@ using SantiyeOnMuh.DataAccess.Concrete;
 namespace SantiyeOnMuh.DataAccess.Migrations
 {
     [DbContext(typeof(Context))]
-    [Migration("20230309145145_ReBuild1")]
-    partial class ReBuild1
+    [Migration("20230311154905_BuildUp")]
+    partial class BuildUp
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

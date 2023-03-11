@@ -102,102 +102,68 @@
                             @if (item.CekKaynak != null)
                             {
                                 <td style=" vertical-align: middle; width: 10%">
-                                    <a asp-controller="Cek"
-                           asp-action="CekDetay"
-                           asp-route-cekid="@item.CekKaynak"
-                                       class="btn btn-info btn-sm">DETAY</a>
+                                    <a asp-controller="Cek" asp-action="CekDetay" asp-route-cekid="@item.CekKaynak" class="btn btn-info btn-sm">DETAY</a>
                                 </td>
                             }
                             else if (item.NakitKaynak != null)
                             {
-                                <td style=" vertical-align: middle; width: 10%">
-                                    <a asp-controller="Nakit"
-                           asp-action="NakitDetay"
-                           asp-route-nakitid="@item.NakitKaynak"
-                                       class="btn btn-info btn-sm">DETAY</a>
+                                <td style=" vertical-align: middle; width: 10%"> <a asp-controller="Nakit" asp-action="NakitDetay" asp-route-nakitid="@item.NakitKaynak" class="btn btn-info btn-sm">DETAY</a>
                                 </td>
                             }
                             else
                             {
                                 <td style=" vertical-align: middle; width: 10%">
-                                    <a asp-controller="BankaKasa"
-                           asp-action="BankaKasaDetay"
-                           asp-route-bankakasaid="@item.Id"
-                                       class="btn btn-info btn-sm">DETAY</a>
+                                    <a asp-controller="BankaKasa" asp-action="BankaKasaDetay" asp-route-bankakasaid="@item.Id" class="btn btn-info btn-sm">DETAY</a>
                                 </td>
                             }
 
                             @if (item.CekKaynak != null)
                             {
                                 <td style=" vertical-align: middle; width: 10%">
-                                    <a asp-controller="Cek"
-                           asp-action="CekGuncelle"
-                           asp-route-cekid="@item.CekKaynak"
-                                       class="btn btn-success btn-sm">GÜNCELLE</a>
+                                    <a asp-controller="Cek" asp-action="CekGuncelle" asp-route-cekid="@item.CekKaynak" class="btn btn-success btn-sm">GÜNCELLE</a>
                                 </td>
                             }
                             else if (item.NakitKaynak != null)
                             {
                                 <td style=" vertical-align: middle; width: 10%">
-                                    <a asp-controller="Nakit"
-                           asp-action="NakitGuncelle"
-                           asp-route-nakitid="@item.NakitKaynak"
-                                       class="btn btn-success btn-sm">GÜNCELLE</a>
+                                    <a asp-controller="Nakit" asp-action="NakitGuncelle" asp-route-nakitid="@item.NakitKaynak" class="btn btn-success btn-sm">GÜNCELLE</a>
                                 </td>
                             }
                             else if (item.SantiyeKasaKaynak != null)
                             {
                                 <td style=" vertical-align: middle; width: 10%">
-                                    <a asp-controller="BankaKasa"
-                           asp-action="BankaKasaGuncelleSantiyeEft"
-                           asp-route-bankakasasantiyeid="@item.Id"
-                                       class="btn btn-success btn-sm">GÜNCELLE</a>
+                                    <a asp-controller="BankaKasa" asp-action="BankaKasaGuncelleSantiyeEft" asp-route-bankakasasantiyeid="@item.Id" class="btn btn-success btn-sm">GÜNCELLE</a>
                                 </td>
                             }
                             else
                             {
                                 <td style=" vertical-align: middle; width: 10%">
-                                    <a asp-controller="BankaKasa"
-                           asp-action="BankaKasaGuncelle"
-                           asp-route-bankakasaid="@item.Id"
-                                       class="btn btn-success btn-sm">GÜNCELLE</a>
+                                    <a asp-controller="BankaKasa" asp-action="BankaKasaGuncelle" asp-route-bankakasaid="@item.Id" class="btn btn-success btn-sm">GÜNCELLE</a>
                                 </td>
                             }
 
                             @if (item.CekKaynak != null)
                             {
                                 <td style=" vertical-align: middle; width: 10%">
-                                    <a asp-controller="Cek"
-                           asp-action="CekSil"
-                           asp-route-cekid="@item.CekKaynak"
-                                       class="btn btn-danger btn-sm">SİL</a>
+                                    <a asp-controller="Cek"  asp-action="CekSil" asp-route-cekid="@item.CekKaynak" class="btn btn-danger btn-sm">SİL</a>
                                 </td>
                             }
                             else if (item.NakitKaynak != null)
                             {
                                 <td style=" vertical-align: middle; width: 10%">
-                                    <a asp-controller="Nakit"
-                           asp-action="NakitSil"
-                           asp-route-nakitid="@item.NakitKaynak"
-                                       class="btn btn-danger btn-sm">SİL</a>
+                                    <a asp-controller="Nakit" asp-action="NakitSil" asp-route-nakitid="@item.NakitKaynak" class="btn btn-danger btn-sm">SİL</a>
                                 </td>
                             }
                             else if (item.SantiyeKasaKaynak != null)
                             {
                                 <td style=" vertical-align: middle; width: 10%">
-                                    <a asp-controller="BankaKasa"
-                           asp-action="BankaKasaSilSantiyeEft"
-                           asp-route-bankakasasantiyeid="@item.Id"
-                                       class="btn btn-danger btn-sm">SİL</a>
+                                    <a asp-controller="BankaKasa" asp-action="BankaKasaSilSantiyeEft" asp-route-bankakasasantiyeid="@item.Id" class="btn btn-danger btn-sm">SİL</a>
                                 </td>
                             }
                             else
                             {
                                 <td style=" vertical-align: middle; width: 5%">
-                                    <a asp-controller="BankaKasa"
-                           asp-action="BankaKasaSil"
-                           asp-route-bankakasaid="@item.Id"
-                                       class="btn btn-danger btn-sm">SİL</a>
+                                    <a asp-controller="BankaKasa" asp-action="BankaKasaSil" asp-route-bankakasaid="@item.Id" class="btn btn-danger btn-sm">SİL</a>
                                 </td>
                             }
 

@@ -64,19 +64,20 @@ namespace SantiyeOnMuh.WebUI.Controllers
             ViewBag.Cari = _cariHesapService.GetAll(null, true);
             ViewBag.Banka = _bankaHesapService.GetAll(true);
 
-            return View(new ECek());
+            return View(new Cek());
         }
         [HttpPost]
-        public async Task<IActionResult> CekEkleme(Cek cek, IFormFile file) 
+        public async Task<IActionResult> CekEkleme(Cek cek, IFormFile? file) 
         {
-            if (!ModelState.IsValid) { return View(cek); }
-
             #region RESİM VS. EKLENMEMİŞSE SAYFAYA GERİ GİDİYOR, GERİ GİDİLEN SAYFANIN İHTİYACI OLAN BİLGİLER
             ViewBag.Sayfa = "YENİ ÇEK EKLEME";
             ViewBag.Sirket = _sirketService.GetAll(true);
             ViewBag.Cari = _cariHesapService.GetAll(null, true);
             ViewBag.Banka = _bankaHesapService.GetAll(true);
             #endregion
+
+            if (!ModelState.IsValid) { return View(cek); }
+
             #region RESİM EKLEME BÖLÜMÜ
             if (file != null)
             {
@@ -95,7 +96,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
                 }
                 else { return View(cek); }
             }
-            else { return View(cek); }
+            //else { return View(cek); }
             #endregion
 
             ECek _cek = new ECek()
@@ -156,24 +157,15 @@ namespace SantiyeOnMuh.WebUI.Controllers
         {
             ViewBag.Sayfa = "ÇEK TAHSİL";
 
-            if (cekid == null)
-            {
-                return NotFound();
-            }
+            if (cekid == null) { return NotFound(); }
 
             ECek c = _cekService.GetByIdDetay((int)cekid);
 
-            if (c == null)
-            {
-                return NotFound();
-            }
+            if (c == null) { return NotFound(); }
 
             var entity = _cekService.GetById(c.Id);
 
-            if (entity == null)
-            {
-                return NotFound();
-            }
+            if (entity == null) { return NotFound(); }
 
             //CARİ KASA İÇİN ÇEK OLUŞTURULDU VE ÇEK KAYNAĞI İLE EKLENDİ
             String FirmaAdiForAciklama = _cariHesapService.GetById((int)c.CariHesapId).Ad;
@@ -303,25 +295,6 @@ namespace SantiyeOnMuh.WebUI.Controllers
         {
             ViewBag.Sayfa = "ÇEK DETAYI";
 
-            if (cekid == null)
-            {
-                return NotFound();
-            }
-
-            ECek cek = _cekService.GetByIdDetay((int)cekid);
-
-            if (cek == null)
-            {
-                return NotFound();
-            }
-
-            return View(cek);
-        }
-        [HttpGet]
-        public IActionResult CekSil(int? cekid)
-        {
-            ViewBag.Sayfa = "ÇEKİ SİL";
-
             if (cekid == null) { return NotFound(); }
 
             ECek cek = _cekService.GetByIdDetay((int)cekid);
@@ -330,6 +303,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
 
             Cek _cek = new Cek()
             {
+                Id = cek.Id,
                 Tarih = cek.Tarih,
                 Aciklama = cek.Aciklama,
                 CekNo = cek.CekNo,
@@ -351,10 +325,45 @@ namespace SantiyeOnMuh.WebUI.Controllers
 
             return View(_cek);
         }
+        [HttpGet]
+        public IActionResult CekSil(int? cekid)
+        {
+            ViewBag.Sayfa = "ÇEKİ SİL";
+
+            if (cekid == null) { return NotFound(); }
+
+            ECek cek = _cekService.GetByIdDetay((int)cekid);
+
+            if (cek == null) { return NotFound(); }
+
+            Cek _cek = new Cek()
+            {
+                Id=cek.Id,
+                Tarih = cek.Tarih,
+                Aciklama = cek.Aciklama,
+                CekNo = cek.CekNo,
+                Tutar = Convert.ToString(cek.Tutar),
+                ImgUrl = cek.ImgUrl,
+                BankaKasaKaynak = cek.BankaKasaKaynak,
+                CariKasaKaynak = cek.CariKasaKaynak,
+                SistemeGiris = cek.SistemeGiris,
+                SonGuncelleme = cek.SonGuncelleme,
+                Durum = cek.Durum,
+                OdemeDurumu = cek.OdemeDurumu,
+                CariHesapId = cek.CariHesapId,
+                CariHesap = cek.CariHesap,
+                SirketId = cek.SirketId,
+                Sirket = cek.Sirket,
+                BankaHesapId = cek.BankaHesapId,
+                BankaHesap = cek.BankaHesap,
+            };
+
+            ViewBag.HesapAdi = _bankaHesapService.GetById(cek.BankaHesapId).HesapAdi;
+            return View(_cek);
+        }
         [HttpPost]
         public IActionResult CekSil(Cek c)
         {
-            if (!ModelState.IsValid) { return View(c); }
 
             ECek _cek = _cekService.GetByIdDetay(c.Id);
 
@@ -395,6 +404,47 @@ namespace SantiyeOnMuh.WebUI.Controllers
             return RedirectToAction("Index");
         }
 
+        public IActionResult CekGeriYukle(int cekid)
+        {
+
+            ECek _cek = _cekService.GetByIdDetay(cekid);
+
+            if (_cek == null) { return NotFound(); }
+
+            _cek.SonGuncelleme = System.DateTime.Now;
+            _cek.Durum = true;
+
+            _cekService.Update(_cek);
+
+            int? bankakasaid = _cek.BankaKasaKaynak;
+            int? carikasaid = _cek.CariKasaKaynak;
+
+            if (bankakasaid != null)
+            {
+                EBankaKasa entityBankaKasa = _bankaKasaService.GetById((int)bankakasaid);
+
+                if (entityBankaKasa == null) { return NotFound(); }
+
+                entityBankaKasa.SonGuncelleme = System.DateTime.Now;
+                entityBankaKasa.Durum = true;
+
+                _bankaKasaService.Update(entityBankaKasa);
+            }
+
+            if (carikasaid != null)
+            {
+                ECariKasa entityCariKasa = _cariKasaService.GetById((int)carikasaid);
+
+                if (entityCariKasa == null) { return NotFound(); }
+
+                entityCariKasa.SonGuncelleme = System.DateTime.Now;
+                entityCariKasa.Durum = true;
+
+                _cariKasaService.Update(entityCariKasa);
+            }
+
+            return RedirectToAction("Index");
+        }
 
         //EXCEL
         public IActionResult CekExcel()

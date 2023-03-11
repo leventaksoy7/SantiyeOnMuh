@@ -70,7 +70,7 @@
                 <div asp-validation-summary="ModelOnly"></div>
                 <select asp-for="BankaHesapId"
                         class="form-control"
-                        asp-items="@(new SelectList(@ViewBag.Banka,"Id","Ad"))">
+                        asp-items="@(new SelectList(@ViewBag.Banka,"Id","HesapAdi"))">
                 </select>
             </div>
         </div>

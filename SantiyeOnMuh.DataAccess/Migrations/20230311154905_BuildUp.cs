@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace SantiyeOnMuh.DataAccess.Migrations
 {
     /// <inheritdoc />
-    public partial class ReBuild1 : Migration
+    public partial class BuildUp : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
