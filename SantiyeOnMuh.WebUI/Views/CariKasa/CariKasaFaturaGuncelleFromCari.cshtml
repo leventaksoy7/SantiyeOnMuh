@@ -42,7 +42,7 @@
         <div class="form-group row">
             <label class="col-sm-2" asp-for="Miktar">MİKTAR:</label>
             <div class="col-sm-5">
-                <input asp-for="Miktar" value="@Model.Miktar" class="form-control" type="number" min="0" step=".01" />
+                <input asp-for="Miktar" value="@Model.Miktar" class="form-control" />
                 <span asp-validation-for="Miktar"></span>
             </div>
         </div>
@@ -50,7 +50,7 @@
         <div class="form-group row">
             <label class="col-sm-2" asp-for="BirimFiyat">BİRİM:</label>
             <div class="col-sm-5">
-                <input asp-for="BirimFiyat" value="@Model.BirimFiyat" class="form-control" type="number" min="0" step=".01" />
+                <input asp-for="BirimFiyat" value="@Model.BirimFiyat" class="form-control" />
                 <span asp-validation-for="BirimFiyat"></span>
             </div>
         </div>
@@ -58,7 +58,7 @@
         <div class="form-group row">
             <label class="col-sm-2" asp-for="Alacak">ALACAK:</label>
             <div class="col-sm-5">
-                <input asp-for="Alacak" value="@Model.Alacak" class="form-control" type="number" min="0" step=".01" />
+                <input asp-for="Alacak" value="@Model.Alacak" class="form-control" />
                 <span asp-validation-for="Alacak"></span>
             </div>
         </div>

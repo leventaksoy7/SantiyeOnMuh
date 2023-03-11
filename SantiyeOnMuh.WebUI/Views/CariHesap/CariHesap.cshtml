@@ -52,24 +52,15 @@
                             <td style="width:10%; vertical-align:middle">@carihesap.IlgiliKisiTelefon</td>
 
                             <td style="width:10%; vertical-align:middle">
-                                <a asp-controller="CariKasa"
-                           asp-action="CariKasa"
-                           asp-route-carihesapid="@carihesap.Id"
-                                   class="btn btn-info btn-sm">HESABI GÖRÜNTÜLE</a>
+                                <a asp-controller="CariKasa" asp-action="CariKasa" asp-route-carihesapid="@carihesap.Id" class="btn btn-info btn-sm">HESABI GÖRÜNTÜLE</a>
                             </td>
 
                             <td style="width:10%; vertical-align:middle">
-                                <a asp-controller="CariHesap"
-                           asp-action="CariHesapGuncelle"
-                           asp-route-carihesapid="@carihesap.Id"
-                                   class="btn btn-success btn-sm">GÜNCELLEME</a>
+                                <a asp-controller="CariHesap" asp-action="CariHesapGuncelle" asp-route-carihesapid="@carihesap.Id" class="btn btn-success btn-sm">GÜNCELLEME</a>
                             </td>
 
                             <td style="width:10%; vertical-align:middle">
-                                <a asp-controller="CariHesap"
-                           asp-action="CariHesapSil"
-                           asp-route-carihesapid="@carihesap.Id"
-                                   class="btn btn-danger btn-sm">SİL</a>
+                                <a asp-controller="CariHesap" asp-action="CariHesapSil" asp-route-carihesapid="@carihesap.Id" class="btn btn-danger btn-sm">SİL</a>
                             </td>
                         </tr>
                     }

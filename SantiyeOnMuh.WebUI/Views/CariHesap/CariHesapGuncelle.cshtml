@@ -9,60 +9,49 @@
 </head>
 
 <body>
-    <br />
-    <br />
-    <div class="container">
-        <form asp-controller="CariHesap" asp-action="CariHesapGuncelle" method="post">
-            <input type="hidden" name="Id" value="@Model.Id" />
-            <br />
-            <div class="row">
-                <div class="col form-group">
-
-                    <label asp-for="Ad"></label>
-                    <input asp-for="Ad" class="form-control" />
-                    <span asp-validation-for="Ad"></span>
-
-                    <label asp-for="Adres"></label>
-                    <input asp-for="Adres" class="form-control" />
-                    <span asp-validation-for="Adres"></span>
-
-                    <label asp-for="Telefon"></label>
-                    <input asp-for="Telefon" class="form-control" />
-                    <span asp-validation-for="Telefon"></span>
-
-                    <label asp-for="VergiNo"></label>
-                    <input asp-for="VergiNo" class="form-control" />
-                    <span asp-validation-for="VergiNo"></span>
-
-                </div>
-                <div class="col form-group">
-
-                    <label asp-for="IlgiliKisi"></label>
-                    <input asp-for="IlgiliKisi" class="form-control" />
-                    <span asp-validation-for="VergiNo"></span>
-
-                    <label asp-for="IlgiliKisiTelefon"></label>
-                    <input asp-for="IlgiliKisiTelefon" class="form-control" />
-                    <span asp-validation-for="IlgiliKisiTelefon"></span>
-
-                    <label asp-for="Odeme"></label>
-                    <input asp-for="Odeme" class="form-control" />
-                    <span asp-validation-for="Odeme"></span>
-
-                    <label asp-for="Vade"></label>
-                    <input asp-for="Vade" class="form-control" />
-                    <span asp-validation-for="Vade"></span>
-
-                    <label asp-for="SantiyeId">ŞANTİYE:</label>
-                    <div asp-validation-summary="ModelOnly"></div>
-                    <select asp-for="SantiyeId"
-                            class="form-control"
-                            asp-items="@(new SelectList(@ViewBag.Santiye,"Id","Ad"))">
-                    </select>
-                </div>
-                <button class="col-sm-offset-2 col-sm-5 btn btn-success" type="submit">EKLE</button>
+    <form asp-controller="CariHesap" asp-action="CariHesapGuncelle" method="post">
+        <input type="hidden" asp-for="Id" class="form-control" value="@Model.Id" />
+        <div class="row">
+            <div class="col form-group">
+                <br />
+                <input asp-for="Ad" class="form-control" placeholder="AD" />
+                <span asp-validation-for="Ad"></span>
+                <br />
+                <input asp-for="Adres" class="form-control" placeholder="ADRES" />
+                <span asp-validation-for="Adres"></span>
+                <br />
+                <input asp-for="Telefon" class="form-control" placeholder="TELEFON" />
+                <span asp-validation-for="Telefon"></span>
+                <br />
+                <input asp-for="VergiNo" class="form-control" placeholder="VERGİ NUMARASI" />
+                <span asp-validation-for="VergiNo"></span>
+                <br />
+                <div asp-validation-summary="ModelOnly"></div>
+                <select asp-for="SantiyeId"
+                        class="form-control"
+                        asp-items="@(new SelectList(@ViewBag.Santiye,"Id","Ad"))">
+                </select>
+                <br />
             </div>
-        </form>
-    </div>
+            <div class="col form-group">
+                <br />
+                <input asp-for="IlgiliKisi" class="form-control" placeholder="İLGİLİ KİŞİ" />
+                <span asp-validation-for="IlgiliKisi"></span>
+                <br />
+                <input asp-for="IlgiliKisiTelefon" class="form-control" placeholder="CEP TELEFONU" />
+                <span asp-validation-for="IlgiliKisiTelefon"></span>
+                <br />
+                <input asp-for="Odeme" class="form-control" placeholder="ÖDEME TÜRÜ" />
+                <span asp-validation-for="Odeme"></span>
+                <br />
+                <input asp-for="Vade" class="form-control" placeholder="VADESİ" />
+                <span asp-validation-for="Vade"></span>
+                <br />
+                <div>
+                    <button type="submit" class="col-sm-12 btn btn-success">GÜNCELLE</button>
+                </div>
+            </div>
+        </div>
+    </form>
 </body>
 </html>

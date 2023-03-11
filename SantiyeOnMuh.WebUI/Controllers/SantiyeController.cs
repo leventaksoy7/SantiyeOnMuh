@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using DocumentFormat.OpenXml.Vml.Spreadsheet;
+using Microsoft.AspNetCore.Mvc;
 using SantiyeOnMuh.Business.Abstract;
 using SantiyeOnMuh.Entity;
 using SantiyeOnMuh.WebUI.Models;
@@ -25,7 +26,38 @@ namespace SantiyeOnMuh.WebUI.Controllers
 
             var santiyeViewModel = new SantiyeViewListModel()
             {
-                Santiyes = _santiyeService.GetAll(true),
+                Santiyes = _santiyeService.GetAll(Convert.ToBoolean(true)),
+                SantiyeKasas = _santiyeKasaService.GetAll(null, null, true),
+            };
+
+            var aktifsantiyesayisi = santiyeViewModel.Santiyes.Count();
+
+            decimal?[] gelir = new decimal?[aktifsantiyesayisi];
+            decimal?[] gider = new decimal?[aktifsantiyesayisi];
+            decimal?[] netbakiye = new decimal?[aktifsantiyesayisi];
+
+            int sayi = 0;
+
+            foreach (var santiye in santiyeViewModel.Santiyes)
+            {
+                gelir[sayi] = (decimal?)_santiyeKasaService.GetAll((int)santiye.Id, null, true).Sum(i => i.Gelir);
+                gider[sayi] = (decimal?)_santiyeKasaService.GetAll((int)santiye.Id, null, true).Sum(i => i.Gider);
+                netbakiye[sayi] = gelir[sayi] - gider[sayi];
+                sayi = sayi + 1;
+            }
+
+            ViewBag.Net = netbakiye;
+
+            return View(santiyeViewModel);
+        }
+        //ARŞİV
+        public IActionResult IndexArsiv()
+        {
+            ViewBag.Sayfa = "ŞANTİYELER";
+
+            var santiyeViewModel = new SantiyeViewListModel()
+            {
+                Santiyes = _santiyeService.GetAll(false),
                 SantiyeKasas = _santiyeKasaService.GetAll(null, null, true),
             };
 
@@ -148,37 +180,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
 
             return RedirectToAction("Index");
         }
-        //ARŞİV
-        public IActionResult IndexArsiv()
-        {
-            ViewBag.Sayfa = "ŞANTİYELER";
-
-            var santiyeViewModel = new SantiyeViewListModel()
-            {
-                Santiyes = _santiyeService.GetAll(false),
-                SantiyeKasas = _santiyeKasaService.GetAll(null, null, false),
-            };
-
-            var aktifsantiyesayisi = santiyeViewModel.Santiyes.Count();
-
-            decimal?[] gelir = new decimal?[aktifsantiyesayisi];
-            decimal?[] gider = new decimal?[aktifsantiyesayisi];
-            decimal?[] netbakiye = new decimal?[aktifsantiyesayisi];
-
-            int sayi = 0;
-
-            foreach (var santiye in santiyeViewModel.Santiyes)
-            {
-                gelir[sayi] = (decimal?)_santiyeKasaService.GetAll((int)santiye.Id, null, false).Sum(i => i.Gelir);
-                gider[sayi] = (decimal?)_santiyeKasaService.GetAll((int)santiye.Id, null, false).Sum(i => i.Gider);
-                netbakiye[sayi] = gelir[sayi] - gider[sayi];
-                sayi = sayi + 1;
-            }
-
-            ViewBag.Net = netbakiye;
-
-            return View(santiyeViewModel);
-        }
+        
         public IActionResult SantiyeGeriYukle(int? id)
         {
             if (id == null) { return NotFound(); }

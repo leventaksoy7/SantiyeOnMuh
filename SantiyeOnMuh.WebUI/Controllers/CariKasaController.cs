@@ -58,6 +58,37 @@ namespace SantiyeOnMuh.WebUI.Controllers
 
             return View(cariKasaViewModel);
         }
+        public IActionResult CariKasaArsiv(int carihesapid, int? gkid, int page = 1)
+        {
+            const int pageSize = 10;
+
+            var cariKasaViewModel = new CariKasaViewListModel()
+            {
+                PageInfo = new PageInfo
+                {
+                    TotalItem = _cariKasaService.GetCount((int)carihesapid, (int?)gkid, false),
+                    CurrentPage = page,
+                    ItemPerPage = pageSize,
+                    UrlInfo = (int?)carihesapid
+                },
+
+                CariKasas = _cariKasaService.GetAll((int)carihesapid, (int?)gkid, false, page, pageSize),
+                CariGiderKalemis = _cariGiderKalemiService.GetAll(true, true),
+                CariHesap = _cariHesapService.GetById((int)carihesapid)
+            };
+
+            //gider kalemi olup olmadığını kontrol ediyoruz, ona göre alt taraftaki toplamın şekli değişecek
+            //BAŞLIK
+
+            ViewBag.Sayfa = cariKasaViewModel.CariHesap.Ad + " CARİ HESABI";
+
+            ViewBag.gk = gkid;
+
+            ViewBag.toplamgider = _cariKasaService.GetAll((int)carihesapid, (int?)gkid, false).Sum(i => i.Borc);
+            ViewBag.toplamgelir = _cariKasaService.GetAll((int)carihesapid, (int?)gkid, false).Sum(i => i.Alacak);
+
+            return View(cariKasaViewModel);
+        }
         [HttpGet]
         public IActionResult CariKasaEkleme()
         {
@@ -211,8 +242,6 @@ namespace SantiyeOnMuh.WebUI.Controllers
         [HttpPost]
         public IActionResult CariKasaSil(CariKasa cariKasa)
         {
-            if (!ModelState.IsValid) { return View(cariKasa); }
-
             ECariKasa _cariKasa = _cariKasaService.GetByIdDetay(cariKasa.Id);
 
             if (_cariKasa == null){return NotFound();}
@@ -351,42 +380,18 @@ namespace SantiyeOnMuh.WebUI.Controllers
         [HttpGet]
         public IActionResult CariKasaGeriYukle(int? carikasaid)
         {
-            ViewBag.Sayfa = "FATURAYI SİL";
-
             if (carikasaid == null){return NotFound();}
 
             ECariKasa cariKasa = _cariKasaService.GetByIdDetay((int)carikasaid);
 
             if (cariKasa == null){return NotFound();}
 
-            CariKasa _cariKasa = new CariKasa()
-            {
-                Id = cariKasa.Id,
-                Tarih = cariKasa.Tarih,
-                Aciklama = cariKasa.Aciklama,
-                //Miktar = cariKasa.Miktar,
-                //BirimFiyat = cariKasa.BirimFiyat,
-                //Borc = cariKasa.Borc,
-                //Alacak = cariKasa.Alacak,
-                #region VİRGÜL VEYA NOKTA KULLANIMININ İKİSİNİN DE SERBEST OLMASINI SAĞLAMAK İÇİN
-                Miktar = Convert.ToString(cariKasa.Miktar),
-                BirimFiyat = Convert.ToString(cariKasa.BirimFiyat),
-                Borc = Convert.ToString(cariKasa.Borc),
-                Alacak = Convert.ToString(cariKasa.Alacak),
-                #endregion
-                ImgUrl = cariKasa.ImgUrl,
-                CekKaynak = cariKasa.CekKaynak,
-                NakitKaynak = cariKasa.NakitKaynak,
-                SistemeGiris = cariKasa.SistemeGiris,
-                SonGuncelleme = cariKasa.SonGuncelleme,
-                Durum = cariKasa.Durum,
-                CariGiderKalemiId = cariKasa.CariGiderKalemiId,
-                CariGiderKalemi = cariKasa.CariGiderKalemi,
-                CariHesapId = cariKasa.CariHesapId,
-                CariHesap = cariKasa.CariHesap,
-            };
+            cariKasa.SonGuncelleme = System.DateTime.Now;
+            cariKasa.Durum = true;
 
-            return View(_cariKasa);
+            _cariKasaService.Update(cariKasa);
+
+            return RedirectToAction("CariKasa", "CariKasa", new { carihesapid = cariKasa.CariHesapId });
         }
         [HttpPost]
         public IActionResult CariKasaGeriYukle(CariKasa cariKasa)
@@ -416,17 +421,18 @@ namespace SantiyeOnMuh.WebUI.Controllers
             return View(new CariKasa());
         }
         [HttpPost]
-        public async Task<IActionResult> CariKasaFaturaEklemeFromCari(CariKasa cariKasa, IFormFile file)
+        public async Task<IActionResult> CariKasaFaturaEklemeFromCari(CariKasa cariKasa, IFormFile? file)
         {
-            if (!ModelState.IsValid) { return View(cariKasa); }
-
-            #region  RESİM VS. EKLENMEMİŞSE SAYFAYA GERİ GİDİYOR, GERİ GİDİLEN SAYFANIN İHTİYACI OLAN BİLGİLER
+            #region SAYFAYA GERİ GİDERSE, GİDİLEN SAYFANIN İHTİYACI OLAN BİLGİLER
             ViewBag.Sayfa = _cariHesapService.GetById(cariKasa.CariHesapId).Ad + " FİRMA CARİSİNE FATURA GİRİŞİ";
             ViewBag.CariGK = _cariGiderKalemiService.GetAll(true, true);
 
             ViewBag.CariHesapId = cariKasa.CariHesapId;
             //ÜSTTEKİ SIFIRDAN EKLEMENİN BİREBİR AYNISI, GEREKLİ BİLGİLER
             #endregion
+
+            if (!ModelState.IsValid) { return View(cariKasa); }
+
             #region RESİM EKLEME BÖLÜMÜ
             if (file != null)
             {
@@ -445,7 +451,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
                 }
                 else { return View(cariKasa); }
             }
-            else { return View(cariKasa); }
+            //else { return View(cariKasa); }
             #endregion
 
             ECariKasa _cariKasa = new ECariKasa()
@@ -483,7 +489,6 @@ namespace SantiyeOnMuh.WebUI.Controllers
         public IActionResult CariKasaFaturaGuncelleFromCari(int? carikasaid)
         {
             ViewBag.Sayfa = "FATURA BİLGİLERİNİ GÜNCELLEME";
-
             ViewBag.CariGK = _cariGiderKalemiService.GetAll(true, true);
 
             if (carikasaid == null){return NotFound();}
@@ -524,10 +529,10 @@ namespace SantiyeOnMuh.WebUI.Controllers
         [HttpPost]
         public IActionResult CariKasaFaturaGuncelleFromCari(CariKasa cariKasa)
         {
-            if (!ModelState.IsValid) { return View(cariKasa); }
-
             ViewBag.Sayfa = "FATURA BİLGİLERİNİ GÜNCELLEME";
             ViewBag.CariGK = _cariGiderKalemiService.GetAll(true, true);
+
+            if (!ModelState.IsValid) { return View(cariKasa); }
 
             ECariKasa _cariKasa = _cariKasaService.GetById(cariKasa.Id);
 

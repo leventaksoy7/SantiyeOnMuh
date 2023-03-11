@@ -1,7 +1,5 @@
 ﻿@model CariHesap
-@{
-
-}
+@{}
 
 <!DOCTYPE html>
 
@@ -12,8 +10,7 @@
 <body>
     <br />
     <form asp-controller="CariHesap" asp-action="CariHesapSil" method="post">
-        <br />
-        <input type="hidden" name="Id" value="@Model.Id" />
+        <input type="hidden" asp-for="Id" class="form-control" value="@Model.Id" />
         <br />
         <div class="row">
             <div class="col-md-6">

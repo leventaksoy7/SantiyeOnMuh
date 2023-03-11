@@ -16,10 +16,10 @@
         </div>
         <br />
         <div>
-            <a asp-controller="SantiyeKasa" asp-action="SantiyeKasa" asp-route-gkid=@null class="btn btn-warning btn-sm">TÜM GİDERLER</a>
+            <a asp-controller="SantiyeKasa" asp-action="SantiyeKasa" asp-route-santiyeid="@santiye" class="btn btn-warning btn-sm">TÜM GİDERLER</a>
             @foreach (var gk in Model.SantiyeGiderKalemis)
             {
-                <a asp-controller="SantiyeKasa" asp-action="SantiyeKasa" asp-route-gkid="@gk.Id" class="btn btn-warning btn-sm">@gk.Ad</a>
+                <a asp-controller="SantiyeKasa" asp-action="SantiyeKasa" asp-route-santiyeid="@santiye" asp-route-gkid="@gk.Id" class="btn btn-warning btn-sm">@gk.Ad</a>
             }
         </div>
         <br />

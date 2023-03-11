@@ -49,10 +49,7 @@
                             <td style="width:10%; vertical-align:middle">@carihesap.IlgiliKisiTelefon</td>
 
                             <td style="width:10%; vertical-align:middle">
-                                <a asp-controller="CariKasa"
-                           asp-action="CariKasaGeriYukle"
-                           asp-route-carihesapid="@carihesap.Id"
-                                   class="btn btn-success btn-sm">GERİ YÜKLE</a>
+                                <a asp-controller="CariHesap" asp-action="CariHesapGeriYukle" asp-route-carihesapid="@carihesap.Id" class="btn btn-success btn-sm">GERİ YÜKLE</a>
                             </td>
                         </tr>
                     }

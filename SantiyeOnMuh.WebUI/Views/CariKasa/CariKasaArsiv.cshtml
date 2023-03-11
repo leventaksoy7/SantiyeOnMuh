@@ -16,24 +16,15 @@
         <br />
         <div>
             <a asp-controller="CariHesap" asp-action="CariHesap" class="btn btn-info btn-sm">TÜM CARİLER</a>
-            @if (Model.CariHesap.Durum != false)
-            {
-                <a asp-controller="CariKasa" asp-action="CariKasaArsiv" asp-route-carihesapid="@cari.Id" class="btn btn-primary btn-sm">ARŞİV</a>
 
-                <a asp-controller="CariKasa" asp-action="CariKasaFaturaEklemeFromCari" asp-route-carihesapid="@cari.Id" class="btn btn-primary btn-sm">ALACAK GİRİŞİ</a>
-
-                <a asp-controller="Nakit" asp-action="NakitEklemeFromCari" asp-route-carihesapid="@cari.Id" class="btn btn-success btn-sm">BORÇ - NAKİT GİRİŞİ</a>
-
-                <a asp-controller="Cek" asp-action="CekEklemeFromCari" asp-route-carihesapid="@cari.Id" class="btn btn-success btn-sm">BORÇ - ÇEK GİRİŞİ</a>
-            }
-
+            <a asp-controller="CariKasa" asp-action="CariKasa" asp-route-carihesapid="@cari.Id" class="btn btn-primary btn-sm">GERİ GEL</a>
         </div>
         <br />
         <div>
-            <a asp-controller="CariKasa" asp-action="CariKasa" asp-route-carihesapid="@cari.Id" asp-route-gkid="@null" class="btn btn-warning btn-sm">TÜM KALEMLER</a>
+            <a asp-controller="CariKasa" asp-action="CariKasaArsiv" asp-route-carihesapid="@cari.Id" asp-route-gkid="@null" class="btn btn-warning btn-sm">TÜM KALEMLER</a>
             @foreach (var gk in Model.CariGiderKalemis)
             {
-                <a asp-controller="CariKasa" asp-action="CariKasa" asp-route-carihesapid="@cari.Id" asp-route-gkid="@gk.Id" class="btn btn-warning btn-sm">@gk.Ad</a>
+                <a asp-controller="CariKasa" asp-action="CariKasaArsiv" asp-route-carihesapid="@cari.Id" asp-route-gkid="@gk.Id" class="btn btn-warning btn-sm">@gk.Ad</a>
             }
         </div>
         <br />
@@ -82,8 +73,7 @@
                 <th>ALACAK</th>
                 <th>BAKİYE</th>
                 <th>DETAY</th>
-                <th>GÜNCELLE</th>
-                <th>SİL</th>
+                <th>GERİ YÜKLE</th>
             </tr>
             @if (Model.CariKasas.Count == 0)
             {
@@ -106,84 +96,26 @@
                         @if (fatura.NakitKaynak != null)
                         {
                             <td style="width:10%; vertical-align:middle">
-                                <a asp-controller="Nakit"
-                       asp-action="NakitDetay"
-                       asp-route-nakitid="@fatura.NakitKaynak"
-                                   class="btn btn-info btn-sm">ÖDEMEYİ GÖRÜNTÜLE</a>
+                                <a asp-controller="Nakit" asp-action="NakitDetay" asp-route-nakitid="@fatura.NakitKaynak" class="btn btn-info btn-sm">ÖDEMEYİ GÖRÜNTÜLE</a>
                             </td>
                         }
                         @if (fatura.CekKaynak != null)
                         {
                             <td style="width:10%; vertical-align:middle">
-                                <a asp-controller="Cek"
-                       asp-action="CekDetay"
-                       asp-route-cekid="@fatura.CekKaynak"
-                                   class="btn btn-info btn-sm">ÇEKİ GÖRÜNTÜLE</a>
+                                <a asp-controller="Cek" asp-action="CekDetay" asp-route-cekid="@fatura.CekKaynak" class="btn btn-info btn-sm">ÇEKİ GÖRÜNTÜLE</a>
                             </td>
                         }
                         @if (fatura.CekKaynak == null && fatura.NakitKaynak == null)
                         {
                             <td style="width:10%; vertical-align:middle">
-                                <a asp-controller="CariKasa"
-                       asp-action="CariKasaDetay"
-                       asp-route-carikasaid="@fatura.Id"
-                                   class="btn btn-info btn-sm">DETAY</a>
+                                <a asp-controller="CariKasa" asp-action="CariKasaDetay" asp-route-carikasaid="@fatura.Id" class="btn btn-info btn-sm">DETAY</a>
                             </td>
                         }
 
-                        @if (fatura.NakitKaynak != null)
-                        {
-                            <td style="width:10%; vertical-align:middle">
-                                <a asp-controller="Nakit"
-                       asp-action="NakitGuncelle"
-                       asp-route-nakitid="@fatura.NakitKaynak"
-                                   class="btn btn-success btn-sm">GÜNCELLE</a>
-                            </td>
-                        }
-                        @if (fatura.CekKaynak != null)
-                        {
-                            <td style="width:10%; vertical-align:middle">
-                                <a asp-controller="Cek"
-                       asp-action="CekGuncelle"
-                       asp-route-cekid="@fatura.CekKaynak"
-                                   class="btn btn-success btn-sm">GÜNCELLE</a>
-                            </td>
-                        }
                         @if (fatura.CekKaynak == null && fatura.NakitKaynak == null)
                         {
                             <td style="width:10%; vertical-align:middle">
-                                <a asp-controller="CariKasa"
-                       asp-action="CariKasaFaturaGuncelleFromCari"
-                       asp-route-carikasaid="@fatura.Id"
-                                   class="btn btn-success btn-sm">GÜNCELLE</a>
-                            </td>
-                        }
-
-                        @if (fatura.NakitKaynak != null)
-                        {
-                            <td style="width:10%; vertical-align:middle">
-                                <a asp-controller="Nakit"
-                       asp-action="NakitSil"
-                       asp-route-nakitid="@fatura.NakitKaynak"
-                                   class="btn btn-danger btn-sm">SİL</a>
-                            </td>
-                        }
-                        @if (fatura.CekKaynak != null)
-                        {
-                            <td style="width:10%; vertical-align:middle">
-                                <a asp-controller="Cek"
-                       asp-action="CekSil"
-                       asp-route-cekid="@fatura.CekKaynak"
-                                   class="btn btn-danger btn-sm">SİL</a>
-                            </td>
-                        }
-                        @if (fatura.CekKaynak == null && fatura.NakitKaynak == null)
-                        {
-                            <td style="width:10%; vertical-align:middle">
-                                <a asp-controller="CariKasa"
-                       asp-action="CariKasaSil"
-                       asp-route-carikasaid="@fatura.Id"
-                                   class="btn btn-danger btn-sm">SİL</a>
+                                <a asp-controller="CariKasa" asp-action="CariKasaGeriYukle" asp-route-carikasaid="@fatura.Id" class="btn btn-danger btn-sm">GERİ YÜKLE</a>
                             </td>
                         }
                     </tr>

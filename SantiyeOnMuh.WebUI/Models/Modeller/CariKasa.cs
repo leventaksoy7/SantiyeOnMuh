@@ -17,20 +17,20 @@ namespace SantiyeOnMuh.WebUI.Models.Modeller
         [Required(ErrorMessage = "AÇIKLAMA GİRİLMESİ ZORUNLUDUR!")]
         public string Aciklama { get; set; }
 
-        [Display(Name = "MİKTAR")]
+        [Display(Name = "MİKTAR", Prompt = "MİKTAR GİRİLMESİ ZORUNLUDUR!")]
+        [Required(ErrorMessage = "MİKTAR GİRİLMESİ ZORUNLUDUR!")]
+        public string Miktar { get; set; }
 
-        public string? Miktar { get; set; }
+        [Display(Name = "BİRİM FİYATI", Prompt = "BİRİM FİYATI GİRİLMESİ ZORUNLUDUR!")]
+        [Required(ErrorMessage = "BİRİM FİYATI GİRİLMESİ ZORUNLUDUR!")]
+        public string BirimFiyat { get; set; }
 
-        [Display(Name = "BİRİM FİYATI")]
-
-        public string? BirimFiyat { get; set; }
-
-        [Display(Name = "TUTAR")]
-
+        [Display(Name = "TUTAR", Prompt = "TUTAR GİRİLMESİ ZORUNLUDUR!")]
+        [Required(ErrorMessage = "TUTAR GİRİLMESİ ZORUNLUDUR!")]
         public string Borc { get; set; }
 
-        [Display(Name = "TUTAR")]
-
+        [Display(Name = "TUTAR", Prompt = "TUTAR GİRİLMESİ ZORUNLUDUR!")]
+        [Required(ErrorMessage = "TUTAR GİRİLMESİ ZORUNLUDUR!")]
         public string Alacak { get; set; }
 
         public string? ImgUrl { get; set; }
@@ -47,11 +47,11 @@ namespace SantiyeOnMuh.WebUI.Models.Modeller
 
         public int CariGiderKalemiId { get; set; }
 
-        public ECariGiderKalemi CariGiderKalemi { get; set; }
+        public ECariGiderKalemi? CariGiderKalemi { get; set; }
 
         public int CariHesapId { get; set; }
 
-        public ECariHesap CariHesap { get; set; }
+        public ECariHesap? CariHesap { get; set; }
 
         public CariKasa()
         {

@@ -8,19 +8,10 @@
 <html>
 <body>
     <div>
-        <div>
-            <br />
-            <div>
-                <a asp-controller="Santiye"
-                   asp-action="Index"
-                   class="btn btn-primary btn-sm">TÜM ŞANTİYELER</a>
-
-                <a asp-controller="Santiye"
-                   asp-action="IndexArsiv"
-                   class="btn btn-dark btn-sm">ARŞİV</a>
-            </div>
-            <br />
-        </div>
+        <br />
+            <a asp-controller="Santiye" asp-action="Index" class="btn btn-primary btn-sm">TÜM ŞANTİYELER</a>
+@*            <a asp-controller="Santiye" asp-action="Index" class="btn btn-dark btn-sm">ARŞİV</a>*@
+        <br />
     </div>
     <br />
     <div>
@@ -49,24 +40,15 @@
                             <th style=" vertical-align: middle; width: 20%">@ViewBag.Net[sayi] <label style="visibility:hidden"> @(sayi = sayi + 1) </label></th>
 
                             <td style=" vertical-align: middle; width: 10%">
-                                <a asp-controller="SantiyeKasa"
-                           asp-action="SantiyeKasa"
-                           asp-route-santiyeid="@item.Id"
-                                   class="btn btn-info btn-sm"><i class="fas fa-cash-register"></i>  KASA</a>
+                                <a asp-controller="SantiyeKasa" asp-action="SantiyeKasa" asp-route-santiyeid="@item.Id" class="btn btn-info btn-sm"><i class="fas fa-cash-register"></i>KASA</a>
                             </td>
 
                             <td style=" vertical-align: middle; width: 10%">
-                                <a asp-controller="SantiyeKasa"
-                           asp-action="SantiyeKasaArsiv"
-                           asp-route-santiyeid="@item.Id"
-                                   class="btn btn-dark btn-sm"><i class="fas fa-cash-register"></i>  SİLİNENLER</a>
+                                <a asp-controller="SantiyeKasa" asp-action="SantiyeKasa" asp-route-santiyeid="@item.Id" class="btn btn-dark btn-sm"><i class="fas fa-cash-register"></i>SİLİNENLER</a>
                             </td>
 
                             <td style=" vertical-align: middle; width: 10%">
-                                <a asp-controller="Santiye"
-                           asp-action="SantiyeGeriYukle"
-                           asp-route-id="@item.Id"
-                                   class="btn btn-success btn-sm">GERİ YÜKLE</a>
+                                <a asp-controller="Santiye" asp-action="SantiyeGeriYukle" asp-route-id="@item.Id" class="btn btn-success btn-sm">GERİ YÜKLE</a>
                             </td>
                         </tr>
                     }

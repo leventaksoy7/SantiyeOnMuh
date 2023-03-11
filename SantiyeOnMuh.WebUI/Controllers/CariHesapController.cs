@@ -58,7 +58,12 @@ namespace SantiyeOnMuh.WebUI.Controllers
         [HttpPost]
         public IActionResult CariHesapEkleme(CariHesap cariHesap)
         {
-            if (!ModelState.IsValid) { return View(cariHesap); }
+            if (!ModelState.IsValid) 
+            {
+                ViewBag.Sayfa = "YENİ CARİ HESAP AÇMA";
+                ViewBag.Santiye = _santiyeService.GetAll(true);
+                return View(cariHesap);
+            }
 
             ECariHesap _cariHesap = new ECariHesap()
             {
@@ -118,6 +123,9 @@ namespace SantiyeOnMuh.WebUI.Controllers
         [HttpPost]
         public IActionResult CariHesapGuncelle(CariHesap cariHesap)
         {
+            ViewBag.Sayfa = "CARİ HESAP BİLGİLERİNİ GÜNCELLEME";
+            ViewBag.Santiye = _santiyeService.GetAll(true);
+
             if (!ModelState.IsValid) { return View(cariHesap); }
 
             var _cariHesap = _cariHesapService.GetById(cariHesap.Id);
@@ -148,13 +156,30 @@ namespace SantiyeOnMuh.WebUI.Controllers
 
             if (cariHesap == null){return NotFound();}
 
-            return View(cariHesap);
+            CariHesap _cariHesap = new CariHesap()
+            {
+                Id=cariHesap.Id,
+                Ad = cariHesap.Ad,
+                Adres = cariHesap.Adres,
+                Telefon = cariHesap.Telefon,
+                VergiNo = cariHesap.VergiNo,
+                IlgiliKisi = cariHesap.IlgiliKisi,
+                IlgiliKisiTelefon = cariHesap.IlgiliKisiTelefon,
+                Odeme = cariHesap.Odeme,
+                Vade = cariHesap.Vade,
+                Durum = cariHesap.Durum,
+                Ceks = cariHesap.Ceks,
+                Nakits = cariHesap.Nakits,
+                CariKasas = cariHesap.CariKasas,
+                SantiyeId = cariHesap.SantiyeId,
+                Santiye = cariHesap.Santiye,
+            };
+
+            return View(_cariHesap);
         }
         [HttpPost]
         public IActionResult CariHesapSil(CariHesap c)
         {
-            if (!ModelState.IsValid) { return View(c); }
-
             var entity = _cariHesapService.GetById(c.Id);
 
             if (entity == null) { return NotFound(); }
