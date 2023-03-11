@@ -11,13 +11,10 @@
 <body>
     <br />
     <div class="row col-md-12">
-        <a asp-controller="BankaKasa"
-           asp-action="BankaKasa"
-           class="btn btn-primary btn-sm">ANA KASA</a>
-    </div>
+        <a asp-controller="BankaKasa" asp-action="BankaKasa" class="btn btn-primary btn-sm">ANA KASA</a>
     <form asp-controller="BankaKasa" asp-action="BankaKasaGuncelle" method="post" enctype="multipart/form-data">
-        <br />
         <input type="hidden" name="Id" value="@Model.Id" />
+        <br />
         <div class="form-group row">
             <label class="col-sm-2" asp-for="Tarih"></label>
             <div class="col-sm-2">
@@ -32,7 +29,7 @@
                 <span asp-validation-for="Aciklama"></span>
             </div>
         </div>
-        <br />
+
         <div class="form-group row">
             <label class="col-sm-2" asp-for="Nitelik"></label>
             <div class="col-sm-5">
@@ -40,7 +37,7 @@
                 <span asp-validation-for="Nitelik"></span>
             </div>
         </div>
-        <br />
+
         <div class="form-group row">
             <label class="col-sm-2" asp-for="BankaHesapId"></label>
             <div class="col-sm-5">
@@ -51,7 +48,7 @@
                 </select>
             </div>
         </div>
-        <br />
+
         <div class="form-group row">
             <label class="col-sm-2" asp-for="Giren"></label>
             <div class="col-sm-5">
@@ -59,7 +56,7 @@
                 <span asp-validation-for="Giren"></span>
             </div>
         </div>
-        <br />
+
         <div class="form-group row">
             <label class="col-sm-2" asp-for="Cikan"></label>
             <div class="col-sm-5">
@@ -67,10 +64,11 @@
                 <span asp-validation-for="Cikan"></span>
             </div>
         </div>
-        <br />
+
         <div class="form-group row">
             <button class="col-sm-offset-2 col-sm-5 btn btn-success" type="submit">GÜNCELLE</button>
         </div>
     </form>
+    </div>
 </body>
 </html>

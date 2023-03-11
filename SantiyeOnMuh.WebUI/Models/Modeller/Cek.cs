@@ -27,6 +27,7 @@ namespace SantiyeOnMuh.WebUI.Models.Modeller
         [Required(ErrorMessage = "ÖDEME TUTAR GİRİLMESİ ZORUNLUDUR!")]
 
         public string Tutar { get; set; }
+        [Display(Name = "ÇEK GÖRÜNTÜSÜ")]
         public string? ImgUrl { get; set; }
         public int? BankaKasaKaynak { get; set; }
         public int? CariKasaKaynak { get; set; }
@@ -34,10 +35,13 @@ namespace SantiyeOnMuh.WebUI.Models.Modeller
         public DateTime SonGuncelleme { get; set; }
         public bool Durum { get; set; }
         public bool OdemeDurumu { get; set; }
+        [Display(Name = "CARİ HESAP")]
         public int CariHesapId { get; set; }
         public ECariHesap? CariHesap { get; set; }
+        [Display(Name = "ÇEKİN KESİLDİĞİ ŞİRKET")]
         public int SirketId { get; set; }
         public ESirket? Sirket { get; set; }
+        [Display(Name = "BANKA")]
         public int BankaHesapId { get; set; }
         public EBankaHesap? BankaHesap { get; set; }
         public Cek()

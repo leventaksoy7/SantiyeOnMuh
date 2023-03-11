@@ -132,7 +132,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
                 Borc = Convert.ToDecimal(cek.Tutar.Replace(".",",")),
                 Alacak = 0,
                 ImgUrl = null,
-                CekKaynak = cek.Id,
+                CekKaynak = _cek.Id,
                 CariGiderKalemiId = 1,
                 CariHesapId = cek.CariHesapId
             };
@@ -142,10 +142,8 @@ namespace SantiyeOnMuh.WebUI.Controllers
             //ŞİMDİ DE ÇEKE, CARİ KAYNAĞI EKLENİYOR-GÜNCELLENİYOR
             var _eklenenCek = _cekService.GetById(_cek.Id);
 
-            if (_eklenenCek == null)
-            {
-                return NotFound();
-            }
+            if (_eklenenCek == null) { return NotFound(); }
+
             _eklenenCek.CariKasaKaynak = _cariKasa.Id;
 
             _cekService.Update(_eklenenCek);
@@ -235,6 +233,11 @@ namespace SantiyeOnMuh.WebUI.Controllers
         [HttpPost]
         public IActionResult CekGuncelle(Cek c)
         {
+            ViewBag.Sayfa = "ÇEK BİLGİLERİNİ GÜNCELLEME";
+            ViewBag.Sirket = _sirketService.GetAll(true);
+            ViewBag.Cari = _cariHesapService.GetAll(null, true);
+            ViewBag.Banka = _bankaHesapService.GetAll(true);
+
             if (!ModelState.IsValid) { return View(c); }
 
             ECek _cek = _cekService.GetById(c.Id);
@@ -252,10 +255,10 @@ namespace SantiyeOnMuh.WebUI.Controllers
                 if (_bankaKasa == null)
                 { return NotFound(); }
 
-                _bankaKasa.Tarih = _cek.Tarih;
-                _bankaKasa.Aciklama = FirmaAdiForAciklama + " AİT " + _cek.CekNo + " NOLU ÇEK ÖDEMESİ" + " - " + _cek.Aciklama;
-                _bankaKasa.Cikan = _cek.Tutar;
-                _bankaKasa.BankaHesapId = _cek.BankaHesapId;
+                _bankaKasa.Tarih = c.Tarih;
+                _bankaKasa.Aciklama = FirmaAdiForAciklama + " AİT " + c.CekNo + " NOLU ÇEK ÖDEMESİ" + " - " + c.Aciklama;
+                _bankaKasa.Cikan = Convert.ToDecimal(c.Tutar.Replace(".",","));
+                _bankaKasa.BankaHesapId = c.BankaHesapId;
                 _bankaKasa.SonGuncelleme = DateTime.Now;
 
                 _bankaKasaService.Update(_bankaKasa);

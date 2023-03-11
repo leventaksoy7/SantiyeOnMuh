@@ -140,6 +140,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
             _cariHesap.IlgiliKisiTelefon = cariHesap.IlgiliKisiTelefon;
             _cariHesap.Odeme = cariHesap.Odeme;
             _cariHesap.Vade = cariHesap.Vade;
+            _cariHesap.SantiyeId = cariHesap.SantiyeId;
 
             _cariHesapService.Update(_cariHesap);
 

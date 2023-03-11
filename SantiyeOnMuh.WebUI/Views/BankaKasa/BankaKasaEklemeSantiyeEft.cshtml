@@ -10,6 +10,9 @@
     <meta name="viewport" content="width=device-width" />
 </head>
 <body>
+    <br />
+    <div class="row col-md-12">
+        <a asp-controller="BankaKasa" asp-action="BankaKasa" class="btn btn-primary btn-sm">ANA KASA</a>
     <form asp-controller="BankaKasa" asp-action="BankaKasaEklemeSantiyeEft" method="post" enctype="multipart/form-data">
         <br />
         <div class="form-group row">
@@ -22,7 +25,7 @@
                 </select>
             </div>
         </div>
-        <br />
+
         <div class="form-group row">
             <label class="col-sm-2" asp-for="BankaHesapId"></label>
             <div class="col-sm-5">
@@ -33,28 +36,29 @@
                 </select>
             </div>
         </div>
-        <br />
+
         <div class="form-group row">
             <label class="col-sm-2" asp-for="Tarih"></label>
             <div class="col-sm-5"><input asp-for="Tarih" class="form-control" value="@DateTime.Now.ToString("yyyy-MM-dd")" /></div>
             <span asp-validation-for="Tarih"></span>
         </div>
-        <br />
+
         <div class="form-group row">
             <label class="col-sm-2" asp-for="Aciklama"></label>
             <div class="col-sm-5"><input asp-for="Aciklama" class="form-control" /></div>
             <span asp-validation-for="Aciklama"></span>
         </div>
-        <br />
+
         <div class="form-group row">
             <label class="col-sm-2" asp-for="Tutar"></label>
             <div class="col-sm-5"><input asp-for="Tutar" value="0" class="form-control" type="number" min="0" step=".01" /></div>
             <span asp-validation-for="Tutar"></span>
         </div>
-        <br />
+
         <div class="form-group row">
             <button class="col-sm-offset-2 col-sm-5 btn btn-success" type="submit">GÖNDER</button>
         </div>
     </form>
+    </div>
 </body>
 </html>

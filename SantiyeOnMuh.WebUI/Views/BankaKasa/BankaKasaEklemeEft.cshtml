@@ -8,6 +8,9 @@
     <meta name="viewport" content="width=device-width" />
 </head>
 <body>
+    <br />
+    <div class="row col-md-12">
+        <a asp-controller="BankaKasa" asp-action="BankaKasa" class="btn btn-primary btn-sm">ANA KASA</a>
     <form asp-controller="BankaKasa" asp-action="BankaKasaEklemeEFT" method="post" enctype="multipart/form-data">
         <br />
         <div class="form-group row">
@@ -17,7 +20,7 @@
                 <span asp-validation-for="Tarih"></span>
             </div>
         </div>
-        <br />
+
         <div class="form-group row">
            <label class="col-sm-2" asp-for="Aciklama"></label>
             <div class="col-sm-5">
@@ -25,7 +28,7 @@
                 <span asp-validation-for="Aciklama"></span>
             </div>
         </div>
-        <br />
+
         <div class="form-group row">
             <label class="col-sm-2" asp-for="GonderenBanka">@*GÖNDEREN HESAP:*@</label>
             <div class="col-sm-5">
@@ -36,7 +39,7 @@
                 </select>
             </div>
         </div>
-        <br />
+
         <div class="form-group row">
             <label class="col-sm-2" asp-for="AliciBanka">@*ALICI HESAP:*@</label>
             <div class="col-sm-5">
@@ -47,7 +50,7 @@
                 </select>
             </div>
         </div>
-        <br />
+
         <div class="form-group row">
             <label class="col-sm-2" asp-for="Tutar">@*GÖNDERİLECEK TUTAR:*@</label>
             <div class="col-sm-5">
@@ -55,10 +58,11 @@
                 <span asp-validation-for="Tutar"></span>
             </div>
         </div>
-        <br />
+
         <div class="form-group row">
             <button class="col-sm-offset-2 col-sm-5 btn btn-success" type="submit">GÖNDER</button>
         </div>
     </form>
+    </div>
 </body>
 </html>

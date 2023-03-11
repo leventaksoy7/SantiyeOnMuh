@@ -1,5 +1,7 @@
 ﻿@model SantiyeKasaViewListModel
-@{ var santiye = Model.Santiye.Id; }
+@{
+    var santiye = Model.Santiye.Id;
+}
 
 <!DOCTYPE html>
 
@@ -67,7 +69,18 @@
                             }*@
 
                             <td><a asp-controller="SantiyeKasa" asp-action="SantiyeKasaDetay" asp-route-id="@item.Id" class="btn btn-info btn-sm">DETAY</a></td>
-                            <td><a asp-controller="SantiyeKasa" asp-action="SantiyeKasaGuncelleFromSantiye" asp-route-santiyekasaid="@item.Id" class="btn btn-success btn-sm">GÜNCELLEME</a></td>
+                            
+
+                            @if (item.BankaKasaKaynak == null)
+                            {
+                                <td><a asp-controller="SantiyeKasa" asp-action="SantiyeKasaGuncelleFromSantiye" asp-route-santiyekasaid="@item.Id" class="btn btn-success btn-sm">GÜNCELLEME</a></td>
+                            }
+                            else
+                            {
+                                <td><a asp-controller="BankaKasa" asp-action="BankaKasaGuncelleSantiyeEft" asp-route-santiyekasaid="@item.BankaKasaKaynak" class="btn btn-success btn-sm">GÜNCELLEME</a></td>
+                            }
+
+
                             @if (item.BankaKasaKaynak == null)
                             {
                                 <td><a asp-controller="SantiyeKasa" asp-action="SantiyeKasaSil" asp-route-santiyekasaid="@item.Id" class="btn btn-danger btn-sm">SİL</a></td>

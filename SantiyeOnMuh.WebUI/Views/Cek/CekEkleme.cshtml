@@ -8,6 +8,14 @@
     <meta name="viewport" content="width=device-width" />
 </head>
 <body>
+    <br />
+    <div>
+        <div class ="form-group row">
+            <a asp-controller="BankaKasa" asp-action="BankaKasa" class="col-sm-5 btn btn-primary btn-sm">ANA KASA</a>
+
+            <a asp-controller="Cek" asp-action="Index" class="col-sm-5 col-sm-offset-2 btn btn-primary btn-sm">ÇEK LİSTESİ</a>
+        </div>
+       
     <form asp-controller="Cek" asp-action="CekEkleme" method="post" enctype="multipart/form-data">
         <br />
         <div class="form-group row">
@@ -17,7 +25,7 @@
                 <span asp-validation-for="CekNo"></span>
             </div>
         </div>
-        <br />
+
         <div class="form-group row">
             <label class="col-sm-2" asp-for="Tarih"></label>
             <div class="col-sm-5">
@@ -25,7 +33,7 @@
                 <span asp-validation-for="Tarih"></span>
             </div>
         </div>
-        <br />
+
         <div class="form-group row">
             <label class="col-sm-2" asp-for="Aciklama"></label>
             <div class="col-sm-5">
@@ -33,7 +41,7 @@
                 <span asp-validation-for="Aciklama"></span>
             </div>
         </div>
-        <br />
+
         <div class="form-group row">
             <label class="col-sm-2" asp-for="Tutar"></label>
             <div class="col-sm-5">
@@ -41,7 +49,7 @@
                 <span asp-validation-for="Tutar"></span>
             </div>
         </div>
-        <br />
+
         <div class="form-group row">
             <label class="col-sm-2" asp-for="SirketId"></label>
             <div class="col-sm-5">
@@ -52,7 +60,7 @@
                 </select>
             </div>
         </div>
-        <br />
+
         <div class="form-group row">
             <label class="col-sm-2" asp-for="CariHesapId"></label>
             <div class="col-sm-5">
@@ -63,7 +71,7 @@
                 </select>
             </div>
         </div>
-        <br />
+
         <div class="form-group row">
             <label class="col-sm-2" asp-for="BankaHesapId"></label>
             <div class="col-sm-5">
@@ -74,7 +82,7 @@
                 </select>
             </div>
         </div>
-        <br />
+
         <div class="form-group row">
             <label class="col-sm-2" asp-for="ImgUrl"></label>
             <div class="col-sm-5">
@@ -83,10 +91,11 @@
                 <span asp-validation-for="ImgUrl"></span>
             </div>
         </div>
-        <br />
+
         <div class="form-group row">
             <button class="col-sm-offset-2 col-sm-5 btn btn-success" type="submit">EKLE</button>
         </div>
     </form>
+    </div>
 </body>
 </html>

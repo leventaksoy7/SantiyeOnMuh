@@ -8,6 +8,10 @@
     <meta name="viewport" content="width=device-width" />
 </head>
 <body>
+    <br />
+    <div class="form-group row">
+        <a asp-controller="SantiyeKasa" asp-action="SantiyeKasa" asp-route-santiyeid="@ViewBag.SantiyeId" class="col-sm-7 btn btn-primary btn-sm">ŞANTİYE KASA</a>
+    </div>
     <form asp-controller="SantiyeKasa" asp-action="SantiyeKasaEklemeFromSantiye" method="post" enctype="multipart/form-data">
         <input type="hidden" asp-for="SantiyeId" class="form-control" value="@ViewBag.SantiyeId" />
         <br />
@@ -18,7 +22,7 @@
                 <span asp-validation-for="Tarih"></span>
             </div>
         </div>
-        <br />
+
         <div class="form-group row">
             <label class="col-sm-2" asp-for="Aciklama"></label>
             <div class="col-sm-5">
@@ -26,7 +30,7 @@
                 <span asp-validation-for="Aciklama"></span>
             </div>
         </div>
-        <br />
+
         <div class="form-group row">
             <label class="col-sm-2" asp-for="Kisi"></label>
             <div class="col-sm-5">
@@ -34,7 +38,7 @@
                 <span asp-validation-for="Kisi"></span>
             </div>
         </div>
-        <br />
+
         <div class="form-group row">
             <label class="col-sm-2" asp-for="SantiyeGiderKalemiId"></label>
             <div class="col-sm-5">
@@ -45,7 +49,7 @@
                 </select>
             </div>
         </div>
-        <br />
+
         <div class="form-group row">
             <label class="col-sm-2" asp-for="No">@*FATURA/FİŞ NO-PLAKA:*@</label>
             <div class="col-sm-5">
@@ -53,7 +57,7 @@
                 <span asp-validation-for="No"></span>
             </div>
         </div>
-        <br />
+
         <div class="form-group row">
             <label class="col-sm-2" asp-for="Gider"></label>
             <div class="col-sm-5">
@@ -61,7 +65,7 @@
                 <span asp-validation-for="Gider"></span>
             </div>
         </div>
-        <br />
+
         <div class="form-group row">
             <label class="col-sm-2" asp-for="ImgUrl"></label>
             <div class="col-sm-5">
@@ -70,7 +74,7 @@
                 @*<span asp-validation-for="ImgUrl"></span>*@
             </div>
         </div>
-        <br />
+
         <div class="form-group row">
             <button class="col-sm-offset-2 col-sm-5 btn btn-success" type="submit">EKLE</button>
         </div>

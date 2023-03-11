@@ -8,6 +8,11 @@
     <meta name="viewport" content="width=device-width" />
 </head>
 <body>
+    <div class="form-group row">
+        <a asp-controller="BankaKasa" asp-action="BankaKasa" class="col-sm-5 btn btn-primary btn-sm">ANA KASA</a>
+
+        <a asp-controller="Cek" asp-action="Index" class="col-sm-5 col-sm-offset-2 btn btn-primary btn-sm">ÇEK LİSTESİ</a>
+    </div>
     <form asp-controller="Cek" asp-action="CekGuncelle" method="post">
         <input type="hidden" name="Id" value="@Model.Id" />
         <br />
@@ -18,7 +23,7 @@
                 <span asp-validation-for="Tarih"></span>
             </div>
         </div>
-        <br />
+
         <div class="form-group row">
             <label class="col-sm-2" asp-for="CekNo"></label>
             <div class="col-sm-5">
@@ -26,7 +31,7 @@
                 <span asp-validation-for="CekNo"></span>
             </div>
         </div>
-        <br />
+
         <div class="form-group row">
             <label class="col-sm-2" asp-for="Aciklama"></label></>
             <div class="col-sm-5">
@@ -34,18 +39,18 @@
                 <span asp-validation-for="Aciklama"></span>
             </div>
         </div>
-        <br />
+
         <div class="form-group row">
             <label class="col-sm-2" asp-for="Tutar"></label>
-            <div class="col-sm-2">
+            <div class="col-sm-5">
                 <input asp-for="Tutar" class="form-control" value=@Model.Tutar type="number" min="1" step=".01" />
                 <span asp-validation-for="Tutar"></span>
             </div>
         </div>
-        <br />
+
         <div class="form-group row">
             <label class="col-sm-2" asp-for="SirketId"></label>
-            <div class="col-sm-2">
+            <div class="col-sm-5">
                 <div asp-validation-summary="ModelOnly"></div>
                 <select asp-for="SirketId"
                         class="form-control"
@@ -53,10 +58,10 @@
                 </select>
             </div>
         </div>
-        <br />
+
         <div class="form-group row">
             <label class="col-sm-2" asp-for="CariHesapId"></label>
-            <div class="col-sm-2">
+            <div class="col-sm-5">
                 <div asp-validation-summary="ModelOnly"></div>
                 <select asp-for="CariHesapId"
                         class="form-control"
@@ -64,18 +69,18 @@
                 </select>
             </div>
         </div>
-        <br />
+
         <div class="form-group row">
             <label class="col-sm-2" asp-for="BankaHesapId"></label>
-            <div class="col-sm-2">
+            <div class="col-sm-5">
                 <div asp-validation-summary="ModelOnly"></div>
                 <select asp-for="BankaHesapId"
                         class="form-control"
-                        asp-items="@(new SelectList(@ViewBag.Banka,"Id","Ad"))">
+                        asp-items="@(new SelectList(@ViewBag.Banka,"Id","HesapAdi"))">
                 </select>
             </div>
         </div>
-        <br />
+
         <div class="form-group row">
             <button class="col-sm-offset-2 col-sm-5 btn btn-success" type="submit">GÜNCELLE</button>
         </div>

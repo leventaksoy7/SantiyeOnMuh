@@ -49,9 +49,7 @@
                             @if (item.OdemeDurumu == false)
                             {
                                 <td style="vertical-align: middle; width: 10%">
-                                    <a asp-controller="Cek"
-                           asp-action="CekTahsil"
-                           asp-route-cekid="@item.Id"
+                                    <a asp-controller="Cek" asp-action="CekTahsil" asp-route-cekid="@item.Id"
                                        class="btn btn-info btn-sm">TAHSİL ET</a>
                                 </td>
                             }

@@ -17,12 +17,12 @@ namespace SantiyeOnMuh.WebUI.Models.Modeller
 
         [Required(ErrorMessage = "AÇIKLAMA BOŞ BIRAKILAMAZ!")]
         [Display(Name = "AÇIKLAMA", Prompt = "AÇIKLAMA BOŞ BIRAKILAMAZ!")]
-        [MinLength(10)]
+        [MinLength(3)]
         public string Aciklama { get; set; }
 
         //PARA AKIŞININ NİCELİĞİ ÖRN: EFT HAVALE ÖDEME VB
         [Required(ErrorMessage = "NİTELİK BOŞ BIRAKILAMAZ!")]
-        [Display(Name = "EFT-HAVALE-FATURA ÖD. VB.", Prompt = "EFT-HAVALE-FATURA ÖDEMESİ VB. OLARAK BELİRTİNİZ")]
+        [Display(Name = "NİTELİK", Prompt = "HAKEDİŞ-EFT-HAVALE-FATURA ÖDEMESİ VB. OLARAK BELİRTİNİZ")]
         [MinLength(3)]
         public string Nitelik { get; set; }
 

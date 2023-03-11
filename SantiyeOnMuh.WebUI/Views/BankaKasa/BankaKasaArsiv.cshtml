@@ -61,30 +61,15 @@
 
                             @if (item.CekKaynak != null)
                             {
-                                <td style=" vertical-align: middle; width: 10%">
-                                    <a asp-controller="Cek"
-                           asp-action="CekGeriYukle"
-                           asp-route-cekid="@item.CekKaynak"
-                                       class="btn btn-success btn-sm">GERİ YÜKLE</a>
-                                </td>
+                                <td style=" vertical-align: middle; width: 10%"> <a asp-controller="Cek" asp-action="CekGeriYukle" asp-route-cekid="@item.CekKaynak" class="btn btn-success btn-sm">GERİ YÜKLE</a> </td>
                             }
                             else if (item.NakitKaynak != null)
                             {
-                                <td style=" vertical-align: middle; width: 10%">
-                                    <a asp-controller="Nakit"
-                           asp-action="NakitGeriYukle"
-                           asp-route-nakitid="@item.NakitKaynak"
-                                       class="btn btn-success btn-sm">GERİ YÜKLE</a>
-                                </td>
+                                <td style=" vertical-align: middle; width: 10%"> <a asp-controller="Nakit" asp-action="NakitGeriYukle" asp-route-nakitid="@item.NakitKaynak" class="btn btn-success btn-sm">GERİ YÜKLE</a> </td>
                             }
                             else
                             {
-                                <td style=" vertical-align: middle; width: 10%">
-                                    <a asp-controller="BankaKasa"
-                           asp-action="BankaKasaGeriYukle"
-                           asp-route-bankakasaid="@item.Id"
-                                       class="btn btn-success btn-sm">GERİ YÜKLE</a>
-                                </td>
+                                <td style=" vertical-align: middle; width: 10%"> <a asp-controller="BankaKasa" asp-action="BankaKasaGeriYukle" asp-route-bankakasaid="@item.Id" class="btn btn-success btn-sm">GERİ YÜKLE</a> </td>
                             }
                         </tr>
                     }

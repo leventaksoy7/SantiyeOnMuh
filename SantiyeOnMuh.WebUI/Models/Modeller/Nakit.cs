@@ -8,7 +8,7 @@ namespace SantiyeOnMuh.WebUI.Models.Modeller
     public class Nakit
     {
         public int Id { get; set; }
-
+        [Display(Name = "TARİH")]
         [Required(ErrorMessage = "TARİH GİRMELİSİNİZ!")]
         [DataType(DataType.Date)]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
@@ -22,19 +22,22 @@ namespace SantiyeOnMuh.WebUI.Models.Modeller
         [Required(ErrorMessage = "ÖDEME TUTARI GİRİLMESİ ZORUNLUDUR!")]
 
         public string Tutar { get; set; }
-
+        [Display(Name = "DEKONT GÖRÜNTÜSÜ")]
         public string? ImgUrl { get; set; }
         public int? BankaKasaKaynak { get; set; }
         public int? CariKasaKaynak { get; set; }
         public DateTime SistemeGiris { get; set; }
         public DateTime SonGuncelleme { get; set; }
         public bool Durum { get; set; }
+        [Display(Name = "CARİ HESAP")]
         public int CariHesapId { get; set; }
-        public ECariHesap CariHesap { get; set; }
+        public ECariHesap? CariHesap { get; set; }
+        [Display(Name = "ÇEKİN KESİLDİĞİ ŞİRKET")]
         public int SirketId { get; set; }
-        public ESirket Sirket { get; set; }
+        public ESirket? Sirket { get; set; }
+        [Display(Name = "BANKA")]
         public int BankaHesapId { get; set; }
-        public EBankaHesap BankaHesap { get; set; }
+        public EBankaHesap? BankaHesap { get; set; }
         public Nakit()
         {
             Tarih = System.DateTime.Now;

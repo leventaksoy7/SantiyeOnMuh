@@ -62,18 +62,20 @@ namespace SantiyeOnMuh.WebUI.Controllers
         {
             ViewBag.Sayfa = "YENİ NAKİT ÖDEMESİ EKLE";
 
-            ViewBag.Sirket = new SelectList(_sirketService.GetAll(true), "Id", "Ad");
-            ViewBag.Cari = new SelectList(_cariHesapService.GetAll(null, true), "Id", "Ad");
-            ViewBag.Banka = new SelectList(_bankaHesapService.GetAll(true), "Id", "Ad");
+            ViewBag.Sirket = _sirketService.GetAll(true);
+            ViewBag.Cari = _cariHesapService.GetAll(null, true);
+            ViewBag.Banka = _bankaHesapService.GetAll(true);
 
-            return View(new ENakit());
+            return View(new Nakit());
         }
         [HttpPost]
-        public IActionResult NakitEkleme(Nakit nakit, IFormFile file)
+        public IActionResult NakitEkleme(Nakit nakit, IFormFile? file)
         {
-            ViewBag.Sirket = new SelectList(_sirketService.GetAll(true), "Id", "Ad");
-            ViewBag.Cari = new SelectList(_cariHesapService.GetAll(null, true), "Id", "Ad");
-            ViewBag.Banka = new SelectList(_bankaHesapService.GetAll(true), "Id", "Ad");
+            ViewBag.Sayfa = "YENİ NAKİT ÖDEMESİ EKLE";
+
+            ViewBag.Sirket = _sirketService.GetAll(true);
+            ViewBag.Cari = _cariHesapService.GetAll(null, true);
+            ViewBag.Banka = _bankaHesapService.GetAll(true);
 
             if (ModelState.IsValid)
             {

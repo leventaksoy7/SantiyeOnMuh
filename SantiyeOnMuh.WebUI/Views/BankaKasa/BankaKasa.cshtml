@@ -9,7 +9,6 @@
 <html>
 <body>
 
-
     @if (TempData["message"] != null)
     {
         var message = JsonConvert.DeserializeObject<AlertMessage>(TempData["message"] as string);
@@ -26,34 +25,19 @@
     <div>
         <br />
         <div>
-            <a asp-controller="BankaKasa"
-               asp-action="BankaKasa"
-               asp-route-bankahesapid="@null"
-               class="btn btn-primary btn-sm">TÜM BANKALAR</a>
+            <a asp-controller="BankaKasa" asp-action="BankaKasa" asp-route-bankahesapid="@null" class="btn btn-primary btn-sm">TÜM BANKALAR</a>
 
-            <a asp-controller="BankaKasa"
-               asp-action="BankaKasaEkleme"
-               class="btn btn-success btn-sm">ANA KASAYA GİRİŞ</a>
+            <a asp-controller="BankaKasa" asp-action="BankaKasaEkleme" class="btn btn-success btn-sm">ANA KASAYA GİRİŞ</a>
 
-            <a asp-controller="BankaKasa"
-               asp-action="BankaKasaEklemeSantiyeEft"
-               class="btn btn-success btn-sm">ŞANTİYE KASASINA EFT</a>
+            <a asp-controller="BankaKasa" asp-action="BankaKasaEklemeSantiyeEft" class="btn btn-success btn-sm">ŞANTİYE KASASINA EFT</a>
 
-            <a asp-controller="BankaKasa"
-               asp-action="BankaKasaEklemeEft"
-               class="btn btn-success btn-sm">EFT</a>
+            <a asp-controller="BankaKasa" asp-action="BankaKasaEklemeEft" class="btn btn-success btn-sm">EFT</a>
 
-            <a asp-controller="Cek"
-               asp-action="CekEkleme"
-               class="btn btn-success btn-sm">ÇEK</a>
+            <a asp-controller="Cek" asp-action="CekEkleme" class="btn btn-success btn-sm">ÇEK</a>
 
-            <a asp-controller="Nakit"
-               asp-action="NakitEkleme"
-               class="btn btn-success btn-sm">NAKİT</a>
-            <a asp-controller="BankaKasa"
-               asp-action="BankaKasaArsiv"
-               asp-route-bankahesapid="@null"
-               class="btn btn-dark btn-sm">ARŞİV</a>
+            <a asp-controller="Nakit" asp-action="NakitEkleme" class="btn btn-success btn-sm">NAKİT</a>
+
+            <a asp-controller="BankaKasa" asp-action="BankaKasaArsiv" asp-route-bankahesapid="@null" class="btn btn-dark btn-sm">ARŞİV</a>
         </div>
         <br />
         <div>
@@ -96,8 +80,8 @@
                             <td style=" vertical-align: middle; width: 30%">@item.Aciklama</td>
                             <td style=" vertical-align: middle; width: 10%">@item.BankaHesap.HesapAdi</td>
                             <td style=" vertical-align: middle; width: 10%">@item.Nitelik</td>
-                            <td style=" vertical-align: middle; width: 10%">@item.Giren</td>
-                            <td style=" vertical-align: middle; width: 10%">@item.Cikan</td>
+                            <td style=" vertical-align: middle; width: 10%">@string.Format("{0:0,0.00}",item.Giren)</td>
+                            <td style=" vertical-align: middle; width: 10%">@string.Format("{0:0,0.00}",item.Cikan)</td>
 
                             @if (item.CekKaynak != null)
                             {
