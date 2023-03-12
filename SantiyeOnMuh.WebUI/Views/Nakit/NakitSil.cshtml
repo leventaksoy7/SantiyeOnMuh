@@ -18,12 +18,12 @@
             <div class="col-xl-6 col-md-4">
                 <table class="w3-table w3-striped w3-white">
                     <!--DÖNGÜ İÇİNDE FATURA BİLGİLERİ-->
-                    <tr><th>BANKA</th><td>@Model.BankaHesap.HesapAdi</td></tr>
+                    <tr><th>BANKA</th><td>@ViewBag.Banka</td></tr>
                     <tr><th>TARİH</th><td>@Model.Tarih.ToString("dd/MM/yyyy")</td></tr>
                     <tr><th>AÇIKLAMA</th><td>@Model.Aciklama</td></tr>
                     <tr><th>TUTAR</th><td>@Model.Tutar</td></tr>
-                    <tr><th>ŞİRKET</th><td>@Model.Sirket.Ad</td></tr>
-                    <tr><th>FİRMA</th><td>@Model.CariHesap.Ad</td></tr>
+                    <tr><th>ŞİRKET</th><td>@ViewBag.Sirket</td></tr>
+                    <tr><th>FİRMA</th><td>@ViewBag.Cari</td></tr>
                     <tr><th>SİSTEME GİRİŞ</th><td>@Model.SistemeGiris.ToString("dd/MM/yyyy")</td></tr>
                     <tr><th>SON GÜNCELLEME</th><td>@Model.SonGuncelleme.ToString("dd/MM/yyyy")</td></tr>
                 </table>

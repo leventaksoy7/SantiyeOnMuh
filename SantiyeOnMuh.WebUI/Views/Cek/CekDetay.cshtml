@@ -1,7 +1,5 @@
 ﻿@model Cek
-@{
-
-}
+@{}
 
 <!DOCTYPE html>
 
@@ -17,21 +15,8 @@
                     <!--DÖNGÜ İÇİNDE FATURA BİLGİLERİ-->
                     <tr>
                         <th>DURUM</th>
-                        @if (Model.OdemeDurumu != false)
-                        {
-                            <th>
-                                TAHSİL EDİLDİ
-                            </th>
-                        }
-                        else
-                        {
-                            <td style="vertical-align: middle; width: 10%">
-                                <a asp-controller="Cek"
-                               asp-action="CekTahsil"
-                               asp-route-cekid="@Model.Id"
-                                   class="btn btn-info btn-sm">TAHSİL ET</a>
-                            </td>
-                        }
+                        @if (Model.OdemeDurumu != false) { <th> TAHSİL EDİLDİ </th> }
+                        else { <td style="vertical-align: middle; width: 10%"> <a asp-controller="Cek" asp-action="CekTahsil" asp-route-cekid="@Model.Id" class="btn btn-info btn-sm">TAHSİL ET</a> </td> }
                     </tr>
                     <tr><th>BANKA</th><td>@Model.BankaHesap.HesapAdi</td></tr>
                     <tr><th>ÇEK NO</th><td>@Model.CekNo</td></tr>

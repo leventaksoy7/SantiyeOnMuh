@@ -187,6 +187,11 @@ namespace SantiyeOnMuh.WebUI.Controllers
         [HttpPost]
         public IActionResult NakitGuncelle(Nakit nakit)
         {
+            ViewBag.Sayfa = "NAKİT ÖDEME BİLGİSİNİ GÜNCELLEME";
+            ViewBag.Sirket = _sirketService.GetAll(true);
+            ViewBag.Cari = _cariHesapService.GetAll(null, true);
+            ViewBag.Banka = _bankaHesapService.GetAll(true);
+
             if (!ModelState.IsValid) { return View(nakit); }
 
             ENakit _nakit = _nakitService.GetById(nakit.Id);
@@ -244,7 +249,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
             return RedirectToAction("Index");
         }
         [HttpGet]
-        public IActionResult Nakit(int? nakitid)
+        public IActionResult NakitDetay(int? nakitid)
         {
             ViewBag.Sayfa = "NAKİT DETAYI";
 
@@ -254,16 +259,17 @@ namespace SantiyeOnMuh.WebUI.Controllers
 
             if (nakit == null){return NotFound();}
 
-            ViewBag.Sirket = _sirketService.GetAll();
-            ViewBag.Cari = _cariHesapService.GetAll();
-            ViewBag.Banka = _bankaHesapService.GetAll();
+            //VİEWDA INCLUDE ÇALIŞMADI - ÇEK İÇİN ÇALIŞTI SORUNU BULAMADIM VİEWBAG İLE VERİYİ ATTIM
+            ViewBag.Sirket = _sirketService.GetById(nakit.SirketId).Ad;
+            ViewBag.Cari = _cariHesapService.GetById(nakit.CariHesapId).Ad;
+            ViewBag.Banka = _bankaHesapService.GetById(nakit.BankaHesapId).HesapAdi;
 
-            ENakit _nakit = new ENakit()
+            Nakit _nakit = new Nakit()
             {
                 Id = nakit.Id,
                 Tarih = nakit.Tarih,
                 Aciklama = nakit.Aciklama,
-                Tutar = nakit.Tutar,
+                Tutar = Convert.ToString(nakit.Tutar),
                 ImgUrl = nakit.ImgUrl,
                 BankaKasaKaynak = nakit.BankaKasaKaynak,
                 CariKasaKaynak = nakit.CariKasaKaynak,
@@ -316,7 +322,10 @@ namespace SantiyeOnMuh.WebUI.Controllers
         [HttpPost]
         public IActionResult NakitSil(Nakit nakit)
         {
-            if (!ModelState.IsValid) { return View(nakit); }
+            //VİEWDA INCLUDE ÇALIŞMADI - ÇEK İÇİN ÇALIŞTI SORUNU BULAMADIM VİEWBAG İLE VERİYİ ATTIM
+            //ViewBag.Sirket = _sirketService.GetById(nakit.SirketId).Ad;
+            //ViewBag.Cari = _cariHesapService.GetById(nakit.CariHesapId).Ad;
+            //ViewBag.Banka = _bankaHesapService.GetById(nakit.BankaHesapId).HesapAdi;
 
             ENakit _nakit = _nakitService.GetById(nakit.Id);
 
@@ -356,6 +365,53 @@ namespace SantiyeOnMuh.WebUI.Controllers
 
             return RedirectToAction("Index");
         }
+
+
+        [HttpGet]
+        public IActionResult NakitGeriYukle(int? nakitid)
+        {
+
+            if (nakitid == null) { return NotFound(); }
+
+            ENakit _nakit = _nakitService.GetById((int)nakitid);
+
+            if (_nakit == null) { return NotFound(); }
+
+            _nakit.SonGuncelleme = System.DateTime.Now;
+            _nakit.Durum = true;
+
+            int? bankakasaid = _nakit.BankaKasaKaynak;
+            int? carikasaid = _nakit.CariKasaKaynak;
+
+            if (bankakasaid != null)
+            {
+                EBankaKasa _bankaKasa = _bankaKasaService.GetById((int)bankakasaid);
+
+                if (_bankaKasa == null) { return NotFound(); }
+
+                _bankaKasa.SonGuncelleme = System.DateTime.Now;
+                _bankaKasa.Durum = true;
+
+                _bankaKasaService.Update(_bankaKasa);
+            }
+
+            if (carikasaid != null)
+            {
+                ECariKasa _cariKasa = _cariKasaService.GetById((int)carikasaid);
+
+                if (_cariKasa == null) { return NotFound(); }
+
+                _cariKasa.SonGuncelleme = System.DateTime.Now;
+                _cariKasa.Durum = true;
+
+                _cariKasaService.Update(_cariKasa);
+            }
+
+            _nakitService.Update(_nakit);
+
+            return RedirectToAction("Index");
+        }
+        
 
 
         //EXCEL
@@ -451,6 +507,11 @@ namespace SantiyeOnMuh.WebUI.Controllers
             };
             return View(nakitViewModel);
         }
+
+
+
+
+
 
         #region CARİDEN
         [HttpGet]
@@ -565,6 +626,13 @@ namespace SantiyeOnMuh.WebUI.Controllers
             return RedirectToAction("CariKasa", "CariKasa", new { carihesapid = _nakit.CariHesapId });
         }
         #endregion
+
+
+
+
+
+
+
 
         #region ARASEÇİM
         public IActionResult AraSecim()

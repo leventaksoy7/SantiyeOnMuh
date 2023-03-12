@@ -43,7 +43,7 @@
                             <td style="vertical-align: middle; width: 15%">@item.Sirket.Ad</td>
                             <td style="vertical-align: middle; width: 10%">@item.CariHesap.Ad</td>
                             <td style="vertical-align: middle; width: 10%">@item.BankaHesap.HesapAdi</td>
-                            <td style="vertical-align: middle; width: 10%"><a asp-controller="Nakit" asp-action="NakitGeriYukle" asp-route-id="@item.Id" class="btn btn-success btn-sm">GERİ YÜKLE</a></td>
+                            <td style="vertical-align: middle; width: 10%"><a asp-controller="Nakit" asp-action="NakitGeriYukle" asp-route-nakitid="@item.Id" class="btn btn-success btn-sm">GERİ YÜKLE</a></td>
                         </tr>
                     }
                 }
