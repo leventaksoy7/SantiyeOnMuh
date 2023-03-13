@@ -89,16 +89,20 @@ namespace SantiyeOnMuh.WebUI.Controllers
 
             if (_cariHesapService.Create(_cariHesap))
             {
-                AlertMessage msg = new AlertMessage()
-                {
-                    Message = $"{_cariHesap.Ad} HESABI AÇILDI.",
-                    AlertType = "success"
-                };
+                //AlertMessage msg = new AlertMessage()
+                //{
+                //    Message = ,
+                //    AlertType = "success"
+                //};
 
-                TempData["message"] = JsonConvert.SerializeObject(msg);
+                //TempData["message"] = JsonConvert.SerializeObject(msg);
+
+                CreateMessage($"{_cariHesap.Ad} HESABI AÇILDI.", "success");
 
                 return RedirectToAction("CariHesap");
             };
+            CreateMessage(_cariHesapService.ErrorMessage, "danger");
+
             return View(cariHesap);
 
             //_cariHesapService.Create(_cariHesap);
@@ -332,6 +336,19 @@ namespace SantiyeOnMuh.WebUI.Controllers
 
             _cariHesapService.Update(cariHesap);
             return RedirectToAction("CariHesap");
+        }
+
+
+        private void CreateMessage(string message, string alertType)
+        {
+            AlertMessage msg = new AlertMessage()
+            {
+                //Message = $"{_bankaHesap.HesapAdi} HESABI AÇILDI.",
+                Message = message,
+                AlertType = alertType
+            };
+
+            TempData["message"] = JsonConvert.SerializeObject(msg);
         }
     }
 }

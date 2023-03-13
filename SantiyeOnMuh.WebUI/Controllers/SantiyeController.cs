@@ -108,16 +108,13 @@ namespace SantiyeOnMuh.WebUI.Controllers
 
             if (_santiyeService.Create(_santiye))
             {
-                AlertMessage msg = new AlertMessage()
-                {
-                    Message = $"{_santiye.Ad} HESABI AÇILDI.",
-                    AlertType = "success"
-                };
-
-                TempData["message"] = JsonConvert.SerializeObject(msg);
+                CreateMessage($"{_santiye.Ad} HESABI AÇILDI.", "success");
 
                 return RedirectToAction("Index");
             };
+
+            CreateMessage(_santiyeService.ErrorMessage, "danger");
+
             return View(santiye);
         }
 
@@ -214,6 +211,21 @@ namespace SantiyeOnMuh.WebUI.Controllers
             _santiyeService.Update(santiye);
 
             return RedirectToAction("Index");
+        }
+
+
+
+
+        private void CreateMessage(string message, string alertType)
+        {
+            AlertMessage msg = new AlertMessage()
+            {
+                //Message = $"{_bankaHesap.HesapAdi} HESABI AÇILDI.",
+                Message = message,
+                AlertType = alertType
+            };
+
+            TempData["message"] = JsonConvert.SerializeObject(msg);
         }
     }
 }

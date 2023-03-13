@@ -105,16 +105,12 @@ namespace SantiyeOnMuh.WebUI.Controllers
 
             if (_bankaKasaService.Create(_bankaKasa))
             {
-                AlertMessage msg = new AlertMessage()
-                {
-                    Message = $"{_bankaKasa.Aciklama} KASAYA EKLENDİ.",
-                    AlertType = "success"
-                };
-
-                TempData["message"] = JsonConvert.SerializeObject(msg);
+                CreateMessage($"{_bankaKasa.Aciklama} HESABA EKLENDİ.", "success");
 
                 return RedirectToAction("BankaKasa");
             };
+
+            CreateMessage(_bankaKasaService.ErrorMessage, "danger");
 
             return View(bankaKasa);
 
@@ -640,5 +636,18 @@ namespace SantiyeOnMuh.WebUI.Controllers
             return RedirectToAction("BankaKasa");
         }
         #endregion
+
+
+        private void CreateMessage(string message, string alertType)
+        {
+            AlertMessage msg = new AlertMessage()
+            {
+                //Message = $"{_bankaHesap.HesapAdi} HESABI AÇILDI.",
+                Message = message,
+                AlertType = alertType
+            };
+
+            TempData["message"] = JsonConvert.SerializeObject(msg);
+        }
     }
 }

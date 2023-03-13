@@ -153,16 +153,13 @@ namespace SantiyeOnMuh.WebUI.Controllers
                 _cekService.Update(_eklenenCek);
                 #endregion
 
-                AlertMessage msg = new AlertMessage()
-                {
-                    Message = $"{_cek.CekNo} NUMARALI ÇEK EKLENDİ.",
-                    AlertType = "success"
-                };
 
-                TempData["message"] = JsonConvert.SerializeObject(msg);
+                CreateMessage($"{_cek.CekNo} NUMARALI ÇEK EKLENDİ.", "success");
 
                 return RedirectToAction("Index");
             };
+            CreateMessage(_cekService.ErrorMessage, "danger");
+
             return View(cek);
         }
 
@@ -1002,5 +999,18 @@ namespace SantiyeOnMuh.WebUI.Controllers
 
         #endregion
 
+
+
+        private void CreateMessage(string message, string alertType)
+        {
+            AlertMessage msg = new AlertMessage()
+            {
+                //Message = $"{_bankaHesap.HesapAdi} HESABI AÇILDI.",
+                Message = message,
+                AlertType = alertType
+            };
+
+            TempData["message"] = JsonConvert.SerializeObject(msg);
+        }
     }
 }

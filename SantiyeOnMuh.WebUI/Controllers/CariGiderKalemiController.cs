@@ -49,21 +49,15 @@ namespace SantiyeOnMuh.WebUI.Controllers
 
             if (_cariGiderKalemiService.Create(_cariGiderKalemi))
             {
-                AlertMessage msg = new AlertMessage()
-                {
-                    Message = $"{_cariGiderKalemi.Ad} KALEMİ EKLENDİ.",
-                    AlertType = "success"
-                };
-
-                TempData["message"] = JsonConvert.SerializeObject(msg);
+                CreateMessage($"{_cariGiderKalemi.Ad} GİDER KALEMİ EKLENDİ.", "success");
 
                 return RedirectToAction("Index", "Admin");
             };
+
+            CreateMessage(_cariGiderKalemiService.ErrorMessage, "danger");
+
             return View(_cariGiderKalemi);
 
-            //_cariGiderKalemiService.Create(_cariGiderKalemi);
-
-            //return RedirectToAction("Index", "Admin");
         }
 
         [HttpGet]
@@ -135,6 +129,19 @@ namespace SantiyeOnMuh.WebUI.Controllers
             _cariGiderKalemiService.Update(cariGiderKalemi);
 
             return RedirectToAction("Index", "Admin");
+        }
+
+
+        private void CreateMessage(string message, string alertType)
+        {
+            AlertMessage msg = new AlertMessage()
+            {
+                //Message = $"{_bankaHesap.HesapAdi} HESABI AÇILDI.",
+                Message = message,
+                AlertType = alertType
+            };
+
+            TempData["message"] = JsonConvert.SerializeObject(msg);
         }
     }
 }

@@ -143,16 +143,13 @@ namespace SantiyeOnMuh.WebUI.Controllers
                     _nakitService.Update(_eklenenNakit);
                     #endregion
 
-                    AlertMessage msg = new AlertMessage()
-                    {
-                        Message = $"{_nakit.Tutar} ÖDEMESİ EKLENDİ.",
-                        AlertType = "success"
-                    };
-
-                    TempData["message"] = JsonConvert.SerializeObject(msg);
+                    CreateMessage($"{_nakit.Tutar} ÖDEMESİ EKLENDİ.", "success");
 
                     return RedirectToAction("Index");
                 };
+
+                CreateMessage(_nakitService.ErrorMessage, "danger");
+
                 return View(nakit);
             }
             return View(nakit);
@@ -941,5 +938,19 @@ namespace SantiyeOnMuh.WebUI.Controllers
             }
         }
         #endregion
+
+
+
+        private void CreateMessage(string message, string alertType)
+        {
+            AlertMessage msg = new AlertMessage()
+            {
+                //Message = $"{_bankaHesap.HesapAdi} HESABI AÇILDI.",
+                Message = message,
+                AlertType = alertType
+            };
+
+            TempData["message"] = JsonConvert.SerializeObject(msg);
+        }
     }
 }

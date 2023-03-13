@@ -52,16 +52,14 @@ namespace SantiyeOnMuh.WebUI.Controllers
 
             if (_sirketService.Create(_sirket))
             {
-                AlertMessage msg = new AlertMessage()
-                {
-                    Message = $"{_sirket.Ad} HESABI AÇILDI.",
-                    AlertType = "success"
-                };
 
-                TempData["message"] = JsonConvert.SerializeObject(msg);
+                CreateMessage($"{_sirket.Ad} HESABI AÇILDI.", "success");
 
                 return RedirectToAction("Index", "Admin");
             };
+
+            CreateMessage(_sirketService.ErrorMessage, "danger");
+
             return View(sirket);
         }
 
@@ -136,6 +134,20 @@ namespace SantiyeOnMuh.WebUI.Controllers
             _sirketService.Update(sirket);
 
             return RedirectToAction("Index", "Admin");
+        }
+
+
+
+        private void CreateMessage(string message, string alertType)
+        {
+            AlertMessage msg = new AlertMessage()
+            {
+                //Message = $"{_bankaHesap.HesapAdi} HESABI AÇILDI.",
+                Message = message,
+                AlertType = alertType
+            };
+
+            TempData["message"] = JsonConvert.SerializeObject(msg);
         }
     }
 }

@@ -104,7 +104,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CariKasaEkleme(CariKasa cariKasa, IFormFile file)
+        public async Task<IActionResult> CariKasaEkleme(CariKasa cariKasa, IFormFile? file)
         {
             if (!ModelState.IsValid) { return View(cariKasa); }
 
@@ -139,10 +139,6 @@ namespace SantiyeOnMuh.WebUI.Controllers
             {
                 Tarih = cariKasa.Tarih,
                 Aciklama = cariKasa.Aciklama,
-                //Miktar = cariKasa.Miktar,
-                //BirimFiyat = cariKasa.BirimFiyat,
-                //Borc = cariKasa.Borc,
-                //Alacak = cariKasa.Alacak,
                 #region VİRGÜL VEYA NOKTA KULLANIMININ İKİSİNİN DE SERBEST OLMASINI SAĞLAMAK İÇİN
                 Miktar = Convert.ToDecimal(cariKasa.Miktar.Replace(".", ",")),
                 BirimFiyat = Convert.ToDecimal(cariKasa.BirimFiyat.Replace(".", ",")),
@@ -163,22 +159,13 @@ namespace SantiyeOnMuh.WebUI.Controllers
 
             if (_cariKasaService.Create(_cariKasa))
             {
-                AlertMessage msg = new AlertMessage()
-                {
-                    Message = $"{_cariKasa.Aciklama} KASAYA EKLENDİ.",
-                    AlertType = "success"
-                };
+                CreateMessage($"{_cariKasa.Aciklama} KASAYA EKLENDİ.", "success");
 
-                TempData["message"] = JsonConvert.SerializeObject(msg);
-
-                //return RedirectToAction("Index", "Admin");
                 return RedirectToAction("CariKasa", "CariKasa", new { carihesapid = cariKasa.CariHesap.Id });
             };
+            CreateMessage(_cariKasaService.ErrorMessage, "danger");
+
             return View(_cariKasa);
-
-            //_cariKasaService.Create(_cariKasa);
-
-            //return RedirectToAction("CariKasa", "CariKasa", new { carihesapid = cariKasa.CariHesap.Id });
         }
 
         [HttpGet]
@@ -485,10 +472,6 @@ namespace SantiyeOnMuh.WebUI.Controllers
                 Id = cariKasa.Id,
                 Tarih = cariKasa.Tarih,
                 Aciklama = cariKasa.Aciklama,
-                //Miktar = cariKasa.Miktar,
-                //BirimFiyat = cariKasa.BirimFiyat,
-                //Borc = cariKasa.Borc,
-                //Alacak = cariKasa.Alacak,
                 #region VİRGÜL VEYA NOKTA KULLANIMININ İKİSİNİN DE SERBEST OLMASINI SAĞLAMAK İÇİN
                 Miktar = Convert.ToDecimal(cariKasa.Miktar.Replace(".", ",")),
                 BirimFiyat = Convert.ToDecimal(cariKasa.BirimFiyat.Replace(".", ",")),
@@ -507,9 +490,15 @@ namespace SantiyeOnMuh.WebUI.Controllers
                 CariHesap = cariKasa.CariHesap,
             };
 
-            _cariKasaService.Create(_cariKasa);
+            if (_cariKasaService.Create(_cariKasa))
+            {
+                CreateMessage($"{_cariKasa.Aciklama} KASAYA EKLENDİ.", "success");
 
-            return RedirectToAction("CariKasa", new { carihesapid = cariKasa.CariHesapId });
+                return RedirectToAction("CariKasa", "CariKasa", new { carihesapid = cariKasa.CariHesap.Id });
+            };
+            CreateMessage(_cariKasaService.ErrorMessage, "danger");
+
+            return View(_cariKasa);
         }
 
         [HttpGet]
@@ -587,5 +576,18 @@ namespace SantiyeOnMuh.WebUI.Controllers
             return RedirectToAction("CariKasa", new { carihesapid = cariKasa.CariHesapId });
         }
         #endregion
+
+
+        private void CreateMessage(string message, string alertType)
+        {
+            AlertMessage msg = new AlertMessage()
+            {
+                //Message = $"{_bankaHesap.HesapAdi} HESABI AÇILDI.",
+                Message = message,
+                AlertType = alertType
+            };
+
+            TempData["message"] = JsonConvert.SerializeObject(msg);
+        }
     }
 }
