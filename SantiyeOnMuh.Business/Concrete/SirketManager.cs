@@ -12,14 +12,36 @@ namespace SantiyeOnMuh.Business.Concrete
     public class SirketManager:ISirketService
     {
         private ISirketRepository _sirketRepository;
+
         public SirketManager(ISirketRepository sirketRepository)
         {
             _sirketRepository = sirketRepository;
         }
 
-        public void Create(ESirket entity)
+        public string ErrorMessage { get; set; }
+
+        public bool Validation(ESirket entity)
         {
-            _sirketRepository.Create(entity);
+            var IsValid = true;
+
+            if (string.IsNullOrEmpty(entity.Ad))
+            {
+                ErrorMessage += "ŞİRKET ADI GİRMELİSİNİZ.\n";
+                return false;
+            }
+
+
+            return IsValid;
+        }
+
+        public bool Create(ESirket entity)
+        {
+            if (Validation(entity))
+            {
+                _sirketRepository.Create(entity);
+                return true;
+            }
+            return false;
         }
 
         public void Delete(ESirket entity)
@@ -46,5 +68,6 @@ namespace SantiyeOnMuh.Business.Concrete
         {
             return _sirketRepository.GetById(id);
         }
+
     }
 }

@@ -12,13 +12,35 @@ namespace SantiyeOnMuh.Business.Concrete
     public class SantiyeGiderKalemiManager : ISantiyeGiderKalemiService
     {
         private ISantiyeGiderKalemiRepository _santiyeGiderKalemiRepository;
+
         public SantiyeGiderKalemiManager (ISantiyeGiderKalemiRepository santiyeGiderKalemiRepositoryservice)
         {
             _santiyeGiderKalemiRepository = santiyeGiderKalemiRepositoryservice;
         }
-        public void Create(ESantiyeGiderKalemi entity)
+
+        public string ErrorMessage { get; set; }
+
+        public bool Validation(ESantiyeGiderKalemi entity)
         {
-            _santiyeGiderKalemiRepository.Create(entity);
+            var IsValid = true;
+
+            if (string.IsNullOrEmpty(entity.Ad))
+            {
+                ErrorMessage += "GİDER KALEMİ ADI GİRMELİSİNİZ.\n";
+                return false;
+            }
+
+            return IsValid;
+        }
+
+        public bool Create(ESantiyeGiderKalemi entity)
+        {
+            if (Validation(entity))
+            {
+                _santiyeGiderKalemiRepository.Create(entity);
+                return true;
+            }
+            return false;
         }
 
         public void Delete(ESantiyeGiderKalemi entity)

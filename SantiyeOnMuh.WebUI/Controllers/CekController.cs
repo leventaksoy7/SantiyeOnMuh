@@ -2,6 +2,7 @@
 using DocumentFormat.OpenXml.Office2010.Excel;
 using MathNet.Numerics;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using SantiyeOnMuh.Business.Abstract;
 using SantiyeOnMuh.Entity;
 using SantiyeOnMuh.WebUI.Models;
@@ -56,6 +57,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
             };
             return View(cekViewModel);
         }
+
         [HttpGet]
         public IActionResult CekEkleme()
         {
@@ -66,6 +68,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
 
             return View(new Cek());
         }
+
         [HttpPost]
         public async Task<IActionResult> CekEkleme(Cek cek, IFormFile? file) 
         {
@@ -120,36 +123,49 @@ namespace SantiyeOnMuh.WebUI.Controllers
                 BankaHesap = cek.BankaHesap,
             };
 
-            _cekService.Create(_cek);
-
-            //CARİ KASA İÇİN ÇEK OLUŞTURULDU VE ÇEK KAYNAĞI İLE EKLENDİ
-            ECariKasa _cariKasa = new ECariKasa()
+            if (_cekService.Create(_cek))
             {
-                Tarih = cek.Tarih,
-                Aciklama = cek.CekNo + " NOLU CEK ÖDEMESİ " + cek.Aciklama,
-                Miktar = 1,
-                BirimFiyat = 1,
-                Borc = Convert.ToDecimal(cek.Tutar.Replace(".",",")),
-                Alacak = 0,
-                ImgUrl = null,
-                CekKaynak = _cek.Id,
-                CariGiderKalemiId = 1,
-                CariHesapId = cek.CariHesapId
+                //CARİ KASA İÇİN ÇEK OLUŞTURULDU VE ÇEK KAYNAĞI İLE EKLENDİ
+                ECariKasa _cariKasa = new ECariKasa()
+                {
+                    Tarih = cek.Tarih,
+                    Aciklama = cek.CekNo + " NOLU CEK ÖDEMESİ " + cek.Aciklama,
+                    Miktar = 1,
+                    BirimFiyat = 1,
+                    Borc = Convert.ToDecimal(cek.Tutar.Replace(".", ",")),
+                    Alacak = 0,
+                    ImgUrl = null,
+                    CekKaynak = _cek.Id,
+                    CariGiderKalemiId = 1,
+                    CariHesapId = cek.CariHesapId
+                };
+
+                _cariKasaService.Create(_cariKasa);
+
+                #region ÇEKE-CARİ KASA BAĞLANTISI
+                //ŞİMDİ DE ÇEKE, CARİ KAYNAĞI EKLENİYOR-GÜNCELLENİYOR
+                var _eklenenCek = _cekService.GetById(_cek.Id);
+
+                if (_eklenenCek == null) { return NotFound(); }
+
+                _eklenenCek.CariKasaKaynak = _cariKasa.Id;
+
+                _cekService.Update(_eklenenCek);
+                #endregion
+
+                AlertMessage msg = new AlertMessage()
+                {
+                    Message = $"{_cek.CekNo} NUMARALI ÇEK EKLENDİ.",
+                    AlertType = "success"
+                };
+
+                TempData["message"] = JsonConvert.SerializeObject(msg);
+
+                return RedirectToAction("Index");
             };
-
-            _cariKasaService.Create(_cariKasa);
-
-            //ŞİMDİ DE ÇEKE, CARİ KAYNAĞI EKLENİYOR-GÜNCELLENİYOR
-            var _eklenenCek = _cekService.GetById(_cek.Id);
-
-            if (_eklenenCek == null) { return NotFound(); }
-
-            _eklenenCek.CariKasaKaynak = _cariKasa.Id;
-
-            _cekService.Update(_eklenenCek);
-
-            return RedirectToAction("Index");
+            return View(cek);
         }
+
         [HttpGet]
         public IActionResult CekTahsil(int? cekid)
         {
@@ -191,6 +207,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
 
             return RedirectToAction("Index");
         }
+
         [HttpGet]
         public IActionResult CekGuncelle(int? cekid)
         {
@@ -230,6 +247,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
 
             return View(_cek);
         }
+
         [HttpPost]
         public IActionResult CekGuncelle(Cek c)
         {
@@ -293,6 +311,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
 
             return RedirectToAction("Index");
         }
+
         [HttpGet]
         public IActionResult CekDetay(int? cekid)
         {
@@ -328,6 +347,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
 
             return View(_cek);
         }
+
         [HttpGet]
         public IActionResult CekSil(int? cekid)
         {
@@ -364,6 +384,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
             ViewBag.HesapAdi = _bankaHesapService.GetById(cek.BankaHesapId).HesapAdi;
             return View(_cek);
         }
+
         [HttpPost]
         public IActionResult CekSil(Cek c)
         {
@@ -535,6 +556,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
                 }
             }
         }
+
         //ARŞİV
         public IActionResult CekArsiv(int page = 1)
         {
@@ -567,6 +589,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
 
             return View(new Cek());
         }
+
         [HttpPost]
         public async Task<IActionResult> CekEklemeFromCari(Cek cek, IFormFile file)
         {
@@ -663,6 +686,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
 
             return View(cekViewModel);
         }
+
         public IActionResult CekSantiye(int santiyeid, int page = 1)
         {
             ViewBag.Sayfa = "ÇEKLER";
@@ -680,6 +704,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
             };
             return View(cekViewModel);
         }
+
         public IActionResult CekSirket(int sirketid, int page = 1)
         {
             ViewBag.Sayfa = "ÇEKLER";
@@ -697,6 +722,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
             };
             return View(cekViewModel);
         }
+
         public IActionResult CekBanka(int bankahesapid, int page = 1)
         {
             ViewBag.Sayfa = "ÇEKLER";
@@ -801,6 +827,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
                 }
             }
         }
+
         public IActionResult CekSirketExcel(int sirketid)
         {
             var cekViewModel = new CekViewListModel()
@@ -886,6 +913,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
                 }
             }
         }
+
         public IActionResult CekBankaExcel(int bankahesapid)
         {
             var cekViewModel = new CekViewListModel()

@@ -1,4 +1,5 @@
-﻿using SantiyeOnMuh.Business.Abstract;
+﻿using Microsoft.IdentityModel.Tokens;
+using SantiyeOnMuh.Business.Abstract;
 using SantiyeOnMuh.DataAccess.Abstract;
 using SantiyeOnMuh.Entity;
 using System;
@@ -12,14 +13,42 @@ namespace SantiyeOnMuh.Business.Concrete
     public class BankaHesapManager : IBankaHesapService
     {
         private IBankaHesapRepository _bankaHesapRepository;
+
         public BankaHesapManager(IBankaHesapRepository bankaHesapRepository)
         {
             _bankaHesapRepository = bankaHesapRepository;
+
         }
 
-        public void Create(EBankaHesap entity)
+        public string ErrorMessage { get; set; }
+
+        public bool Validation(EBankaHesap entity)
         {
-            _bankaHesapRepository.Create(entity);
+            var IsValid = true;
+
+            if (string.IsNullOrEmpty(entity.BankaAdi))
+            {
+                ErrorMessage += "BANKA ADI GİRMELİSİNİZ.\n";
+                return false;
+            }
+
+            if (string.IsNullOrEmpty(entity.HesapAdi))
+            {
+                ErrorMessage += "HESAP ADI GİRMELİSİNİZ.\n";
+                return false;
+            }
+
+            return IsValid;
+        }
+
+        public bool Create(EBankaHesap entity)
+        {
+            if (Validation(entity))
+            {
+                _bankaHesapRepository.Create(entity);
+                return true;
+            }
+            return false;
         }
 
         public void Delete(EBankaHesap entity)

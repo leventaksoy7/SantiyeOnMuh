@@ -1,6 +1,7 @@
 ﻿using ClosedXML.Excel;
 using DocumentFormat.OpenXml.Drawing;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using SantiyeOnMuh.Business.Abstract;
 using SantiyeOnMuh.Entity;
 using SantiyeOnMuh.WebUI.Models;
@@ -27,6 +28,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
             this._cariGiderKalemiService = cariGiderKalemiService;
             this._cariService = cariService;
         }
+
         public IActionResult CariKasa(int carihesapid, int? gkid, int page = 1)
         {
             const int pageSize = 10;
@@ -58,6 +60,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
 
             return View(cariKasaViewModel);
         }
+
         public IActionResult CariKasaArsiv(int carihesapid, int? gkid, int page = 1)
         {
             const int pageSize = 10;
@@ -89,6 +92,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
 
             return View(cariKasaViewModel);
         }
+
         [HttpGet]
         public IActionResult CariKasaEkleme()
         {
@@ -98,6 +102,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
 
             return View(new CariKasa());
         }
+
         [HttpPost]
         public async Task<IActionResult> CariKasaEkleme(CariKasa cariKasa, IFormFile file)
         {
@@ -156,10 +161,26 @@ namespace SantiyeOnMuh.WebUI.Controllers
                 CariHesap = cariKasa.CariHesap,
             };
 
-            _cariKasaService.Create(_cariKasa);
+            if (_cariKasaService.Create(_cariKasa))
+            {
+                AlertMessage msg = new AlertMessage()
+                {
+                    Message = $"{_cariKasa.Aciklama} KASAYA EKLENDİ.",
+                    AlertType = "success"
+                };
 
-            return RedirectToAction("CariKasa", "CariKasa", new { carihesapid = cariKasa.CariHesap.Id });
+                TempData["message"] = JsonConvert.SerializeObject(msg);
+
+                //return RedirectToAction("Index", "Admin");
+                return RedirectToAction("CariKasa", "CariKasa", new { carihesapid = cariKasa.CariHesap.Id });
+            };
+            return View(_cariKasa);
+
+            //_cariKasaService.Create(_cariKasa);
+
+            //return RedirectToAction("CariKasa", "CariKasa", new { carihesapid = cariKasa.CariHesap.Id });
         }
+
         [HttpGet]
         public IActionResult CariKasaDetay(int? carikasaid)
         {
@@ -199,6 +220,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
 
             return View(_cariKasa);
         }
+
         [HttpGet]
         public IActionResult CariKasaSil(int? carikasaid)
         {
@@ -239,6 +261,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
 
             return View(_cariKasa);
         }
+
         [HttpPost]
         public IActionResult CariKasaSil(CariKasa cariKasa)
         {
@@ -376,6 +399,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
                 }
             }
         }
+
         //GERİ YÜKLE
         [HttpGet]
         public IActionResult CariKasaGeriYukle(int? carikasaid)
@@ -393,6 +417,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
 
             return RedirectToAction("CariKasa", "CariKasa", new { carihesapid = cariKasa.CariHesapId });
         }
+
         [HttpPost]
         public IActionResult CariKasaGeriYukle(CariKasa cariKasa)
         {
@@ -420,6 +445,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
 
             return View(new CariKasa());
         }
+
         [HttpPost]
         public async Task<IActionResult> CariKasaFaturaEklemeFromCari(CariKasa cariKasa, IFormFile? file)
         {
@@ -485,6 +511,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
 
             return RedirectToAction("CariKasa", new { carihesapid = cariKasa.CariHesapId });
         }
+
         [HttpGet]
         public IActionResult CariKasaFaturaGuncelleFromCari(int? carikasaid)
         {
@@ -526,6 +553,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
 
             return View(_cariKasa);
         }
+
         [HttpPost]
         public IActionResult CariKasaFaturaGuncelleFromCari(CariKasa cariKasa)
         {

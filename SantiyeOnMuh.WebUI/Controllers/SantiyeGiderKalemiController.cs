@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using SantiyeOnMuh.Business.Abstract;
 using SantiyeOnMuh.Entity;
+using SantiyeOnMuh.WebUI.Models;
 using SantiyeOnMuh.WebUI.Models.Modeller;
 using System.ComponentModel.DataAnnotations;
 
@@ -10,16 +12,19 @@ namespace SantiyeOnMuh.WebUI.Controllers
     {
         // NESNELER ÜZERİNDEKİ İŞLEMLERİ _ OLAN NESNE ÜZERİNDE YAPIP SONRA AKTARIYORUZ - INJECTION
         private ISantiyeGiderKalemiService _santiyeGiderKalemiService;
+
         public SantiyeGiderKalemiController(ISantiyeGiderKalemiService santiyeGiderKalemiService)
         {
             this._santiyeGiderKalemiService = santiyeGiderKalemiService;
         }
+
         [HttpGet]
         public IActionResult SantiyeGiderKalemiEkleme()
         {
             ViewBag.Sayfa = "ŞANTİYE KASASI İÇİN YENİ GİDER KALEMİ EKLEME";
             return View();
         }
+
         [HttpPost]
         public IActionResult SantiyeGiderKalemiEkleme(SantiyeGiderKalemi santiyeGiderKalemi)
         {
@@ -33,10 +38,21 @@ namespace SantiyeOnMuh.WebUI.Controllers
                 SantiyeKasas = santiyeGiderKalemi.SantiyeKasas,
             };
 
-            _santiyeGiderKalemiService.Create(_santiyeGiderKalemi);
+            if (_santiyeGiderKalemiService.Create(_santiyeGiderKalemi))
+            {
+                AlertMessage msg = new AlertMessage()
+                {
+                    Message = $"{_santiyeGiderKalemi.Ad} GİDER KALEMİ EKLENDİ.",
+                    AlertType = "success"
+                };
 
-            return RedirectToAction("Index", "Admin");
+                TempData["message"] = JsonConvert.SerializeObject(msg);
+
+                return RedirectToAction("Index", "Admin");
+            };
+            return View(santiyeGiderKalemi);
         }
+
         [HttpGet]
         public IActionResult SantiyeGiderKalemiGuncelle(int? id)
         {
@@ -59,6 +75,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
 
             return View(_santiyeGiderKalemi);
         }
+
         [HttpPost]
         public IActionResult SantiyeGiderKalemiGuncelle(SantiyeGiderKalemi santiyeGiderKalemi)
         {
@@ -74,6 +91,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
 
             return RedirectToAction("Index", "Admin");
         }
+
         [HttpGet]
         public IActionResult SantiyeGiderKalemiSil(int? id)
         {
@@ -89,6 +107,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
 
             return RedirectToAction("Index", "Admin");
         }
+
         [HttpGet]
         public IActionResult SantiyeGiderKalemiGeriYukle(int? id)
         {

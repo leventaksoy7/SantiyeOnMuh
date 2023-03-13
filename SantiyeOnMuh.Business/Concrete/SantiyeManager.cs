@@ -19,11 +19,31 @@ namespace SantiyeOnMuh.Business.Concrete
         {
             _santiyeRepository = santiyeRepository;
         }
+
+        public string ErrorMessage { get; set; }
+
+        public bool Validation(ESantiye entity)
+        {
+            var IsValid = true;
+
+            if (string.IsNullOrEmpty(entity.Ad))
+            {
+                ErrorMessage += "ŞANTİYE ADI GİRMELİSİNİZ.\n";
+                return false;
+            }
+
+            return IsValid;
+        }
         //CRUD
-        public void Create(ESantiye entity)
+        public bool Create(ESantiye entity)
         {
             //İŞ KURALLARI
-            _santiyeRepository.Create(entity);
+            if (Validation(entity))
+            {
+                _santiyeRepository.Create(entity);
+                return true;
+            }
+            return false;
         }
 
         public void Update(ESantiye entity)

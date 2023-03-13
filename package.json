@@ -1,6 +1,8 @@
 {
   "dependencies": {
     "@popperjs/core": "^2.11.6",
-    "bootstrap": "^5.2.3"
+    "bootstrap": "^5.2.3",
+    "jquery-validation": "^1.19.5",
+    "unobtrusive": "^1.2.0"
   }
 }

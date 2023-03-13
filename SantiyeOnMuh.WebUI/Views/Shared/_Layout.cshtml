@@ -1,5 +1,5 @@
 ﻿@{
-    Layout = null;
+    //Layout = null;
 }
 
 <!DOCTYPE html>
@@ -25,6 +25,10 @@
 
 </head>
 <body>
+
+    
+
+
     <div class="w3-sidebar w3-bar-block w3-card bg-success" style="display:none" id="mySidebar">
         <button class="w3-bar-item w3-button bg-info w3-large font-weight-bold"
                 onclick="w3_close()">
@@ -69,6 +73,20 @@
             </div>
         </div>
 
+        @if (TempData["message"] != null)
+        {
+            var message = JsonConvert.DeserializeObject<AlertMessage>(TempData["message"] as string);
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="alert alert-@message.AlertType">
+                        @message.Message
+                    </div>
+                </div>
+            </div>
+        }
+
+
         <div class="w3-container">
             @RenderBody()
             <p></p>
@@ -88,6 +106,14 @@
             document.getElementById("openNav").style.display = "inline-block";
         }
     </script>
+
+    @section Scripts
+    {
+        <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+        <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+    }
+
+    @RenderSection("Scripts",false);
 
 </body>
 </html>

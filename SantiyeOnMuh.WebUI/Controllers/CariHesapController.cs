@@ -1,5 +1,6 @@
 ﻿using ClosedXML.Excel;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using SantiyeOnMuh.Business.Abstract;
 using SantiyeOnMuh.Entity;
 using SantiyeOnMuh.WebUI.Models;
@@ -19,6 +20,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
             this._cariHesapService = cariHesapService;
             this._santiyeService = santiyeService;
         }
+
         public IActionResult CariHesap(int? santiyeid, int page = 1)
         {
             const int pageSize = 10;
@@ -48,6 +50,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
 
             return View(cariHesapViewModel);
         }
+
         [HttpGet]
         public IActionResult CariHesapEkleme()
         {
@@ -55,6 +58,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
             ViewBag.Santiye = _santiyeService.GetAll(true);
             return View();
         }
+
         [HttpPost]
         public IActionResult CariHesapEkleme(CariHesap cariHesap)
         {
@@ -83,10 +87,25 @@ namespace SantiyeOnMuh.WebUI.Controllers
                 Santiye = cariHesap.Santiye,
             };
 
-            _cariHesapService.Create(_cariHesap);
+            if (_cariHesapService.Create(_cariHesap))
+            {
+                AlertMessage msg = new AlertMessage()
+                {
+                    Message = $"{_cariHesap.Ad} HESABI AÇILDI.",
+                    AlertType = "success"
+                };
 
-            return RedirectToAction("CariHesap");
+                TempData["message"] = JsonConvert.SerializeObject(msg);
+
+                return RedirectToAction("CariHesap");
+            };
+            return View(cariHesap);
+
+            //_cariHesapService.Create(_cariHesap);
+
+            //return RedirectToAction("CariHesap");
         }
+
         [HttpGet]
         public IActionResult CariHesapGuncelle(int? carihesapid)
         {
@@ -120,6 +139,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
 
             return View(_cariHesap);
         }
+
         [HttpPost]
         public IActionResult CariHesapGuncelle(CariHesap cariHesap)
         {
@@ -146,6 +166,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
 
             return RedirectToAction("CariHesap");
         }
+
         [HttpGet]
         public IActionResult CariHesapSil(int? carihesapid)
         {
@@ -178,6 +199,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
 
             return View(_cariHesap);
         }
+
         [HttpPost]
         public IActionResult CariHesapSil(CariHesap c)
         {
@@ -256,6 +278,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
                 }
             }
         }
+
         //ARŞİV
         public IActionResult CariHesapArsiv(int? santiyeid, int page = 1)
         {
@@ -288,6 +311,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
 
             return View(cariHesapViewModel);
         }
+
         //GERİ YÜKLEME
         [HttpGet]
         public IActionResult CariHesapGeriYukle(int? carihesapid)

@@ -29,6 +29,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
             this._santiyeService = santiyeService;
             this._santiyeKasaService = santiyeKasaService;
         }
+
         public IActionResult BankaKasa(int? bankahesapid, int page = 1)
         {
             ViewBag.Sayfa = "ANA KASA";
@@ -53,6 +54,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
 
             return View(bankaKasaViewModel);
         }
+
         [HttpGet]
         public IActionResult BankaKasaEkleme()
         {
@@ -61,6 +63,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
 
             return View();
         }
+
         [HttpPost]
         public IActionResult BankaKasaEkleme(BankaKasa bankaKasa)
         {
@@ -100,18 +103,25 @@ namespace SantiyeOnMuh.WebUI.Controllers
                 SonGuncelleme = bankaKasa.SonGuncelleme
             };
 
-            _bankaKasaService.Create(_bankaKasa);
-
-            AlertMessage msg = new AlertMessage()
+            if (_bankaKasaService.Create(_bankaKasa))
             {
-                Message = $"{_bankaKasa.Aciklama} kasaya eklendi.",
-                AlertType = "warning"
+                AlertMessage msg = new AlertMessage()
+                {
+                    Message = $"{_bankaKasa.Aciklama} KASAYA EKLENDİ.",
+                    AlertType = "success"
+                };
+
+                TempData["message"] = JsonConvert.SerializeObject(msg);
+
+                return RedirectToAction("BankaKasa");
             };
 
-            TempData["message"] = JsonConvert.SerializeObject(msg);
+            return View(bankaKasa);
 
-            return RedirectToAction("BankaKasa");
-        }
+        //_bankaKasaService.Create(_bankaKasa);
+        //return RedirectToAction("BankaKasa");
+    }
+
         [HttpGet]
         public IActionResult BankaKasaGuncelle(int? bankakasaid)
         {
@@ -160,6 +170,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
 
             return View(_bankaKasa);
         }
+
         [HttpPost]
         public IActionResult BankaKasaGuncelle(BankaKasa bankaKasa)
         {
@@ -188,6 +199,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
 
             return RedirectToAction("BankaKasa");
         }
+
         [HttpGet]
         public IActionResult BankaKasaDetay(int? bankakasaid)
         {
@@ -234,6 +246,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
 
             return View(_bankaKasa);
         }
+
         [HttpGet]
         public IActionResult BankaKasaSil(int? bankakasaid)
         {
@@ -253,6 +266,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
 
             return RedirectToAction("BankaKasa");
         }
+
         //EXCEL//
         public IActionResult BankaKasaExcel(int? bankahesapid)
         {
@@ -315,6 +329,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
                 }
             }
         }
+
         //ARŞİV//
         public IActionResult BankaKasaArsiv(int? bankahesapid, int page = 1)
         {
@@ -340,6 +355,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
 
             return View(bankaKasaViewModel);
         }
+
         //GERİ YÜKLEME//
         [HttpGet]
         public IActionResult BankaKasaGeriYukle(int? bankakasaid)
@@ -367,6 +383,9 @@ namespace SantiyeOnMuh.WebUI.Controllers
             return RedirectToAction("BankaKasa");
         }
 
+
+
+
         #region BANKALAR ARASI EFT
         [HttpGet]
         public IActionResult BankaKasaEklemeEft()
@@ -376,6 +395,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
 
             return View();
         }
+
         [HttpPost]
         public IActionResult BankaKasaEklemeEFT(BankaKasaEftModel b)
         {
@@ -415,6 +435,9 @@ namespace SantiyeOnMuh.WebUI.Controllers
         }
         #endregion
 
+
+
+
         #region ŞANTİYE KASA EFT İŞLEMLERİ
         [HttpGet]
         public IActionResult BankaKasaEklemeSantiyeEft()
@@ -425,6 +448,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
 
             return View();
         }
+
         [HttpPost]
         public IActionResult BankaKasaEklemeSantiyeEft(BankaKasaEftSantiyeModel b)
         {
@@ -472,6 +496,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
 
             return RedirectToAction("BankaKasa");
         }
+
         [HttpGet]
         public IActionResult BankaKasaGuncelleSantiyeEft(int? bankakasasantiyeid)
         {
@@ -505,6 +530,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
 
             return View(bankaKasaEftSantiyeModel);
         }
+
         [HttpPost]
         public IActionResult BankaKasaGuncelleSantiyeEft(BankaKasaEftSantiyeModel b)
         {
@@ -551,6 +577,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
 
             return RedirectToAction("BankaKasa");
         }
+
         [HttpGet]
         public IActionResult BankaKasaSilSantiyeEft(int? bankakasasantiyeid)
         {
@@ -585,6 +612,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
 
             return View(bankaKasaEftSantiyeModel);
         }
+
         [HttpPost]
         public IActionResult BankaKasaSilSantiyeEft(BankaKasaEftSantiyeModel b)
         {

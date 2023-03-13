@@ -12,14 +12,59 @@ namespace SantiyeOnMuh.Business.Concrete
     public class CariKasaManager : ICariKasaService
     {
         private ICariKasaRepository _cariKasaRepository;
+
         public CariKasaManager(ICariKasaRepository cariKasaRepository)
         {
             _cariKasaRepository = cariKasaRepository;
         }
 
-        public void Create(ECariKasa entity)
+        public string ErrorMessage { get; set; }
+
+        public bool Validation(ECariKasa entity)
         {
-            _cariKasaRepository.Create(entity);
+            var IsValid = true;
+
+            if (string.IsNullOrEmpty(entity.Aciklama))
+            {
+                ErrorMessage += "AÇIKLAMA GİRMELİSİNİZ.\n";
+                return false;
+            }
+
+            if (entity.Miktar<0)
+            {
+                ErrorMessage += "MİKTAR -0- DAN KÜÇÜK OLAMAZ.\n";
+                return false;
+            }
+
+            if (entity.BirimFiyat<0)
+            {
+                ErrorMessage += "BİRİM FİYAT -0- DAN KÜÇÜK OLAMAZ.\n";
+                return false;
+            }
+
+            if (entity.Borc < 0)
+            {
+                ErrorMessage += "BORÇ -0- DAN KÜÇÜK OLAMAZ.\n";
+                return false;
+            }
+
+            if (entity.Alacak < 0)
+            {
+                ErrorMessage += "BORÇ -0- DAN KÜÇÜK OLAMAZ.\n";
+                return false;
+            }
+
+            return IsValid;
+        }
+
+        public bool Create(ECariKasa entity)
+        {
+            if (Validation(entity))
+            {
+                _cariKasaRepository.Create(entity);
+                return true;
+            }
+            return false;
         }
 
         public void Update(ECariKasa entity)

@@ -17,9 +17,41 @@ namespace SantiyeOnMuh.Business.Concrete
             _santiyeKasaRepository = santiyeKasaRepository;
         }
 
-        public void Create(ESantiyeKasa entity)
+        public string ErrorMessage { get; set; }
+
+        public bool Validation(ESantiyeKasa entity)
         {
-            _santiyeKasaRepository.Create(entity);
+            var IsValid = true;
+
+            if (string.IsNullOrEmpty(entity.Aciklama))
+            {
+                ErrorMessage += "AÇIKLAMA GİRMELİSİNİZ.\n";
+                return false;
+            }
+
+            if (entity.Gelir < 0)
+            {
+                ErrorMessage += "GELİR -0- DAN KÜÇÜK OLAMAZ.\n";
+                return false;
+            }
+
+            if (entity.Gider < 0)
+            {
+                ErrorMessage += "GİDER -0- DAN KÜÇÜK OLAMAZ.\n";
+                return false;
+            }
+
+            return IsValid;
+        }
+
+        public bool Create(ESantiyeKasa entity)
+        {
+            if (Validation(entity))
+            {
+                _santiyeKasaRepository.Create(entity);
+                return true;
+            }
+            return false;
         }
 
         public void Delete(ESantiyeKasa entity)

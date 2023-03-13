@@ -12,13 +12,47 @@ namespace SantiyeOnMuh.Business.Concrete
     public class CekManager : ICekService
     {
         private ICekRepository _cekRepository;
+
         public CekManager(ICekRepository CekRepository)
         {
             _cekRepository = CekRepository;
         }
-        public void Create(ECek entity)
+
+        public string ErrorMessage { get; set; }
+
+        public bool Validation(ECek entity)
         {
-            _cekRepository.Create(entity);
+            var IsValid = true;
+
+            if (string.IsNullOrEmpty(entity.Aciklama))
+            {
+                ErrorMessage += "AÇIKLAMA GİRMELİSİNİZ.\n";
+                return false;
+            }
+
+            if (string.IsNullOrEmpty(entity.CekNo))
+            {
+                ErrorMessage += "ÇEK NUMARASI GİRMELİSİNİZ.\n";
+                return false;
+            }
+
+            if (entity.Tutar < 0)
+            {
+                ErrorMessage += "ÇEK TUTARI -0- DAN KÜÇÜK OLAMAZ.\n";
+                return false;
+            }
+
+            return IsValid;
+        }
+
+        public bool Create(ECek entity)
+        {
+            if (Validation(entity))
+            {
+                _cekRepository.Create(entity);
+                return true;
+            }
+            return false;
         }
 
         public void Delete(ECek entity)

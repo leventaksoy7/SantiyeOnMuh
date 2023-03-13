@@ -1,5 +1,6 @@
 ﻿using DocumentFormat.OpenXml.Vml.Spreadsheet;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using SantiyeOnMuh.Business.Abstract;
 using SantiyeOnMuh.Entity;
 using SantiyeOnMuh.WebUI.Models;
@@ -20,6 +21,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
             this._santiyeKasaService = santiyeKasaService;
 
         }
+
         public IActionResult Index()
         {
             ViewBag.Sayfa = "ŞANTİYELER";
@@ -50,6 +52,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
 
             return View(santiyeViewModel);
         }
+
         //ARŞİV
         public IActionResult IndexArsiv()
         {
@@ -81,12 +84,14 @@ namespace SantiyeOnMuh.WebUI.Controllers
 
             return View(santiyeViewModel);
         }
+
         [HttpGet]
         public IActionResult SantiyeEkleme()
         {
             ViewBag.Sayfa = "YENİ ŞANTİYE EKLEME";
             return View();
         }
+
         [HttpPost]
         public IActionResult SantiyeEkleme(Santiye santiye)
         {
@@ -101,10 +106,21 @@ namespace SantiyeOnMuh.WebUI.Controllers
                 CariHesaps = santiye.CariHesaps,
             };
 
-            _santiyeService.Create(_santiye);
+            if (_santiyeService.Create(_santiye))
+            {
+                AlertMessage msg = new AlertMessage()
+                {
+                    Message = $"{_santiye.Ad} HESABI AÇILDI.",
+                    AlertType = "success"
+                };
 
-            return RedirectToAction("Index");
+                TempData["message"] = JsonConvert.SerializeObject(msg);
+
+                return RedirectToAction("Index");
+            };
+            return View(santiye);
         }
+
         [HttpGet]
         public IActionResult SantiyeGuncelle(int? id)
         {
@@ -128,6 +144,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
 
             return View(_santiye);
         }
+
         [HttpPost]
         public IActionResult SantiyeGuncelle(Santiye santiye)
         {
@@ -144,6 +161,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
 
             return RedirectToAction("Index");
         }
+
         [HttpGet]
         public IActionResult SantiyeSil(int? id)
         {
@@ -167,6 +185,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
 
             return View(_santiye);
         }
+
         [HttpPost]
         public IActionResult SantiyeSil(Santiye santiye)
         {
@@ -180,6 +199,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
 
             return RedirectToAction("Index");
         }
+
         
         public IActionResult SantiyeGeriYukle(int? id)
         {

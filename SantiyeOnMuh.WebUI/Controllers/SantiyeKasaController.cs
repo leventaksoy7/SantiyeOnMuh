@@ -1,6 +1,7 @@
 ﻿using ClosedXML.Excel;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
+using Newtonsoft.Json;
 using SantiyeOnMuh.Business.Abstract;
 using SantiyeOnMuh.Entity;
 using SantiyeOnMuh.WebUI.Models;
@@ -55,6 +56,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
 
             return View(santiyeKasaViewModel);
         }
+
         public IActionResult SantiyeKasaArsiv(int santiyeid, int? gkid, int page = 1)
         {
             //BAŞLIKTA ŞANTİYENİN ADININ YAZMASI İÇİN
@@ -84,6 +86,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
 
             return View(santiyeKasaViewModel);
         }
+
         [HttpGet]
         public IActionResult SantiyeKasaEkleme()
         {
@@ -94,8 +97,9 @@ namespace SantiyeOnMuh.WebUI.Controllers
 
             return View(new ESantiyeKasa());
         }
+
         [HttpPost]
-        public async Task<IActionResult> SantiyeKasaEkleme(SantiyeKasa santiyeKasa, IFormFile file)
+        public async Task<IActionResult> SantiyeKasaEkleme(SantiyeKasa santiyeKasa, IFormFile? file)
         {
             if (!ModelState.IsValid) { return View(santiyeKasa); }
 
@@ -155,6 +159,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
 
             return RedirectToAction("Index", "Santiye");
         }
+
         [HttpGet]
         public IActionResult SantiyeKasaDetay(int? id)
         {
@@ -190,6 +195,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
 
             return View(_santiyeKasa);
         }
+
         [HttpGet]
         public IActionResult SantiyeKasaSil(int? santiyekasaid)
         {
@@ -227,6 +233,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
 
             return View(_santiyeKasa);
         }
+
         [HttpPost]
         public IActionResult SantiyeKasaSil(SantiyeKasa santiyeKasa)
         {
@@ -243,6 +250,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
 
             return RedirectToAction("SantiyeKasa", new { santiyeid = entity.SantiyeId });
         }
+
         //EXCEL
         public IActionResult SantiyeKasaExcel(int santiyeid, int? gkid)
         {
@@ -344,6 +352,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
                 }
             }
         }
+
         //GERİ YÜKLEME
         [HttpGet]
         public IActionResult SantiyeKasaGeriYukle(int id)
@@ -359,6 +368,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
 
             return RedirectToAction("SantiyeKasa", new { santiyeid = santiyeKasa.SantiyeId });
         }
+
         #region ŞANTİYEDEN
         [HttpGet]
         public IActionResult SantiyeKasaEklemeFromSantiye(int santiyeid)
@@ -369,6 +379,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
 
             return View(new SantiyeKasa());
         }
+
         [HttpPost]
         public async Task<IActionResult> SantiyeKasaEklemeFromSantiye(SantiyeKasa santiyeKasa, IFormFile? file)
         {
@@ -427,10 +438,21 @@ namespace SantiyeOnMuh.WebUI.Controllers
             //FATURA EKLENMESE BİLE SİSTEME FATURA GİRİLEBİLSİN DİYE ELSE KISMINI ÇIKARDIM
             #endregion
 
-            _santiyeKasaService.Create(_santiyeKasa);
+            if (_santiyeKasaService.Create(_santiyeKasa))
+            {
+                AlertMessage msg = new AlertMessage()
+                {
+                    Message = $"{_santiyeKasa.Aciklama} KASAYA EKLENDİ.",
+                    AlertType = "success"
+                };
 
-            return RedirectToAction("SantiyeKasa", new { santiyeid = santiyeKasa.SantiyeId });
+                TempData["message"] = JsonConvert.SerializeObject(msg);
+
+                return RedirectToAction("SantiyeKasa", new { santiyeid = santiyeKasa.SantiyeId });
+            };
+            return View(santiyeKasa);
         }
+
         [HttpGet]
         public IActionResult SantiyeKasaGuncelleFromSantiye(int? santiyekasaid)
         {
@@ -469,6 +491,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
 
             return View(_santiyeKasa);
         }
+
         [HttpPost]
         public async Task<IActionResult> SantiyeKasaGuncelleFromSantiye(SantiyeKasa s, IFormFile? file)
         {

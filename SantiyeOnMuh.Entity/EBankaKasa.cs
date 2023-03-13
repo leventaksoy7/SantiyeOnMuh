@@ -11,13 +11,10 @@ namespace SantiyeOnMuh.Entity
     public class EBankaKasa
     {
         public int Id { get; set; }
-
         public DateTime Tarih { get; set; }
         public string Aciklama { get; set; }
         public string Nitelik { get; set; }
-
         public decimal Giren { get; set; }
-
         public decimal Cikan { get; set; }
         public bool Durum { get; set; }
         public int? CekKaynak { get; set; }

@@ -11,7 +11,6 @@ namespace SantiyeOnMuh.Entity
     public class ESantiyeKasa
     {
         public int Id { get; set; }
-
         public DateTime Tarih { get; set; }
         public string Aciklama { get; set; }
         public string? Kisi { get; set; }

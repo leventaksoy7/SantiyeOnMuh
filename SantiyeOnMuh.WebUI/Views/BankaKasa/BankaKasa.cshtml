@@ -9,18 +9,7 @@
 <html>
 <body>
 
-    @if (TempData["message"] != null)
-    {
-        var message = JsonConvert.DeserializeObject<AlertMessage>(TempData["message"] as string);
-
-        <div class="row">
-            <div class="col-md-2">
-                <div class="alert alert-@message.AlertType">
-                    @message.Message
-                </div>
-            </div>
-        </div>
-    }
+    
 
     <div>
         <br />
@@ -43,10 +32,7 @@
         <div>
             @foreach (var bankahesap in Model.BankaHesaps)
             {
-                <a asp-controller="BankaKasa"
-               asp-action="BankaKasa"
-               asp-route-bankahesapid="@bankahesap.Id"
-                   class="btn btn-warning btn-sm">@bankahesap.HesapAdi</a>
+                <a asp-controller="BankaKasa" asp-action="BankaKasa" asp-route-bankahesapid="@bankahesap.Id" class="btn btn-warning btn-sm">@bankahesap.HesapAdi</a>
             }
         </div>
         <br />
@@ -91,7 +77,8 @@
                             }
                             else if (item.NakitKaynak != null)
                             {
-                                <td style=" vertical-align: middle; width: 10%"> <a asp-controller="Nakit" asp-action="NakitDetay" asp-route-nakitid="@item.NakitKaynak" class="btn btn-info btn-sm">DETAY</a>
+                                <td style=" vertical-align: middle; width: 10%">
+                                    <a asp-controller="Nakit" asp-action="NakitDetay" asp-route-nakitid="@item.NakitKaynak" class="btn btn-info btn-sm">DETAY</a>
                                 </td>
                             }
                             else
@@ -204,10 +191,7 @@
     </div>
     <br />
     <div class="row col-md-12">
-        <a asp-controller="BankaKasa"
-           asp-action="BankaKasaExcel"
-           asp-route-bankahesapid=@Model.PageInfo.UrlInfo
-           class="btn btn-warning btn-sm">EXCEL</a>
+        <a asp-controller="BankaKasa" asp-action="BankaKasaExcel" asp-route-bankahesapid=@Model.PageInfo.UrlInfo class="btn btn-warning btn-sm">EXCEL</a>
     </div>
 </body>
 </html>

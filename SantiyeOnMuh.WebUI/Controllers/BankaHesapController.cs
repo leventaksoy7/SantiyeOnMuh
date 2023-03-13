@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using SantiyeOnMuh.Business.Abstract;
 using SantiyeOnMuh.Entity;
+using SantiyeOnMuh.WebUI.Models;
 using SantiyeOnMuh.WebUI.Models.Modeller;
 
 namespace SantiyeOnMuh.WebUI.Controllers
@@ -9,10 +11,12 @@ namespace SantiyeOnMuh.WebUI.Controllers
     {
         // NESNELER ÜZERİNDEKİ İŞLEMLERİ _ OLAN NESNE ÜZERİNDE YAPIP SONRA AKTARIYORUZ - INJECTION
         private IBankaHesapService _bankaHesapService;
+
         public BankaHesapController(IBankaHesapService bankaHesapService)
         {
             this._bankaHesapService = bankaHesapService;
         }
+
         [HttpGet]
         public IActionResult BankaHesapEkleme()
         {
@@ -23,7 +27,6 @@ namespace SantiyeOnMuh.WebUI.Controllers
         [HttpPost]
         public IActionResult BankaHesapEkleme(BankaHesap bankaHesap)
         {
-
             if (ModelState.IsValid)
             {
 
@@ -35,7 +38,6 @@ namespace SantiyeOnMuh.WebUI.Controllers
                  * WebUI katmanındaki modeller üzerinde değişiklik yapıyorum.
                  * entity katmanında sadece saf database deseni var.
                 */
-
 
                 EBankaHesap _bankaHesap = new EBankaHesap()
                 {
@@ -49,15 +51,23 @@ namespace SantiyeOnMuh.WebUI.Controllers
                     BankaKasas = bankaHesap.BankaKasas,
                 };
 
-                _bankaHesapService.Create(_bankaHesap);
+               if(_bankaHesapService.Create(_bankaHesap))
+                {
+                    AlertMessage msg = new AlertMessage()
+                    {
+                        Message = $"{_bankaHesap.HesapAdi} HESABI AÇILDI.",
+                        AlertType = "success"
+                    };
 
-                return RedirectToAction("Index", "Admin");
+                    TempData["message"] = JsonConvert.SerializeObject(msg);
+
+                    return RedirectToAction("Index", "Admin");
+                };
+                return View(bankaHesap);   
             }
-
-
-
             return View(bankaHesap);
         }
+
         [HttpGet]
         public IActionResult BankaHesapGuncelle(int? id)
         {
@@ -92,6 +102,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
 
             return View(_bankaHesap);
         }
+
         [HttpPost]
         public IActionResult BankaHesapGuncelle(BankaHesap bankaHesap)
         {
@@ -115,6 +126,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
             return RedirectToAction("Index", "Admin");
             
         }
+
         [HttpGet]
         public IActionResult BankaHesapSil(int? id)
         {
@@ -130,6 +142,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
 
             return RedirectToAction("Index", "Admin");
         }
+
         [HttpGet]
         public IActionResult BankaHesapGeriYukle(int? id)
         {

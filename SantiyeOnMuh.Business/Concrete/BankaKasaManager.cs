@@ -12,14 +12,47 @@ namespace SantiyeOnMuh.Business.Concrete
     public class BankaKasaManager : IBankaKasaService
     {
         private IBankaKasaRepository _bankaKasaRepository;
+
         public BankaKasaManager (IBankaKasaRepository bankaKasaRepository)
         {
             _bankaKasaRepository = bankaKasaRepository;
         }
 
-        public void Create(EBankaKasa entity)
+        public string ErrorMessage { get; set; }
+
+        public bool Validation(EBankaKasa entity)
         {
-            _bankaKasaRepository.Create(entity);
+            var IsValid = true;
+
+            if (string.IsNullOrEmpty(entity.Aciklama))
+            {
+                ErrorMessage += "AÇIKLAMA GİRMELİSİNİZ.\n";
+                return false;
+            }
+
+            if (string.IsNullOrEmpty(entity.Nitelik))
+            {
+                ErrorMessage += "NİTELİK GİRMELİSİNİZ.\n";
+                return false;
+            }
+
+            if ((entity.Giren<0) || (entity.Cikan < 0))
+            {
+                ErrorMessage += "TUTAR -0- DAN KÜÇÜK OLAMAZ .\n";
+                return false;
+            }
+
+            return IsValid;
+        }
+
+        public bool Create(EBankaKasa entity)
+        {
+            if (Validation(entity))
+            {
+                _bankaKasaRepository.Create(entity);
+                return true;
+            }
+            return false;
         }
 
         public void Update(EBankaKasa entity)

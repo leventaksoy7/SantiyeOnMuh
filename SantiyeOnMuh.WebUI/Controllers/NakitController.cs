@@ -1,6 +1,7 @@
 ﻿using ClosedXML.Excel;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Newtonsoft.Json;
 using SantiyeOnMuh.Business.Abstract;
 using SantiyeOnMuh.Entity;
 using SantiyeOnMuh.WebUI.Models;
@@ -57,6 +58,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
             };
             return View(nakitViewModel);
         }
+
         [HttpGet]
         public IActionResult NakitEkleme()
         {
@@ -68,6 +70,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
 
             return View(new Nakit());
         }
+
         [HttpPost]
         public IActionResult NakitEkleme(Nakit nakit, IFormFile? file)
         {
@@ -98,56 +101,63 @@ namespace SantiyeOnMuh.WebUI.Controllers
                     BankaHesap = nakit.BankaHesap,
                 };
 
-                _nakitService.Create(_nakit);
-
-                //CARİ KASA İÇİN NAKİT OLUŞTURULDU VE KAYNAĞI İLE EKLENDİ
-                ECariKasa _cariKasa = new ECariKasa()
+                if (_nakitService.Create(_nakit))
                 {
-                    Tarih = nakit.Tarih,
-                    Aciklama = nakit.Aciklama,
-                    Miktar = 1,
-                    BirimFiyat = 1,
-                    Borc = Convert.ToDecimal(nakit.Tutar.Replace(".",",")),
-                    Alacak = 0,
-                    ImgUrl = null,
-                    NakitKaynak = _nakit.Id,
-                    CekKaynak = null,
-                    CariGiderKalemiId = 2,
-                    CariHesapId = nakit.CariHesapId
+                    ECariKasa _cariKasa = new ECariKasa()
+                    {
+                        Tarih = nakit.Tarih,
+                        Aciklama = nakit.Aciklama,
+                        Miktar = 1,
+                        BirimFiyat = 1,
+                        Borc = Convert.ToDecimal(nakit.Tutar.Replace(".", ",")),
+                        Alacak = 0,
+                        ImgUrl = null,
+                        NakitKaynak = _nakit.Id,
+                        CekKaynak = null,
+                        CariGiderKalemiId = 2,
+                        CariHesapId = nakit.CariHesapId
+                    };
+                    _cariKasaService.Create(_cariKasa);
+
+                    EBankaKasa _bankaKasa = new EBankaKasa()
+                    {
+                        Tarih = nakit.Tarih,
+                        Aciklama = nakit.Aciklama,
+                        Nitelik = "NAKİT ÖDEME",
+                        Cikan = Convert.ToDecimal(nakit.Tutar.Replace(".", ",")),
+                        Giren = 0,
+                        NakitKaynak = _nakit.Id,
+                        BankaHesapId = nakit.BankaHesapId
+                    };
+                    _bankaKasaService.Create(_bankaKasa);
+
+                    #region NAKİT ÖDEME - CARİ HESAP VE BANKA ARASINDAKİ BAĞLANTI
+                    var _eklenenNakit = _nakitService.GetById(_nakit.Id);
+
+                    if (_eklenenNakit == null) { return NotFound(); }
+
+                    _eklenenNakit.CariKasaKaynak = _cariKasa.Id;
+
+                    _eklenenNakit.BankaKasaKaynak = _bankaKasa.Id;
+
+                    _nakitService.Update(_eklenenNakit);
+                    #endregion
+
+                    AlertMessage msg = new AlertMessage()
+                    {
+                        Message = $"{_nakit.Tutar} ÖDEMESİ EKLENDİ.",
+                        AlertType = "success"
+                    };
+
+                    TempData["message"] = JsonConvert.SerializeObject(msg);
+
+                    return RedirectToAction("Index");
                 };
-                _cariKasaService.Create(_cariKasa);
-
-                //BANKA KASA İÇİN NAKİT OLUŞTURULDU VE KAYNAĞI İLE EKLENDİ
-                EBankaKasa _bankaKasa = new EBankaKasa()
-                {
-                    Tarih = nakit.Tarih,
-                    Aciklama = nakit.Aciklama,
-                    Nitelik = "NAKİT ÖDEME",
-                    Cikan = Convert.ToDecimal(nakit.Tutar.Replace(".",",")),
-                    Giren = 0,
-                    NakitKaynak = _nakit.Id,
-                    BankaHesapId = nakit.BankaHesapId
-                };
-
-                _bankaKasaService.Create(_bankaKasa);
-
-                //ŞİMDİ NAKİT ÖDEMEYE, BANKA KASA VE CARİ HESAP KAYNAĞI EKLENİYOR
-                var _eklenenNakit = _nakitService.GetById(_nakit.Id);
-
-                if (_eklenenNakit == null){return NotFound();}
-
-                _eklenenNakit.CariKasaKaynak = _cariKasa.Id;
-
-                _eklenenNakit.BankaKasaKaynak = _bankaKasa.Id;
-
-                _nakitService.Update(_eklenenNakit);
-
-                return RedirectToAction("BankaKasa", "BankaKasa");
+                return View(nakit);
             }
-
             return View(nakit);
-
         }
+
         [HttpGet]
         public IActionResult NakitGuncelle(int? nakitid)
         {
@@ -184,6 +194,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
 
             return View(_nakit);
         }
+
         [HttpPost]
         public IActionResult NakitGuncelle(Nakit nakit)
         {
@@ -248,6 +259,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
 
             return RedirectToAction("Index");
         }
+
         [HttpGet]
         public IActionResult NakitDetay(int? nakitid)
         {
@@ -286,6 +298,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
 
             return View(_nakit);
         }
+
         [HttpGet]
         public IActionResult NakitSil(int? nakitid)
         {
@@ -319,6 +332,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
 
             return View(_nakit);
         }
+
         [HttpPost]
         public IActionResult NakitSil(Nakit nakit)
         {
@@ -365,7 +379,6 @@ namespace SantiyeOnMuh.WebUI.Controllers
 
             return RedirectToAction("Index");
         }
-
 
         [HttpGet]
         public IActionResult NakitGeriYukle(int? nakitid)
@@ -488,6 +501,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
                 }
             }
         }
+
         //ARŞİV
         public IActionResult IndexArsiv(int page = 1)
         {
@@ -525,6 +539,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
 
             return View(new Nakit());
         }
+
         [HttpPost]
         public async Task<IActionResult> NakitEklemeFromCari(Nakit nakit, IFormFile file)
         {
@@ -648,6 +663,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
 
             return View(nakitViewModel);
         }
+
         public IActionResult NakitSantiye(int santiyeid, int page = 1)
         {
             ViewBag.Sayfa = "NAKİT ÖDEMELER";
@@ -665,6 +681,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
             };
             return View(nakitViewModel);
         }
+
         public IActionResult NakitSirket(int sirketid, int page = 1)
         {
             ViewBag.Sayfa = "NAKİT ÖDEMELER";
@@ -682,6 +699,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
             };
             return View(nakitViewModel);
         }
+
         public IActionResult NakitBanka(int bankahesapid, int page = 1)
         {
             ViewBag.Sayfa = "NAKİT ÖDEMELER";
@@ -774,6 +792,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
                 }
             }
         }
+
         public IActionResult NakitSirket(int sirketid)
         {
             var nakitViewModel = new NakitViewListModel()
@@ -847,6 +866,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
                 }
             }
         }
+
         public IActionResult NakitBankaHesap(int bankahesapid)
         {
             var nakitViewModel = new NakitViewListModel()

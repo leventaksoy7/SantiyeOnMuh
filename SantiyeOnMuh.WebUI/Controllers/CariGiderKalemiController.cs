@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using SantiyeOnMuh.Business.Abstract;
 using SantiyeOnMuh.Entity;
+using SantiyeOnMuh.WebUI.Models;
 using SantiyeOnMuh.WebUI.Models.Modeller;
 using System.ComponentModel.DataAnnotations;
 
@@ -10,16 +12,19 @@ namespace SantiyeOnMuh.WebUI.Controllers
     {
         // NESNELER ÜZERİNDEKİ İŞLEMLERİ _ OLAN NESNE ÜZERİNDE YAPIP SONRA AKTARIYORUZ - INJECTION
         private ICariGiderKalemiService _cariGiderKalemiService;
+
         public CariGiderKalemiController(ICariGiderKalemiService cariGiderKalemiService)
         {
             this._cariGiderKalemiService = cariGiderKalemiService;
         }
+
         [HttpGet]
         public IActionResult CariGiderKalemiEkleme()
         {
             ViewBag.Sayfa = "CARİ HESAPLAR İÇİN YENİ GİDER KALEMİ EKLEME";
             return View();
         }
+
         [HttpPost]
         public IActionResult CariGiderKalemiEkleme(CariGiderKalemi cariGiderKalemi)
         {
@@ -42,10 +47,25 @@ namespace SantiyeOnMuh.WebUI.Controllers
                 CariKasas = cariGiderKalemi.CariKasas,
             };
 
-            _cariGiderKalemiService.Create(_cariGiderKalemi);
+            if (_cariGiderKalemiService.Create(_cariGiderKalemi))
+            {
+                AlertMessage msg = new AlertMessage()
+                {
+                    Message = $"{_cariGiderKalemi.Ad} KALEMİ EKLENDİ.",
+                    AlertType = "success"
+                };
 
-            return RedirectToAction("Index", "Admin");
+                TempData["message"] = JsonConvert.SerializeObject(msg);
+
+                return RedirectToAction("Index", "Admin");
+            };
+            return View(_cariGiderKalemi);
+
+            //_cariGiderKalemiService.Create(_cariGiderKalemi);
+
+            //return RedirectToAction("Index", "Admin");
         }
+
         [HttpGet]
         public IActionResult CariGiderKalemiGuncelle(int? id)
         {
@@ -68,6 +88,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
 
             return View(_cariGiderKalemi);
         }
+
         [HttpPost]
         public IActionResult CariGiderKalemiGuncelle(CariGiderKalemi c)
         {
@@ -83,6 +104,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
 
             return RedirectToAction("Index", "Admin");
         }
+
         [HttpGet]
         public IActionResult CariGiderKalemiSil(int? id)
         {
@@ -98,6 +120,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
 
             return RedirectToAction("Index", "Admin");
         }
+
         [HttpGet]
         public IActionResult CariGiderKalemiGeriYukle(int? id)
         {

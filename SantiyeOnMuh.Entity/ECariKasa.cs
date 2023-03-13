@@ -11,16 +11,11 @@ namespace SantiyeOnMuh.Entity
     public class ECariKasa
     {
         public int Id { get; set; }
-
         public DateTime Tarih { get; set; }
         public string Aciklama { get; set; }
-
         public decimal Miktar { get; set; }
-
         public decimal BirimFiyat { get; set; }
-
         public decimal Borc { get; set; }
- 
         public decimal Alacak { get; set; }
         public string? ImgUrl { get; set; }
         public int? CekKaynak { get; set; }

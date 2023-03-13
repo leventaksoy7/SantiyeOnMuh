@@ -12,13 +12,41 @@ namespace SantiyeOnMuh.Business.Concrete
     public class NakitManager : INakitService
     {
         private INakitRepository _nakitRepository;
+
         public NakitManager(INakitRepository NakitRepository)
         {
             _nakitRepository = NakitRepository;
         }
-        public void Create(ENakit entity)
+
+        public string ErrorMessage { get; set; }
+
+        public bool Validation(ENakit entity)
         {
-            _nakitRepository.Create(entity);
+            var IsValid = true;
+
+            if (string.IsNullOrEmpty(entity.Aciklama))
+            {
+                ErrorMessage += "AÇIKLAMA GİRMELİSİNİZ.\n";
+                return false;
+            }
+
+            if (entity.Tutar < 0)
+            {
+                ErrorMessage += "ÇEK TUTARI -0- DAN KÜÇÜK OLAMAZ.\n";
+                return false;
+            }
+
+            return IsValid;
+        }
+
+        public bool Create(ENakit entity)
+        {
+            if (Validation(entity))
+            {
+                _nakitRepository.Create(entity);
+                return true;
+            }
+            return false;
         }
 
         public void Delete(ENakit entity)

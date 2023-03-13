@@ -12,14 +12,36 @@ namespace SantiyeOnMuh.Business.Concrete
     public class CariGiderKalemiManager : ICariGiderKalemiService
     {
         private ICariGiderKalemiRepository _cariGiderKalemiRepository;
+
         public CariGiderKalemiManager(ICariGiderKalemiRepository cariGiderKalemiRepository)
         {
             _cariGiderKalemiRepository = cariGiderKalemiRepository;
         }
 
-        public void Create(ECariGiderKalemi entity)
+        public string ErrorMessage { get; set; }
+
+        public bool Validation(ECariGiderKalemi entity)
         {
-            _cariGiderKalemiRepository.Create(entity);
+            var IsValid = true;
+
+            if (string.IsNullOrEmpty(entity.Ad))
+            {
+                ErrorMessage += "GİDER KALEMİ ADI GİRMELİSİNİZ.\n";
+                return false;
+            }
+
+            return IsValid;
+        }
+
+        public bool Create(ECariGiderKalemi entity)
+        {
+            if (Validation(entity))
+            {
+                _cariGiderKalemiRepository.Create(entity);
+                return true;
+            }
+            return false;
+            
         }
 
         public void Delete(ECariGiderKalemi entity)

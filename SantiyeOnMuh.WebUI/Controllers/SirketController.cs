@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using SantiyeOnMuh.Business.Abstract;
 using SantiyeOnMuh.Entity;
 using SantiyeOnMuh.WebUI.Models;
@@ -10,10 +11,12 @@ namespace SantiyeOnMuh.WebUI.Controllers
     {
         // NESNELER ÜZERİNDEKİ İŞLEMLERİ _ OLAN NESNE ÜZERİNDE YAPIP SONRA AKTARIYORUZ - INJECTION
         private ISirketService _sirketService;
+
         public SirketController(ISirketService sirketService)
         {
             this._sirketService = sirketService;
         }
+
         public IActionResult SilinmisSirketler()
         {
             ViewBag.Sayfa = "SİLİNMİŞ ŞİRKETLER";
@@ -25,12 +28,14 @@ namespace SantiyeOnMuh.WebUI.Controllers
 
             return View(sirketViewModel);
         }
+
         [HttpGet]
         public IActionResult SirketEkleme()
         {
             ViewBag.Sayfa = "YENİ ŞİRKET EKLEME";
             return View();
         }
+
         [HttpPost]
         public IActionResult SirketEkleme(Sirket sirket)
         {
@@ -44,9 +49,22 @@ namespace SantiyeOnMuh.WebUI.Controllers
                 Ceks=sirket.Ceks,
                 Nakits=sirket.Nakits,
             };
-            _sirketService.Create(_sirket);
-            return RedirectToAction("Index", "Admin");
+
+            if (_sirketService.Create(_sirket))
+            {
+                AlertMessage msg = new AlertMessage()
+                {
+                    Message = $"{_sirket.Ad} HESABI AÇILDI.",
+                    AlertType = "success"
+                };
+
+                TempData["message"] = JsonConvert.SerializeObject(msg);
+
+                return RedirectToAction("Index", "Admin");
+            };
+            return View(sirket);
         }
+
         [HttpGet]
         public IActionResult SirketGuncelle(int? id)
         {
@@ -70,6 +88,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
 
             return View(_sirket);
         }
+
         [HttpPost]
         public IActionResult SirketGuncelle(Sirket sirket)
         {
@@ -86,6 +105,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
 
             return RedirectToAction("Index", "Admin");
         }
+
         [HttpGet]
         public IActionResult SirketSil(int? id)
         {
@@ -101,6 +121,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
 
             return RedirectToAction("Index", "Admin");
         }
+
         [HttpGet]
         public IActionResult SirketGeriYukle(int? id)
         {

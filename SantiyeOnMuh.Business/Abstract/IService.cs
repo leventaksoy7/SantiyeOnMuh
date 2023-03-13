@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace SantiyeOnMuh.Business.Abstract
 {
-    public interface IService<T>
+    public interface IService<T>: IValidator<T>
     {
         T GetById(int id);
         List<T> GetAll();
-        void Create(T entity);
+        bool Create(T entity);
         void Update(T entity);
         void Delete(T entity);
     }

@@ -12,13 +12,53 @@ namespace SantiyeOnMuh.Business.Concrete
     public class CariHesapManager : ICariHesapService
     {
         private ICariHesapRepository _cariHesapRepository;
+
         public CariHesapManager (ICariHesapRepository cariHesapRepository)
         {
             _cariHesapRepository = cariHesapRepository;
         }
-        public void Create(ECariHesap entity)
+
+        public string ErrorMessage { get; set; }
+
+        public bool Validation(ECariHesap entity)
+        {
+            var IsValid = true;
+
+            if (string.IsNullOrEmpty(entity.Ad))
+            {
+                ErrorMessage += "GİDER KALEMİ ADI GİRMELİSİNİZ.\n";
+                return false;
+            }
+
+            if (string.IsNullOrEmpty(entity.Telefon))
+            {
+                if (Validation(entity))
+                {
+                    ErrorMessage += "TELEFON NUMARASI GİRMELİSİNİZ.\n";
+                    return false;
+                }
+                return false;
+            }
+
+            if (string.IsNullOrEmpty(entity.IlgiliKisi))
+            {
+                ErrorMessage += "YETKİLİ KİŞİ GİRMELİSİNİZ.\n";
+                return false;
+            }
+
+            if (string.IsNullOrEmpty(entity.IlgiliKisiTelefon))
+            {
+                ErrorMessage += "TELEFON NUMARASI GİRMELİSİNİZ.\n";
+                return false;
+            }
+
+            return IsValid;
+        }
+
+        public bool Create(ECariHesap entity)
         {
             _cariHesapRepository.Create(entity);
+            return true;
         }
 
         public void Delete(ECariHesap entity)
