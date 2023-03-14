@@ -12,6 +12,7 @@ using System.Text.Json.Serialization;
 
 namespace SantiyeOnMuh.WebUI.Controllers
 {
+    [ValidateAntiForgeryToken]
     public class BankaKasaController : Controller
     {
         // NESNELER ÜZERİNDEKİ İŞLEMLERİ _ OLAN NESNE ÜZERİNDE YAPIP SONRA AKTARIYORUZ - INJECTION
@@ -124,10 +125,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
             });
 
             return View(bankaKasa);
-
-        //_bankaKasaService.Create(_bankaKasa);
-        //return RedirectToAction("BankaKasa");
-    }
+        }
 
         [HttpGet]
         public IActionResult BankaKasaGuncelle(int? bankakasaid)

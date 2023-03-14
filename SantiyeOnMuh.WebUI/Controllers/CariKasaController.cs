@@ -12,6 +12,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace SantiyeOnMuh.WebUI.Controllers
 {
+    [ValidateAntiForgeryToken]
     public class CariKasaController : Controller
     {
         // NESNELER ÜZERİNDEKİ İŞLEMLERİ _ OLAN NESNE ÜZERİNDE YAPIP SONRA AKTARIYORUZ - INJECTION
@@ -173,7 +174,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
 
             TempData.Put("message", new AlertMessage()
             {
-                Title = "BAŞARILI",
+                Title = "HATA",
                 AlertType = "danger",
                 Message = _cariKasaService.ErrorMessage
             });
@@ -278,7 +279,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
             {
                 Title = "BAŞARILI",
                 AlertType = "danger",
-                Message = $"{_cariKasa.Aciklama} KASAYA EKLENDİ."
+                Message = $"{_cariKasa.Aciklama} SİLİNDİ."
 
             });
 

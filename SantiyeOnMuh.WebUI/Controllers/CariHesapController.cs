@@ -9,6 +9,7 @@ using SantiyeOnMuh.WebUI.Models.Modeller;
 
 namespace SantiyeOnMuh.WebUI.Controllers
 {
+    [ValidateAntiForgeryToken]
     public class CariHesapController : Controller
     {
         // _ olan nesnemizle artık işlemlerimizi gerçekleştireceğiz
@@ -226,7 +227,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
             {
                 Title = "BAŞARILI",
                 AlertType = "danger",
-                Message = $"{c.Ad} HESABI AÇILDI."
+                Message = $"{c.Ad} HESABI SİLİNDİ."
             });
 
             return RedirectToAction("CariHesap");
@@ -348,8 +349,8 @@ namespace SantiyeOnMuh.WebUI.Controllers
             TempData.Put("message", new AlertMessage()
             {
                 Title = "BAŞARILI",
-                AlertType = "danger",
-                Message = $"{cariHesap.Ad} HESABI AÇILDI."
+                AlertType = "success",
+                Message = $"{cariHesap.Ad} HESABI GERİ YÜKLENDİ."
             });
 
             return RedirectToAction("CariHesap");

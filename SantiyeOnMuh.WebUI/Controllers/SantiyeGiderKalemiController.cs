@@ -9,6 +9,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace SantiyeOnMuh.WebUI.Controllers
 {
+    [ValidateAntiForgeryToken]
     public class SantiyeGiderKalemiController : Controller
     {
         // NESNELER ÜZERİNDEKİ İŞLEMLERİ _ OLAN NESNE ÜZERİNDE YAPIP SONRA AKTARIYORUZ - INJECTION
@@ -101,7 +102,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
             {
                 Title = "BAŞARILI",
                 AlertType = "success",
-                Message = $"{_santiyeGiderKalemi.Ad} GİDER KALEMİ EKLENDİ."
+                Message = $"{_santiyeGiderKalemi.Ad} GİDER KALEMİ GÜNCELLENDİ."
             });
 
             return RedirectToAction("Index", "Admin");
@@ -124,7 +125,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
             {
                 Title = "BAŞARILI",
                 AlertType = "success",
-                Message = $"{santiyeGiderKalemi.Ad} GİDER KALEMİ EKLENDİ."
+                Message = $"{santiyeGiderKalemi.Ad} GİDER KALEMİ SİLİNDİ."
             });
 
             return RedirectToAction("Index", "Admin");
@@ -147,7 +148,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
             {
                 Title = "BAŞARILI",
                 AlertType = "success",
-                Message = $"{santiyeGiderKalemi.Ad} GİDER KALEMİ EKLENDİ."
+                Message = $"{santiyeGiderKalemi.Ad} GİDER KALEMİ GERİ EKLENDİ."
             });
 
             return RedirectToAction("Index", "Admin");

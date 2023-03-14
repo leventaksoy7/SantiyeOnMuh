@@ -8,6 +8,7 @@ using SantiyeOnMuh.WebUI.Models.Modeller;
 
 namespace SantiyeOnMuh.WebUI.Controllers
 {
+    [ValidateAntiForgeryToken]
     public class SirketController : Controller
     {
         // NESNELER ÜZERİNDEKİ İŞLEMLERİ _ OLAN NESNE ÜZERİNDE YAPIP SONRA AKTARIYORUZ - INJECTION
@@ -58,7 +59,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
                 {
                     Title = "BAŞARILI",
                     AlertType = "success",
-                    Message = $"{_sirket.Ad} HESABI AÇILDI."
+                    Message = $"{_sirket.Ad} ŞİRKETİ AÇILDI."
                 });
 
                 return RedirectToAction("Index", "Admin");
@@ -116,7 +117,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
             {
                 Title = "BAŞARILI",
                 AlertType = "success",
-                Message = $"{_sirket.Ad} HESABI AÇILDI."
+                Message = $"{_sirket.Ad} ŞİRKETİ GÜNCELLENDİ."
             });
 
             return RedirectToAction("Index", "Admin");
@@ -139,7 +140,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
             {
                 Title = "BAŞARILI",
                 AlertType = "success",
-                Message = $"{sirket.Ad} HESABI AÇILDI."
+                Message = $"{sirket.Ad} ŞİRKETİ SİLİNDİ."
             });
 
             return RedirectToAction("Index", "Admin");
@@ -162,7 +163,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
             {
                 Title = "BAŞARILI",
                 AlertType = "success",
-                Message = $"{sirket.Ad} HESABI AÇILDI."
+                Message = $"{sirket.Ad} ŞİRKETİ GERİ EKLENDİ."
             });
 
             return RedirectToAction("Index", "Admin");

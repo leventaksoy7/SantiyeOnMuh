@@ -6,6 +6,7 @@ using SantiyeOnMuh.WebUI.Models;
 namespace SantiyeOnMuh.WebUI.Controllers
 {
     [Authorize]
+    [ValidateAntiForgeryToken]
     public class AdminController : Controller
     {
         private ISantiyeGiderKalemiService _santiyeGiderKalemiService;

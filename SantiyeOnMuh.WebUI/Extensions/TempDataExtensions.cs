@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Newtonsoft.Json;
+using SantiyeOnMuh.WebUI.Models;
 
 namespace SantiyeOnMuh.WebUI.Extensions
 {

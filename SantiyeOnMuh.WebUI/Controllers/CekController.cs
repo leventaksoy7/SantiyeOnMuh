@@ -15,6 +15,7 @@ using System.Runtime.ConstrainedExecution;
 
 namespace SantiyeOnMuh.WebUI.Controllers
 {
+    [ValidateAntiForgeryToken]
     public class CekController : Controller
     {
         // NESNELER ÜZERİNDEKİ İŞLEMLERİ _ OLAN NESNE ÜZERİNDE YAPIP SONRA AKTARIYORUZ - INJECTION
@@ -218,7 +219,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
             {
                 Title = "BAŞARILI",
                 AlertType = "success",
-                Message = $"{entity.CekNo} ÇEK TAHSİL EDİLDİ"
+                Message = $"{entity.CekNo} NUMARALI ÇEK TAHSİL EDİLDİ"
             });
 
             return RedirectToAction("Index");
@@ -1045,19 +1046,5 @@ namespace SantiyeOnMuh.WebUI.Controllers
         }
 
         #endregion
-
-
-
-        private void CreateMessage(string message, string alertType)
-        {
-            AlertMessage msg = new AlertMessage()
-            {
-                //Message = $"{_bankaHesap.HesapAdi} HESABI AÇILDI.",
-                Message = message,
-                AlertType = alertType
-            };
-
-            TempData["message"] = JsonConvert.SerializeObject(msg);
-        }
     }
 }

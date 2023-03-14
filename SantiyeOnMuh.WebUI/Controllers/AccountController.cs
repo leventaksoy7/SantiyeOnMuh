@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using SantiyeOnMuh.Business.Abstract;
 using SantiyeOnMuh.WebUI.Extensions;
 using SantiyeOnMuh.WebUI.Identity;
 using SantiyeOnMuh.WebUI.Models;
@@ -31,13 +32,40 @@ namespace SantiyeOnMuh.WebUI.Controllers
 
             var user = await _userManager.FindByNameAsync(model.UserName);
 
-            if (user == null) { ModelState.AddModelError("", "HATALI KULLANICI ADI"); return View(model); }
+            if (user == null) 
+            { 
+                TempData.Put("message", new AlertMessage()
+                {
+                    Title = "HATA",
+                    AlertType = "danger",
+                    Message = "GİRİŞ BAŞARISIZ"
+                });
+
+                return View(model); 
+            }
 
             var result = await _signInManager.PasswordSignInAsync(user, model.Password,false,true); //f=cookie silme t=user block
 
-            if (result.Succeeded) { return RedirectToAction("Anasayfa", "AnaSayfa"); }
+            if (result.Succeeded) 
+            { 
 
-            ModelState.AddModelError("", "HATALI KULLANICI ADI VEYA PAROLA");
+                TempData.Put("message", new AlertMessage()
+                {
+                    Title = "BAŞARILI",
+                    AlertType = "success",
+                    Message = $"{user.UserName} GİRİŞ BAŞARILI"
+                });
+
+                return RedirectToAction("Anasayfa", "AnaSayfa");
+            }
+
+            TempData.Put("message", new AlertMessage()
+            {
+                Title = "HATA",
+                AlertType = "danger",
+                Message = "GİRİŞ BAŞARISIZ"
+            });
+
             return View();
         }
 
@@ -69,7 +97,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
                 {
                     Title = "BAŞARILI",
                     AlertType = "success",
-                    Message = $"{user.Ad} BAŞARIYLA EKLENDİ"
+                    Message = $"{user.Ad} KULLANICI ADI EKLENDİ"
                 });
                 return RedirectToAction("Admin", "Admin"); 
             }
@@ -78,7 +106,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
             {
                 Title = "HATA",
                 AlertType = "danger",
-                Message = "BİLİNMEYEN BİR HATA OLUŞTU, TEKRAR DENEYİNİZ"
+                Message = "BİLİNMEYEN BİR HATA OLUŞTU, TEKRAR DENEYİNİZ."
             });
 
             ModelState.AddModelError("", "BİLİNMEYEN BİR HATA OLUŞTU, TEKRAR DENEYİNİZ");

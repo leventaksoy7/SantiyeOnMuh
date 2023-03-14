@@ -8,6 +8,7 @@ using SantiyeOnMuh.WebUI.Models.Modeller;
 
 namespace SantiyeOnMuh.WebUI.Controllers
 {
+    [ValidateAntiForgeryToken]
     public class BankaHesapController : Controller
     {
         // NESNELER ÜZERİNDEKİ İŞLEMLERİ _ OLAN NESNE ÜZERİNDE YAPIP SONRA AKTARIYORUZ - INJECTION
@@ -70,6 +71,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
                     AlertType = "danger",
                     Message = _bankaHesapService.ErrorMessage
                 });
+
                 return View(bankaHesap);   
             }
             return View(bankaHesap);
@@ -114,7 +116,17 @@ namespace SantiyeOnMuh.WebUI.Controllers
         public IActionResult BankaHesapGuncelle(BankaHesap bankaHesap)
         {
 
-            if (!ModelState.IsValid) { return View(bankaHesap); }
+            if (!ModelState.IsValid) 
+            {
+                TempData.Put("message", new AlertMessage()
+                {
+                    Title = "HATA",
+                    AlertType = "danger",
+                    Message = "BİR HATA OLUŞTU"
+                });
+
+                return View(bankaHesap); 
+            }
 
             EBankaHesap _bankaHesap = _bankaHesapService.GetById(bankaHesap.Id);
 
@@ -144,11 +156,11 @@ namespace SantiyeOnMuh.WebUI.Controllers
         [HttpGet]
         public IActionResult BankaHesapSil(int? id)
         {
-            if (id == null){return NotFound();}
+            if (id == null) { return NotFound(); }
 
             EBankaHesap bankaHesap = _bankaHesapService.GetById((int)id);
 
-            if (bankaHesap == null){return NotFound();}
+            if (bankaHesap == null) {return NotFound();}
 
             bankaHesap.Durum = false;
 
@@ -167,7 +179,10 @@ namespace SantiyeOnMuh.WebUI.Controllers
         [HttpGet]
         public IActionResult BankaHesapGeriYukle(int? id)
         {
-            if (id == null){return NotFound();}
+            if (id == null)
+            {
+                return NotFound();
+            }
 
             EBankaHesap bankaHesap = _bankaHesapService.GetById((int)id);
 

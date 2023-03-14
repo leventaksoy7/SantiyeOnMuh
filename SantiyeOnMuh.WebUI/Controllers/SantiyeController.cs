@@ -10,6 +10,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace SantiyeOnMuh.WebUI.Controllers
 {
+    [ValidateAntiForgeryToken]
     public class SantiyeController : Controller
     {
         // _ olan nesnemizle artık işlemlerimizi gerçekleştireceğiz
@@ -113,7 +114,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
                 {
                     Title = "BAŞARILI",
                     AlertType = "success",
-                    Message = $"{_santiye.Ad} HESABI AÇILDI."
+                    Message = $"{_santiye.Ad} ŞANTİYE AÇILDI."
                 });
 
                 return RedirectToAction("Index");
@@ -171,7 +172,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
             {
                 Title = "   BAŞARILI",
                 AlertType = "success",
-                Message = $"{_santiye.Ad} HESABI AÇILDI."
+                Message = $"{_santiye.Ad} ŞANTİYE GÜNCELLENDİ."
             });
 
             return RedirectToAction("Index");
@@ -216,7 +217,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
             {
                 Title = "   BAŞARILI",
                 AlertType = "success",
-                Message = $"{_santiye.Ad} HESABI AÇILDI."
+                Message = $"{_santiye.Ad} ŞANTİYE SİLİNDİ."
             });
 
             return RedirectToAction("Index");
@@ -238,7 +239,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
             {
                 Title = "   BAŞARILI",
                 AlertType = "success",
-                Message = $"{santiye.Ad} HESABI AÇILDI."
+                Message = $"{santiye.Ad} ŞANTİYE GERİ EKLENDİ."
             });
 
             return RedirectToAction("Index");
