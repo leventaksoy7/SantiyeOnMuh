@@ -1,9 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using SantiyeOnMuh.Business.Abstract;
 using SantiyeOnMuh.WebUI.Models;
 
 namespace SantiyeOnMuh.WebUI.Controllers
 {
+    [Authorize]
     public class AdminController : Controller
     {
         private ISantiyeGiderKalemiService _santiyeGiderKalemiService;

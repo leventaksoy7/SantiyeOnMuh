@@ -1,0 +1,61 @@
+﻿@model RegisterModel
+@{
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+</head>
+<body>
+    <br />
+    <form asp-controller="Account" asp-action="Register" method="post">
+        <div asp-validation-summary="All" class="text-bg-danger"></div>
+        <br />
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label" asp-for="FirstName"></label>
+            <div class="col-sm-5">
+                <input asp-for="FirstName" class="form-control" />
+                <span asp-validation-for="FirstName"></span>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-sm-2" asp-for="LastName"></label>
+            <div class="col-sm-5">
+                <input asp-for="LastName" class="form-control" />
+                <span asp-validation-for="LastName"></span>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-sm-2" asp-for="UserName"></label>
+            <div class="col-sm-5">
+                <input asp-for="UserName" class="form-control" />
+                <span asp-validation-for="UserName"></span>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-sm-2" asp-for="Password"></label>
+            <div class="col-sm-5">
+                <input asp-for="Password" class="form-control" />
+                <span asp-validation-for="Password"></span>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-sm-2" asp-for="RePassword"></label>
+            <div class="col-sm-5">
+                <input asp-for="RePassword" class="form-control" />
+                <span asp-validation-for="RePassword"></span>
+            </div>
+        </div>
+        <div class="form-group row">
+            <button class="col-sm-offset-2 col-sm-5 btn btn-success" type="submit">EKLE</button>
+        </div>
+    </form>
+</body>
+@section Scripts
+{
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+}
+</html>

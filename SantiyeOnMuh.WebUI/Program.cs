@@ -1,8 +1,11 @@
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using SantiyeOnMuh.Business.Abstract;
 using SantiyeOnMuh.Business.Concrete;
 using SantiyeOnMuh.DataAccess.Abstract;
 using SantiyeOnMuh.DataAccess.Concrete.EfCore;
 using SantiyeOnMuh.DataAccess.Concrete.SqlServer;
+using SantiyeOnMuh.WebUI.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,6 +21,47 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddMemoryCache();
 
 // Add a custom scoped service.
+
+//USER
+builder.Services.AddDbContext<ApplicationContext>
+    (options => options.UseSqlServer(@"Server=localhost\SQLEXPRESS; Database=SantiyeOnMuhasebe; Trusted_Connection=True;Encrypt=false;TrustServerCertificate=true;"));
+builder.Services.AddIdentity<User,IdentityRole>().AddEntityFrameworkStores<ApplicationContext>().AddDefaultTokenProviders();
+
+builder.Services.Configure<IdentityOptions>(options =>
+{
+    //PASSWORD
+    options.Password.RequireDigit = false; // RAKAM ZORUNLU
+    options.Password.RequireLowercase = false; // KÜÇÜK HARF DEÐER ZORUNLU
+    options.Password.RequireUppercase = false; // BÜYÜK HARF DEÐER ZORUNLU
+    options.Password.RequiredLength = 6; // MÝN 6 KARAKTER ZORUNLU
+    options.Password.RequireNonAlphanumeric = false; // ÞEKÝL DEÐER ZORUNLU
+
+    //LOCKOUT
+    options.Lockout.MaxFailedAccessAttempts = 5; // 5 KERE YANLIÞ PAROLA GÝRÝÞ HAKKI MAXÝMUM
+    options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5); // 5 DK HESAP KÝLÝDÝ
+    options.Lockout.AllowedForNewUsers = true; // LOCKOUT AKTÝF OLMASI ÝÇÝN
+
+    //USER
+    //options.User.AllowedUserNameCharacters = ""; // ZORUNLU OLMASINI ÝSTEDÝÐÝMÝZ KARAKTERLER LÝSTESÝ
+    options.User.RequireUniqueEmail = false; // HER KULLANICININ FARKLI MAÝL ADRESÝ OLMASI ÝÇÝN (BEN FALSE YAPTIM, AYNI MAÝL FARKLI KULLANICILAR ÝÇÝN KULLANILABÝLÝR)
+    options.SignIn.RequireConfirmedEmail = false; // GÝRÝÞ ÝÇÝN MAÝLDEN ONAYLANMIÞ OLMAK ZORUNLU (MAÝL DOÐRULAMASI)
+    options.SignIn.RequireConfirmedPhoneNumber = false; // GÝRÝÞ ÝÇÝN TELEFON ONAYLANMIÞ OLMAK ZORUNLU (MAÝL DOÐRULAMASI)   
+});
+
+builder.Services.ConfigureApplicationCookie(options =>
+{
+    options.LoginPath = "/account/login";
+    options.LogoutPath = "/account/logout";
+    options.AccessDeniedPath = "/account/accessdenied";
+    options.SlidingExpiration = false; //COOKIE ZAMAN SIFIRLAMASINI KAPATTIM. DEFAULT OLARAK HER ISTEKTE SIFIRLANIR
+    options.ExpireTimeSpan = TimeSpan.FromMinutes(1); //COOKIE ZAMANI
+    options.Cookie = new CookieBuilder
+    {
+        HttpOnly = true, //SADECE HTTP TALEBÝ ÝLE COOKIE ALINABÝLSÝN DÝYE
+        Name = ".santiyeonmuh.security.cookie" // ÖZEL ADLANDIRMA ÝÇÝN
+    };
+});
+
 //SANTÝYE
 builder.Services.AddScoped<ISantiyeService, SantiyeManager>();
 builder.Services.AddScoped<ISantiyeRepository, EfCoreSantiyeRepository>();
@@ -73,6 +117,8 @@ SeedDatabase.Seed();
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
+
+app.UseAuthentication();
 
 app.UseRouting();
 
@@ -139,7 +185,7 @@ app.UseAuthorization();
             );
 #endregion
 
-#region CARÝ HESAP
+    #region CARÝ HESAP
 //INDEX
 app.MapControllerRoute(
         name: "CariHesap",
@@ -367,8 +413,6 @@ app.MapControllerRoute(
         defaults: new { controller = "Nakit", action = "NakitSirket" }
         );
     #endregion
-
-    
 
 
 app.Run();
