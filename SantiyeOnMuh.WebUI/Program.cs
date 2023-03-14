@@ -58,7 +58,8 @@ builder.Services.ConfigureApplicationCookie(options =>
     options.Cookie = new CookieBuilder
     {
         HttpOnly = true, //SADECE HTTP TALEBÝ ÝLE COOKIE ALINABÝLSÝN DÝYE
-        Name = ".santiyeonmuh.security.cookie" // ÖZEL ADLANDIRMA ÝÇÝN
+        Name = ".santiyeonmuh.security.cookie", // ÖZEL ADLANDIRMA ÝÇÝN
+        SameSite = SameSiteMode.Strict, //cookie 
     };
 });
 

@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using SantiyeOnMuh.Business.Abstract;
 using SantiyeOnMuh.Entity;
+using SantiyeOnMuh.WebUI.Extensions;
+using SantiyeOnMuh.WebUI.Identity;
 using SantiyeOnMuh.WebUI.Models;
 using SantiyeOnMuh.WebUI.Models.Modeller;
 using System.ComponentModel.DataAnnotations;
@@ -159,11 +161,22 @@ namespace SantiyeOnMuh.WebUI.Controllers
 
             if (_cariKasaService.Create(_cariKasa))
             {
-                CreateMessage($"{_cariKasa.Aciklama} KASAYA EKLENDİ.", "success");
+                TempData.Put("message", new AlertMessage()
+                {
+                    Title = "BAŞARILI",
+                    AlertType = "success",
+                    Message = $"{_cariKasa.Aciklama} KASAYA EKLENDİ."
+                });
 
                 return RedirectToAction("CariKasa", "CariKasa", new { carihesapid = cariKasa.CariHesap.Id });
             };
-            CreateMessage(_cariKasaService.ErrorMessage, "danger");
+
+            TempData.Put("message", new AlertMessage()
+            {
+                Title = "BAŞARILI",
+                AlertType = "danger",
+                Message = _cariKasaService.ErrorMessage
+            });
 
             return View(_cariKasa);
         }
@@ -260,6 +273,14 @@ namespace SantiyeOnMuh.WebUI.Controllers
             _cariKasa.Durum = false;
 
             _cariKasaService.Update(_cariKasa);
+
+            TempData.Put("message", new AlertMessage()
+            {
+                Title = "BAŞARILI",
+                AlertType = "danger",
+                Message = $"{_cariKasa.Aciklama} KASAYA EKLENDİ."
+
+            });
 
             return RedirectToAction("CariKasa", "CariKasa", new { carihesapid = _cariKasa.CariHesapId });
         }
@@ -419,6 +440,14 @@ namespace SantiyeOnMuh.WebUI.Controllers
 
             _cariKasaService.Update(_cariKasa);
 
+            TempData.Put("message", new AlertMessage()
+            {
+                Title = "BAŞARILI",
+                AlertType = "danger",
+                Message = $"{_cariKasa.Aciklama} KASAYA GERİ EKLENDİ."
+
+            });
+
             return RedirectToAction("CariKasa", "CariKasa", new { carihesapid = _cariKasa.CariHesapId });
         }
 
@@ -492,11 +521,24 @@ namespace SantiyeOnMuh.WebUI.Controllers
 
             if (_cariKasaService.Create(_cariKasa))
             {
-                CreateMessage($"{_cariKasa.Aciklama} KASAYA EKLENDİ.", "success");
+                TempData.Put("message", new AlertMessage()
+                {
+                    Title = "BAŞARILI",
+                    AlertType = "success",
+                    Message = $"{_cariKasa.Aciklama} KASAYA EKLENDİ."
+
+                });
 
                 return RedirectToAction("CariKasa", "CariKasa", new { carihesapid = cariKasa.CariHesap.Id });
             };
-            CreateMessage(_cariKasaService.ErrorMessage, "danger");
+
+            TempData.Put("message", new AlertMessage()
+            {
+                Title = "HATA",
+                AlertType = "danger",
+                Message = _cariKasaService.ErrorMessage
+
+            });
 
             return View(_cariKasa);
         }
@@ -573,21 +615,17 @@ namespace SantiyeOnMuh.WebUI.Controllers
             _cariKasa.CariHesapId = cariKasa.CariHesapId;
 
             _cariKasaService.Update(_cariKasa);
+
+            TempData.Put("message", new AlertMessage()
+            {
+                Title = "BAŞARILI",
+                AlertType = "success",
+                Message = $"{_cariKasa.Aciklama} GÜNCELLENDİ."
+
+            });
+
             return RedirectToAction("CariKasa", new { carihesapid = cariKasa.CariHesapId });
         }
         #endregion
-
-
-        private void CreateMessage(string message, string alertType)
-        {
-            AlertMessage msg = new AlertMessage()
-            {
-                //Message = $"{_bankaHesap.HesapAdi} HESABI AÇILDI.",
-                Message = message,
-                AlertType = alertType
-            };
-
-            TempData["message"] = JsonConvert.SerializeObject(msg);
-        }
     }
 }

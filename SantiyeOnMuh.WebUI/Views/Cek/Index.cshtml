@@ -49,8 +49,7 @@
                             @if (item.OdemeDurumu == false)
                             {
                                 <td style="vertical-align: middle; width: 10%">
-                                    <a asp-controller="Cek" asp-action="CekTahsil" asp-route-cekid="@item.Id"
-                                       class="btn btn-info btn-sm">TAHSİL ET</a>
+                                    <a asp-controller="Cek" asp-action="CekTahsil" asp-route-cekid="@item.Id" class="btn btn-info btn-sm">TAHSİL ET</a>
                                 </td>
                             }
                             else
@@ -85,9 +84,7 @@
     </div>
     <br />
     <div>
-        <a asp-controller="Cek"
-           asp-action="CekExcel"
-           class="btn btn-warning btn-sm">EXCEL</a>
+        <a asp-controller="Cek" asp-action="CekExcel" class="btn btn-warning btn-sm">EXCEL</a>
     </div>
 </body>
 </html>

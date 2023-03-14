@@ -1,10 +1,12 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using SantiyeOnMuh.WebUI.Extensions;
 using SantiyeOnMuh.WebUI.Identity;
 using SantiyeOnMuh.WebUI.Models;
 
 namespace SantiyeOnMuh.WebUI.Controllers
 {
+    [ValidateAntiForgeryToken] //CROSSIDE ATTACKLAR ICIN -post tokenları control ediyor
     public class AccountController : Controller
     {
         private UserManager<User> _userManager;
@@ -61,10 +63,32 @@ namespace SantiyeOnMuh.WebUI.Controllers
 
             var result = await _userManager.CreateAsync(user, model.Password);
 
-            if (result.Succeeded) { return RedirectToAction("Admin", "Admin"); }
+            if (result.Succeeded) 
+            {
+                TempData.Put("message", new AlertMessage()
+                {
+                    Title = "BAŞARILI",
+                    AlertType = "success",
+                    Message = $"{user.Ad} BAŞARIYLA EKLENDİ"
+                });
+                return RedirectToAction("Admin", "Admin"); 
+            }
+
+            TempData.Put("message", new AlertMessage()
+            {
+                Title = "HATA",
+                AlertType = "danger",
+                Message = "BİLİNMEYEN BİR HATA OLUŞTU, TEKRAR DENEYİNİZ"
+            });
 
             ModelState.AddModelError("", "BİLİNMEYEN BİR HATA OLUŞTU, TEKRAR DENEYİNİZ");
             return View(model);
+        }
+
+        public async Task<IActionResult> Logout()
+        {
+            await _signInManager.SignOutAsync();
+            return RedirectToAction("Login", "account");
         }
     }
 }

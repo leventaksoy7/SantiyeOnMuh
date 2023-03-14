@@ -46,7 +46,10 @@
         <br />
         <a href="/Nakit/Index" class="w3-bar-item w3-button w3-padding"><i class="fa fa-turkish-lira"></i> NAKİT ÖDEMELER</a>
         <br />
-        <a href="#" class="w3-bar-item w3-button w3-padding"><i class="fas fa-power-off"></i> ÇIKIŞ</a>
+        @if (User.Identity.IsAuthenticated)
+        {
+            <a href="/account/Logout" class="w3-bar-item w3-button w3-padding"><i class="fas fa-power-off"></i>@User.Identity.Name ÇIKIŞ</a>
+        }
     </div>
 
     <div id="main">
@@ -59,15 +62,7 @@
 
         @if (TempData["message"] != null)
         {
-            var message = JsonConvert.DeserializeObject<AlertMessage>(TempData["message"] as string);
-
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="alert alert-@message.AlertType">
-                        @message.Message
-                    </div>
-                </div>
-            </div>
+            <partial name="_ResultMessage" model="@(TempData.Get<AlertMessage>("message"))" />
         }
 
 

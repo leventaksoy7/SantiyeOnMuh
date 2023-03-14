@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using SantiyeOnMuh.Business.Abstract;
 using SantiyeOnMuh.Entity;
+using SantiyeOnMuh.WebUI.Extensions;
 using SantiyeOnMuh.WebUI.Models;
 using SantiyeOnMuh.WebUI.Models.Modeller;
 using System.ComponentModel.DataAnnotations;
@@ -105,12 +106,22 @@ namespace SantiyeOnMuh.WebUI.Controllers
 
             if (_bankaKasaService.Create(_bankaKasa))
             {
-                CreateMessage($"{_bankaKasa.Aciklama} HESABA EKLENDİ.", "success");
+                TempData.Put("message", new AlertMessage()
+                {
+                    Title = "BAŞARILI",
+                    AlertType = "success",
+                    Message = $"{_bankaKasa.Aciklama} HESABA EKLENDİ."
+                });
 
                 return RedirectToAction("BankaKasa");
             };
 
-            CreateMessage(_bankaKasaService.ErrorMessage, "danger");
+            TempData.Put("message", new AlertMessage()
+            {
+                Title = "HATA",
+                AlertType = "danger",
+                Message = _bankaKasaService.ErrorMessage
+            });
 
             return View(bankaKasa);
 
@@ -193,6 +204,13 @@ namespace SantiyeOnMuh.WebUI.Controllers
 
             _bankaKasaService.Update(_bankaKasa);
 
+            TempData.Put("message", new AlertMessage()
+            {
+                Title = "BAŞARILI",
+                AlertType = "success",
+                Message = $"{_bankaKasa.Aciklama} GÜNCELLENDİ."
+            });
+
             return RedirectToAction("BankaKasa");
         }
 
@@ -259,6 +277,13 @@ namespace SantiyeOnMuh.WebUI.Controllers
             bankaKasa.Durum = false;
 
             _bankaKasaService.Update(bankaKasa);
+
+            TempData.Put("message", new AlertMessage()
+            {
+                Title = "BAŞARILI",
+                AlertType = "danger",
+                Message = $"{bankaKasa.Aciklama} SİLİNDİ."
+            });
 
             return RedirectToAction("BankaKasa");
         }
@@ -376,10 +401,15 @@ namespace SantiyeOnMuh.WebUI.Controllers
 
             _bankaKasaService.Update(bankaKasa);
 
+            TempData.Put("message", new AlertMessage()
+            {
+                Title = "BAŞARILI",
+                AlertType = "success",
+                Message = $"{bankaKasa.Aciklama} GERİ YÜKLENDİ."
+            });
+
             return RedirectToAction("BankaKasa");
         }
-
-
 
 
         #region BANKALAR ARASI EFT
@@ -426,6 +456,13 @@ namespace SantiyeOnMuh.WebUI.Controllers
 
             _bankaKasaService.Create(EFTGonderenHesap);
             _bankaKasaService.Create(EFTAlanHesap);
+
+            TempData.Put("message", new AlertMessage()
+            {
+                Title = "BAŞARILI",
+                AlertType = "success",
+                Message = $"{b.Aciklama} EKLENDİ."
+            });
 
             return RedirectToAction("BankaKasa");
         }
@@ -489,6 +526,13 @@ namespace SantiyeOnMuh.WebUI.Controllers
             entityBankaKasaKaynakGuncelleme.SantiyeKasaKaynak = entitySantiyeKasa.Id;
 
             _bankaKasaService.Update(entityBankaKasaKaynakGuncelleme);
+
+            TempData.Put("message", new AlertMessage()
+            {
+                Title = "BAŞARILI",
+                AlertType = "success",
+                Message = $"{b.Aciklama} EKLENDİ."
+            });
 
             return RedirectToAction("BankaKasa");
         }
@@ -571,6 +615,13 @@ namespace SantiyeOnMuh.WebUI.Controllers
             _santiyeKasaService.Update(entitySantiyeKasa);
             #endregion
 
+            TempData.Put("message", new AlertMessage()
+            {
+                Title = "BAŞARILI",
+                AlertType = "success",
+                Message = $"{b.Aciklama} GÜNCELLEDİ."
+            });
+
             return RedirectToAction("BankaKasa");
         }
 
@@ -633,21 +684,15 @@ namespace SantiyeOnMuh.WebUI.Controllers
             _santiyeKasaService.Update(entitySantiyeKasa);
             #endregion
 
+            TempData.Put("message", new AlertMessage()
+            {
+                Title = "BAŞARILI",
+                AlertType = "danger",
+                Message = $"{b.Aciklama} SİLİNDİ."
+            });
+
             return RedirectToAction("BankaKasa");
         }
         #endregion
-
-
-        private void CreateMessage(string message, string alertType)
-        {
-            AlertMessage msg = new AlertMessage()
-            {
-                //Message = $"{_bankaHesap.HesapAdi} HESABI AÇILDI.",
-                Message = message,
-                AlertType = alertType
-            };
-
-            TempData["message"] = JsonConvert.SerializeObject(msg);
-        }
     }
 }

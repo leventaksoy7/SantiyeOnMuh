@@ -2,6 +2,7 @@
 using Newtonsoft.Json;
 using SantiyeOnMuh.Business.Abstract;
 using SantiyeOnMuh.Entity;
+using SantiyeOnMuh.WebUI.Extensions;
 using SantiyeOnMuh.WebUI.Models;
 using SantiyeOnMuh.WebUI.Models.Modeller;
 using System.ComponentModel.DataAnnotations;
@@ -49,12 +50,22 @@ namespace SantiyeOnMuh.WebUI.Controllers
 
             if (_cariGiderKalemiService.Create(_cariGiderKalemi))
             {
-                CreateMessage($"{_cariGiderKalemi.Ad} GİDER KALEMİ EKLENDİ.", "success");
+                TempData.Put("message", new AlertMessage()
+                {
+                    Title = "BAŞARILI",
+                    AlertType = "success",
+                    Message = $"{_cariGiderKalemi.Ad} GİDER KALEMİ EKLENDİ."
+                });
 
                 return RedirectToAction("Index", "Admin");
             };
 
-            CreateMessage(_cariGiderKalemiService.ErrorMessage, "danger");
+            TempData.Put("message", new AlertMessage()
+            {
+                Title = "HATA",
+                AlertType = "danger",
+                Message = _cariGiderKalemiService.ErrorMessage
+            });
 
             return View(_cariGiderKalemi);
 
@@ -96,6 +107,13 @@ namespace SantiyeOnMuh.WebUI.Controllers
 
             _cariGiderKalemiService.Update(_giderKalemi);
 
+            TempData.Put("message", new AlertMessage()
+            {
+                Title = "BAŞARILI",
+                AlertType = "success",
+                Message = $"{c.Ad} GÜNCELLENDİ."
+            });
+
             return RedirectToAction("Index", "Admin");
         }
 
@@ -111,6 +129,13 @@ namespace SantiyeOnMuh.WebUI.Controllers
             cariGiderKalemi.Durum = false;
 
             _cariGiderKalemiService.Update(cariGiderKalemi);
+
+            TempData.Put("message", new AlertMessage()
+            {
+                Title = "BAŞARILI",
+                AlertType = "danger",
+                Message = $"{cariGiderKalemi.Ad} SİLİNDİ."
+            });
 
             return RedirectToAction("Index", "Admin");
         }
@@ -128,20 +153,15 @@ namespace SantiyeOnMuh.WebUI.Controllers
 
             _cariGiderKalemiService.Update(cariGiderKalemi);
 
+            TempData.Put("message", new AlertMessage()
+            {
+                Title = "BAŞARILI",
+                AlertType = "success",
+                Message = $"{cariGiderKalemi.Ad} GERİ YÜKLENDİ."
+            });
+
             return RedirectToAction("Index", "Admin");
         }
 
-
-        private void CreateMessage(string message, string alertType)
-        {
-            AlertMessage msg = new AlertMessage()
-            {
-                //Message = $"{_bankaHesap.HesapAdi} HESABI AÇILDI.",
-                Message = message,
-                AlertType = alertType
-            };
-
-            TempData["message"] = JsonConvert.SerializeObject(msg);
-        }
     }
 }

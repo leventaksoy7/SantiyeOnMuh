@@ -5,6 +5,8 @@ using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using SantiyeOnMuh.Business.Abstract;
 using SantiyeOnMuh.Entity;
+using SantiyeOnMuh.WebUI.Extensions;
+using SantiyeOnMuh.WebUI.Identity;
 using SantiyeOnMuh.WebUI.Models;
 using SantiyeOnMuh.WebUI.Models.Modeller;
 using System.ComponentModel.DataAnnotations;
@@ -153,12 +155,22 @@ namespace SantiyeOnMuh.WebUI.Controllers
                 _cekService.Update(_eklenenCek);
                 #endregion
 
-
-                CreateMessage($"{_cek.CekNo} NUMARALI ÇEK EKLENDİ.", "success");
+                TempData.Put("message", new AlertMessage()
+                {
+                    Title = "BAŞARILI",
+                    AlertType = "success",
+                    Message = $"{_cek.CekNo} NUMARALI ÇEK EKLENDİ."
+                });
 
                 return RedirectToAction("Index");
             };
-            CreateMessage(_cekService.ErrorMessage, "danger");
+
+            TempData.Put("message", new AlertMessage()
+            {
+                Title = "HATA",
+                AlertType = "danger",
+                Message = _cekService.ErrorMessage
+            });
 
             return View(cek);
         }
@@ -201,6 +213,13 @@ namespace SantiyeOnMuh.WebUI.Controllers
             entity.BankaKasaKaynak = EntityBankaKasa.Id;
 
             _cekService.Update(entity);
+
+            TempData.Put("message", new AlertMessage()
+            {
+                Title = "BAŞARILI",
+                AlertType = "success",
+                Message = $"{entity.CekNo} ÇEK TAHSİL EDİLDİ"
+            });
 
             return RedirectToAction("Index");
         }

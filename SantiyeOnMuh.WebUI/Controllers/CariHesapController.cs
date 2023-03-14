@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using SantiyeOnMuh.Business.Abstract;
 using SantiyeOnMuh.Entity;
+using SantiyeOnMuh.WebUI.Extensions;
 using SantiyeOnMuh.WebUI.Models;
 using SantiyeOnMuh.WebUI.Models.Modeller;
 
@@ -89,25 +90,24 @@ namespace SantiyeOnMuh.WebUI.Controllers
 
             if (_cariHesapService.Create(_cariHesap))
             {
-                //AlertMessage msg = new AlertMessage()
-                //{
-                //    Message = ,
-                //    AlertType = "success"
-                //};
-
-                //TempData["message"] = JsonConvert.SerializeObject(msg);
-
-                CreateMessage($"{_cariHesap.Ad} HESABI AÇILDI.", "success");
+                TempData.Put("message", new AlertMessage()
+                {
+                    Title = "BAŞARILI",
+                    AlertType = "danger",
+                    Message = $"{_cariHesap.Ad} HESABI AÇILDI."
+                });
 
                 return RedirectToAction("CariHesap");
             };
-            CreateMessage(_cariHesapService.ErrorMessage, "danger");
+
+            TempData.Put("message", new AlertMessage()
+            {
+                Title = "HATA",
+                AlertType = "danger",
+                Message = _cariHesapService.ErrorMessage
+            });
 
             return View(cariHesap);
-
-            //_cariHesapService.Create(_cariHesap);
-
-            //return RedirectToAction("CariHesap");
         }
 
         [HttpGet]
@@ -168,6 +168,13 @@ namespace SantiyeOnMuh.WebUI.Controllers
 
             _cariHesapService.Update(_cariHesap);
 
+            TempData.Put("message", new AlertMessage()
+            {
+                Title = "BAŞARILI",
+                AlertType = "success",
+                Message = $"{cariHesap.Ad} HESABI AÇILDI."
+            });
+
             return RedirectToAction("CariHesap");
         }
 
@@ -214,6 +221,14 @@ namespace SantiyeOnMuh.WebUI.Controllers
             entity.Durum = false;
 
             _cariHesapService.Update(entity);
+
+            TempData.Put("message", new AlertMessage()
+            {
+                Title = "BAŞARILI",
+                AlertType = "danger",
+                Message = $"{c.Ad} HESABI AÇILDI."
+            });
+
             return RedirectToAction("CariHesap");
         }
 
@@ -320,35 +335,24 @@ namespace SantiyeOnMuh.WebUI.Controllers
         [HttpGet]
         public IActionResult CariHesapGeriYukle(int? carihesapid)
         {
-            if (carihesapid == null)
-            {
-                return NotFound();
-            }
+            if (carihesapid == null) { return NotFound(); }
 
             ECariHesap cariHesap = _cariHesapService.GetById((int)carihesapid);
 
-            if (cariHesap == null)
-            {
-                return NotFound();
-            }
+            if (cariHesap == null) { return NotFound(); }
 
             cariHesap.Durum = true;
 
             _cariHesapService.Update(cariHesap);
-            return RedirectToAction("CariHesap");
-        }
 
-
-        private void CreateMessage(string message, string alertType)
-        {
-            AlertMessage msg = new AlertMessage()
+            TempData.Put("message", new AlertMessage()
             {
-                //Message = $"{_bankaHesap.HesapAdi} HESABI AÇILDI.",
-                Message = message,
-                AlertType = alertType
-            };
+                Title = "BAŞARILI",
+                AlertType = "danger",
+                Message = $"{cariHesap.Ad} HESABI AÇILDI."
+            });
 
-            TempData["message"] = JsonConvert.SerializeObject(msg);
+            return RedirectToAction("CariHesap");
         }
     }
 }

@@ -1,7 +1,5 @@
 ﻿@model AdminViewListModel
-@{
-
-}
+@{ }
 
 <!DOCTYPE html>
 
@@ -28,12 +26,8 @@
         <div style="background-color:aliceblue" class="col col-md-12">
             <br />
             <div>
-                <a asp-controller="Sirket"
-                   asp-action="SirketEkleme"
-                   class="btn btn-success btn-sm">YENİ ŞİRKET EKLE</a>
-                <a asp-controller="Admin"
-                   asp-action="Arsiv"
-                   class="btn btn-dark btn-sm">ARŞİV</a>
+                <a asp-controller="Sirket" asp-action="SirketEkleme" class="btn btn-success btn-sm">YENİ ŞİRKET EKLE</a>
+                <a asp-controller="Admin" asp-action="Arsiv" class="btn btn-dark btn-sm">ARŞİV</a>
             </div>
             <br />
             <table class="table table-bordered">
@@ -56,17 +50,11 @@
                             <td style="width:35%; vertical-align:middle">@item.VergiNo</td>
 
                             <td style="width:10%; vertical-align:middle">
-                                <a asp-controller="Sirket"
-                           asp-action="SirketGuncelle"
-                           asp-route-id="@item.Id"
-                                   class="btn btn-success btn-sm">GÜNCELLE</a>
+                                <a asp-controller="Sirket" asp-action="SirketGuncelle" asp-route-id="@item.Id" class="btn btn-success btn-sm">GÜNCELLE</a>
                             </td>
 
                             <td style="width:5%; vertical-align:middle">
-                                <a asp-controller="Sirket"
-                           asp-action="SirketSil"
-                           asp-route-id="@item.Id"
-                                   class="btn btn-danger btn-sm">SİL</a>
+                                <a asp-controller="Sirket" asp-action="SirketSil" asp-route-id="@item.Id" class="btn btn-danger btn-sm">SİL</a>
                             </td>
                         </tr>
                     }
@@ -89,12 +77,8 @@
         <div style="background-color:antiquewhite" class="col col-md-12">
             <div>
                 <br />
-                <a asp-controller="BankaHesap"
-                   asp-action="BankaHesapEkleme"
-                   class="btn btn-success btn-sm">YENİ BANKA HESABI EKLE</a>
-                <a asp-controller="Admin"
-                   asp-action="Arsiv"
-                   class="btn btn-dark btn-sm">ARŞİV</a>
+                <a asp-controller="BankaHesap" asp-action="BankaHesapEkleme" class="btn btn-success btn-sm">YENİ BANKA HESABI EKLE</a>
+                <a asp-controller="Admin" asp-action="Arsiv" class="btn btn-dark btn-sm">ARŞİV</a>
             </div>
             <br />
             <table class="table table-bordered">
@@ -117,16 +101,11 @@
                             <td style=" vertical-align: middle; width: 35%">@item.IbanNo</td>
 
                             <td style=" vertical-align: middle; width: 10%">
-                                <a asp-controller="BankaHesap"
-                                   asp-action="BankaHesapGuncelle"
-                                   asp-route-id="@item.Id"
-                                   class="btn btn-success btn-sm">GÜNCELLE</a>
+                                <a asp-controller="BankaHesap" asp-action="BankaHesapGuncelle" asp-route-id="@item.Id" class="btn btn-success btn-sm">GÜNCELLE</a>
                             </td>
 
                             <td style=" vertical-align: middle; width: 5%">
-                                <a asp-controller="BankaHesap"
-                           asp-action="BankaHesapSil"
-                           asp-route-id="@item.Id" class="btn btn-danger btn-sm">SİL</a>
+                                <a asp-controller="BankaHesap" asp-action="BankaHesapSil" asp-route-id="@item.Id" class="btn btn-danger btn-sm">SİL</a>
                             </td>
                         </tr>
                     }
@@ -149,12 +128,8 @@
         <div style="background-color:aliceblue" class="col col-md-12">
             <div>
                 <br />
-                <a asp-controller="CariGiderKalemi"
-                   asp-action="CariGiderKalemiEkleme"
-                   class="btn btn-success btn-sm">YENİ CARİ KALEM EKLE</a>
-                    <a asp-controller="Admin"
-                    asp-action="Arsiv"
-                   class="btn btn-dark btn-sm">ARŞİV</a>
+                <a asp-controller="CariGiderKalemi" asp-action="CariGiderKalemiEkleme" class="btn btn-success btn-sm">YENİ CARİ KALEM EKLE</a>
+                <a asp-controller="Admin" asp-action="Arsiv" class="btn btn-dark btn-sm">ARŞİV</a>
             </div>
             <br />
             <table class="table table-bordered">

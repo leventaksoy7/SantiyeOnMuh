@@ -2,6 +2,7 @@
 using Newtonsoft.Json;
 using SantiyeOnMuh.Business.Abstract;
 using SantiyeOnMuh.Entity;
+using SantiyeOnMuh.WebUI.Extensions;
 using SantiyeOnMuh.WebUI.Models;
 using SantiyeOnMuh.WebUI.Models.Modeller;
 
@@ -53,13 +54,22 @@ namespace SantiyeOnMuh.WebUI.Controllers
 
                if(_bankaHesapService.Create(_bankaHesap))
                 {
-                    CreateMessage($"{_bankaHesap.HesapAdi} HESABI AÇILDI.", "success");
+                    TempData.Put("message", new AlertMessage()
+                    {
+                        Title = "BAŞARILI",
+                        AlertType = "success",
+                        Message = $"{_bankaHesap.HesapAdi} HESABI AÇILDI."
+                    });
 
                     return RedirectToAction("Index", "Admin");
                 };
 
-                CreateMessage(_bankaHesapService.ErrorMessage, "danger");
-
+                TempData.Put("message", new AlertMessage()
+                {
+                    Title = "HATA",
+                    AlertType = "danger",
+                    Message = _bankaHesapService.ErrorMessage
+                });
                 return View(bankaHesap);   
             }
             return View(bankaHesap);
@@ -120,6 +130,13 @@ namespace SantiyeOnMuh.WebUI.Controllers
 
             _bankaHesapService.Update(_bankaHesap);
 
+            TempData.Put("message", new AlertMessage()
+            {
+                Title = "BAŞARILI",
+                AlertType = "success",
+                Message = $"{_bankaHesap.HesapAdi} GÜNCELLENDİ"
+            });
+
             return RedirectToAction("Index", "Admin");
             
         }
@@ -137,6 +154,13 @@ namespace SantiyeOnMuh.WebUI.Controllers
 
             _bankaHesapService.Update(bankaHesap);
 
+            TempData.Put("message", new AlertMessage()
+            {
+                Title = "BAŞARILI",
+                AlertType = "danger",
+                Message = $"{bankaHesap.HesapAdi} SİLİNDİ"
+            });
+
             return RedirectToAction("Index", "Admin");
         }
 
@@ -153,20 +177,15 @@ namespace SantiyeOnMuh.WebUI.Controllers
 
             _bankaHesapService.Update(bankaHesap);
 
+            TempData.Put("message", new AlertMessage()
+            {
+                Title = "BAŞARILI",
+                AlertType = "success",
+                Message = $"{bankaHesap.HesapAdi} GERİ YÜKLENDİ"
+            });
+
             return RedirectToAction("Index", "Admin");
         }
 
-
-        private void CreateMessage(string message, string alertType)
-        {
-            AlertMessage msg = new AlertMessage()
-            {
-                //Message = $"{_bankaHesap.HesapAdi} HESABI AÇILDI.",
-                Message = message,
-                AlertType = alertType
-            };
-
-            TempData["message"] = JsonConvert.SerializeObject(msg);
-        }
     }
 }
