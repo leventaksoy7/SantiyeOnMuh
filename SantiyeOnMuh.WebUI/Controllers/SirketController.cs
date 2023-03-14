@@ -2,6 +2,7 @@
 using Newtonsoft.Json;
 using SantiyeOnMuh.Business.Abstract;
 using SantiyeOnMuh.Entity;
+using SantiyeOnMuh.WebUI.Extensions;
 using SantiyeOnMuh.WebUI.Models;
 using SantiyeOnMuh.WebUI.Models.Modeller;
 
@@ -53,12 +54,22 @@ namespace SantiyeOnMuh.WebUI.Controllers
             if (_sirketService.Create(_sirket))
             {
 
-                CreateMessage($"{_sirket.Ad} HESABI AÇILDI.", "success");
+                TempData.Put("message", new AlertMessage()
+                {
+                    Title = "BAŞARILI",
+                    AlertType = "success",
+                    Message = $"{_sirket.Ad} HESABI AÇILDI."
+                });
 
                 return RedirectToAction("Index", "Admin");
             };
 
-            CreateMessage(_sirketService.ErrorMessage, "danger");
+            TempData.Put("message", new AlertMessage()
+            {
+                Title = "HATA",
+                AlertType = "danger",
+                Message = _sirketService.ErrorMessage
+            });
 
             return View(sirket);
         }
@@ -101,6 +112,13 @@ namespace SantiyeOnMuh.WebUI.Controllers
 
             _sirketService.Update(_sirket);
 
+            TempData.Put("message", new AlertMessage()
+            {
+                Title = "BAŞARILI",
+                AlertType = "success",
+                Message = $"{_sirket.Ad} HESABI AÇILDI."
+            });
+
             return RedirectToAction("Index", "Admin");
         }
 
@@ -116,6 +134,13 @@ namespace SantiyeOnMuh.WebUI.Controllers
             sirket.Durum = false;
 
             _sirketService.Update(sirket);
+
+            TempData.Put("message", new AlertMessage()
+            {
+                Title = "BAŞARILI",
+                AlertType = "success",
+                Message = $"{sirket.Ad} HESABI AÇILDI."
+            });
 
             return RedirectToAction("Index", "Admin");
         }
@@ -133,21 +158,14 @@ namespace SantiyeOnMuh.WebUI.Controllers
 
             _sirketService.Update(sirket);
 
-            return RedirectToAction("Index", "Admin");
-        }
-
-
-
-        private void CreateMessage(string message, string alertType)
-        {
-            AlertMessage msg = new AlertMessage()
+            TempData.Put("message", new AlertMessage()
             {
-                //Message = $"{_bankaHesap.HesapAdi} HESABI AÇILDI.",
-                Message = message,
-                AlertType = alertType
-            };
+                Title = "BAŞARILI",
+                AlertType = "success",
+                Message = $"{sirket.Ad} HESABI AÇILDI."
+            });
 
-            TempData["message"] = JsonConvert.SerializeObject(msg);
+            return RedirectToAction("Index", "Admin");
         }
     }
 }

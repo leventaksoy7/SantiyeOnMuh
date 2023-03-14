@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using SantiyeOnMuh.Business.Abstract;
 using SantiyeOnMuh.Entity;
+using SantiyeOnMuh.WebUI.Extensions;
 using SantiyeOnMuh.WebUI.Models;
 using SantiyeOnMuh.WebUI.Models.Modeller;
 using System.ComponentModel.DataAnnotations;
@@ -108,12 +109,22 @@ namespace SantiyeOnMuh.WebUI.Controllers
 
             if (_santiyeService.Create(_santiye))
             {
-                CreateMessage($"{_santiye.Ad} HESABI AÇILDI.", "success");
+                TempData.Put("message", new AlertMessage()
+                {
+                    Title = "BAŞARILI",
+                    AlertType = "success",
+                    Message = $"{_santiye.Ad} HESABI AÇILDI."
+                });
 
                 return RedirectToAction("Index");
             };
 
-            CreateMessage(_santiyeService.ErrorMessage, "danger");
+            TempData.Put("message", new AlertMessage()
+            {
+                Title = "HATA",
+                AlertType = "danger",
+                Message = _santiyeService.ErrorMessage
+            });
 
             return View(santiye);
         }
@@ -156,6 +167,13 @@ namespace SantiyeOnMuh.WebUI.Controllers
 
             _santiyeService.Update(_santiye);
 
+            TempData.Put("message", new AlertMessage()
+            {
+                Title = "   BAŞARILI",
+                AlertType = "success",
+                Message = $"{_santiye.Ad} HESABI AÇILDI."
+            });
+
             return RedirectToAction("Index");
         }
 
@@ -194,9 +212,15 @@ namespace SantiyeOnMuh.WebUI.Controllers
 
             _santiyeService.Update(_santiye);
 
+            TempData.Put("message", new AlertMessage()
+            {
+                Title = "   BAŞARILI",
+                AlertType = "success",
+                Message = $"{_santiye.Ad} HESABI AÇILDI."
+            });
+
             return RedirectToAction("Index");
         }
-
         
         public IActionResult SantiyeGeriYukle(int? id)
         {
@@ -210,22 +234,14 @@ namespace SantiyeOnMuh.WebUI.Controllers
 
             _santiyeService.Update(santiye);
 
-            return RedirectToAction("Index");
-        }
-
-
-
-
-        private void CreateMessage(string message, string alertType)
-        {
-            AlertMessage msg = new AlertMessage()
+            TempData.Put("message", new AlertMessage()
             {
-                //Message = $"{_bankaHesap.HesapAdi} HESABI AÇILDI.",
-                Message = message,
-                AlertType = alertType
-            };
+                Title = "   BAŞARILI",
+                AlertType = "success",
+                Message = $"{santiye.Ad} HESABI AÇILDI."
+            });
 
-            TempData["message"] = JsonConvert.SerializeObject(msg);
+            return RedirectToAction("Index");
         }
     }
 }

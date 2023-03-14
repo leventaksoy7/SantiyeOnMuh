@@ -325,6 +325,13 @@ namespace SantiyeOnMuh.WebUI.Controllers
 
             _cekService.Update(_cek);
 
+            TempData.Put("message", new AlertMessage()
+            {
+                Title = "BAŞARILI",
+                AlertType = "success",
+                Message = $"{_cek.CekNo} NUMARALI ÇEK GÜNCELLENDİ."
+            });
+
             return RedirectToAction("Index");
         }
 
@@ -441,6 +448,13 @@ namespace SantiyeOnMuh.WebUI.Controllers
 
             _cekService.Update(_cek);
 
+            TempData.Put("message", new AlertMessage()
+            {
+                Title = "BAŞARILI",
+                AlertType = "danger",
+                Message = $"{_cek.CekNo} NUMARALI ÇEK SİLİNDİ."
+            });
+
             return RedirectToAction("Index");
         }
 
@@ -482,6 +496,13 @@ namespace SantiyeOnMuh.WebUI.Controllers
 
                 _cariKasaService.Update(entityCariKasa);
             }
+
+            TempData.Put("message", new AlertMessage()
+            {
+                Title = "BAŞARILI",
+                AlertType = "success",
+                Message = $"{_cek.CekNo} NUMARALI ÇEK GERİ EKLENDİ."
+            });
 
             return RedirectToAction("Index");
         }
@@ -684,6 +705,13 @@ namespace SantiyeOnMuh.WebUI.Controllers
             EntityEklenenCek.CariKasaKaynak = EntityCariKasa.Id;
 
             _cekService.Update(EntityEklenenCek);
+
+            TempData.Put("message", new AlertMessage()
+            {
+                Title = "BAŞARILI",
+                AlertType = "success",
+                Message = $"{_cek.CekNo} NUMARALI ÇEK EKLENDİ."
+            });
 
             return RedirectToAction("CariKasa", "CariKasa", new { carihesapid = cek.CariHesapId });
         }

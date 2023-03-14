@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Newtonsoft.Json;
 using SantiyeOnMuh.Business.Abstract;
 using SantiyeOnMuh.Entity;
+using SantiyeOnMuh.WebUI.Extensions;
 using SantiyeOnMuh.WebUI.Models;
 using SantiyeOnMuh.WebUI.Models.Modeller;
 using System.ComponentModel.DataAnnotations;
@@ -143,12 +144,22 @@ namespace SantiyeOnMuh.WebUI.Controllers
                     _nakitService.Update(_eklenenNakit);
                     #endregion
 
-                    CreateMessage($"{_nakit.Tutar} ÖDEMESİ EKLENDİ.", "success");
+                    TempData.Put("message", new AlertMessage()
+                    {
+                        Title = "BAŞARILI",
+                        AlertType = "success",
+                        Message = $"{_nakit.Tutar} ÖDEMESİ EKLENDİ."
+                    });
 
                     return RedirectToAction("Index");
                 };
 
-                CreateMessage(_nakitService.ErrorMessage, "danger");
+                TempData.Put("message", new AlertMessage()
+                {
+                    Title = "HATA",
+                    AlertType = "danger",
+                    Message = _nakitService.ErrorMessage
+                });
 
                 return View(nakit);
             }
@@ -253,6 +264,13 @@ namespace SantiyeOnMuh.WebUI.Controllers
             _nakit.BankaHesapId = nakit.BankaHesapId;
 
             _nakitService.Update(_nakit);
+
+            TempData.Put("message", new AlertMessage()
+            {
+                Title = "BAŞARILI",
+                AlertType = "success",
+                Message = $"{_nakit.Tutar} ÖDEME GÜNCELLENDİ."
+            });
 
             return RedirectToAction("Index");
         }
@@ -374,6 +392,13 @@ namespace SantiyeOnMuh.WebUI.Controllers
 
             _nakitService.Update(_nakit);
 
+            TempData.Put("message", new AlertMessage()
+            {
+                Title = "BAŞARILI",
+                AlertType = "danger",
+                Message = $"{_nakit.Tutar} ÖDEMESİ SİLİNDİ."
+            });
+
             return RedirectToAction("Index");
         }
 
@@ -418,6 +443,13 @@ namespace SantiyeOnMuh.WebUI.Controllers
             }
 
             _nakitService.Update(_nakit);
+
+            TempData.Put("message", new AlertMessage()
+            {
+                Title = "BAŞARILI",
+                AlertType = "success",
+                Message = $"{_nakit.Tutar} ÖDEMESİ GERİ EKLENDİ."
+            });
 
             return RedirectToAction("Index");
         }
@@ -634,6 +666,13 @@ namespace SantiyeOnMuh.WebUI.Controllers
             _eklenenNakit.BankaKasaKaynak = _eklenenNakit.Id;
 
             _nakitService.Update(_eklenenNakit);
+
+            TempData.Put("message", new AlertMessage()
+            {
+                Title = "BAŞARILI",
+                AlertType = "success",
+                Message = $"{_nakit.Tutar} ÖDEMESİ EKLENDİ."
+            });
 
             return RedirectToAction("CariKasa", "CariKasa", new { carihesapid = _nakit.CariHesapId });
         }
@@ -938,19 +977,5 @@ namespace SantiyeOnMuh.WebUI.Controllers
             }
         }
         #endregion
-
-
-
-        private void CreateMessage(string message, string alertType)
-        {
-            AlertMessage msg = new AlertMessage()
-            {
-                //Message = $"{_bankaHesap.HesapAdi} HESABI AÇILDI.",
-                Message = message,
-                AlertType = alertType
-            };
-
-            TempData["message"] = JsonConvert.SerializeObject(msg);
-        }
     }
 }

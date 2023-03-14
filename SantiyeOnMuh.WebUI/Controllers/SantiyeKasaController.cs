@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Newtonsoft.Json;
 using SantiyeOnMuh.Business.Abstract;
 using SantiyeOnMuh.Entity;
+using SantiyeOnMuh.WebUI.Extensions;
 using SantiyeOnMuh.WebUI.Models;
 using SantiyeOnMuh.WebUI.Models.Modeller;
 using System.ComponentModel.DataAnnotations;
@@ -103,7 +104,6 @@ namespace SantiyeOnMuh.WebUI.Controllers
         {
             if (!ModelState.IsValid) { return View(santiyeKasa); }
 
-
             #region EĞER RESİM EKLİ DEĞİLSE GERİ DÖNÜŞTE GEREKLİ BİLGİLER
             ViewBag.Sayfa = "GİDER EKLEME";
 
@@ -156,6 +156,13 @@ namespace SantiyeOnMuh.WebUI.Controllers
             };
 
             _santiyeKasaService.Create(_santiyeKasa);
+
+            TempData.Put("message", new AlertMessage()
+            {
+                Title = "BAŞARILI",
+                AlertType = "success",
+                Message = $"{santiyeKasa.Aciklama} EKLENDİ."
+            });
 
             return RedirectToAction("Index", "Santiye");
         }
@@ -247,6 +254,13 @@ namespace SantiyeOnMuh.WebUI.Controllers
             entity.SonGuncelleme = DateTime.Today;
 
             _santiyeKasaService.Update(entity);
+
+            TempData.Put("message", new AlertMessage()
+            {
+                Title = "BAŞARILI",
+                AlertType = "danger",
+                Message = $"{santiyeKasa.Aciklama} SİLİNDİ."
+            });
 
             return RedirectToAction("SantiyeKasa", new { santiyeid = entity.SantiyeId });
         }
@@ -366,6 +380,13 @@ namespace SantiyeOnMuh.WebUI.Controllers
 
             _santiyeKasaService.Update(santiyeKasa);
 
+            TempData.Put("message", new AlertMessage()
+            {
+                Title = "BAŞARILI",
+                AlertType = "success",
+                Message = $"{santiyeKasa.Aciklama} GERİ EKLENDİ."
+            });
+
             return RedirectToAction("SantiyeKasa", new { santiyeid = santiyeKasa.SantiyeId });
         }
 
@@ -440,13 +461,22 @@ namespace SantiyeOnMuh.WebUI.Controllers
 
             if (_santiyeKasaService.Create(_santiyeKasa))
             {
-                
-                CreateMessage($"{_santiyeKasa.Aciklama} KASAYA EKLENDİ.", "success");
+                TempData.Put("message", new AlertMessage()
+                {
+                    Title = "BAŞARILI",
+                    AlertType = "success",
+                    Message = $"{santiyeKasa.Aciklama} EKLENDİ."
+                });
 
                 return RedirectToAction("SantiyeKasa", new { santiyeid = santiyeKasa.SantiyeId });
             };
 
-            CreateMessage(_santiyeKasaService.ErrorMessage, "danger");
+            TempData.Put("message", new AlertMessage()
+            {
+                Title = "BAŞARILI",
+                AlertType = "danger",
+                Message = _santiyeKasaService.ErrorMessage
+            });
 
             return View(santiyeKasa);
         }
@@ -545,22 +575,15 @@ namespace SantiyeOnMuh.WebUI.Controllers
 
             _santiyeKasaService.Update(entitySantiyeKasa);
 
+            TempData.Put("message", new AlertMessage()
+            {
+                Title = "BAŞARILI",
+                AlertType = "success",
+                Message = $"{entitySantiyeKasa.Aciklama} GÜNCELLENDİ."
+            });
+
             return RedirectToAction("SantiyeKasa", new { santiyeid = s.SantiyeId });
         }
         #endregion
-
-
-
-        private void CreateMessage(string message, string alertType)
-        {
-            AlertMessage msg = new AlertMessage()
-            {
-                //Message = $"{_bankaHesap.HesapAdi} HESABI AÇILDI.",
-                Message = message,
-                AlertType = alertType
-            };
-
-            TempData["message"] = JsonConvert.SerializeObject(msg);
-        }
     }
 }
