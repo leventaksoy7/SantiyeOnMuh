@@ -4,7 +4,7 @@ using SantiyeOnMuh.WebUI.Models;
 
 namespace SantiyeOnMuh.WebUI.Controllers
 {
-    [ValidateAntiForgeryToken]
+    //[ValidateAntiForgeryToken]
     public class AnaSayfaController : Controller
     {
         private ISantiyeService _santiyeService;

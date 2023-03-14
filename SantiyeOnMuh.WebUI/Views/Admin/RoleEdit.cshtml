@@ -1,0 +1,70 @@
+﻿@model RoleDetails
+@{
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+</head>
+<body>
+    <form asp-controller="Admin" asp-action="RoleEdit" method="post">
+        <input type="hidden" name="RoleId" value="@Model.Role.Id" />
+        <input type="hidden" name="RoleName" value="@Model.Role.Name" />
+        <h6 class="bg-info text-white p-1">@Model.Role.Name</h6>
+        <table class="table table-bordered table-sm">
+            @if (Model.Nonmembers.Count() == 0)
+            {
+                <tr>
+                    <td colspan="2">BÜTÜN KULLANICILAR ROLE AİT</td>
+                </tr>
+            }
+            else
+            {
+                @foreach(var user in Model.Nonmembers)
+                {
+                    <tr>
+                        <td>@user.UserName</td>
+                        <td>
+                            <input type="checkbox" name="IdsToAdd" value="@user.Id">
+                        </td>
+                    </tr> 
+                }               
+            }
+        </table>
+
+        <hr />
+
+        <h6 class="bg-info text-white p-1">ROLDEN KALDIR @Model.Role.Name</h6>
+        <table class="table table-bordered table-sm">
+            @if (Model.Members.Count() == 0)
+            {
+                <tr>
+                    <td colspan="2">ROLE AİT KULLANICI YOK</td>
+                </tr>
+            }
+            else
+            {
+                @foreach (var user in Model.Members)
+                {
+                    <tr>
+                        <td>@user.UserName</td>
+                        <td>
+                            <input type="checkbox" name="IdsToDelete" value="@user.Id">
+                        </td>
+                    </tr>
+                }
+            }
+        </table>
+        <div class="form-group row">
+            <button class="col-sm-offset-2 col-sm-5 btn btn-success" type="submit">DÜZENLE</button>
+        </div>
+    </form>
+</body>
+@section Scripts
+    {
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+}
+</html>

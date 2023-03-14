@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using SantiyeOnMuh.Business.Abstract;
 using SantiyeOnMuh.WebUI.Extensions;
@@ -7,13 +8,15 @@ using SantiyeOnMuh.WebUI.Models;
 
 namespace SantiyeOnMuh.WebUI.Controllers
 {
-    [ValidateAntiForgeryToken] //CROSSIDE ATTACKLAR ICIN -post tokenları control ediyor
+    //[Authorize(Roles ="Admin")]
+    //[ValidateAntiForgeryToken] //CROSSIDE ATTACKLAR ICIN -post tokenları control ediyor
     public class AccountController : Controller
     {
         private UserManager<User> _userManager;
         private SignInManager<User> _signInManager;
 
-        public AccountController(UserManager<User> userManager, SignInManager<User> signInManager)
+        public AccountController(UserManager<User> userManager,
+                                SignInManager<User> signInManager)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -99,7 +102,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
                     AlertType = "success",
                     Message = $"{user.Ad} KULLANICI ADI EKLENDİ"
                 });
-                return RedirectToAction("Admin", "Admin"); 
+                return RedirectToAction("Index", "Admin"); 
             }
 
             TempData.Put("message", new AlertMessage()

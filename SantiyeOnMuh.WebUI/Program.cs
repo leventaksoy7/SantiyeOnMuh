@@ -134,8 +134,18 @@ app.UseAuthorization();
 //GUNCELLE
 //DETAY
 //SÝL
-    app.MapControllerRoute(
-        name: "default",
+app.MapControllerRoute(
+       name: "default",
+       pattern: "{controller=Account}/{action=Login}");
+
+app.MapControllerRoute(
+        name: "adminroleedit",
+        pattern: "Admin/RoleEdit/{id?}",
+        defaults: new { controller = "Admin", action = "RoleEdit" }
+        );
+
+app.MapControllerRoute(
+        name: "default2",
         pattern: "{controller=AnaSayfa}/{action=Anasayfa}/{id?}");
     #region ÞANTÝYE KASA
     //INDEX

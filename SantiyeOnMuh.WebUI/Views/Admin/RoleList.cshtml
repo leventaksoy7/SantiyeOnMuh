@@ -1,0 +1,43 @@
+﻿@model IEnumerable<IdentityRole>
+@{ }
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+</head>
+<br />
+<div>
+    <a asp-controller="Account" asp-action="Register" class="btn btn-dark btn-sm">KULLANICI EKLE</a>
+    <a asp-controller="Admin" asp-action="RoleCreate" class="btn btn-dark btn-sm">ROL EKLE</a>
+    <a asp-controller="Admin" asp-action="RoleList" class="btn btn-dark btn-sm">ROL LİSTESİ</a>
+</div>
+<br />
+<body style="background-color:burlywood">
+    <div style="background-color:aliceblue" class="col col-md-12">
+        <table class="table table-bordered">
+            <tr>
+                <th style="width:50%; vertical-align:middle">ID</th>
+                <th style="width:35%; vertical-align:middle">ROL</th>
+                <th style="width:10%">ATAMA</th>
+                <th style="width:5%"></th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td style="width:50%; vertical-align:middle">@item.Id</td>
+                    <td style="width:35%; vertical-align:middle">@item.Name</td>
+                    <td style="width:5%; vertical-align:middle">
+                        <a asp-controller="Admin" asp-action="RoleEdit" asp-route-id="@item.Id" class="btn btn-danger btn-sm">KULLANICI ATA</a>
+                    </td>
+                </tr>
+            }
+
+        </table>
+    </div>
+
+</body>
+</html>
