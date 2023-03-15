@@ -84,7 +84,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
                     if (user != null)
                     {
                         var result = await _userManager.AddToRoleAsync(user,model.RoleName);
-                        if (result.Succeeded)
+                        if (!result.Succeeded)
                         {
                             foreach(var error in result.Errors)
                             {
@@ -100,7 +100,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
                     if (user != null)
                     {
                         var result = await _userManager.RemoveFromRoleAsync(user, model.RoleName);
-                        if (result.Succeeded)
+                        if (!result.Succeeded)
                         {
                             foreach (var error in result.Errors)
                             {
@@ -110,9 +110,9 @@ namespace SantiyeOnMuh.WebUI.Controllers
                     }
                 }
 
-                return View("RoleEdit");
+                //return View("RoleEdit","Admin");
             }
-            return View(model);
+            return RedirectToAction("RoleList", "Admin");
         }
 
         [HttpGet]
