@@ -1,5 +1,9 @@
-﻿@{
-    //Layout = null;
+﻿@*@inject UserManager<UserDetailsModel> UserManager*@
+
+@{
+    //var user = await UserManager.GetUserAsync(User);
+
+    //var santiyeid = user.SantiyeId;
 }
 
 <!DOCTYPE html>
@@ -54,21 +58,24 @@
                 <br />
             }
             
-            @if (User.IsInRole("Santiye"))
+@*            @if (User.IsInRole("Santiye"))
             {
-                <a href="/SantiyeKasa/SantiyeKasaYonlendirme" class="w3-bar-item w3-button w3-padding"><i class="fas fa-home"></i>  ŞANTİYE KASA</a> @*ŞANTİYEYE ÖZEL*@
+                <a href="/SantiyeKasa/SantiyeKasa" class="w3-bar-item w3-button w3-padding"><i class="fas fa-home"></i>  ŞANTİYE KASA</a>
                 <br />
-                <a href="/CariHesap/CariHesap" class="w3-bar-item w3-button w3-padding"><i class="fa fa-copy"></i>  CARİ HESAPLAR</a> @*ŞANTİYEYE ÖZEL*@
+                <a href="/CariHesap/CariHesap" class="w3-bar-item w3-button w3-padding"><i class="fa fa-copy"></i>  CARİ HESAPLAR</a>
                 <br />
-                <a href="/Cek/Index" class="w3-bar-item w3-button w3-padding"><i class="fa fa-ticket"></i> ÇEKLER</a> @*ŞANTİYEYE ÖZEL*@
+                <a href="/Cek/Index" class="w3-bar-item w3-button w3-padding"><i class="fa fa-ticket"></i> ÇEKLER</a>
                 <br />
-                <a href="/Nakit/Index" class="w3-bar-item w3-button w3-padding"><i class="fa fa-turkish-lira"></i> NAKİT ÖDEMELER</a> @*ŞANTİYEYE ÖZEL*@
+                <a href="/Nakit/Index" class="w3-bar-item w3-button w3-padding"><i class="fa fa-turkish-lira"></i> NAKİT ÖDEMELER</a>
                 <br />
-            }
+            }*@
+
             <a href="/account/Logout" class="w3-bar-item w3-button w3-padding"><i class="fas fa-power-off"></i>@User.Identity.Name ÇIKIŞ</a>
+
         </div>
     }
     <div id="main">
+
         <div class="bg-info">
             <button id="openNav" class="w3-button w3-teal w3-xlarge" onclick="w3_open()">&#9776;</button>
             <div class="w3-container text-white">

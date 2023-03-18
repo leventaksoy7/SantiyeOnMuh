@@ -1,32 +1,49 @@
 ﻿using ClosedXML.Excel;
+using DocumentFormat.OpenXml.Spreadsheet;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using SantiyeOnMuh.Business.Abstract;
 using SantiyeOnMuh.Entity;
 using SantiyeOnMuh.WebUI.Extensions;
+using SantiyeOnMuh.WebUI.Identity;
 using SantiyeOnMuh.WebUI.Models;
 using SantiyeOnMuh.WebUI.Models.Modeller;
 
 namespace SantiyeOnMuh.WebUI.Controllers
 {
     //[ValidateAntiForgeryToken]
-    [Authorize(Roles = "Admin,Ofis")]
+    //[Authorize(Roles = "Admin,Ofis")]
     public class CariHesapController : Controller
     {
         // _ olan nesnemizle artık işlemlerimizi gerçekleştireceğiz
         private ICariHesapService _cariHesapService;
         private ISantiyeService _santiyeService;
+        private UserManager<User> _userManager;
         public CariHesapController(
+            UserManager<User> userManager,
             ICariHesapService cariHesapService,
             ISantiyeService santiyeService)
         {
+            this._userManager = userManager;
             this._cariHesapService = cariHesapService;
             this._santiyeService = santiyeService;
         }
 
-        public IActionResult CariHesap(int? santiyeid, int page = 1)
+        [Authorize(Roles = "Admin,Ofis,Santiye")]
+        public async Task<IActionResult> CariHesap(int? santiyeid, int page = 1)
         {
+            #region
+            var user = await _userManager.GetUserAsync(HttpContext.User);
+
+            if (await _userManager.IsInRoleAsync(user, "Santiye"))
+            {
+                santiyeid = user.SantiyeId;
+                ViewBag.santiyeid = santiyeid;
+            }
+            #endregion
+
             const int pageSize = 10;
 
             var cariHesapViewModel = new CariHesapViewListModel()
@@ -56,16 +73,32 @@ namespace SantiyeOnMuh.WebUI.Controllers
         }
 
         [HttpGet]
-        public IActionResult CariHesapEkleme()
+        [Authorize(Roles = "Admin,Ofis,Santiye")]
+        public async Task<IActionResult> CariHesapEkleme()
         {
+            #region
+            var user = await _userManager.GetUserAsync(HttpContext.User);
+
+            if (await _userManager.IsInRoleAsync(user, "Santiye"))
+            {
+                ViewBag.santiyeid = user.SantiyeId;
+            }
+            #endregion
+
             ViewBag.Sayfa = "YENİ CARİ HESAP AÇMA";
             ViewBag.Santiye = _santiyeService.GetAll(true);
             return View();
         }
 
         [HttpPost]
-        public IActionResult CariHesapEkleme(CariHesap cariHesap)
+        [Authorize(Roles = "Admin,Ofis,Santiye")]
+        public async Task<IActionResult> CariHesapEkleme(CariHesap cariHesap)
         {
+            #region
+            var user = await _userManager.GetUserAsync(HttpContext.User);
+
+            #endregion
+
             if (!ModelState.IsValid) 
             {
                 ViewBag.Sayfa = "YENİ CARİ HESAP AÇMA";
@@ -87,7 +120,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
                 Ceks = cariHesap.Ceks,
                 Nakits = cariHesap.Nakits,
                 CariKasas = cariHesap.CariKasas,
-                SantiyeId = cariHesap.SantiyeId,
+                SantiyeId = Convert.ToInt32(user.SantiyeId),
                 Santiye = cariHesap.Santiye,
             };
 
@@ -114,6 +147,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Admin")]
         public IActionResult CariHesapGuncelle(int? carihesapid)
         {
             ViewBag.Sayfa = "CARİ HESAP BİLGİLERİNİ GÜNCELLEME";
@@ -148,6 +182,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public IActionResult CariHesapGuncelle(CariHesap cariHesap)
         {
             ViewBag.Sayfa = "CARİ HESAP BİLGİLERİNİ GÜNCELLEME";
@@ -182,6 +217,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Admin")]
         public IActionResult CariHesapSil(int? carihesapid)
         {
             ViewBag.Sayfa = "CARİ HESABI SİL";
@@ -215,6 +251,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public IActionResult CariHesapSil(CariHesap c)
         {
             var entity = _cariHesapService.GetById(c.Id);
@@ -236,6 +273,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
         }
 
         //EXCEL
+        [Authorize(Roles = "Admin,Ofis,Santiye")]
         public IActionResult CariHesapExcel(int? santiyeid, int page = 1)
         {
 
@@ -302,6 +340,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
         }
 
         //ARŞİV
+        [Authorize(Roles = "Admin")]
         public IActionResult CariHesapArsiv(int? santiyeid, int page = 1)
         {
             const int pageSize = 10;
@@ -336,6 +375,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
 
         //GERİ YÜKLEME
         [HttpGet]
+        [Authorize(Roles = "Admin")]
         public IActionResult CariHesapGeriYukle(int? carihesapid)
         {
             if (carihesapid == null) { return NotFound(); }
@@ -357,5 +397,59 @@ namespace SantiyeOnMuh.WebUI.Controllers
 
             return RedirectToAction("CariHesap");
         }
+
+        #region
+        //ÇALIŞIYOR - GEREKSİZLERİ KİCKLEMEK İÇİN
+        public async Task<bool> SantiyeKontrol(int? santiyeid)
+        {
+            var user = await _userManager.GetUserAsync(HttpContext.User);
+
+            if (user == null)
+            {
+                TempData.Put("message", new AlertMessage()
+                {
+                    Title = "HATA",
+                    AlertType = "danger",
+                    Message = "OTURUM KAPATILDI"
+                });
+
+                return false;
+            }
+            else
+            {
+                if ((await _userManager.IsInRoleAsync(user, "Santiye")))
+                {
+                    if (user.SantiyeId != santiyeid)
+                    {
+                        TempData.Put("message", new AlertMessage()
+                        {
+                            Title = "HATA",
+                            AlertType = "danger",
+                            Message = "OTURUM KAPATILDI"
+                        });
+                        return false;
+                    }
+                    else
+                    { return true; }
+                }
+                else
+                { return true; }
+            }
+        }
+        #endregion
+
+        //public async Task<int?> SantiyeKontrol()
+        //{
+        //    var user = await _userManager.GetUserAsync(HttpContext.User);
+
+        //    var santiyeid = new int?();
+
+        //    if (await _userManager.IsInRoleAsync(user, "Santiye"))
+        //    {
+        //        santiyeid = user.SantiyeId;
+        //    }
+ 
+        //    return santiyeid;
+        //}
     }
 }

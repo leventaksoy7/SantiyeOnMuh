@@ -25,12 +25,15 @@
                 <input asp-for="VergiNo" class="form-control" placeholder="VERGİ NUMARASI" />
                 <span asp-validation-for="VergiNo"></span>
                 <br />
-                <div asp-validation-summary="ModelOnly"></div>
-                <select asp-for="SantiyeId"
-                        class="form-control"
-                        asp-items="@(new SelectList(@ViewBag.Santiye,"Id","Ad"))">
-                </select>
-                <br />
+                @if (User.IsInRole("Admin") || User.IsInRole("Ofis"))
+                {
+                    <div asp-validation-summary="ModelOnly"></div>
+                    <select asp-for="SantiyeId"
+                            class="form-control"
+                            asp-items="@(new SelectList(@ViewBag.Santiye,"Id","Ad"))">
+                    </select>
+                    <br />
+                }
             </div>
             <div class="col form-group">
                 <br />

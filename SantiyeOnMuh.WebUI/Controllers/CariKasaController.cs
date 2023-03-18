@@ -14,7 +14,7 @@ using System.ComponentModel.DataAnnotations;
 namespace SantiyeOnMuh.WebUI.Controllers
 {
     //[ValidateAntiForgeryToken]
-    [Authorize(Roles = "Admin,Ofis,Santiye")]
+    //[Authorize(Roles = "Admin,Ofis,Santiye")]
     public class CariKasaController : Controller
     {
         // NESNELER ÜZERİNDEKİ İŞLEMLERİ _ OLAN NESNE ÜZERİNDE YAPIP SONRA AKTARIYORUZ - INJECTION
@@ -57,7 +57,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
             //BAŞLIK
 
             ViewBag.Sayfa = cariKasaViewModel.CariHesap.Ad + " CARİ HESABI";
-
+            var santiye = cariKasaViewModel.CariHesap.SantiyeId;
             ViewBag.gk = gkid;
 
             ViewBag.toplamgider = _cariKasaService.GetAll((int)carihesapid, (int?)gkid, true).Sum(i => i.Borc);

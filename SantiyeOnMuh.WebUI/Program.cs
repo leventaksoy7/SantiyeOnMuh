@@ -1,14 +1,20 @@
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using SantiyeOnMuh.Business.Abstract;
 using SantiyeOnMuh.Business.Concrete;
 using SantiyeOnMuh.DataAccess.Abstract;
 using SantiyeOnMuh.DataAccess.Concrete.EfCore;
 using SantiyeOnMuh.DataAccess.Concrete.SqlServer;
 using SantiyeOnMuh.WebUI.Identity;
+using System.Configuration;
+
+IConfiguration configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 
+configuration = builder.Configuration;
 
 //--EF CORE 6'DA DEÐÝÞTÝRÝLMÝÞ - BÝTÝÞE KADAR MS SÝTEDEN COPY PASTE
 
@@ -38,7 +44,7 @@ builder.Services.Configure<IdentityOptions>(options =>
 
     //LOCKOUT
     options.Lockout.MaxFailedAccessAttempts = 5; // 5 KERE YANLIÞ PAROLA GÝRÝÞ HAKKI MAXÝMUM
-    options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5); // 5 DK HESAP KÝLÝDÝ
+    options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(15); // 5 DK HESAP KÝLÝDÝ
     options.Lockout.AllowedForNewUsers = true; // LOCKOUT AKTÝF OLMASI ÝÇÝN
 
     //USER
@@ -423,7 +429,14 @@ app.MapControllerRoute(
         pattern: "Nakit/NakitSirket/{sirketid?}",
         defaults: new { controller = "Nakit", action = "NakitSirket" }
         );
-    #endregion
+#endregion
 
+var scopeFactory = app.Services.GetRequiredService<IServiceScopeFactory>();
+using (var scope = scopeFactory.CreateScope())
+{
+    var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+    var userManager = scope.ServiceProvider.GetRequiredService<UserManager<User>>();
+    await SeedIdentity.Seed(userManager, roleManager, configuration);
+}
 
 app.Run();

@@ -90,7 +90,8 @@ namespace SantiyeOnMuh.WebUI.Controllers
                         return RedirectToAction("SantiyeKasa", "SantiyeKasa", new { @santiyeid = santiyeid });
                     }
                     
-                    return RedirectToAction("LogOut", "Account");
+                    return RedirectToAction("SantiyeKasa", "SantiyeKasa");
+                    //return RedirectToAction("LogOut", "Account");
                     
                 }
             }

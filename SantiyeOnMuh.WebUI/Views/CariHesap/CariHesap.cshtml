@@ -1,7 +1,5 @@
 ﻿@model CariHesapViewListModel
-@{
-
-}
+@{}
 
 <!DOCTYPE html>
 
@@ -10,15 +8,24 @@
     <div>
         <br />
         <div>
-            <a asp-controller="CariHesap" asp-action="CariHesap" asp-route-santiyeid=@null class="btn btn-primary btn-sm">TÜM CARİ HESAPLAR</a>
+            @if (User.IsInRole("Santiye"))
+            {
+                <a asp-controller="SantiyeKasa" asp-action="SantiyeKasa" asp-route-santiyeid=@ViewBag.santiyeid class="btn btn-primary btn-sm">ŞANTİYE KASA</a>
+            }
+
             <a asp-controller="CariHesap" asp-action="CariHesapEkleme" class="btn btn-success btn-sm">YENİ CARİ HESAP AÇ</a>
-            <a asp-controller="CariHesap" asp-action="CariHesapArsiv" asp-route-santiyeid=@null class="btn btn-dark btn-sm">SİLİNMİŞ CARİ HESAPLAR</a>
+            
         </div>
         <br />
         <div>
-            @foreach (var santiye in Model.Santiyes)
+            @if (User.IsInRole("Admin") || User.IsInRole("Ofis"))
             {
-                <a asp-controller="CariHesap" asp-action="CariHesap" asp-route-santiyeid="@santiye.Id" class="btn btn-warning btn-sm">@santiye.Ad</a>
+                <a asp-controller="CariHesap" asp-action="CariHesapArsiv" asp-route-santiyeid=@null class="btn btn-dark btn-sm">SİLİNMİŞ CARİ HESAPLAR</a>
+                <a asp-controller="CariHesap" asp-action="CariHesap" asp-route-santiyeid=@null class="btn btn-primary btn-sm">TÜM CARİ HESAPLAR</a>
+                @foreach (var santiye in Model.Santiyes)
+                {
+                    <a asp-controller="CariHesap" asp-action="CariHesap" asp-route-santiyeid="@santiye.Id" class="btn btn-warning btn-sm">@santiye.Ad</a>
+                }
             }
         </div>
         <br />
@@ -33,8 +40,11 @@
                     <th style="width:10%">İLGİLİ KİŞİ</th>
                     <th style="width:10%">TELEFON</th>
                     <th style="width:10%">DETAY</th>
-                    <th style="width:10%">GÜNCELLE</th>
-                    <th style="width:10%">SİL</th>
+                    @if (User.IsInRole("Admin") || User.IsInRole("Ofis"))
+                    { 
+                        <th style="width:10%">GÜNCELLE</th>
+                        <th style="width:10%">SİL</th>
+                    }
                 </tr>
                 @if (Model.CariHesaps.Count == 0)
                 {
@@ -54,14 +64,16 @@
                             <td style="width:10%; vertical-align:middle">
                                 <a asp-controller="CariKasa" asp-action="CariKasa" asp-route-carihesapid="@carihesap.Id" class="btn btn-info btn-sm">HESABI GÖRÜNTÜLE</a>
                             </td>
+                            @if (User.IsInRole("Admin") || User.IsInRole("Ofis"))
+                            {
+                                <td style="width:10%; vertical-align:middle">
+                                    <a asp-controller="CariHesap" asp-action="CariHesapGuncelle" asp-route-carihesapid="@carihesap.Id" class="btn btn-success btn-sm">GÜNCELLEME</a>
+                                </td>
 
-                            <td style="width:10%; vertical-align:middle">
-                                <a asp-controller="CariHesap" asp-action="CariHesapGuncelle" asp-route-carihesapid="@carihesap.Id" class="btn btn-success btn-sm">GÜNCELLEME</a>
-                            </td>
-
-                            <td style="width:10%; vertical-align:middle">
-                                <a asp-controller="CariHesap" asp-action="CariHesapSil" asp-route-carihesapid="@carihesap.Id" class="btn btn-danger btn-sm">SİL</a>
-                            </td>
+                                <td style="width:10%; vertical-align:middle">
+                                    <a asp-controller="CariHesap" asp-action="CariHesapSil" asp-route-carihesapid="@carihesap.Id" class="btn btn-danger btn-sm">SİL</a>
+                                </td>
+                            }
                         </tr>
                     }
                 }
@@ -99,10 +111,7 @@
     </div>
     <br />
     <div>
-        <a asp-controller="CariHesap"
-           asp-action="CariHesapExcel"
-           asp-route-santiyeid=@Model.PageInfo.UrlInfo
-           class="btn btn-warning btn-sm">EXCEL</a>
+        <a asp-controller="CariHesap" asp-action="CariHesapExcel" asp-route-santiyeid=@Model.PageInfo.UrlInfo class="btn btn-warning btn-sm">EXCEL</a>
     </div>
 </body>
 </html>

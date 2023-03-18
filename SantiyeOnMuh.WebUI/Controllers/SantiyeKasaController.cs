@@ -14,8 +14,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace SantiyeOnMuh.WebUI.Controllers
 {
-    //[ValidateAntiForgeryToken]
-    [Authorize(Roles = "Admin,Ofis")]
+    
     public class SantiyeKasaController : Controller
     {
         // NESNELER ÜZERİNDEKİ İŞLEMLERİ _ OLAN NESNE ÜZERİNDE YAPIP SONRA AKTARIYORUZ - INJECTION
@@ -37,21 +36,14 @@ namespace SantiyeOnMuh.WebUI.Controllers
         }
 
         [Authorize(Roles = "Admin,Ofis,Santiye")]
-        public async Task<IActionResult> SantiyeKasaYonlendirme()
-        {
-            var user = await _userManager.GetUserAsync(HttpContext.User);
-
-            return RedirectToAction("SantiyeKasaYonlendirme", "SantiyeKasa", new { @santiyeid = user.SantiyeId });
-        }
-
-        [Authorize(Roles = "Admin,Ofis,Santiye")]
         public async Task<IActionResult> SantiyeKasa(int santiyeid, int? gkid, int page = 1)
         {
+            if (await SantiyeKontrol(santiyeid)) { }
+            else
+            {
+                return RedirectToAction("LogOut", "Account");
+            }
 
-            if (await SantiyeKontrol(santiyeid)) { } else {
-                return RedirectToAction("LogOut", "Account");}
-
-            //BAŞLIKTA ŞANTİYENİN ADININ YAZMASI İÇİN
             ViewBag.Sayfa = _santiyeService.GetById(santiyeid).Ad + " ŞANTİYE KASASI ";
 
             const int pageSize = 10;
@@ -66,7 +58,8 @@ namespace SantiyeOnMuh.WebUI.Controllers
                 },
 
                 SantiyeKasas = _santiyeKasaService.GetAll((int)santiyeid, (int?)gkid, true, page, pageSize),
-                SantiyeGiderKalemis = _santiyeGiderKalemiService.GetAll(true, true),
+                SantiyeGiderKalemis = _santiyeGiderKalemiService.GetAll(true),
+                //SantiyeGiderKalemis = _santiyeGiderKalemiService.GetAll(true, true),
                 Santiye = _santiyeService.GetById(santiyeid)
             };
 
@@ -79,6 +72,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
             return View(santiyeKasaViewModel);
         }
 
+        [Authorize(Roles = "Admin")]
         public IActionResult SantiyeKasaArsiv(int santiyeid, int? gkid, int page = 1)
         {
             //BAŞLIKTA ŞANTİYENİN ADININ YAZMASI İÇİN
@@ -109,88 +103,8 @@ namespace SantiyeOnMuh.WebUI.Controllers
             return View(santiyeKasaViewModel);
         }
 
-        //[HttpGet]
-        //public IActionResult SantiyeKasaEkleme()
-        //{
-            
-        //    ViewBag.Sayfa = "GİDER EKLEME";
-
-        //    ViewBag.GK = _santiyeGiderKalemiService.GetAll(true, true);
-        //    ViewBag.Santiye = _santiyeService.GetAll(true);
-
-        //    return View(new ESantiyeKasa());
-        //}
-
-        //[HttpPost]
-        //public async Task<IActionResult> SantiyeKasaEkleme(SantiyeKasa santiyeKasa, IFormFile? file)
-        //{
-
-        //    if (!ModelState.IsValid) { return View(santiyeKasa); }
-
-        //    #region EĞER RESİM EKLİ DEĞİLSE GERİ DÖNÜŞTE GEREKLİ BİLGİLER
-        //    ViewBag.Sayfa = "GİDER EKLEME";
-
-        //    ViewBag.GK = _santiyeGiderKalemiService.GetAll(true, true);
-        //    ViewBag.Santiye = _santiyeService.GetAll(true);
-        //    #endregion
-        //    #region RESİM EKLEME BÖLÜMÜ
-        //    if (file != null)
-        //    {
-        //        var extension = Path.GetExtension(file.FileName);
-
-        //        if (extension == ".jpg" || extension == ".png" || extension == ".pdf")
-        //        {
-        //            var PicName = string.Format($"{santiyeKasa.Aciklama}{"-"}{Guid.NewGuid()}{extension}");
-        //            santiyeKasa.ImgUrl = PicName;
-        //            var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\SantiyeKasaResim", PicName);
-
-        //            using (var stream = new FileStream(path, FileMode.Create))
-        //            {
-        //                await file.CopyToAsync(stream);
-        //            }
-        //        }
-        //        else { return View(santiyeKasa); }
-        //    }
-        //    //else { return View(santiyeKasa); }
-        //    //FATURA EKLENMESE BİLE SİSTEME FATURA GİRİLEBİLSİN DİYE ELSE KISMINI ÇIKARDIM
-        //    #endregion
-
-        //    ESantiyeKasa _santiyeKasa = new ESantiyeKasa()
-        //    {
-        //        Tarih = santiyeKasa.Tarih,
-        //        Aciklama = santiyeKasa.Aciklama,
-        //        Kisi = santiyeKasa.Kisi,
-        //        No = santiyeKasa.No,
-
-        //        #region VİRGÜL VEYA NOKTA KULLANIMININ İKİSİNİN DE SERBEST OLMASINI SAĞLAMAK İÇİN
-        //        Gelir = Convert.ToDecimal(santiyeKasa.Gelir.Replace(".", ",")),
-        //        Gider = Convert.ToDecimal(santiyeKasa.Gider.Replace(".", ",")),
-        //        #endregion
-
-        //        ImgUrl = santiyeKasa.ImgUrl,
-        //        Durum = santiyeKasa.Durum,
-        //        BankaKasaKaynak = santiyeKasa.BankaKasaKaynak,
-        //        SistemeGiris = santiyeKasa.SistemeGiris,
-        //        SonGuncelleme = santiyeKasa.SonGuncelleme,
-        //        SantiyeGiderKalemiId = santiyeKasa.SantiyeGiderKalemiId,
-        //        SantiyeGiderKalemi = santiyeKasa.SantiyeGiderKalemi,
-        //        SantiyeId = santiyeKasa.SantiyeId,
-        //        Santiye = santiyeKasa.Santiye,
-        //    };
-
-        //    _santiyeKasaService.Create(_santiyeKasa);
-
-        //    TempData.Put("message", new AlertMessage()
-        //    {
-        //        Title = "BAŞARILI",
-        //        AlertType = "success",
-        //        Message = $"{santiyeKasa.Aciklama} EKLENDİ."
-        //    });
-
-        //    return RedirectToAction("Index", "Santiye");
-        //}
-
         [HttpGet]
+        [Authorize(Roles = "Admin,Ofis,Santiye")]
         public IActionResult SantiyeKasaDetay(int? id)
         {
             ViewBag.Sayfa = "GİDER DETAYI";
@@ -227,6 +141,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Admin,Ofis")]
         public IActionResult SantiyeKasaSil(int? santiyekasaid)
         {
             ViewBag.Sayfa = "FATURAYI SİL";
@@ -265,6 +180,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin,Ofis")]
         public IActionResult SantiyeKasaSil(SantiyeKasa santiyeKasa)
         {
 
@@ -393,6 +309,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
 
         //GERİ YÜKLEME
         [HttpGet]
+        [Authorize(Roles = "Admin")]
         public IActionResult SantiyeKasaGeriYukle(int id)
         {
             ESantiyeKasa santiyeKasa = _santiyeKasaService.GetById(id);
@@ -420,7 +337,8 @@ namespace SantiyeOnMuh.WebUI.Controllers
         public IActionResult SantiyeKasaEklemeFromSantiye(int santiyeid)
         {
             ViewBag.Sayfa = _santiyeService.GetById(santiyeid).Ad + " ŞANTİYE KASASI GİDER EKLE";
-            ViewBag.GK = _santiyeGiderKalemiService.GetAll(true, true);
+            ViewBag.GK = _santiyeGiderKalemiService.GetAll(true);
+            //ViewBag.GK = _santiyeGiderKalemiService.GetAll(true, true);
             ViewBag.SantiyeId = santiyeid;
 
             return View(new SantiyeKasa());
@@ -513,6 +431,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Admin")]
         public IActionResult SantiyeKasaGuncelleFromSantiye(int? santiyekasaid)
         {
 
@@ -552,6 +471,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> SantiyeKasaGuncelleFromSantiye(SantiyeKasa s, IFormFile? file)
         {
             if (await SantiyeKontrol(s.SantiyeId)) { }
@@ -628,7 +548,14 @@ namespace SantiyeOnMuh.WebUI.Controllers
             var user = await _userManager.GetUserAsync(HttpContext.User);
 
             if (user == null) 
-            { 
+            {
+                TempData.Put("message", new AlertMessage()
+                {
+                    Title = "HATA",
+                    AlertType = "danger",
+                    Message = "OTURUM KAPATILDI"
+                });
+
                 return false; 
             }
             else
@@ -637,17 +564,19 @@ namespace SantiyeOnMuh.WebUI.Controllers
                 {
                     if (user.SantiyeId != santiyeid)
                     {
+                        TempData.Put("message", new AlertMessage()
+                        {
+                            Title = "HATA",
+                            AlertType = "danger",
+                            Message = "OTURUM KAPATILDI"
+                        });
                         return false;
                     }
                     else
-                    {
-                        return true;
-                    }
+                    { return true; }
                 }
                 else
-                {
-                    return true;
-                }
+                { return true; }
             }
         }
         #endregion

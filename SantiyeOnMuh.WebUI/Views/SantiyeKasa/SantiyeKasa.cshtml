@@ -10,7 +10,14 @@
     <div>
         <br />
         <div>
-            <a asp-controller="Santiye" asp-action="Index" class="btn btn-primary btn-sm">TÜM ŞANTİYELER</a>
+            @if (User.IsInRole("Santiye"))
+            {
+                <a asp-controller="CariHesap" asp-action="CariHesap" class="btn btn-primary btn-sm">CARİ HESAPLAR</a>
+            }
+            @if (User.IsInRole("Ofis") || User.IsInRole("Admin"))
+            {
+                <a asp-controller="Santiye" asp-action="Index" class="btn btn-primary btn-sm">TÜM ŞANTİYELER</a>
+            }
             @if (Model.Santiye.Durum != false)
             {
                 <a asp-controller="SantiyeKasa" asp-action="SantiyeKasaEklemeFromSantiye" asp-route-santiyeid="@santiye" class="btn btn-primary btn-sm">KASAYA GİDER EKLE</a>
@@ -60,13 +67,6 @@
                             <td>@item.Gelir</td>
                             <td>@item.Gider </td>
                             <td>@(item.Gelir- item.Gider) </td>
-
-                            @*@if (item.SantiyeGiderKalemiId != 1)
-                            {
-                                <td><a asp-controller="SantiyeKasa" asp-action="SantiyeKasaDetay" asp-route-id="@item.Id" class="btn btn-info btn-sm">DETAY</a></td>
-                                <td><a asp-controller="SantiyeKasa" asp-action="SantiyeKasaGuncelleFromSantiye" asp-route-santiyekasaid="@item.Id" class="btn btn-success btn-sm">GÜNCELLEME</a></td>
-                                <td><a asp-controller="SantiyeKasa" asp-action="SantiyeKasaSil" asp-route-santiyekasaid="@item.Id" class="btn btn-danger btn-sm">SİL</a></td>
-                            }*@
 
                             <td><a asp-controller="SantiyeKasa" asp-action="SantiyeKasaDetay" asp-route-id="@item.Id" class="btn btn-info btn-sm">DETAY</a></td>
                             
