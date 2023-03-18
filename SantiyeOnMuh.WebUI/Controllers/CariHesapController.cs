@@ -1,4 +1,5 @@
 ﻿using ClosedXML.Excel;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using SantiyeOnMuh.Business.Abstract;
@@ -9,7 +10,8 @@ using SantiyeOnMuh.WebUI.Models.Modeller;
 
 namespace SantiyeOnMuh.WebUI.Controllers
 {
-    [ValidateAntiForgeryToken]
+    //[ValidateAntiForgeryToken]
+    [Authorize(Roles = "Admin,Ofis")]
     public class CariHesapController : Controller
     {
         // _ olan nesnemizle artık işlemlerimizi gerçekleştireceğiz

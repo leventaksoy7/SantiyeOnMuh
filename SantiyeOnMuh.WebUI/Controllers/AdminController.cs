@@ -7,7 +7,7 @@ using SantiyeOnMuh.WebUI.Models;
 
 namespace SantiyeOnMuh.WebUI.Controllers
 {
-    //[Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Admin")]
     //[ValidateAntiForgeryToken]
     public class AdminController : Controller
     {
@@ -33,6 +33,36 @@ namespace SantiyeOnMuh.WebUI.Controllers
             this._roleManager = roleManager;
             this._userManager = userManager;
         }
+
+        public IActionResult UserList()
+        {
+            return View(_userManager.Users);
+        }
+
+        //public async Task<IActionResult> UserEdit(string id)
+        //{
+        //    var user = await _userManager.FindByIdAsync(id);
+
+        //    if (user != null)
+        //    {
+        //        var selectedRoles = await _userManager.GetRolesAsync(user);
+        //        var roles = _roleManager.Roles.Select(i => i.Name);
+
+        //        ViewBag.Roles = roles;
+
+        //        return View(new UserDetailsModel()
+        //        {
+        //            UserId = user.Id,
+        //            UserName = user.UserName,
+        //            FirstName = user.Ad,
+        //            LastName = user.SoyAd,
+        //            SantiyeId = user.SantiyeId,
+        //        });
+        //    }
+
+        //    return View();
+        //}
+
         public IActionResult RoleList() 
         { 
             return View(_roleManager.Roles); 
@@ -109,7 +139,6 @@ namespace SantiyeOnMuh.WebUI.Controllers
                         }
                     }
                 }
-
                 //return View("RoleEdit","Admin");
             }
             return RedirectToAction("RoleList", "Admin");

@@ -1,4 +1,5 @@
 ﻿using DocumentFormat.OpenXml.Vml.Spreadsheet;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using SantiyeOnMuh.Business.Abstract;
@@ -10,7 +11,8 @@ using System.ComponentModel.DataAnnotations;
 
 namespace SantiyeOnMuh.WebUI.Controllers
 {
-    [ValidateAntiForgeryToken]
+    //[ValidateAntiForgeryToken]
+    [Authorize(Roles = "Admin,Ofis")]
     public class SantiyeController : Controller
     {
         // _ olan nesnemizle artık işlemlerimizi gerçekleştireceğiz

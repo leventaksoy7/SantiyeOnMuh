@@ -1,0 +1,62 @@
+﻿@model UserDetailsModel
+@{
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+</head>
+<body>
+    <div>
+        <a asp-controller="Admin" asp-action="RoleList" class="btn btn-dark btn-sm">ROL LİSTESİ</a>
+        <a asp-controller="Admin" asp-action="UserList" class="btn btn-dark btn-sm">KULLANICI LİSTESİ</a>
+    </div>
+    <br />
+    <form asp-controller="Account" asp-action="UserDelete" method="post">
+        <div asp-validation-summary="All" class="text-bg-danger"></div>
+        <input type="hidden" asp-for="UserId" class="form-control" />
+        <div class="form-group row">
+            <button class="col-sm-offset-2 col-sm-5 btn btn-danger" type="submit">KULLANICIYI SİL</button>
+        </div>
+    </form>
+    <br />
+
+    <div class="form-group row">
+        <div class="col-xl-6 col-md-4">
+            <table class="w3-table w3-striped w3-white">
+                <!--DÖNGÜ İÇİNDE FATURA BİLGİLERİ-->
+                <tr><th>TARİH</th><td>@Model.FirstName</td></tr>
+                <tr><th>AÇIKLAMA</th><td>@Model.LastName</td></tr>
+                <tr><th>TUTAR</th><td>@Model.UserName</td></tr>
+            </table>
+        </div>
+
+    </div>
+    <form asp-controller="Account" asp-action="UserEdit" method="post">
+        <div asp-validation-summary="All" class="text-bg-danger"></div>
+        <input type="hidden" asp-for="UserId" class="form-control" />
+        <br />
+        <div class="form-group row">
+            <label class="col-sm-2" asp-for="SantiyeId"></label>
+            <div class="col-sm-5">
+                <div asp-validation-summary="ModelOnly"></div>
+                <select asp-for="SantiyeId"
+                        class="form-control"
+                        asp-items="@(new SelectList(@ViewBag.Santiye,"Id","Ad"))">
+                </select>
+            </div>
+        </div>
+        <div class="form-group row">
+            <button class="col-sm-offset-2 col-sm-5 btn btn-success" type="submit">KAYDET</button>
+        </div>
+    </form>
+    
+</body>
+@section Scripts
+    {
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+}
+</html>

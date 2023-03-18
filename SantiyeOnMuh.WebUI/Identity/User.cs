@@ -6,5 +6,6 @@ namespace SantiyeOnMuh.WebUI.Identity
     {
         public string Ad { get; set; }
         public string SoyAd { get; set; }
+        public int? SantiyeId { get; set; }
     }
 }

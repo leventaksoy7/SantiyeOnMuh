@@ -25,33 +25,49 @@
 
 </head>
 <body>
+    @if (User.Identity.IsAuthenticated)
+    {
+        <div class="w3-sidebar w3-bar-block w3-card bg-success" style="display:none" id="mySidebar">
+            <button class="w3-bar-item w3-button bg-info w3-large font-weight-bold"
+            onclick="w3_close()">
+                KAPAT &times;
+            </button>
+            @if (User.IsInRole("Admin"))
+            {
+            <a href="/Admin/Index" class="w3-bar-item w3-button w3-padding"><i class="fas fa-university"></i>  ADMİN PANELİ</a>
+            <br />
+            }
 
-    <div class="w3-sidebar w3-bar-block w3-card bg-success" style="display:none" id="mySidebar">
-        <button class="w3-bar-item w3-button bg-info w3-large font-weight-bold"
-                onclick="w3_close()">
-            KAPAT &times;
-        </button>
-
-        <a href="/Admin/Index" class="w3-bar-item w3-button w3-padding"><i class="fas fa-university"></i>  ADMİN PANELİ</a>
-        <br />
-        <a href="/AnaSayfa/AnaSayfa" class="w3-bar-item w3-button w3-padding"><i class="fas fa-home"></i>  ANA SAYFA</a>
-        <br />
-        <a href="/Santiye/Index" class="w3-bar-item w3-button w3-padding"><i class="fas fa-snowplow"></i>  ŞANTİYELER</a>
-        <br />
-        <a href="/CariHesap/CariHesap" class="w3-bar-item w3-button w3-padding"><i class="fa fa-copy"></i>  CARİ HESAPLAR</a>
-        <br />
-        <a href="/BankaKasa/BankaKasa" class="w3-bar-item w3-button w3-padding"><i class="fas fa-cash-register"></i>  ANA KASA</a>
-        <br />
-        <a href="/Cek/Index" class="w3-bar-item w3-button w3-padding"><i class="fa fa-ticket"></i> ÇEKLER</a>
-        <br />
-        <a href="/Nakit/Index" class="w3-bar-item w3-button w3-padding"><i class="fa fa-turkish-lira"></i> NAKİT ÖDEMELER</a>
-        <br />
-        @if (User.Identity.IsAuthenticated)
-        {
+            @if (User.IsInRole("Ofis") || User.IsInRole("Admin"))
+            {
+                <a href="/AnaSayfa/AnaSayfa" class="w3-bar-item w3-button w3-padding"><i class="fas fa-home"></i>  ANA SAYFA</a>
+                <br />
+                <a href="/Santiye/Index" class="w3-bar-item w3-button w3-padding"><i class="fas fa-snowplow"></i>  ŞANTİYELER</a>
+                <br />
+                <a href="/CariHesap/CariHesap" class="w3-bar-item w3-button w3-padding"><i class="fa fa-copy"></i>  CARİ HESAPLAR</a>
+                <br />
+                <a href="/BankaKasa/BankaKasa" class="w3-bar-item w3-button w3-padding"><i class="fas fa-cash-register"></i>  ANA KASA</a>
+                <br />
+                <a href="/Cek/Index" class="w3-bar-item w3-button w3-padding"><i class="fa fa-ticket"></i> ÇEKLER</a>
+                <br />
+                <a href="/Nakit/Index" class="w3-bar-item w3-button w3-padding"><i class="fa fa-turkish-lira"></i> NAKİT ÖDEMELER</a>
+                <br />
+            }
+            
+            @if (User.IsInRole("Santiye"))
+            {
+                <a href="/SantiyeKasa/SantiyeKasaYonlendirme" class="w3-bar-item w3-button w3-padding"><i class="fas fa-home"></i>  ŞANTİYE KASA</a> @*ŞANTİYEYE ÖZEL*@
+                <br />
+                <a href="/CariHesap/CariHesap" class="w3-bar-item w3-button w3-padding"><i class="fa fa-copy"></i>  CARİ HESAPLAR</a> @*ŞANTİYEYE ÖZEL*@
+                <br />
+                <a href="/Cek/Index" class="w3-bar-item w3-button w3-padding"><i class="fa fa-ticket"></i> ÇEKLER</a> @*ŞANTİYEYE ÖZEL*@
+                <br />
+                <a href="/Nakit/Index" class="w3-bar-item w3-button w3-padding"><i class="fa fa-turkish-lira"></i> NAKİT ÖDEMELER</a> @*ŞANTİYEYE ÖZEL*@
+                <br />
+            }
             <a href="/account/Logout" class="w3-bar-item w3-button w3-padding"><i class="fas fa-power-off"></i>@User.Identity.Name ÇIKIŞ</a>
-        }
-    </div>
-
+        </div>
+    }
     <div id="main">
         <div class="bg-info">
             <button id="openNav" class="w3-button w3-teal w3-xlarge" onclick="w3_open()">&#9776;</button>

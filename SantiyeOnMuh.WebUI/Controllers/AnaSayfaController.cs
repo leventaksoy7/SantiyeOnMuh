@@ -1,10 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using SantiyeOnMuh.Business.Abstract;
 using SantiyeOnMuh.WebUI.Models;
 
 namespace SantiyeOnMuh.WebUI.Controllers
 {
     //[ValidateAntiForgeryToken]
+    [Authorize(Roles = "Admin,Ofis")]
     public class AnaSayfaController : Controller
     {
         private ISantiyeService _santiyeService;
