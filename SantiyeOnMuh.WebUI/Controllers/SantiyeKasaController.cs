@@ -1,4 +1,5 @@
 ﻿using ClosedXML.Excel;
+using DocumentFormat.OpenXml.Spreadsheet;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -35,7 +36,13 @@ namespace SantiyeOnMuh.WebUI.Controllers
             this._santiyeService = santiyeService;
         }
 
-        [Authorize(Roles = "Admin,Ofis,Santiye")]
+        [Authorize(Roles = "Santiye")]
+        public async Task<IActionResult> SantiyeKasaYonlendirme()
+        {
+            var user = await _userManager.GetUserAsync(HttpContext.User);
+            return RedirectToAction("SantiyeKasa", "SantiyeKasa", new { @santiyeid = user.SantiyeId });
+        }
+            [Authorize(Roles = "Admin,Ofis,Santiye")]
         public async Task<IActionResult> SantiyeKasa(int santiyeid, int? gkid, int page = 1)
         {
             if (await SantiyeKontrol(santiyeid)) { }

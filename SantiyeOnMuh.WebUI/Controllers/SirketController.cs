@@ -10,7 +10,7 @@ using SantiyeOnMuh.WebUI.Models.Modeller;
 namespace SantiyeOnMuh.WebUI.Controllers
 {
     //[ValidateAntiForgeryToken]
-    [Authorize(Roles = "Admin,Ofis")]
+    [Authorize(Roles = "Admin")]
     public class SirketController : Controller
     {
         // NESNELER ÜZERİNDEKİ İŞLEMLERİ _ OLAN NESNE ÜZERİNDE YAPIP SONRA AKTARIYORUZ - INJECTION

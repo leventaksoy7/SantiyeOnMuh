@@ -15,16 +15,25 @@
     <div>
         <br />
         <div>
-            <a asp-controller="CariHesap" asp-action="CariHesap" class="btn btn-info btn-sm">TÜM CARİLER</a>
+            @if (User.IsInRole("Admin"))
+            {
+                <a asp-controller="CariHesap" asp-action="CariHesap" class="btn btn-info btn-sm">TÜM CARİLER</a>
+            }
+            @if (User.IsInRole("Santiye"))
+            {
+                <a asp-controller="SantiyeKasa" asp-action="SantiyeKasaYonlendirme" class="btn btn-info btn-sm">ŞANTİYE KASASI</a>
+            }
             @if (Model.CariHesap.Durum != false)
             {
-                <a asp-controller="CariKasa" asp-action="CariKasaArsiv" asp-route-carihesapid="@cari.Id" class="btn btn-primary btn-sm">ARŞİV</a>
 
                 <a asp-controller="CariKasa" asp-action="CariKasaFaturaEklemeFromCari" asp-route-carihesapid="@cari.Id" class="btn btn-primary btn-sm">ALACAK GİRİŞİ</a>
 
-                <a asp-controller="Nakit" asp-action="NakitEklemeFromCari" asp-route-carihesapid="@cari.Id" class="btn btn-success btn-sm">BORÇ - NAKİT GİRİŞİ</a>
-
-                <a asp-controller="Cek" asp-action="CekEklemeFromCari" asp-route-carihesapid="@cari.Id" class="btn btn-success btn-sm">BORÇ - ÇEK GİRİŞİ</a>
+                @if (User.IsInRole("Admin"))
+                {
+                    <a asp-controller="CariKasa" asp-action="CariKasaArsiv" asp-route-carihesapid="@cari.Id" class="btn btn-primary btn-sm">ARŞİV</a>
+                    <a asp-controller="Nakit" asp-action="NakitEklemeFromCari" asp-route-carihesapid="@cari.Id" class="btn btn-success btn-sm">BORÇ - NAKİT GİRİŞİ</a>
+                    <a asp-controller="Cek" asp-action="CekEklemeFromCari" asp-route-carihesapid="@cari.Id" class="btn btn-success btn-sm">BORÇ - ÇEK GİRİŞİ</a>
+                }                
             }
 
         </div>

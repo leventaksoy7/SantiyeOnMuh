@@ -10,7 +10,7 @@ using SantiyeOnMuh.WebUI.Models.Modeller;
 
 namespace SantiyeOnMuh.WebUI.Controllers
 {
-    [Authorize(Roles = "Admin")]
+    
     //[ValidateAntiForgeryToken] //CROSSIDE ATTACKLAR ICIN -post tokenları control ediyor
     public class AccountController : Controller
     {
@@ -89,10 +89,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
 
                         return RedirectToAction("SantiyeKasa", "SantiyeKasa", new { @santiyeid = santiyeid });
                     }
-                    
                     return RedirectToAction("SantiyeKasa", "SantiyeKasa");
-                    //return RedirectToAction("LogOut", "Account");
-                    
                 }
             }
 
@@ -107,12 +104,14 @@ namespace SantiyeOnMuh.WebUI.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Admin")]
         public IActionResult Register()
         {
             return View();
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Register(RegisterModel model)
         {
             if (!ModelState.IsValid) { return View(model); }
@@ -164,6 +163,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> UserEdit(string id)
         {
             var user = await _userManager.FindByIdAsync(id);
@@ -182,6 +182,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> UserEdit(UserDetailsModel model)
         {
             if (model.UserId != null)
@@ -208,6 +209,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> UserDelete(UserDetailsModel model)
         {
             if (model.UserId != null)

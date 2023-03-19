@@ -5,6 +5,7 @@ using Microsoft.Extensions.Configuration;
 using SantiyeOnMuh.Business.Abstract;
 using SantiyeOnMuh.Business.Concrete;
 using SantiyeOnMuh.DataAccess.Abstract;
+using SantiyeOnMuh.DataAccess.Concrete;
 using SantiyeOnMuh.DataAccess.Concrete.EfCore;
 using SantiyeOnMuh.DataAccess.Concrete.SqlServer;
 using SantiyeOnMuh.WebUI.Identity;
@@ -28,9 +29,19 @@ builder.Services.AddMemoryCache();
 
 // Add a custom scoped service.
 
+//builder.Services.AddDbContext<ApplicationContext>
+//    (options => options.UseSqlServer(@"Server=localhost\SQLEXPRESS; Database=SantiyeOnMuhasebe; Trusted_Connection=True;Encrypt=false;TrustServerCertificate=true;"));
+//builder.Services.AddDbContext<Context>
+//    (options => options.UseSqlServer(@"Server=localhost\SQLEXPRESS; Database=SantiyeOnMuhasebe; Trusted_Connection=True;Encrypt=false;TrustServerCertificate=true;"));
+
 //USER
 builder.Services.AddDbContext<ApplicationContext>
-    (options => options.UseSqlServer(@"Server=localhost\SQLEXPRESS; Database=SantiyeOnMuhasebe; Trusted_Connection=True;Encrypt=false;TrustServerCertificate=true;"));
+    (options => options.UseSqlServer(configuration.GetConnectionString("MsSqlServerCon")));
+//MAINCONTEX
+builder.Services.AddDbContext<Context>
+    (options => options.UseSqlServer(configuration.GetConnectionString("MsSqlServerCon")));
+
+
 builder.Services.AddIdentity<User,IdentityRole>().AddEntityFrameworkStores<ApplicationContext>().AddDefaultTokenProviders();
 
 builder.Services.Configure<IdentityOptions>(options =>

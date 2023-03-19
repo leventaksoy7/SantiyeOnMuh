@@ -120,9 +120,21 @@ namespace SantiyeOnMuh.WebUI.Controllers
                 Ceks = cariHesap.Ceks,
                 Nakits = cariHesap.Nakits,
                 CariKasas = cariHesap.CariKasas,
-                SantiyeId = Convert.ToInt32(user.SantiyeId),
+                SantiyeId = cariHesap.SantiyeId,
                 Santiye = cariHesap.Santiye,
             };
+
+            if (await _userManager.IsInRoleAsync(user, "Santiye"))
+            {
+                if (user.SantiyeId != null)
+                {
+                    _cariHesap.SantiyeId = Convert.ToInt32(user.SantiyeId);
+                }
+                else
+                {
+                    return RedirectToAction("LogOut", "Account");
+                }
+            }
 
             if (_cariHesapService.Create(_cariHesap))
             {

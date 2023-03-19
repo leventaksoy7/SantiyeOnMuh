@@ -45,6 +45,8 @@ namespace SantiyeOnMuh.WebUI.Controllers
             this._cariKasaService = cariKasaService;
             this._santiyeService = santiyeService;
         }
+
+        [Authorize(Roles = "Admin,Ofis")]
         public IActionResult Index(int page = 1)
         {
             ViewBag.Sayfa = "ÇEKLER";
@@ -63,6 +65,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
             return View(cekViewModel);
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         public IActionResult CekEkleme()
         {
@@ -74,6 +77,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
             return View(new Cek());
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public async Task<IActionResult> CekEkleme(Cek cek, IFormFile? file) 
         {
@@ -178,6 +182,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
             return View(cek);
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         public IActionResult CekTahsil(int? cekid)
         {
@@ -227,6 +232,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
             return RedirectToAction("Index");
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         public IActionResult CekGuncelle(int? cekid)
         {
@@ -267,6 +273,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
             return View(_cek);
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public IActionResult CekGuncelle(Cek c)
         {
@@ -338,6 +345,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
             return RedirectToAction("Index");
         }
 
+        [Authorize(Roles = "Admin,Ofis,Santiye")]
         [HttpGet]
         public IActionResult CekDetay(int? cekid)
         {
@@ -374,6 +382,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
             return View(_cek);
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         public IActionResult CekSil(int? cekid)
         {
@@ -411,6 +420,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
             return View(_cek);
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public IActionResult CekSil(Cek c)
         {
@@ -461,6 +471,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
             return RedirectToAction("Index");
         }
 
+        [Authorize(Roles = "Admin")]
         public IActionResult CekGeriYukle(int cekid)
         {
 
@@ -510,6 +521,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
             return RedirectToAction("Index");
         }
 
+        [Authorize(Roles = "Admin,Ofis")]
         //EXCEL
         public IActionResult CekExcel()
         {
@@ -597,6 +609,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
             }
         }
 
+        [Authorize(Roles = "Admin")]
         //ARŞİV
         public IActionResult CekArsiv(int page = 1)
         {
@@ -616,6 +629,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
             return View(cekViewModel);
         }
 
+        [Authorize(Roles = "Admin")]
         #region CARİ ÜZERİNDEN
         [HttpGet]
         public IActionResult CekEklemeFromCari(int carihesapid)
@@ -630,6 +644,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
             return View(new Cek());
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public async Task<IActionResult> CekEklemeFromCari(Cek cek, IFormFile file)
         {
@@ -720,6 +735,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
         }
         #endregion
 
+        [Authorize(Roles = "Admin")]
         #region BASİT FİLTRE
         public IActionResult AraSecim()
         {
@@ -733,7 +749,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
 
             return View(cekViewModel);
         }
-
+        [Authorize(Roles = "Admin")]
         public IActionResult CekSantiye(int santiyeid, int page = 1)
         {
             ViewBag.Sayfa = "ÇEKLER";
@@ -751,7 +767,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
             };
             return View(cekViewModel);
         }
-
+        [Authorize(Roles = "Admin")]
         public IActionResult CekSirket(int sirketid, int page = 1)
         {
             ViewBag.Sayfa = "ÇEKLER";
@@ -769,7 +785,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
             };
             return View(cekViewModel);
         }
-
+        [Authorize(Roles = "Admin")]
         public IActionResult CekBanka(int bankahesapid, int page = 1)
         {
             ViewBag.Sayfa = "ÇEKLER";
@@ -787,7 +803,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
             };
             return View(cekViewModel);
         }
-
+        [Authorize(Roles = "Admin")]
         //BASİT FİLTRE EXCEL
         public IActionResult CekSantiyeExcel(int santiyeid)
         {
@@ -874,7 +890,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
                 }
             }
         }
-
+        [Authorize(Roles = "Admin")]
         public IActionResult CekSirketExcel(int sirketid)
         {
             var cekViewModel = new CekViewListModel()
@@ -960,7 +976,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
                 }
             }
         }
-
+        [Authorize(Roles = "Admin")]
         public IActionResult CekBankaExcel(int bankahesapid)
         {
             var cekViewModel = new CekViewListModel()

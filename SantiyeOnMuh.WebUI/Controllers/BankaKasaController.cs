@@ -411,7 +411,6 @@ namespace SantiyeOnMuh.WebUI.Controllers
             return RedirectToAction("BankaKasa");
         }
 
-
         #region BANKALAR ARASI EFT
         [HttpGet]
         public IActionResult BankaKasaEklemeEft()
@@ -467,9 +466,6 @@ namespace SantiyeOnMuh.WebUI.Controllers
             return RedirectToAction("BankaKasa");
         }
         #endregion
-
-
-
 
         #region ŞANTİYE KASA EFT İŞLEMLERİ
         [HttpGet]

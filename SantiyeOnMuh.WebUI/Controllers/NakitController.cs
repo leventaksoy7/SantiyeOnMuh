@@ -44,6 +44,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
             this._santiyeService = santiyeService;
         }
 
+        [Authorize(Roles = "Admin")]
         public IActionResult Index(int page = 1)
         {
             ViewBag.Sayfa = "NAKİT ÖDEMELER";
@@ -63,6 +64,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
             return View(nakitViewModel);
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         public IActionResult NakitEkleme()
         {
@@ -75,6 +77,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
             return View(new Nakit());
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public IActionResult NakitEkleme(Nakit nakit, IFormFile? file)
         {
@@ -169,6 +172,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
             return View(nakit);
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         public IActionResult NakitGuncelle(int? nakitid)
         {
@@ -206,6 +210,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
             return View(_nakit);
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public IActionResult NakitGuncelle(Nakit nakit)
         {
@@ -277,7 +282,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
 
             return RedirectToAction("Index");
         }
-
+        [Authorize(Roles = "Admin,Ofis,Santiye")]
         [HttpGet]
         public IActionResult NakitDetay(int? nakitid)
         {
@@ -317,6 +322,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
             return View(_nakit);
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         public IActionResult NakitSil(int? nakitid)
         {
@@ -351,6 +357,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
             return View(_nakit);
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public IActionResult NakitSil(Nakit nakit)
         {
@@ -405,6 +412,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
             return RedirectToAction("Index");
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         public IActionResult NakitGeriYukle(int? nakitid)
         {
@@ -456,9 +464,9 @@ namespace SantiyeOnMuh.WebUI.Controllers
 
             return RedirectToAction("Index");
         }
-        
 
 
+        [Authorize(Roles = "Admin,Ofis,Santiye")]
         //EXCEL
         public IActionResult NakitExcel()
         {
@@ -534,6 +542,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
             }
         }
 
+        [Authorize(Roles = "Admin")]
         //ARŞİV
         public IActionResult IndexArsiv(int page = 1)
         {
@@ -560,6 +569,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
 
 
         #region CARİDEN
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         public IActionResult NakitEklemeFromCari(int carihesapid)
         {
@@ -572,6 +582,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
             return View(new Nakit());
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public async Task<IActionResult> NakitEklemeFromCari(Nakit nakit, IFormFile file)
         {

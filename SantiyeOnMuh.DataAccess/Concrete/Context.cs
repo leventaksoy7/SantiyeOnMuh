@@ -10,6 +10,10 @@ namespace SantiyeOnMuh.DataAccess.Concrete
 {
     public class Context:DbContext
     {
+        public Context(DbContextOptions options):base(options)
+        {
+            
+        }
         public DbSet<ESantiye> Santiyes { get; set; }
         public DbSet<ESantiyeKasa> SantiyesKasas { get; set; }
         public DbSet<ESantiyeGiderKalemi> SantiyeGiderKalemis { get; set; }
@@ -22,10 +26,9 @@ namespace SantiyeOnMuh.DataAccess.Concrete
         public DbSet<ENakit> Nakits { get; set; }
         public DbSet<ESirket> Sirkets { get; set; }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseSqlServer(@"Server=localhost\SQLEXPRESS; Database=SantiyeOnMuhasebe; Trusted_Connection=True;Encrypt=false;TrustServerCertificate=true;");
-        }
-
+        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        //{
+        //    optionsBuilder.UseSqlServer(@"Server=localhost\SQLEXPRESS; Database=SantiyeOnMuhasebe; Trusted_Connection=True;Encrypt=false;TrustServerCertificate=true;");
+        //}
     }
 }

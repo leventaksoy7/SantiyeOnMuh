@@ -11,14 +11,21 @@
     <form asp-controller="CariKasa" asp-action="CariKasaEkleme" method="post" enctype="multipart/form-data">
         <br />
         <div class="form-group row">
-            <label class="col-sm-2" asp-for="CariHesapId">@*FİRMA ADI:*@</label>
-            <div class="col-sm-5">
-                <div asp-validation-summary="ModelOnly"></div>
-                <select asp-for="CariHesapId"
-                        class="form-control"
-                        asp-items="@(new SelectList(@ViewBag.CariHesap,"Id","Ad"))">
-                </select>
-            </div>
+            @if (User.IsInRole("Admin") || User.IsInRole("Ofis"))
+            {
+                <label class="col-sm-2" asp-for="CariHesapId">@*FİRMA ADI:*@</label>
+                <div class="col-sm-5">
+                    <div asp-validation-summary="ModelOnly"></div>
+                    <select asp-for="CariHesapId"
+                            class="form-control"
+                            asp-items="@(new SelectList(@ViewBag.CariHesap,"Id","Ad"))">
+                    </select>
+                </div>
+            }
+            else
+            {
+                <input type="hidden" asp-for="CariHesapId" class="form-control" value="@ViewBag.CariHesapId" />
+            }
         </div>
         <br />
         <div class="form-group row">

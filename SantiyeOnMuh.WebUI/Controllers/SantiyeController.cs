@@ -26,6 +26,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
 
         }
 
+        
         public IActionResult Index()
         {
             ViewBag.Sayfa = "ŞANTİYELER";
@@ -58,6 +59,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
         }
 
         //ARŞİV
+        [Authorize(Roles = "Admin,Ofis")]
         public IActionResult IndexArsiv()
         {
             ViewBag.Sayfa = "ŞANTİYELER";
@@ -89,6 +91,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
             return View(santiyeViewModel);
         }
 
+
         [HttpGet]
         public IActionResult SantiyeEkleme()
         {
@@ -96,6 +99,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
             return View();
         }
 
+ 
         [HttpPost]
         public IActionResult SantiyeEkleme(Santiye santiye)
         {
@@ -132,6 +136,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
             return View(santiye);
         }
 
+        
         [HttpGet]
         public IActionResult SantiyeGuncelle(int? id)
         {
@@ -156,6 +161,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
             return View(_santiye);
         }
 
+        
         [HttpPost]
         public IActionResult SantiyeGuncelle(Santiye santiye)
         {
@@ -180,6 +186,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
             return RedirectToAction("Index");
         }
 
+        
         [HttpGet]
         public IActionResult SantiyeSil(int? id)
         {
@@ -204,6 +211,7 @@ namespace SantiyeOnMuh.WebUI.Controllers
             return View(_santiye);
         }
 
+       
         [HttpPost]
         public IActionResult SantiyeSil(Santiye santiye)
         {
@@ -224,7 +232,8 @@ namespace SantiyeOnMuh.WebUI.Controllers
 
             return RedirectToAction("Index");
         }
-        
+
+       
         public IActionResult SantiyeGeriYukle(int? id)
         {
             if (id == null) { return NotFound(); }
