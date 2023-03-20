@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace SantiyeOnMuh.WebUI.Migrations
 {
     /// <inheritdoc />
-    public partial class AddingIdentity : Migration
+    public partial class initUser : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -32,6 +32,7 @@ namespace SantiyeOnMuh.WebUI.Migrations
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Ad = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     SoyAd = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    SantiyeId = table.Column<int>(type: "int", nullable: true),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),

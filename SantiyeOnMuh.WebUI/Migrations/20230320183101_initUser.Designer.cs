@@ -12,15 +12,15 @@ using SantiyeOnMuh.WebUI.Identity;
 namespace SantiyeOnMuh.WebUI.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20230313203851_AddingIdentity")]
-    partial class AddingIdentity
+    [Migration("20230320183101_initUser")]
+    partial class initUser
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "7.0.3")
+                .HasAnnotation("ProductVersion", "7.0.0")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -203,6 +203,9 @@ namespace SantiyeOnMuh.WebUI.Migrations
 
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("bit");
+
+                    b.Property<int?>("SantiyeId")
+                        .HasColumnType("int");
 
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");

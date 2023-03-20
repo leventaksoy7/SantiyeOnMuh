@@ -12,15 +12,15 @@ using SantiyeOnMuh.DataAccess.Concrete;
 namespace SantiyeOnMuh.DataAccess.Migrations
 {
     [DbContext(typeof(Context))]
-    [Migration("20230311154905_BuildUp")]
-    partial class BuildUp
+    [Migration("20230320182320_initData")]
+    partial class initData
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "7.0.3")
+                .HasAnnotation("ProductVersion", "7.0.0")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -129,6 +129,22 @@ namespace SantiyeOnMuh.DataAccess.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("CariGiderKalemis");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Ad = "ÇEK",
+                            Durum = true,
+                            Tur = false
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Ad = "NAKİT",
+                            Durum = true,
+                            Tur = false
+                        });
                 });
 
             modelBuilder.Entity("SantiyeOnMuh.Entity.ECariHesap", b =>
@@ -402,6 +418,15 @@ namespace SantiyeOnMuh.DataAccess.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("SantiyeGiderKalemis");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Ad = "ŞANTİYE KASASINA EFT",
+                            Durum = true,
+                            Tur = false
+                        });
                 });
 
             modelBuilder.Entity("SantiyeOnMuh.Entity.ESantiyeKasa", b =>

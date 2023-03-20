@@ -24,6 +24,7 @@ namespace SantiyeOnMuh.Entity.AraModeller
         public bool Durum { get; set; }
         public EBankaHesapKasaEftModel()
         {
+            Aciklama = "BOŞ BIRAKILDI";
             Tarih = System.DateTime.Now;
             Nitelik = "EFT";
             Tutar = "0";

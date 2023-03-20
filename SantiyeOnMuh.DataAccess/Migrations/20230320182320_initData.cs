@@ -3,10 +3,12 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
+#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
+
 namespace SantiyeOnMuh.DataAccess.Migrations
 {
     /// <inheritdoc />
-    public partial class BuildUp : Migration
+    public partial class initData : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -306,6 +308,20 @@ namespace SantiyeOnMuh.DataAccess.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
+
+            migrationBuilder.InsertData(
+                table: "CariGiderKalemis",
+                columns: new[] { "Id", "Ad", "Durum", "Tur" },
+                values: new object[,]
+                {
+                    { 1, "ÇEK", true, false },
+                    { 2, "NAKİT", true, false }
+                });
+
+            migrationBuilder.InsertData(
+                table: "SantiyeGiderKalemis",
+                columns: new[] { "Id", "Ad", "Durum", "Tur" },
+                values: new object[] { 1, "ŞANTİYE KASASINA EFT", true, false });
 
             migrationBuilder.CreateIndex(
                 name: "IX_BankaKasas_BankaHesapId",

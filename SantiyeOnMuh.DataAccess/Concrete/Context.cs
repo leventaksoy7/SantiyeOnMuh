@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using SantiyeOnMuh.DataAccess.Concrete.EfCore;
 using SantiyeOnMuh.Entity;
 using System;
 using System.Collections.Generic;
@@ -30,5 +31,11 @@ namespace SantiyeOnMuh.DataAccess.Concrete
         //{
         //    optionsBuilder.UseSqlServer(@"Server=localhost\SQLEXPRESS; Database=SantiyeOnMuhasebe; Trusted_Connection=True;Encrypt=false;TrustServerCertificate=true;");
         //}
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.ApplyConfiguration(new SantiyeGiderKalemiConfiguration());
+            modelBuilder.ApplyConfiguration(new CariGiderKalemiConfiguration());
+        }
     }
 }

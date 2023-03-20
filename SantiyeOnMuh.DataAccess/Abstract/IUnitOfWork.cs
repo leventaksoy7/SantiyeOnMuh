@@ -19,5 +19,6 @@ namespace SantiyeOnMuh.DataAccess.Abstract
         ISantiyeKasaRepository SantiyeKasas { get; }
         ISantiyeRepository Santiyes { get; }
         ISirketRepository Sirkets { get; }
+        void Save();
     }
 }

@@ -12,12 +12,12 @@ namespace SantiyeOnMuh.Business.Concrete
 {
     public class BankaHesapManager : IBankaHesapService
     {
-        private IBankaHesapRepository _bankaHesapRepository;
+        //private IBankaHesapRepository _bankaHesapRepository;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public BankaHesapManager(IBankaHesapRepository bankaHesapRepository)
+        public BankaHesapManager(IUnitOfWork unitOfWork)
         {
-            _bankaHesapRepository = bankaHesapRepository;
-
+            _unitOfWork = unitOfWork;
         }
 
         public string ErrorMessage { get; set; }
@@ -45,7 +45,8 @@ namespace SantiyeOnMuh.Business.Concrete
         {
             if (Validation(entity))
             {
-                _bankaHesapRepository.Create(entity);
+                _unitOfWork.BankaHesaps.Create(entity);
+                _unitOfWork.Save();
                 return true;
             }
             return false;
@@ -53,27 +54,27 @@ namespace SantiyeOnMuh.Business.Concrete
 
         public void Delete(EBankaHesap entity)
         {
-            _bankaHesapRepository.Delete(entity);
+            _unitOfWork.BankaHesaps.Delete(entity);
         }
 
         public void Update(EBankaHesap entity)
         {
-            _bankaHesapRepository.Update(entity);
+            _unitOfWork.BankaHesaps.Update(entity);
         }
 
         public List<EBankaHesap> GetAll()
         {
-            return _bankaHesapRepository.GetAll();
+            return _unitOfWork.BankaHesaps.GetAll();
         }
 
         public List<EBankaHesap> GetAll(bool drm)
         {
-            return _bankaHesapRepository.GetAll(drm);
+            return _unitOfWork.BankaHesaps.GetAll(drm);
         }
 
         public EBankaHesap GetById(int id)
         {
-            return _bankaHesapRepository.GetById(id);
+            return _unitOfWork.BankaHesaps.GetById(id);
         }
     }
 }

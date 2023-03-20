@@ -22,8 +22,10 @@ namespace SantiyeOnMuh.Entity.AraModeller
         public int? SantiyeKasaId { get; set; }
         public EBankaHesapKasaEftSantiyeKasaModel()
         {
+            Aciklama = "BOŞ BIRAKILDI";
             BankaKasaId = null;
             SantiyeKasaId = null;
+            Tutar = "0";
         }
     }
 }

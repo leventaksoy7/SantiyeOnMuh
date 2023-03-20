@@ -8,6 +8,7 @@ using SantiyeOnMuh.DataAccess.Abstract;
 using SantiyeOnMuh.DataAccess.Concrete;
 using SantiyeOnMuh.DataAccess.Concrete.EfCore;
 using SantiyeOnMuh.DataAccess.Concrete.SqlServer;
+using SantiyeOnMuh.WebUI.Extensions;
 using SantiyeOnMuh.WebUI.Identity;
 using System.Configuration;
 
@@ -16,6 +17,8 @@ IConfiguration configuration;
 var builder = WebApplication.CreateBuilder(args);
 
 configuration = builder.Configuration;
+
+builder.Build().MigrateDatabase().Run();
 
 //--EF CORE 6'DA DEÐÝÞTÝRÝLMÝÞ - BÝTÝÞE KADAR MS SÝTEDEN COPY PASTE
 
@@ -81,6 +84,8 @@ builder.Services.ConfigureApplicationCookie(options =>
 });
 
 //SANTÝYE
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+
 builder.Services.AddScoped<ISantiyeService, SantiyeManager>();
 builder.Services.AddScoped<ISantiyeRepository, EfCoreSantiyeRepository>();
 
@@ -131,7 +136,7 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
-SeedDatabase.Seed();
+//SeedDatabase.Seed();
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
