@@ -12,35 +12,35 @@ namespace SantiyeOnMuh.DataAccess.Concrete.EfCore
     {
         public static void Seed()
         {
-            var context = new Context();
+            //var context = new Context();
 
-            //TUM MIGRATIONLARIN UYGULANDIĞINI KONTROL EDILIYOR
-            if (context.Database.GetPendingMigrations().Count() == 0)
-            {
-                ////DATABASE EKLENMİŞ VERİ KONTROLÜ YAPILIYOR
-                //if(context.Santiyes.Count() == 0) 
-                //{
-                //    //OLUŞTURULAN VERİLERİ İLGİLİ TABLOYA EKLİYOR.
-                //    context.Santiyes.AddRange(Santiyes);
-                //}
+            ////TUM MIGRATIONLARIN UYGULANDIĞINI KONTROL EDILIYOR
+            //if (context.Database.GetPendingMigrations().Count() == 0)
+            //{
+            //    ////DATABASE EKLENMİŞ VERİ KONTROLÜ YAPILIYOR
+            //    //if(context.Santiyes.Count() == 0) 
+            //    //{
+            //    //    //OLUŞTURULAN VERİLERİ İLGİLİ TABLOYA EKLİYOR.
+            //    //    context.Santiyes.AddRange(Santiyes);
+            //    //}
 
-                ////DATABASE EKLENMİŞ VERİ KONTROLÜ YAPILIYOR
-                //if (context.SantiyesKasas.Count() == 0)
-                //{
-                //    //OLUŞTURULAN VERİLERİ İLGİLİ TABLOYA EKLİYOR.
-                //    context.SantiyesKasas.AddRange(SantiyeKasas);
-                //}
+            //    ////DATABASE EKLENMİŞ VERİ KONTROLÜ YAPILIYOR
+            //    //if (context.SantiyesKasas.Count() == 0)
+            //    //{
+            //    //    //OLUŞTURULAN VERİLERİ İLGİLİ TABLOYA EKLİYOR.
+            //    //    context.SantiyesKasas.AddRange(SantiyeKasas);
+            //    //}
 
-                if (context.CariGiderKalemis.Count() == 0)
+            //    if (context.CariGiderKalemis.Count() == 0)
                 
-                { context.CariGiderKalemis.AddRange(CariGiderKalemis); }
+            //    { context.CariGiderKalemis.AddRange(CariGiderKalemis); }
 
-                if (context.SantiyeGiderKalemis.Count() == 0)
+            //    if (context.SantiyeGiderKalemis.Count() == 0)
                 
-                { context.SantiyeGiderKalemis.AddRange(SantiyeGiderKalemis); }
+            //    { context.SantiyeGiderKalemis.AddRange(SantiyeGiderKalemis); }
 
-            }
-            context.SaveChanges();
+            //}
+            //context.SaveChanges();
         }
 
         //private static ESantiye[] Santiyes =

@@ -8,16 +8,23 @@ using System.Threading.Tasks;
 
 namespace SantiyeOnMuh.DataAccess.Concrete.EfCore
 {
-    public class EfCoreSirketRepository : EfCoreGenericRepository<ESirket, Context>, ISirketRepository
+    public class EfCoreSirketRepository : EfCoreGenericRepository<ESirket>, ISirketRepository
     {
+        public EfCoreSirketRepository(Context context):base(context)
+        {
+            
+        }
+        private Context Context
+        {
+            get { return context as Context; }
+        }
         public List<ESirket> GetAll(bool drm)
         {
-            using (var context = new Context())
-            {
-                return context.Sirkets
-                    .Where(i => i.Durum == drm)
-                    .ToList();
-            }
+
+            return Context.Sirkets
+                .Where(i => i.Durum == drm)
+                .ToList();
+
         }
     }
 }

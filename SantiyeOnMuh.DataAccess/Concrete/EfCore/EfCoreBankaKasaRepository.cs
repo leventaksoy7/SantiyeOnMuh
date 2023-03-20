@@ -9,106 +9,110 @@ using System.Threading.Tasks;
 
 namespace SantiyeOnMuh.DataAccess.Concrete.EfCore
 {
-    public class EfCoreBankaKasaRepository : EfCoreGenericRepository<EBankaKasa, Context>, IBankaKasaRepository
+    public class EfCoreBankaKasaRepository : EfCoreGenericRepository<EBankaKasa>, IBankaKasaRepository
     {
+        public EfCoreBankaKasaRepository(Context context) : base(context)
+        {
+            
+        }
+
+        private Context Context
+        {
+            get { return context as Context;}
+        }
+
         public EBankaKasa GetByIdDetay(int id)
         {
-            using (var context = new Context())
-            {
-                return context.BankaKasas
-                    .Include(i => i.BankaHesap)
-                    .FirstOrDefault(i => i.Id == id);
-            }
+            return Context.BankaKasas
+                .Include(i => i.BankaHesap)
+                .FirstOrDefault(i => i.Id == id);
+
         }
 
         public List<EBankaKasa> GetAll(bool drm)
         {
-            using (var context = new Context())
-            {
-                return context.BankaKasas
-                    .Where(i => i.Durum == drm)
-                    .ToList();
-            }
+
+            return Context.BankaKasas
+                .Where(i => i.Durum == drm)
+                .ToList();
+
         }
 
         public List<EBankaKasa> GetAll(int? bankahesapid, bool drm)
         {
-            using (var context = new Context())
+
+            var bankakasa = Context.BankaKasas.AsQueryable();
+
+            if (bankahesapid == null)
             {
-                var bankakasa = context.BankaKasas.AsQueryable();
-
-                if (bankahesapid == null)
-                {
-                    bankakasa = bankakasa
-                        .Include(i => i.BankaHesap)
-                        .Where(i => i.Durum == drm);
-                }
-                else
-                {
-                    bankakasa = bankakasa
-                        .Include(i => i.BankaHesap)
-                        .Where(i => i.Durum == drm)
-                        .Where(i => i.BankaHesapId == bankahesapid);
-                }
-
-                return bankakasa.
-                    OrderBy(i => i.Tarih)
-                    .ToList();
+                bankakasa = bankakasa
+                    .Include(i => i.BankaHesap)
+                    .Where(i => i.Durum == drm);
             }
+            else
+            {
+                bankakasa = bankakasa
+                    .Include(i => i.BankaHesap)
+                    .Where(i => i.Durum == drm)
+                    .Where(i => i.BankaHesapId == bankahesapid);
+            }
+
+            return bankakasa.
+                OrderBy(i => i.Tarih)
+                .ToList();
+
         }
 
         public List<EBankaKasa> GetAll(int? bankahesapid, bool drm, int page, int pageSize)
         {
-            using (var context = new Context())
+
+            var bankakasa = Context.BankaKasas.AsQueryable();
+
+            if (bankahesapid == null)
             {
-                var bankakasa = context.BankaKasas.AsQueryable();
-
-                if (bankahesapid == null)
-                {
-                    bankakasa = bankakasa
-                            .Where(i => i.Durum == drm)
-                            .Include(i => i.BankaHesap);
-                }
-                else
-                {
-                    bankakasa = bankakasa
-                            .Where(i => i.Durum == drm)
-                            .Include(i => i.BankaHesap)
-                            .Where(i => i.BankaHesapId == bankahesapid);
-                }
-
-                return bankakasa
-                    .OrderBy(i => i.Tarih)
-                    .Reverse()
-                    .Skip((page - 1) * pageSize)
-                    .Take(pageSize)
-                    .OrderBy(j => j.Tarih)
-                    .ToList();
+                bankakasa = bankakasa
+                        .Where(i => i.Durum == drm)
+                        .Include(i => i.BankaHesap);
             }
+            else
+            {
+                bankakasa = bankakasa
+                        .Where(i => i.Durum == drm)
+                        .Include(i => i.BankaHesap)
+                        .Where(i => i.BankaHesapId == bankahesapid);
+            }
+
+            return bankakasa
+                .OrderBy(i => i.Tarih)
+                .Reverse()
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
+                .OrderBy(j => j.Tarih)
+                .ToList();
+
         }
 
         public int GetCount(int? bankahesapid, bool drm)
         {
-            using (var context = new Context())
+
+            var bankakasa = Context.BankaKasas.AsQueryable();
+
+            if (bankahesapid == null)
             {
-                var bankakasa = context.BankaKasas.AsQueryable();
-
-                if (bankahesapid == null)
-                {
-                    bankakasa = bankakasa
-                            .Where(i => i.Durum == drm)
-                            .Include(i => i.BankaHesap);
-                }
-                else
-                {
-                    bankakasa = bankakasa
-                            .Where(i => i.Durum == drm)
-                            .Include(i => i.BankaHesap)
-                            .Where(i => i.BankaHesapId == bankahesapid);
-                }
-
-                return bankakasa.Count();
+                bankakasa = bankakasa
+                        .Where(i => i.Durum == drm)
+                        .Include(i => i.BankaHesap);
             }
+            else
+            {
+                bankakasa = bankakasa
+                        .Where(i => i.Durum == drm)
+                        .Include(i => i.BankaHesap)
+                        .Where(i => i.BankaHesapId == bankahesapid);
+            }
+
+            return bankakasa.Count();
+
         }
     }
 }

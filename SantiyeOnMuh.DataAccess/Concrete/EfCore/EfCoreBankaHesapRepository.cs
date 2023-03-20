@@ -9,18 +9,26 @@ using System.Threading.Tasks;
 
 namespace SantiyeOnMuh.DataAccess.Concrete.EfCore
 {
-    public class EfCoreBankaHesapRepository : EfCoreGenericRepository<EBankaHesap, Context>, IBankaHesapRepository
+    public class EfCoreBankaHesapRepository : EfCoreGenericRepository<EBankaHesap>, IBankaHesapRepository
     {
+        public EfCoreBankaHesapRepository(Context context): base(context)
+        {
+            
+        }
+
+        private Context Context 
+        { 
+            get { return context as Context; } 
+        }
+
         public List<EBankaHesap> GetAll(bool drm)
         {
-            using (var context = new Context())
-            {
-                var BankaHesaps = context.BankaHesaps.AsQueryable();
+            var BankaHesaps = Context.BankaHesaps.AsQueryable();
 
-                return BankaHesaps
-                    .Where(i => i.Durum == drm)
-                    .ToList();
-            }
+            return BankaHesaps
+                .Where(i => i.Durum == drm)
+                .ToList();
+
         }
     }
 }

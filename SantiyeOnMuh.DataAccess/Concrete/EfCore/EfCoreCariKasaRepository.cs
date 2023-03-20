@@ -9,120 +9,123 @@ using System.Threading.Tasks;
 
 namespace SantiyeOnMuh.DataAccess.Concrete.EfCore
 {
-    public class EfCoreCariKasaRepository : EfCoreGenericRepository<ECariKasa, Context>, ICariKasaRepository
+    public class EfCoreCariKasaRepository : EfCoreGenericRepository<ECariKasa>, ICariKasaRepository
     {
+        public EfCoreCariKasaRepository(Context context):base(context)
+        {
+            
+        }
+        private Context Context
+        {
+            get { return context as Context; }
+        }
         public List<ECariKasa> GetAll(bool drm)
         {
-            using (var context = new Context())
-            {
-                return context.CariKasas
-                    .Where(i => i.Durum == drm)
-                    .ToList();
-            }
+
+            return Context.CariKasas
+                .Where(i => i.Durum == drm)
+                .ToList();
+
         }
 
         public ECariKasa GetByIdDetay(int id)
         {
-            using (var context = new Context())
-            {
-                return context.CariKasas
-                    .Include(i => i.CariHesap)
-                    .ThenInclude(i => i.Santiye)
-                    .Include(x => x.CariGiderKalemi)
-                    .FirstOrDefault(x => x.Id == id);
-            }
+
+            return Context.CariKasas
+                .Include(i => i.CariHesap)
+                .ThenInclude(i => i.Santiye)
+                .Include(x => x.CariGiderKalemi)
+                .FirstOrDefault(x => x.Id == id);
+  
         }
         public List<ECariKasa> GetAll(int carihesapid, int? gkid, bool drm)
         {
-            using (var context = new Context())
+
+            var carikasa = Context.CariKasas.AsQueryable();
+
+            if (gkid == null)
             {
-                var carikasa = context.CariKasas.AsQueryable();
-
-                if (gkid == null)
-                {
-                    carikasa = carikasa
-                            .Where(i => i.Durum == drm)
-                            .Include(i => i.CariHesap)
-                            .Where(i => i.CariHesapId == carihesapid)
-                            .Include(x => x.CariGiderKalemi);
-                }
-                else
-                {
-                    carikasa = carikasa
-                            .Where(i => i.Durum == drm)
-                            .Include(x => x.CariGiderKalemi)
-                            .Where(i => i.CariGiderKalemiId == gkid)
-                            .Include(i => i.CariHesap)
-                            .Where(i => i.CariHesapId == carihesapid);
-                }
-
-                return carikasa
-                    .OrderBy(s => s.Tarih)
-                    .Reverse()
-                    .OrderBy(s => s.Tarih)
-                    .ToList();
+                carikasa = carikasa
+                        .Where(i => i.Durum == drm)
+                        .Include(i => i.CariHesap)
+                        .Where(i => i.CariHesapId == carihesapid)
+                        .Include(x => x.CariGiderKalemi);
             }
+            else
+            {
+                carikasa = carikasa
+                        .Where(i => i.Durum == drm)
+                        .Include(x => x.CariGiderKalemi)
+                        .Where(i => i.CariGiderKalemiId == gkid)
+                        .Include(i => i.CariHesap)
+                        .Where(i => i.CariHesapId == carihesapid);
+            }
+
+            return carikasa
+                .OrderBy(s => s.Tarih)
+                .Reverse()
+                .OrderBy(s => s.Tarih)
+                .ToList();
+
         }
 
         public List<ECariKasa> GetAll(int carihesapid, int? gkid, bool drm, int page, int pageSize)
         {
-            using (var context = new Context())
+
+            var carikasa = Context.CariKasas.AsQueryable();
+
+            if (gkid == null)
             {
-                var carikasa = context.CariKasas.AsQueryable();
-
-                if (gkid == null)
-                {
-                    carikasa = carikasa
-                            .Where(i => i.Durum == drm)
-                            .Include(i => i.CariHesap)
-                            .Where(i => i.CariHesapId == carihesapid)
-                            .Include(x => x.CariGiderKalemi);
-                }
-                else
-                {
-                    carikasa = carikasa
-                            .Where(i => i.Durum == drm)
-                            .Include(x => x.CariGiderKalemi)
-                            .Where(i => i.CariGiderKalemiId == gkid)
-                            .Include(i => i.CariHesap)
-                            .Where(i => i.CariHesapId == carihesapid);
-                }
-
-                return carikasa
-                    .OrderBy(s => s.Tarih)
-                    .Reverse()
-                    .Skip((page - 1) * pageSize)
-                    .Take(pageSize)
-                    .OrderBy(s => s.Tarih)
-                    .ToList();
+                carikasa = carikasa
+                        .Where(i => i.Durum == drm)
+                        .Include(i => i.CariHesap)
+                        .Where(i => i.CariHesapId == carihesapid)
+                        .Include(x => x.CariGiderKalemi);
             }
+            else
+            {
+                carikasa = carikasa
+                        .Where(i => i.Durum == drm)
+                        .Include(x => x.CariGiderKalemi)
+                        .Where(i => i.CariGiderKalemiId == gkid)
+                        .Include(i => i.CariHesap)
+                        .Where(i => i.CariHesapId == carihesapid);
+            }
+
+            return carikasa
+                .OrderBy(s => s.Tarih)
+                .Reverse()
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
+                .OrderBy(s => s.Tarih)
+                .ToList();
+     
         }
         public int GetCount(int carihesapid, int? gkid, bool drm)
         {
-            using (var context = new Context())
+
+            var carikasa = Context.CariKasas.AsQueryable();
+
+            if (gkid == null)
             {
-                var carikasa = context.CariKasas.AsQueryable();
-
-                if (gkid == null)
-                {
-                    carikasa = carikasa
-                            .Where(i => i.Durum == drm)
-                            .Include(i => i.CariHesap)
-                            .Where(i => i.CariHesapId == carihesapid)
-                            .Include(x => x.CariGiderKalemi);
-                }
-                else
-                {
-                    carikasa = carikasa
-                            .Where(i => i.Durum == drm)
-                            .Include(x => x.CariGiderKalemi)
-                            .Where(i => i.CariGiderKalemiId == gkid)
-                            .Include(i => i.CariHesap)
-                            .Where(i => i.CariHesapId == carihesapid);
-                }
-
-                return carikasa.Count();
+                carikasa = carikasa
+                        .Where(i => i.Durum == drm)
+                        .Include(i => i.CariHesap)
+                        .Where(i => i.CariHesapId == carihesapid)
+                        .Include(x => x.CariGiderKalemi);
             }
+            else
+            {
+                carikasa = carikasa
+                        .Where(i => i.Durum == drm)
+                        .Include(x => x.CariGiderKalemi)
+                        .Where(i => i.CariGiderKalemiId == gkid)
+                        .Include(i => i.CariHesap)
+                        .Where(i => i.CariHesapId == carihesapid);
+            }
+
+            return carikasa.Count();
+
         }
     }
 }

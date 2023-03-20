@@ -9,33 +9,38 @@ using System.Threading.Tasks;
 
 namespace SantiyeOnMuh.DataAccess.Concrete.EfCore
 {
-    public class EfCoreNakitRepository : EfCoreGenericRepository<ENakit, Context>, INakitRepository
+    public class EfCoreNakitRepository : EfCoreGenericRepository<ENakit>, INakitRepository
     {
+        public EfCoreNakitRepository(Context context): base(context)
+        {
+            
+        }
+        private Context Context
+        {
+            get { return context as Context; }
+        }
         public List<ENakit> GetAll(bool drm)
         {
-            using (var context = new Context())
-            {
-                return context.Nakits
+
+                return Context.Nakits
                     .Where(i => i.Durum == drm)
                     .ToList();
-            }
+
         }
         public ENakit GetByIdDetay(int id)
         {
-            using (var context = new Context())
-            {
-                return context.Nakits.
+
+                return Context.Nakits.
                      Include(y => y.Sirket)
                     .Include(x => x.CariHesap)
                     .Include(x => x.BankaHesap)
                     .FirstOrDefault(x => x.Id == id);
-            }
+
         }
         public List<ENakit> GetAll(int? santiyeid, int? sirketid, int? bankahesapid, bool drm)
         {
-            using (var context = new Context())
-            {
-                var nakit = context.Nakits.AsQueryable();
+
+                var nakit = Context.Nakits.AsQueryable();
 
                 if (santiyeid != null)
                 {
@@ -61,13 +66,12 @@ namespace SantiyeOnMuh.DataAccess.Concrete.EfCore
                     .Include(i => i.Sirket)
                     .Include(i => i.BankaHesap)
                     .ToList();
-            }
+
         }
         public List<ENakit> GetAll(int? santiyeid, int? sirketid, int? bankahesapid, bool drm, int page, int pageSize)
         {
-            using (var context = new Context())
-            {
-                var nakit = context.Nakits.AsQueryable();
+
+                var nakit = Context.Nakits.AsQueryable();
 
                 if (santiyeid != null)
                 {
@@ -97,13 +101,12 @@ namespace SantiyeOnMuh.DataAccess.Concrete.EfCore
                     .Include(i => i.Sirket)
                     .Include(i => i.BankaHesap)
                     .ToList();
-            }
+
         }
         public int GetCount(int? santiyeid, int? sirketid, int? bankahesapid, bool drm)
         {
-            using (var context = new Context())
-            {
-                var nakit = context.Nakits.AsQueryable();
+
+                var nakit = Context.Nakits.AsQueryable();
 
                 if (santiyeid != null)
                 {
@@ -128,7 +131,7 @@ namespace SantiyeOnMuh.DataAccess.Concrete.EfCore
                     .Include(i => i.Sirket)
                     .Include(i => i.BankaHesap)
                     .Count();
-            }
+
         }
     }
 }

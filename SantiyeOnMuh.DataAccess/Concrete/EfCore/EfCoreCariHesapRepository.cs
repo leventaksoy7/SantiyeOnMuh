@@ -9,95 +9,101 @@ using System.Threading.Tasks;
 
 namespace SantiyeOnMuh.DataAccess.Concrete.EfCore
 {
-    public class EfCoreCariHesapRepository : EfCoreGenericRepository<ECariHesap, Context>, ICariHesapRepository
+    public class EfCoreCariHesapRepository : EfCoreGenericRepository<ECariHesap>, ICariHesapRepository
     {
+        public EfCoreCariHesapRepository(Context context ):base (context)
+        {
+            
+        }
+
+        private Context Context
+        {
+            get { return context as Context; }
+        }
+
         public List<ECariHesap> GetAll(bool drm)
         {
-            using (var context = new Context())
-            {
-                return context.CariHesaps
-                    .Where(i => i.Durum == drm)
-                    .ToList();
-            }
+
+            return Context.CariHesaps
+                .Where(i => i.Durum == drm)
+                .ToList();
+
         }
 
         public List<ECariHesap> GetAll(int? santiyeid, bool drm)
         {
-            using (var context = new Context())
+
+            var carihesap = Context.CariHesaps.AsQueryable();
+
+            if (santiyeid == null)
             {
-                var carihesap = context.CariHesaps.AsQueryable();
-
-                if (santiyeid == null)
-                {
-                    carihesap = carihesap
-                            .Where(c => c.Durum == drm)
-                            .Include(i => i.Santiye);
-                }
-                else
-                {
-                    carihesap = carihesap
-                            .Where(c => c.Durum == drm)
-                            .Include(i => i.Santiye)
-                            .Where(i => i.SantiyeId == santiyeid);
-                }
-
-                return carihesap
-                    .OrderBy(i => i.Ad)
-                    .ToList();
+                carihesap = carihesap
+                        .Where(c => c.Durum == drm)
+                        .Include(i => i.Santiye);
             }
+            else
+            {
+                carihesap = carihesap
+                        .Where(c => c.Durum == drm)
+                        .Include(i => i.Santiye)
+                        .Where(i => i.SantiyeId == santiyeid);
+            }
+
+            return carihesap
+                .OrderBy(i => i.Ad)
+                .ToList();
+
         }
 
         public List<ECariHesap> GetAll(int? santiyeid, bool drm, int page, int pageSize)
         {
-            using (var context = new Context())
+
+            var carihesap = Context.CariHesaps.AsQueryable();
+
+            if (santiyeid == null)
             {
-                var carihesap = context.CariHesaps.AsQueryable();
-
-                if (santiyeid == null)
-                {
-                    carihesap = carihesap
-                            .Where(c => c.Durum == drm)
-                            .Include(i => i.Santiye);
-                }
-                else
-                {
-                    carihesap = carihesap
-                            .Where(c => c.Durum == drm)
-                            .Include(i => i.Santiye)
-                            .Where(i => i.SantiyeId == santiyeid);
-                }
-
-                return carihesap
-                    .OrderBy(f => f.Ad)
-                    .Reverse()
-                    .Skip((page - 1) * pageSize)
-                    .Take(pageSize)
-                    .OrderBy(f => f.Ad)
-                    .ToList();
+                carihesap = carihesap
+                        .Where(c => c.Durum == drm)
+                        .Include(i => i.Santiye);
             }
+            else
+            {
+                carihesap = carihesap
+                        .Where(c => c.Durum == drm)
+                        .Include(i => i.Santiye)
+                        .Where(i => i.SantiyeId == santiyeid);
+            }
+
+            return carihesap
+                .OrderBy(f => f.Ad)
+                .Reverse()
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
+                .OrderBy(f => f.Ad)
+                .ToList();
+
         }
         public int GetCount(int? santiyeid, bool drm)
         {
-            using (var context = new Context())
+
+            var carihesap = Context.CariHesaps.AsQueryable();
+
+            if (santiyeid == null)
             {
-                var carihesap = context.CariHesaps.AsQueryable();
-
-                if (santiyeid == null)
-                {
-                    carihesap = carihesap
-                            .Where(c => c.Durum == drm)
-                            .Include(i => i.Santiye);
-                }
-                else
-                {
-                    carihesap = carihesap
-                            .Where(c => c.Durum == drm)
-                            .Include(i => i.Santiye)
-                            .Where(i => i.SantiyeId == santiyeid);
-                }
-
-                return carihesap.Count();
+                carihesap = carihesap
+                        .Where(c => c.Durum == drm)
+                        .Include(i => i.Santiye);
             }
+            else
+            {
+                carihesap = carihesap
+                        .Where(c => c.Durum == drm)
+                        .Include(i => i.Santiye)
+                        .Where(i => i.SantiyeId == santiyeid);
+            }
+
+            return carihesap.Count();
+
         }
     }
 }

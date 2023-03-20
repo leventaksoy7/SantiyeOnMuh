@@ -10,33 +10,38 @@ using System.Threading.Tasks;
 
 namespace SantiyeOnMuh.DataAccess.Concrete.EfCore
 {
-    public class EfCoreCekRepository : EfCoreGenericRepository<ECek, Context>, ICekRepository
+    public class EfCoreCekRepository : EfCoreGenericRepository<ECek>, ICekRepository
     {
+        public EfCoreCekRepository(Context context): base(context)
+        {
+            
+        }
+        private Context Context
+        {
+            get { return context as Context; }
+        }
         public List<ECek> GetAll(bool drm)
         {
-            using (var context = new Context())
-            {
-                return context.Ceks
-                    .Where(i => i.Durum == drm)
-                    .ToList();
-            }
+
+            return Context.Ceks
+                .Where(i => i.Durum == drm)
+                .ToList();
+
         }
         public ECek GetByIdDetay(int id)
         {
-            using (var context = new Context())
-            {
-                return context.Ceks.
-                     Include(y => y.Sirket)
-                    .Include(x => x.CariHesap)
-                    .Include(x => x.BankaHesap)
-                    .FirstOrDefault(x => x.Id == id);
-            }
+
+            return Context.Ceks.
+                    Include(y => y.Sirket)
+                .Include(x => x.CariHesap)
+                .Include(x => x.BankaHesap)
+                .FirstOrDefault(x => x.Id == id);
+
         }
         public List<ECek> GetAll(int? santiyeid, int? sirketid, int? bankahesapid, bool drm)
         {
-            using (var context = new Context())
-            {
-                var cek = context.Ceks.AsQueryable();
+
+                var cek = Context.Ceks.AsQueryable();
 
                 if (santiyeid != null)
                 {
@@ -67,80 +72,78 @@ namespace SantiyeOnMuh.DataAccess.Concrete.EfCore
                     .Include(i => i.Sirket)
                     .Include(i => i.BankaHesap)
                     .ToList();
-            }
+
         }
         public List<ECek> GetAll(int? santiyeid, int? sirketid, int? bankahesapid, bool drm, int page, int pageSize)
         {
-            using (var context = new Context())
-            {
-                var cek = context.Ceks.AsQueryable();
 
-                if (santiyeid != null)
-                {
-                    cek = cek
-                        .Where(i => i.Durum == drm)
-                        .Where(i => i.CariHesap.SantiyeId == santiyeid);
-                }
-                else if (sirketid != null)
-                {
-                    cek = cek
-                        .Where(i => i.Durum == drm)
-                        .Where(i => i.SirketId == sirketid);
-                }
-                else if (bankahesapid != null)
-                {
-                    cek = cek
-                        .Where(i => i.Durum == drm)
-                        .Where(i => i.BankaHesapId == bankahesapid);
-                }
-                else
-                {
-                    cek = cek
-                        .Where(i => i.Durum == drm);
-                }
-                return cek
-                    .OrderBy(s => s.Tarih)
-                    .Reverse()
-                    .Skip((page - 1) * pageSize)
-                    .Take(pageSize)
-                    .OrderBy(t => t.Tarih)
-                    .Include(i => i.CariHesap)
-                    .ThenInclude(i => i.Santiye)
-                    .Include(i => i.Sirket)
-                    .Include(i => i.BankaHesap)
-                    .ToList();
+            var cek = Context.Ceks.AsQueryable();
+
+            if (santiyeid != null)
+            {
+                cek = cek
+                    .Where(i => i.Durum == drm)
+                    .Where(i => i.CariHesap.SantiyeId == santiyeid);
             }
+            else if (sirketid != null)
+            {
+                cek = cek
+                    .Where(i => i.Durum == drm)
+                    .Where(i => i.SirketId == sirketid);
+            }
+            else if (bankahesapid != null)
+            {
+                cek = cek
+                    .Where(i => i.Durum == drm)
+                    .Where(i => i.BankaHesapId == bankahesapid);
+            }
+            else
+            {
+                cek = cek
+                    .Where(i => i.Durum == drm);
+            }
+            return cek
+                .OrderBy(s => s.Tarih)
+                .Reverse()
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
+                .OrderBy(t => t.Tarih)
+                .Include(i => i.CariHesap)
+                .ThenInclude(i => i.Santiye)
+                .Include(i => i.Sirket)
+                .Include(i => i.BankaHesap)
+                .ToList();
+
         }
         public int GetCount(int? santiyeid, int? sirketid, int? bankahesapid, bool drm)
         {
-            using (var context = new Context())
-            {
-                var cek = context.Ceks.AsQueryable();
 
-                if (santiyeid != null)
-                {
-                    cek = cek.Where(i => i.Durum == drm).Where(i => i.CariHesap.SantiyeId == santiyeid);
-                }
-                else if (sirketid != null)
-                {
-                    cek = cek.Where(i => i.Durum == drm).Where(i => i.SirketId == sirketid);
-                }
-                else if (bankahesapid != null)
-                {
-                    cek = cek.Where(i => i.Durum == drm).Where(i => i.BankaHesapId == bankahesapid);
-                }
-                else
-                {
-                    cek = cek
-                        .Where(i => i.Durum == drm);
-                }
-                return cek
-                    .Include(i => i.CariHesap)
-                    .ThenInclude(i => i.Santiye)
-                    .Include(i => i.Sirket)
-                    .Include(i => i.BankaHesap)
-                    .Count();
+            var cek = Context.Ceks.AsQueryable();
+
+            if (santiyeid != null)
+            {
+                cek = cek.Where(i => i.Durum == drm).Where(i => i.CariHesap.SantiyeId == santiyeid);
             }
+            else if (sirketid != null)
+            {
+                cek = cek.Where(i => i.Durum == drm).Where(i => i.SirketId == sirketid);
+            }
+            else if (bankahesapid != null)
+            {
+                cek = cek.Where(i => i.Durum == drm).Where(i => i.BankaHesapId == bankahesapid);
+            }
+            else
+            {
+                cek = cek
+                    .Where(i => i.Durum == drm);
+            }
+            return cek
+                .Include(i => i.CariHesap)
+                .ThenInclude(i => i.Santiye)
+                .Include(i => i.Sirket)
+                .Include(i => i.BankaHesap)
+                .Count();
+
         }
     }
 }
