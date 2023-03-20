@@ -18,7 +18,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 configuration = builder.Configuration;
 
-builder.Build().MigrateDatabase().Run();
+
 
 //--EF CORE 6'DA DEÐÝÞTÝRÝLMÝÞ - BÝTÝÞE KADAR MS SÝTEDEN COPY PASTE
 
@@ -44,6 +44,7 @@ builder.Services.AddDbContext<ApplicationContext>
 builder.Services.AddDbContext<Context>
     (options => options.UseSqlServer(configuration.GetConnectionString("MsSqlServerCon")));
 
+//builder.Build().MigrateDatabase().Run();
 
 builder.Services.AddIdentity<User,IdentityRole>().AddEntityFrameworkStores<ApplicationContext>().AddDefaultTokenProviders();
 
