@@ -46,6 +46,7 @@ builder.Services.AddDbContext<Context>
 
 //builder.Build().MigrateDatabase().Run();
 
+
 builder.Services.AddIdentity<User,IdentityRole>().AddEntityFrameworkStores<ApplicationContext>().AddDefaultTokenProviders();
 
 builder.Services.Configure<IdentityOptions>(options =>
